@@ -3,6 +3,23 @@ biojs-core
 
 Sandbox for a BioJS Core with AMD and CoffeeScript
 
+###
+
+- `development`
+  * all javascript are loaded on demand
+  * CoffeeScript is compiled by the Browser
+  * demo views:
+    * `development.html`
+- `production`
+  * all sources are bundled to one JS file (`build/biojs.js`)
+  * CoffeeScript is compiled by R.js
+  - demo views
+    - `production.html` 
+      * users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
+    - `production-non-amd.html` 
+      * users has no AMD loader. BioJS automatically uses almond and registers as global variable
+
+
 ### How to run
 
 You need either Java or node to compile the project.
