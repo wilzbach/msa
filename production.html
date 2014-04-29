@@ -20,7 +20,19 @@ requirejs.config({
 });
 
 require(['jquery','biojs'], function ($, biojs) {
-$("#foo").html(biojs.testCoffee("hu"));
+
+a_sequence = new biojs.seq("ACGT");
+
+$("#ele").append("rvs_complement  " + a_sequence.reverse_complement() + "\n");
+$("#ele").append("Transcribe:     " + a_sequence.transcribe()+ "\n");
+$("#ele").append("Back_Transcribe " + a_sequence.back_transcribe()+ "\n");
+$("#ele").append("Translate       " + a_sequence.translate()+ "\n");
+$("#ele").append("Ungap           " + a_sequence.ungap()+ "\n");
+
+dummyFasta = new biojs.input.fasta("http://www.uniprot.org/uniprot/S5G603.fasta");
+$("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
+
+
   $("#foo").animate({
 	"paddingTop": "200px",
 	borderWidth: "10px"
@@ -34,6 +46,7 @@ $("#foo").html(biojs.testCoffee("hu"));
 
 <body>
 
+<pre id="ele"></pre>
 <div id="foo">hhh</div>
 
 </body>

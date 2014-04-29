@@ -21,14 +21,17 @@ requirejs.config({
 }
 });
 
-require(['jquery','cs!util'], function ($, utils) {
-$("#foo").html(utils.toDom("hu"));
-  $("#foo").animate({
-	"paddingTop": "200px",
-	borderWidth: "10px"
-  }, {
-	duration: 5000,
-  });
+require(['jquery','cs!seq', 'cs!input/fasta'], function ($, Seq, Fasta) {
+
+a_sequence = new Seq("ACGT");
+$("#ele").append("rvs_complement  " + a_sequence.reverse_complement() + "\n");
+$("#ele").append("Transcribe:     " + a_sequence.transcribe()+ "\n");
+$("#ele").append("Back_Transcribe " + a_sequence.back_transcribe()+ "\n");
+$("#ele").append("Translate       " + a_sequence.translate()+ "\n");
+$("#ele").append("Ungap           " + a_sequence.ungap()+ "\n");
+
+dummyFasta = new Fasta("http://www.uniprot.org/uniprot/S5G603.fasta");
+$("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
 
 });
 
@@ -39,7 +42,7 @@ $("#foo").html(utils.toDom("hu"));
 
 <body>
 
-<div id="foo">hhh</div>
+<pre id="ele"></pre>
 
 </body>
 </html>
