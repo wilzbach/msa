@@ -29,7 +29,8 @@ $("#ele").append("Back_Transcribe " + a_sequence.back_transcribe()+ "\n");
 $("#ele").append("Translate       " + a_sequence.translate()+ "\n");
 $("#ele").append("Ungap           " + a_sequence.ungap()+ "\n");
 
-dummyFasta = new biojs.input.fasta("http://www.uniprot.org/uniprot/S5G603.fasta");
+// uniprot does not support SSL requests
+dummyFasta = new biojs.input.fasta("dummy/S5G603.fasta");
 $("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
 
 
