@@ -1,0 +1,45 @@
+<html>
+
+<head>
+
+<style>
+#foo{
+	background-color: #bca;
+	width: 100px;
+	border: 1px solid green;
+}
+</style>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js" /></script>
+<script />
+requirejs.config({
+  baseUrl: 'js',
+"paths": {
+  "jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
+  cs: 'libs/cs',
+'coffee-script': 'libs/coffee-script',
+}
+});
+
+require(['jquery','cs!util'], function ($, utils) {
+$("#foo").html(utils.toDom("hu"));
+  $("#foo").animate({
+	"paddingTop": "200px",
+	borderWidth: "10px"
+  }, {
+	duration: 5000,
+  });
+
+});
+
+
+</script>
+
+</head>
+
+<body>
+
+<div id="foo">hhh</div>
+
+</body>
+</html>
