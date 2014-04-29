@@ -3,7 +3,7 @@ biojs-core
 
 Sandbox for a BioJS Core with AMD and CoffeeScript
 
-###
+### Architecture
 
 - `development`
   * all javascript are loaded on demand
