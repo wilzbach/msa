@@ -1,27 +1,73 @@
 <html>
-
 <head>
+<meta charset="utf-8"> 
 
-<style>
-#foo{
-	background-color: #bca;
-	width: 100px;
-	border: 1px solid green;
-}
-</style>
-
+<link type="text/css" rel="stylesheet" href="css/msa.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js" /></script>
-<script />
+<script>
 requirejs.config({
-  baseUrl: 'js',
+baseUrl: 'js',
 "paths": {
-  "jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
-  cs: 'libs/cs',
+"jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
+cs: 'libs/cs',
 'coffee-script': 'libs/coffee-script',
 }
 });
+</script>
 
-require(['jquery','cs!seq', 'cs!input/fasta'], function ($, Seq, Fasta) {
+<!-- third-party -->
+<link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_dark.min.css">
+
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+
+</head>
+
+<body>
+
+This dev build uses Bootstrap and HighlightJS. This could have some effect on the components.
+Examples on the left is executed directly by your browser.
+"cs!" stands for live compilation of coffeescript (only in dev mode).
+
+<h3> MSA </h3>
+
+<div class="row">
+	<div class="col-md-6">
+
+		<pre class="hljs-js"><code>
+require(["msa/msa", "msa/sequence"], function (MSA, Sequence) {
+
+	msa = new MSA('msa-first-example');
+	msa.setConsole('msa-first-console');
+	msa.addSequences([new Sequence("MSPFTACAPDRLNNPPLKRTRTLSLRNPSETSTLSRSDRRNSMFLEGERIMNAFGQQPSS", "awesome name", 1)
+,new Sequence("QQTSPLQQQDILDMTVYCDSNFSMYQQNLHHHHHHHHHQRPPAHPSGYGLGEYSSPSTNP", "awesome name3", 2)
+,new Sequence("YLWMNSPGITSTPYLSSPNGGSYIQSGFGSNQRQFLPPPTGFGSADLGWLSISSQQELFK", "awesome name2", 3)
+,new Sequence("MVRPPYSYSALIAMAIQNAQDKKLTLSQIYQYVADNFPFYKKSKAGWQNSIRHNLSLNDC", "awesome name5", 4)
+,new Sequence("FKKVARDEDDPGKGNYWTLDPNCEKMFDNGNFRRKRKRRADGNAMSVKSEDALKLADTSS", "awesome name4", 5)
+,new Sequence("LMSASPPSLQNSPTSSDPKSSPSPSAEHSPCFSNFIGNMNSIMSGNAVRSRDGSSAHLGD", "awesome name7", 6)
+,new Sequence("FTQHGMSGHEISPPSEPGHLNTNRLNYYSASHNNSGLINSISNHFSVNNLIYNRDGSEV", "awesome name6", 7)]);
+//	msa.menu.displayMenuElement();
+});
+		</code></pre>
+
+	</div>
+	<div class="col-md-6" >
+		<div id="msa-first-example" ></div>
+		<div id="msa-first-console" ></div>
+	</div>
+</div>
+
+
+<h3> Input / Output </h3>
+
+<div class="row">
+	<div class="col-md-6">
+
+
+		<pre class="hljs-js">
+<code>
+require(["jquery","cs!seq", "cs!input/fasta"], function ($, Seq, Fasta) {
 
 a_sequence = new Seq("ACGT");
 $("#ele").append("rvs_complement  " + a_sequence.reverse_complement() + "\n");
@@ -35,15 +81,37 @@ dummyFasta = new Fasta("dummy/S5G603.fasta");
 $("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
 
 });
+		</code>		</pre>
+
+	</div>
+	<div class="col-md-6" >
+		<pre id="ele"></pre>
+
+	</div>
+</div>
 
 
+<script>
+var loadBoxes = function(){
+	$(document).ready(function() {
+			jQuery('pre code').each(function(i, e) {
+				// trim the pre texts
+				jQuery(e).text(jQuery.trim(jQuery(e).text()));
+				hljs.highlightBlock(e)
+				// unsecure - only use for demo purposes
+				eval(jQuery(e).text());
+				});
+			});
+}
+if (typeof define === 'function' && define.amd) {
+	require(["jquery"], function(jQuery){
+			loadBoxes(jQuery);
+			});
+}
+else{
+	loadBoxes(jQuery);
+}
 </script>
-
-</head>
-
-<body>
-
-<pre id="ele"></pre>
 
 </body>
 </html>
