@@ -60,14 +60,14 @@ users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
 2) [`production-non-amd.html`](#)
 users has no AMD loader. BioJS automatically uses almond and registers as global variable
 
-Click the links for an interactive demo for a possible production code.
 
+To generate the documentation run:
 
 ```
 python3 build.py
 ```
 
-You might need to run
+You might need install `lxml`, therefore
 ```
 pip3 install lxml 
 ```
