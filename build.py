@@ -26,21 +26,30 @@ libName = "biojs"
 content = ""
 rootDir = path.dirname(path.realpath(__file__))
 
+snipFileAMD = "biojs_snips_amd.js"
+snipFileNonAMD = "biojs_snips_non_amd.js"
+
 fnBuildAMD = path.join(rootDir, buildDir, buildAMD);
 fnBuildNonAMD = path.join(rootDir, buildDir, buildNonAMD);
 
+fSnipFileAMD = path.join(rootDir, buildDir, snipFileAMD);
+fSnipFileNonAMD = path.join(rootDir, buildDir, snipFileNonAMD);
+
 def main():
+
+    print("Cleaning build dir")
+    shutil.rmtree(buildDir)
 
     print("Compiling to biojs.js")
     # check for node
     if shutil.which("node"):
         # call requires via node and compile the lib
         subprocess.call(["node", path.join(rootDir,"js/libs/r.js"),  "-o", \
-            path.join(rootDir, "build.js")])
+                path.join(rootDir, "build.js")])
     elif shutil.which("java"):
         subprocess.call(["java", "-classpath", path.join(rootDir, "jars/rhino.jar") + ":"+ \
-            path.join(rootDir, "jars/compiler.jar"), "org.mozilla.javascript.tools.shell.Main", \
-            path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")])
+                path.join(rootDir, "jars/compiler.jar"), "org.mozilla.javascript.tools.shell.Main", \
+                path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")])
     else:
         print("You have neither node nor java installed. Can't call requirejs compiler")
         sys.exit()
@@ -49,16 +58,18 @@ def main():
     with open(devFile, "r") as file:
         content = file.read()
         html5= fromstring(content)
-        body = html5.xpath("//body")[0]
-        head = html5.xpath("//head")[0]
 
         with open(fnBuildAMD, "w") as output:
             root = etree.Element("html")
-            headAMD = deepcopy(head)
-            root.append(headAMD);
-            root.append(replaceCodeElements(deepcopy(body), False))
 
-            headAMD[3] = etree.fromstring("""
+            amdHtml = deepcopy(html5)
+            body = amdHtml.xpath("//body")[0]
+            head = amdHtml.xpath("//head")[0]
+
+            root.append(head);
+            root.append(replaceCodeElements(body, fSnipFileAMD,False))
+
+            head[4] = etree.fromstring("""
             <script>
             requirejs.config({
               baseUrl: '',
@@ -68,18 +79,40 @@ def main():
             });
             </script>
            """)
+            head.append(etree.fromstring('<script src="'+snipFileAMD +'"></script>'))
+
+            # remove highlight script
+            ele = root.xpath('//script[@id="loadBoxes"]')[0]
+            del ele.attrib["id"]
+            ele.text = """ require(['jquery'], function($){
+            $(document).ready(function() {
+                      $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                        });
+                        });"""
 
             outStr = html.tostring(root).decode("utf8")
             output.write(outStr)
 
         with open(fnBuildNonAMD, "w") as output:
             root = etree.Element("html")
-            headAMD = deepcopy(head)
-            root.append(headAMD);
-            root.append(replaceCodeElements(deepcopy(body), True))
 
-            headAMD[3] = etree.fromstring('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>')
-            headAMD[2] = etree.fromstring('<script src="biojs.js"></script>')
+            amdHtml = deepcopy(html5)
+            body = html5.xpath("//body")[0]
+            head = html5.xpath("//head")[0]
+
+            root.append(head);
+            root.append(replaceCodeElements(body,fSnipFileNonAMD, True))
+
+            head[4] = etree.fromstring('<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>')
+            head[3] = etree.fromstring('<script src="biojs.js"></script>')
+            head.append(etree.fromstring('<script src="'+snipFileNonAMD +'"></script>'))
+
+            # remove highlight script
+            ele = root.xpath('//script[@id="loadBoxes"]')[0]
+            del ele.attrib["id"]
+            ele.text = """$(document).ready(function() {
+                      $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+                        });"""
 
             outStr = html.tostring(root).decode("utf8")
             output.write(outStr)
@@ -91,14 +124,30 @@ def main():
     distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
-    print("Everything is ok. You rock")
+    distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
+    print("\nEverything is ok. You rock!")
 
-def replaceCodeElements(body,removeRequired=False):
+def replaceCodeElements(body,oFile,removeRequired=False):
 
-    codeElements = body.xpath("//code")
-    for ele in codeElements:
+    rows = body.xpath('//*[@class="row"]')
+    snips = []
+
+    for row in rows:
+
+        ele = row.xpath("//script")[0]
+
+        # read the snippet
+        url = ele.attrib["src"]
+
+        with open(path.join(rootDir, url), "r") as cfile:
+            text = cfile.read()
+
+        # show log only once
+        if removeRequired :
+            print("snippet %s was sucessfully read." % url)
+
         regex = re.compile(r'require\((.*){(.*)}\);',  re.DOTALL | re.MULTILINE)
-        groups = regex.search(ele.text).groups()
+        groups = regex.search(text).groups()
         headerGroup = groups[0]
         bodyGroup = groups[1]
 
@@ -138,12 +187,39 @@ def replaceCodeElements(body,removeRequired=False):
         headerVarsClean.append(libName)
         headerFilesClean.append(libName)
 
+        # remove it
+        row.remove(ele)
+
+
         # dump the header text
         if removeRequired:
-            ele.text = bodyGroup
+            sourceText = bodyGroup
         else:
             headerGroup = json.dumps(headerFilesClean) + ", function(" + ",".join(headerVarsClean) + ")"
-            ele.text = "require("+ headerGroup + "{" + bodyGroup + "});";
+            sourceText = "require("+ headerGroup + "{" + bodyGroup + "});"
+
+        sourceText =sourceText.strip(' \t\n\r')
+        snips.append(sourceText);
+
+        # dump it as HTML
+        sourceBox = row.xpath('.//*[@class="source-code"]')[0]
+        sourcePre = etree.Element("pre")
+        sourcePre.attrib["class"] = 'hljs-js'
+        sourceCodeEl = etree.Element("code")
+        sourceCodeEl.text = sourceText
+
+        sourcePre.append(sourceCodeEl)
+        sourceBox.append(sourcePre)
+
+
+    with open(oFile,"w") as snipFile:
+        if removeRequired:
+            snipFile.write("window.onload = function(){\n")
+        for snip in snips:
+                snipFile.write(snip)
+                snipFile.write("\n")
+        if removeRequired:
+            snipFile.write("}")
 
     return body
 
