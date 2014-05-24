@@ -5,7 +5,7 @@ Sandbox for the BioJS MSA Viewer with AMD and CoffeeScript
 
 ### Step 1) Embed components
 
-Have a look at the [quick start examples](#).
+Have a look at the [quick start examples](https://cdn.rawgit.com/greenify/biojs-msa-amd/master/development.html).
 
 ```
 <script src="biojs.js"></script>
@@ -37,7 +37,7 @@ Have fun coding.
 * CoffeeScript is compiled by R.js
 * `biojs.js` gets minified
 * two versions of the documentation are generated (with and without AMD loader)
-* static files (c`ss`, `samples`) + third party `libs` are copied to `build`
+* static files (`css`, `samples`) + third party `libs` are copied to `build`
 * a Javascript API documentation is generated (coming soon)
 
 ```
