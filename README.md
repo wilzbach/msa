@@ -38,6 +38,7 @@ Have fun coding.
 * `biojs.js` gets minified
 * two versions of the documentation are generated (with and without AMD loader)
 * static files (c`ss`, `samples`) + third party `libs` are copied to `build`
+* a Javascript API documentation is generated (coming soon)
 
 ```
 python3 build.py
@@ -63,6 +64,15 @@ with Java:
 ```
 java -classpath jars/rhino.jar:jars/compiler.jar org.mozilla.javascript.tools.shell.Main js/libs/r.js -o build.js
 ```
+
+### Documentation
+
+1) [`prod_amd.html`](#)
+users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
+ 
+2) [`prod_non_amd.html`](#)
+users has no AMD loader. BioJS automatically uses almond and registers as global variable
+
 
 ### Used libraries
 
