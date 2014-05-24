@@ -12,6 +12,8 @@ import distutils.core
 import json
 import sys
 from copy import deepcopy
+import subprocess
+import shutil
 
 devFile = "development.html"
 buildDir = "build"
@@ -28,6 +30,22 @@ fnBuildAMD = path.join(rootDir, buildDir, buildAMD);
 fnBuildNonAMD = path.join(rootDir, buildDir, buildNonAMD);
 
 def main():
+
+    print("Compiling to biojs.js")
+    # check for node
+    if shutil.which("node"):
+        # call requires via node and compile the lib
+        subprocess.call(["node", path.join(rootDir,"js/libs/r.js"),  "-o", \
+            path.join(rootDir, "build.js")])
+    elif shutil.which("java"):
+        subprocess.call(["java", "-classpath", path.join(rootDir, "jars/rhino.jar") + ":"+ \
+            path.join(rootDir, "jars/compiler.jar"), "org.mozilla.javascript.tools.shell.Main", \
+            path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")])
+    else:
+        print("You have neither node nor java installed. Can't call requirejs compiler")
+        sys.exit()
+
+    print("Starting to build documentation")
     with open(devFile, "r") as file:
         content = file.read()
         html5= fromstring(content)
@@ -69,8 +87,11 @@ def main():
 
 
     # copy operations
+    print("Copying static files and libs")
     distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
+    distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
+    print("Everything is ok. You rock")
 
 def replaceCodeElements(body,removeRequired=False):
 

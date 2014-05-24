@@ -2,9 +2,8 @@
   baseUrl: 'js',
 
 out: 'build/biojs.js',
-// only in REAL production
-//optimize: 'uglify2',
-optimize: "none",
+optimize: 'uglify2',
+//optimize: "none",
 
 name: 'libs/almond',
 include: ['main'],
