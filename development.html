@@ -5,7 +5,7 @@
 <!-- the script tags are dynamically modified by the documentation generator
 modifing the first 3 scripts will break it -->
 <link type="text/css" rel="stylesheet" href="css/msa.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js" /></script>
+<script src="libs/require.js" /></script>
 <script>
 requirejs.config({
 baseUrl: 'js',
@@ -18,43 +18,27 @@ cs: 'libs/cs',
 </script>
 
 <!-- third-party -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
-<script src="libs/highlight.min.js"></script>
 <link rel="stylesheet" href="libs/highlightjs_solarized_dark.min.css">
 
+<link type="text/css" rel="stylesheet" href="css/documentation.css" />
+<script src="libs/highlight.min.js"></script>
 </head>
 
 <body>
 
-This dev build uses Bootstrap and HighlightJS. This could have some effect on the components.
-Examples on the left is executed directly by your browser.
+<div class="qtext">
+Examples on the left are executed directly by your browser. <br>
 "cs!" stands for live compilation of coffeescript (only in dev mode).
+</div>
 
 <h3> MSA </h3>
 
 <div class="row">
-	<div class="col-md-6">
-
-		<pre class="hljs-js"><code>
-require(["msa/msa", "msa/sequence"], function (MSA, Sequence) {
-
-	msa = new MSA('msa-first-example');
-	msa.setConsole('msa-first-console');
-	msa.addSequences([new Sequence("MSPFTACAPDRLNNPPLKRTRTLSLRNPSETSTLSRSDRRNSMFLEGERIMNAFGQQPSS", "awesome name", 1)
-,new Sequence("QQTSPLQQQDILDMTVYCDSNFSMYQQNLHHHHHHHHHQRPPAHPSGYGLGEYSSPSTNP", "awesome name3", 2)
-,new Sequence("YLWMNSPGITSTPYLSSPNGGSYIQSGFGSNQRQFLPPPTGFGSADLGWLSISSQQELFK", "awesome name2", 3)
-,new Sequence("MVRPPYSYSALIAMAIQNAQDKKLTLSQIYQYVADNFPFYKKSKAGWQNSIRHNLSLNDC", "awesome name5", 4)
-,new Sequence("FKKVARDEDDPGKGNYWTLDPNCEKMFDNGNFRRKRKRRADGNAMSVKSEDALKLADTSS", "awesome name4", 5)
-,new Sequence("LMSASPPSLQNSPTSSDPKSSPSPSAEHSPCFSNFIGNMNSIMSGNAVRSRDGSSAHLGD", "awesome name7", 6)
-,new Sequence("FTQHGMSGHEISPPSEPGHLNTNRLNYYSASHNNSGLINSISNHFSVNNLIYNRDGSEV", "awesome name6", 7)]);
-//	msa.menu.displayMenuElement();
-});
-		</code></pre>
-
-	</div>
-	<div class="col-md-6" >
+	<script src="doc-js/simple_msa.js"></script>
+	<div class="source-code"></div>
+	<div class="live-preview">
+		<!-- add here all necessary containers -->
 		<div id="msa-first-example" ></div>
 		<div id="msa-first-console" ></div>
 	</div>
@@ -64,47 +48,45 @@ require(["msa/msa", "msa/sequence"], function (MSA, Sequence) {
 <h3> Input / Output </h3>
 
 <div class="row">
-	<div class="col-md-6">
-
-
-		<pre class="hljs-js">
-<code>
-require(["jquery","cs!seq", "cs!input/fasta"], function ($, Seq, Fasta) {
-
-a_sequence = new Seq("ACGT");
-$("#ele").append("rvs_complement  " + a_sequence.reverse_complement() + "\n");
-$("#ele").append("Transcribe:     " + a_sequence.transcribe()+ "\n");
-$("#ele").append("Back_Transcribe " + a_sequence.back_transcribe()+ "\n");
-$("#ele").append("Translate       " + a_sequence.translate()+ "\n");
-$("#ele").append("Ungap           " + a_sequence.ungap()+ "\n");
-
-// uniprot does not support SSL requests
-dummyFasta = new Fasta("dummy/S5G603.fasta");
-$("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
-
-});
-		</code>		</pre>
-
-	</div>
-	<div class="col-md-6" >
+	<script src="doc-js/simple_io.js"></script>
+	<div class="source-code"></div>
+	<div class="live-preview">
 		<pre id="ele"></pre>
-
 	</div>
 </div>
 
 
-<script>
+<script id="foobar">
+// this displays the source code from the snippet
+// due to browser restriction we have to download the file again as 'text' object
 var loadBoxes = function(){
 	$(document).ready(function() {
-			jQuery('pre code').each(function(i, e) {
-				// trim the pre texts
-				jQuery(e).text(jQuery.trim(jQuery(e).text()));
-				hljs.highlightBlock(e)
-				// unsecure - only use for demo purposes
-				eval(jQuery(e).text());
+
+			// load the text to a 
+			jQuery('.row script').each(function(i, e) {
+
+				var row = jQuery(e).parent();
+				var codePos =row.find(".source-code").first();
+				codePos.append(jQuery('<pre class="hljs-js"><code></code></pre>'));
+				var url = e.src;
+
+				var codePosDOM = codePos[0];
+
+				$.ajax({type: "GET", url: url, dataType: "text" }).done(function( data ) {
+					codePos = jQuery(codePosDOM);
+					codeBox =codePos.find("pre code").first();
+					codeBox.text(jQuery.trim(data));
+					hljs.highlightBlock(codeBox[0]);
+				})
+				.fail(function(){
+					console.log("couldn't retrieve url");	
 				});
+
 			});
-}
+		});
+};
+
+
 if (typeof define === 'function' && define.amd) {
 	require(["jquery"], function(jQuery){
 			loadBoxes(jQuery);
@@ -114,6 +96,5 @@ else{
 	loadBoxes(jQuery);
 }
 </script>
-
 </body>
 </html>
