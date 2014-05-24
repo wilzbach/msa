@@ -3,7 +3,7 @@ biojs-core
 
 Sandbox for the BioJS MSA Viewer with AMD and CoffeeScript
 
-### Step 1) Embedding components
+### Step 1) Embed components
 
 Have a look at the [quick start examples](#).
 
@@ -23,6 +23,12 @@ The whole API is coming soon.
 * all javascript modules are loaded on demand
 * CoffeeScript is compiled by the Browser
 
+All source files are located in `js`
+
+* If you write a module in CoffeeScript, use `.coffee` as an extension and prefix the module with `cs!`
+* Apart from dependencies you need to add your new module to the `main.js` (otherwise it won't be bundles into the single file)
+
+Have fun coding.
 
 ### Step 3) Compiling
 
@@ -49,9 +55,10 @@ java -classpath jars/rhino.jar:jars/compiler.jar org.mozilla.javascript.tools.sh
 Currently two versions of the documentation are generated.
 
 1) [`production.html`](#)
-      * users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
+users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
+ 
 2) [`production-non-amd.html`](#)
-      * users has no AMD loader. BioJS automatically uses almond and registers as global variable
+users has no AMD loader. BioJS automatically uses almond and registers as global variable
 
 Click the links for an interactive demo for a possible production code.
 
