@@ -37,6 +37,7 @@ Have fun coding.
 
 * all sources are bundled to one JS file (`build/biojs.js`)
 * CoffeeScript is compiled by R.js
+* `biojs.js` gets minified
 
 You need either Java or node to compile the project.
 
@@ -49,6 +50,7 @@ with Java:
 ```
 java -classpath jars/rhino.jar:jars/compiler.jar org.mozilla.javascript.tools.shell.Main js/libs/r.js -o build.js
 ```
+
 
 ### 3.b) Compile the documentation
 
