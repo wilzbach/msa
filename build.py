@@ -15,11 +15,8 @@ from copy import deepcopy
 import subprocess
 import shutil
 
-devFile = "development.html"
+devFiles = ["msa.html", "input.html"]
 buildDir = "build"
-buildAMD = "prod_amd.html"
-buildNonAMD = "prod_non_amd.html"
-
 externalLibs = ["jquery"]
 libName = "biojs"
 
@@ -28,9 +25,6 @@ rootDir = path.dirname(path.realpath(__file__))
 
 snipFileAMD = "biojs_snips_amd.js"
 snipFileNonAMD = "biojs_snips_non_amd.js"
-
-fnBuildAMD = path.join(rootDir, buildDir, buildAMD);
-fnBuildNonAMD = path.join(rootDir, buildDir, buildNonAMD);
 
 fSnipFileAMD = path.join(rootDir, buildDir, snipFileAMD);
 fSnipFileNonAMD = path.join(rootDir, buildDir, snipFileNonAMD);
@@ -55,9 +49,27 @@ def main():
         sys.exit()
 
     print("Starting to build documentation")
+
+    for devFile in devFiles:
+        buildDocumentation(devFile)
+
+    # copy operations
+    print("Copying static files and libs")
+    distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
+    distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
+    distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
+    distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
+    print("\nEverything is ok. You rock!")
+
+def buildDocumentation(devFile):
+
     with open(devFile, "r") as file:
         content = file.read()
         html5= fromstring(content)
+
+        devFileName = path.splitext(devFile)[0]
+        fnBuildAMD= path.join(buildDir,devFileName + "_amd.html")
+        fnBuildNonAMD= path.join(buildDir,devFileName + "_non_amd.html")
 
         with open(fnBuildAMD, "w") as output:
             root = etree.Element("html")
@@ -110,22 +122,13 @@ def main():
             # remove highlight script
             ele = root.xpath('//script[@id="loadBoxes"]')[0]
             del ele.attrib["id"]
+            del ele.attrib["src"]
             ele.text = """$(document).ready(function() {
                       $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
                         });"""
 
             outStr = html.tostring(root).decode("utf8")
             output.write(outStr)
-
-
-
-    # copy operations
-    print("Copying static files and libs")
-    distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
-    distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
-    distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
-    distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
-    print("\nEverything is ok. You rock!")
 
 def replaceCodeElements(body,oFile,removeRequired=False):
 
@@ -213,13 +216,11 @@ def replaceCodeElements(body,oFile,removeRequired=False):
 
 
     with open(oFile,"w") as snipFile:
-        if removeRequired:
-            snipFile.write("window.onload = function(){\n")
+        snipFile.write("window.onload = function(){\n")
         for snip in snips:
                 snipFile.write(snip)
                 snipFile.write("\n")
-        if removeRequired:
-            snipFile.write("}")
+        snipFile.write("}")
 
     return body
 
