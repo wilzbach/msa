@@ -36,6 +36,7 @@ Have fun coding.
 * all sources are bundled to one JS file (`build/biojs.js`)
 * CoffeeScript is compiled by R.js
 * `biojs.js` gets minified
+* all examples snippets are bundled into one file and statically added to the output HTML
 * two versions of the documentation are generated (with and without AMD loader)
 * static files (`css`, `samples`) + third party `libs` are copied to `build`
 * a Javascript API documentation is generated (coming soon)
