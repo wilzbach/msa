@@ -87,4 +87,3 @@ users has no AMD loader. BioJS automatically uses almond and registers as global
 
 * [jQuery](https://jquery.com/)
 * [highlight.js](http://highlightjs.org/)
-* [Bootstrap](http://getbootstrap.com)
