@@ -153,20 +153,24 @@ def replaceCodeElements(body,oFile,removeRequired=False):
             text = cfile.read()
 
         # show log only once
-        if removeRequired :
+        if not removeRequired :
             print("snippet %s was sucessfully read." % url)
 
-        regex = re.compile(r'require\((.*){(.*)}\);',  re.DOTALL | re.MULTILINE)
+        regex = re.compile(r'require\((.*?){(.*)}\);',  re.DOTALL | re.MULTILINE)
         groups = regex.search(text).groups()
         headerGroup = groups[0]
         bodyGroup = groups[1]
+
+        if "io_" in url and removeRequired:
+            print(bodyGroup)
+            print(len(groups))
 
         # recognize internal scripts
         regex = re.compile(r'(\[.*\])')
         headerFiles = regex.search(headerGroup).groups()[0]
         headerFiles = json.loads(headerFiles)
 
-        # recoginze vars
+        # recognize vars
         regex = re.compile(r'function[ ]*\((.*)\)')
         headerVars = regex.search(headerGroup).groups()[0].split(",")
         headerVars = [x.strip(' ') for x in headerVars]
@@ -204,6 +208,18 @@ def replaceCodeElements(body,oFile,removeRequired=False):
         # dump the header text
         if removeRequired:
             sourceText = bodyGroup
+            # remove one indent level
+            newLines = []
+            lines = sourceText.split("\n")
+            # search for the first non-empty line
+            for line in lines[1:]:
+                if len(line.strip(" ")) > 0:
+                    whitespacesInLine = len(line) -len(line.lstrip(" "))
+                    break
+            # remove in all lines the found indention
+            for line in lines[1:]:
+                newLines.append(line[whitespacesInLine:])
+            sourceText= "\n".join(newLines)
         else:
             headerGroup = json.dumps(headerFilesClean) + ", function(" + ",".join(headerVarsClean) + ")"
             sourceText = "require("+ headerGroup + "{" + bodyGroup + "});"
