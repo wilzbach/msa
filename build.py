@@ -92,7 +92,7 @@ def buildDocumentation(devFile):
             requirejs.config({
               baseUrl: '',
             "paths": {
-              "jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min",
+              "jquery": "//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min",
             }
             });
             </script>

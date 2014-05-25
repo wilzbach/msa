@@ -1,12 +1,9 @@
 define [], () ->
   class GenericReader
-    constructor: (@url) ->
-
-    _fetch: ->
-      xmlHttp = null;
-      xmlHttp = new XMLHttpRequest();
-      xmlHttp.open( "GET", @url, false );
-      xmlHttp.send( null );
-      return xmlHttp.responseText;
-
-  return GenericReader
+   fetch:(url, callback)->
+      req = new XMLHttpRequest()
+      req.addEventListener 'readystatechange', ->
+        if req.readyState is 4 and req.status is 200
+          @text = req.responseText
+      req.open "GET", url,true
+      req.send
