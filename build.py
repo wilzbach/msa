@@ -194,8 +194,10 @@ def replaceCodeElements(body,oFile,removeRequired=False):
                 className = hScript.replace("/", ".")
                 className = className.replace("cs!", "")
 
-                # search for all occ
-                bodyGroup = re.sub(r' ' + hVar + r'([ ;(])', ' ' + libName + '.' + className + r'\1' , bodyGroup)
+                # search for all oc
+                # variable needs whitespace on the left and either '(',
+                # '.', ';' or whitespace on the right
+                bodyGroup = re.sub(r' ' + hVar + r'([. ;(])', ' ' + libName + '.' + className + r'\1' , bodyGroup)
 
         # always add biojs
         headerVarsClean.append(libName)
