@@ -39,10 +39,8 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
     this.container.appendChild(this.menu.menu);
     this.container.appendChild(this.stage);
 
-    //this._seqMarkerLayer = "<div id='"+ this.globalId + "_marker"'></div>";
     this._seqMarkerLayer = document.createElement("div");
     this._seqMarkerLayer.className = "biojs_msa_marker";
-    this._seqMarkerLayer.style.paddingLeft = this.seqOffset + "px";
     this.stage.appendChild(this._seqMarkerLayer);
 
     this.stage.style.cursor = "default";
@@ -51,12 +49,12 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
 
     this.addDummySequences = function(){
       // define seqs
-      seqs = [new Sequence("MSPFTACAPDRLNAGECTF", "awesome name", 1)
+      var seqs = [new Sequence("MSPFTACAPDRLNAGECTF", "awesome name", 1)
         ,new Sequence("QQTSPLQQQDILDMTVYCD", "awesome name2", 2)
         ,new Sequence("FTQHGMSGHEISPPSEPGH", "awesome name3", 3)];
 
       this.addSequences(seqs);
-    }
+    };
 
     this._addSequence = function(tSeq){
 
@@ -199,13 +197,13 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
       labelGroup.style.width = this.seqOffset + "px";
 
       labelGroup.addEventListener('click',function(evt){
-        id = this.seqid;
+        var id = this.seqid;
         _self.onRowSelect(id);
         _self.selectSeq(id);
       }, false);
 
       labelGroup.addEventListener('mouseover',function(evt){
-        id = this.seqid;
+        var id = this.seqid;
         _self.onRowSelect(id);
         _self.selectSeq(id);
       }, false);
@@ -213,14 +211,14 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
       this.labelColorScheme.colorLabel(labelGroup,tSeq);
 
       return labelGroup;
-    }
+    };
 
     this.orderSeqsAfterScheme = function(type){
       if(typeof type !== "undefined"){
         this.ordering.setType(type);
       }
       this.orderSeqs(this.ordering.getSeqOrder(this.seqs));
-    }
+    };
 
     /* 
      * receives an ordered list with seq ids
@@ -234,7 +232,7 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
       var spacePerCell = this.columnHeight + this.columnSpacing;
       var val = 0;
 
-      nMax = 0;
+      var nMax = 0;
       this.seqs.forEach(function(entry){
         nMax = Math.max(nMax, entry.tSeq.seq.length);
       });
@@ -250,6 +248,7 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
       if( this.visibleElements.ruler === true){
         val = spacePerCell;
         this._seqMarkerLayer.appendChild(this._drawSeqMarker(nMax));
+        this._seqMarkerLayer.style.paddingLeft= this.seqOffset + "px";
       }
 
       var frag = document.createDocumentFragment();
