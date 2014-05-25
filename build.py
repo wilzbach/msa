@@ -23,12 +23,6 @@ libName = "biojs"
 content = ""
 rootDir = path.dirname(path.realpath(__file__))
 
-snipFileAMD = "biojs_snips_amd.js"
-snipFileNonAMD = "biojs_snips_non_amd.js"
-
-fSnipFileAMD = path.join(rootDir, buildDir, snipFileAMD);
-fSnipFileNonAMD = path.join(rootDir, buildDir, snipFileNonAMD);
-
 def main():
 
     print("Cleaning build dir")
@@ -63,13 +57,25 @@ def main():
 
 def buildDocumentation(devFile):
 
+    devFileName = path.splitext(devFile)[0]
+
+    # html files
+    fnBuildAMD= path.join(buildDir,devFileName + "_amd.html")
+    fnBuildNonAMD= path.join(buildDir,devFileName + "_non_amd.html")
+
+    # snippet file names
+    snipFileAMD = devFileName + "_amd_snip.js"
+    snipFileNonAMD = devFileName + "_non_amd_snip.js"
+
+    # snippet files
+    fSnipFileAMD= path.join(buildDir,snipFileAMD)
+    fSnipFileNonAMD= path.join(buildDir,snipFileNonAMD)
+
+
     with open(devFile, "r") as file:
         content = file.read()
         html5= fromstring(content)
 
-        devFileName = path.splitext(devFile)[0]
-        fnBuildAMD= path.join(buildDir,devFileName + "_amd.html")
-        fnBuildNonAMD= path.join(buildDir,devFileName + "_non_amd.html")
 
         with open(fnBuildAMD, "w") as output:
             root = etree.Element("html")
@@ -96,6 +102,7 @@ def buildDocumentation(devFile):
             # remove highlight script
             ele = root.xpath('//script[@id="loadBoxes"]')[0]
             del ele.attrib["id"]
+            del ele.attrib["src"]
             ele.text = """ require(['jquery'], function($){
             $(document).ready(function() {
                       $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
