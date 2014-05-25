@@ -1,10 +1,9 @@
 define ["cs!input/generic_reader"], (GenericReader) ->
-  class Fasta
-    constructor: (@url) ->
-      #@text = new GenericReader().fetch(@url)
+  class Fasta extends GenericReader
 
-    toString: ->
-      return "foo"
-      #return @text.text
+    constructor: (@text) ->
+      console.log("hihi")
 
-  return Fasta
+    toString:() ->
+      console.log("hi")
+      return @text
