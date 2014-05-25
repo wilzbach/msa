@@ -1,6 +1,6 @@
 require(["msa/msa", "msa/sequence"], function (MSA, Sequence) {
 
-  msa = new MSA('msa-first-example');
+  var msa = new MSA('msa-first-example');
   msa.setConsole('msa-first-console');
   msa.addSequences([new Sequence("MSPFTACAPDRLNNPPLKRTRTLSLRNPSETSTLSRSDRRNSMFLEGERIMNAFGQQPSS", "awesome name", 1)
     ,new Sequence("QQTSPLQQQDILDMTVYCDSNFSMYQQNLHHHHHHHHHQRPPAHPSGYGLGEYSSPSTNP", "awesome name3", 2)
