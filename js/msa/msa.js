@@ -476,7 +476,7 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
       // append as a new line
       //   var msgEl = document.createElement("p");
       //    msgEl.textContent = msg;
-      if( this.console !== "undefined" ){
+      if(typeof this.console !== "undefined" ){
         this.console.innerHTML = msg;
       }
       //  console.log(msg);
