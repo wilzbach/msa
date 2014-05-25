@@ -1,6 +1,5 @@
 require(["jquery","cs!seq", "cs!input/fasta"], function ($, Seq, Fasta) {
-
-  a_sequence = new Seq("ACGT");
+  var a_sequence = new Seq("ACGT");
   $("#ele").append("rvs_complement  " + a_sequence.reverse_complement() + "\n");
   $("#ele").append("Transcribe:     " + a_sequence.transcribe()+ "\n");
   $("#ele").append("Back_Transcribe " + a_sequence.back_transcribe()+ "\n");
@@ -8,7 +7,7 @@ require(["jquery","cs!seq", "cs!input/fasta"], function ($, Seq, Fasta) {
   $("#ele").append("Ungap           " + a_sequence.ungap()+ "\n");
 
   // uniprot does not support SSL requests
-  dummyFasta = new Fasta("dummy/S5G603.fasta");
+  var dummyFasta = new Fasta("dummy/S5G603.fasta");
   $("#ele").append("\n Dummy FASTA: \n" + dummyFasta.toString()+ "\n");
 
 });
