@@ -1,9 +1,14 @@
-define [], () ->
+define ["cs!input/http_request"], (HttpRequest) ->
   class GenericReader
-   fetch:(url, callback)->
-      req = new XMLHttpRequest()
-      req.addEventListener 'readystatechange', ->
-        if req.readyState is 4 and req.status is 200
-          @text = req.responseText
-      req.open "GET", url,true
-      req.send
+
+    constructor: (@text) ->
+
+    toString:() ->
+      return @text
+
+    @read: (url, callback) ->
+      onret = (text) => @_onRetrieval(text,callback)
+      HttpRequest.fetch(url, onret, callback)
+
+    @_onRetrieval:(text, callback) ->
+      return callback(new @(text))
