@@ -15,7 +15,7 @@ from copy import deepcopy
 import subprocess
 import shutil
 
-devFiles = ["msa.html", "input.html"]
+devFiles = ["msa.html"]
 buildDir = "build"
 externalLibs = ["jquery"]
 libName = "biojs"
@@ -26,7 +26,7 @@ rootDir = path.dirname(path.realpath(__file__))
 def main():
 
     print("Cleaning build dir")
-    shutil.rmtree(buildDir)
+    shutil.rmtree(buildDir, True)
 
     print("Compiling to biojs.js")
     # check for node

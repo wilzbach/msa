@@ -1,14 +1,11 @@
 define ["cs!input/http_request"], (HttpRequest) ->
   class GenericReader
 
-    constructor: (@text) ->
-
-    toString:() ->
-      return @text
+    @parse: (text) ->
 
     @read: (url, callback) ->
       onret = (text) => @_onRetrieval(text,callback)
       HttpRequest.fetch(url, onret, callback)
 
     @_onRetrieval:(text, callback) ->
-      return callback(new @(text))
+      return callback(@parse(text))
