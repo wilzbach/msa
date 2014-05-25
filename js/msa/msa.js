@@ -1,7 +1,11 @@
 define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./labelcolorator", "./row"], function(Colorator, Sequence, Ordering, Menu, Utils, LabelColorator, Row) {
-  return function msa(divName){
+  return function msa(divName, config){
 
     var _self = this;
+    // support for only one argument
+    if( typeof config === "undefined"){
+      config = {}
+    }
 
     this.columnWidth = 20;
     this.columnHeight = 20;
@@ -14,6 +18,7 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
     this.ordering = new Ordering();
     this.visibleElements = {
       labels: true, sequences: true, menubar: true, ruler: true};
+
 
     // an Array of BioJS.MSA.Row
     this.seqs = [];
@@ -28,6 +33,14 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
     this.container = document.getElementById(divName);
 
     // BEGIN : CONSTRUCTOR
+    if ( typeof config.registerMoveOvers !== "undefined"){
+      this.registerMoveOvers = true;
+      this.container.addEventListener('mouseout',function(evt){
+        _self._cleanupSelections();
+      });
+    }else{
+      this.registerMoveOvers = false;
+    }
 
     this.stageID =  String.fromCharCode(65 + Math.floor(Math.random() * 26));
     this.globalID = 'biojs_msa_' + this.stageID;
@@ -115,13 +128,15 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
         }, false);
 
 
-        residueSpan.addEventListener('mouseover',function(evt){
+        if( this.registerMoveOvers === true){
+          residueSpan.addEventListener('mouseover',function(evt){
 
-          var id = this.parentNode.seqid;
-          _self.selectResidue(id,this.rowPos);
-          // send event
-          _self.onPositionClicked(id,this.rowPos);
-        }, false);
+            var id = this.parentNode.seqid;
+            _self.selectResidue(id,this.rowPos);
+            // send event
+            _self.onPositionClicked(id,this.rowPos);
+          }, false);
+        }
 
 
         // color it nicely
@@ -164,17 +179,14 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
 
         }, false);
 
-        residueSpan.addEventListener('mouseover',function(evt){
-
-          _self._cleanupSelections();
-
-          // color the selected residues
-          _self.selectColumn(this.rowPos);
-
-          // send events
-          _self.onColumnSelect(this.rowPos);
-
-        }, false);
+        if( this.registerMoveOvers === true){
+          residueSpan.addEventListener('mouseover',function(evt){
+            _self._cleanupSelections();
+            _self.selectColumn(this.rowPos);
+            // send event to others
+            _self.onColumnSelect(this.rowPos);
+          }, false);
+        }
 
         // color it nicely
         this.colorscheme.colorColumn(residueSpan, n);
@@ -202,11 +214,13 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
         _self.selectSeq(id);
       }, false);
 
-      labelGroup.addEventListener('mouseover',function(evt){
-        var id = this.seqid;
-        _self.onRowSelect(id);
-        _self.selectSeq(id);
-      }, false);
+      if( this.registerMoveOvers === true){
+        labelGroup.addEventListener('mouseover',function(evt){
+          var id = this.seqid;
+          _self.onRowSelect(id);
+          _self.selectSeq(id);
+        }, false);
+      }
 
       this.labelColorScheme.colorLabel(labelGroup,tSeq);
 
