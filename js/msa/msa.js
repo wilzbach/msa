@@ -49,6 +49,15 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
 
     // END : CONSTRUCTOR
 
+    this.addDummySequences = function(){
+      // define seqs
+      seqs = [new Sequence("MSPFTACAPDRLNAGECTF", "awesome name", 1)
+        ,new Sequence("QQTSPLQQQDILDMTVYCD", "awesome name2", 2)
+        ,new Sequence("FTQHGMSGHEISPPSEPGH", "awesome name3", 3)];
+
+      this.addSequences(seqs);
+    }
+
     this._addSequence = function(tSeq){
 
       var layer = document.createElement("div");
