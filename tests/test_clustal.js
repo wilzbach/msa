@@ -1,8 +1,5 @@
 define(["cs!input/clustal"], function (Clustal) {
-  return function(){
-
-    module("clustal");
-
+  
     // as a async, non-blocking call
     asyncTest( "simple clustal test", function() {
       expect(1);
@@ -22,5 +19,4 @@ define(["cs!input/clustal"], function (Clustal) {
         start();
       });
     });
-  };
 });

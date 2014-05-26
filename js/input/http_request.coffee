@@ -5,11 +5,13 @@ define [], () ->
       req = @getXMLRequest()
       req.addEventListener 'readystatechange', =>
         if req.readyState is 4
-          successResultCodes = [200, 304]
+          # 0 is returned by PhantomJS
+          successResultCodes = [0,200, 304]
           if req.status in successResultCodes
             text = req.responseText
             callback(text)
           else
+            console.log req.status
             console.log 'Error loading data...'
 
       # prevent xml parsing by Firefox
