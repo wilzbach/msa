@@ -5,7 +5,7 @@ require(["msa/msa"], function (MSA) {
   msa.addDummySequences();
 
   // as an example we switch between different states
-/*  var state = 0;
+  /*  var state = 0;
   setInterval(function(){
     if(state == 0){
       msa.visibleElements.ruler = false;

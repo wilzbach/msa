@@ -58,7 +58,6 @@ def main():
     distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
-    distutils.dir_util.copy_tree(path.join(rootDir, 'tests'), path.join(buildDir, 'tests'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
     print("\nEverything is ok. You rock!")
 
