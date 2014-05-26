@@ -1,4 +1,4 @@
-define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./labelcolorator", "./row", "cs!./highlightor", "cs!msa/eventhandler"], function(Colorator, Sequence, Ordering, Menu, Utils, LabelColorator, Row, Highlightor, Eventhandler) {
+define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator", "./row", "cs!./highlightor", "cs!msa/eventhandler"], function(Colorator, Sequence, Ordering, Utils, LabelColorator, Row, Highlightor, Eventhandler) {
   return function msa(divName, config){
 
     var _self = this;
@@ -43,11 +43,10 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
     this.stageID =  String.fromCharCode(65 + Math.floor(Math.random() * 26));
     this.globalID = 'biojs_msa_' + this.stageID;
 
-    this.menu = new Menu(this);
     this.stage= document.createElement("div");
     this.stage.setAttribute("id",this.globalID+"_canvas"); 
     this.stage.setAttribute("class", "biojs_msa_stage");
-    this.container.appendChild(this.menu.menu);
+    //this.container.appendChild(this.menu.menu);
     this.container.appendChild(this.stage);
 
     this._seqMarkerLayer = document.createElement("div");

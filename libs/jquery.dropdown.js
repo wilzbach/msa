@@ -6,6 +6,8 @@
  * Licensed under the MIT license: http://opensource.org/licenses/MIT
  *
 */
+require(["jquery"], function(jQuery){
+console.log("hi there");
 if (jQuery) (function ($) {
 
     $.extend($.fn, {
@@ -133,3 +135,4 @@ if (jQuery) (function ($) {
     $(window).on('resize', position);
 
 })(jQuery);
+});
