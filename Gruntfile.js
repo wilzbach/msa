@@ -16,8 +16,15 @@ module.exports = function(grunt) {
       all: ['tests/**/*.html'],
   },
   watch: {
-  	files: ['tests/**/*.js', 'tests/**/*.html', 'js/**.*.js'],
-  	tasks: ['qunit'],
+    scripts: {
+      files: ['tests/**/*.js', 'tests/**/*.html', 'js/**/*.js'],
+      tasks: ['qunit'],
+      options: {
+        spawn: false,
+        event: ['all'],
+        livereload: true,
+      },
+    },
   },
   "qunit_amd": {
   	unit: {
