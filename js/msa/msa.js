@@ -34,7 +34,7 @@ define(["./colorator", "./sequence", "./ordering", "./menu", "./utils", "./label
     if ( typeof config.registerMoveOvers !== "undefined"){
       this.registerMoveOvers = true;
       this.container.addEventListener('mouseout',function(evt){
-        _self._cleanupSelections();
+        _self.highlightor._cleanupSelections();
       });
     }else{
       this.registerMoveOvers = false;
