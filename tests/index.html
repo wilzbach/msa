@@ -2,8 +2,9 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>QUnit Example</title>
+<title>BioJS MSA</title>
 <link rel="stylesheet" href="qunit.css">
+<script src="qunit.js" /></script>
 <script src="../libs/require.js" /></script>
 <script>
 requirejs.config({
@@ -14,6 +15,7 @@ requirejs.config({
 	cs: 'libs/cs',
 		'coffee-script': 'libs/coffee-script',
 	},
+	/*
 	shim: {
        'QUnit': {
            exports: 'QUnit',
@@ -25,23 +27,31 @@ requirejs.config({
            }
        } 
     }
+    */
 });
+QUnit.config.autostart = false;
+QUnit.config.autoload = false;
 // add all modules here and call them before QUnit
-require(
-    ['QUnit', '../tests/test_clustal', 'cs!../tests/test_fasta'],
-    function(QUnit, testClustal, testFasta) {
-        // run the tests.
-		testFasta();
-        testClustal();
 
+var testModules = ['../tests/test_clustal',
+	"cs!../tests/test_fasta"];
+	//'cs!../tests/test_fasta']
+require(
+   testModules,
+    function() {
         QUnit.load();
         QUnit.start();
     }
-);
+, function (err) {
+	console.log("error happend " + error);
+});
 </script>
 </head>
 <body>
 <div id="qunit"></div>
-<div id="qunit-fixture"></div>
+<div id="qunit-fixture">
+<!-- all elements inside the fixture are resetted after each tests -->
+
+</div>
 </body>
 </html>

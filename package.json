@@ -1,0 +1,26 @@
+{
+  "name": "biojs.msa.coffee",
+  "version": "0.0.0",
+  "description": "biojs-core ==========",
+  "main": "Gruntfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-qunit": "^0.4.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/greenify/biojs-msa-amd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/greenify/biojs-msa-amd/issues"
+  },
+  "homepage": "https://github.com/greenify/biojs-msa-amd"
+}
