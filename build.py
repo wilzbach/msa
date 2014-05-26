@@ -24,6 +24,12 @@ content = ""
 rootDir = path.dirname(path.realpath(__file__))
 
 def main():
+    if shutil.which("grunt"):
+        print("Executing unit tests")
+        subprocess.call(["grunt", "--gruntfile", \
+                path.join(rootDir, "Gruntfile.js"), "qunit:all"])
+    else:
+        print("Warning: you have no grunt installed.")
 
     print("Cleaning build dir")
     shutil.rmtree(buildDir, True)
