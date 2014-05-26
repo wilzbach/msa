@@ -74,7 +74,7 @@
 	line-height: 18px;
 }
 
-.dropdown .dropdown-menu LI > A,
+.dropdown .dropdown-menu LI,
 .dropdown .dropdown-menu LABEL {
 	display: block;
 	color: #555;
@@ -84,7 +84,7 @@
 	white-space: nowrap;
 }
 
-.dropdown .dropdown-menu LI > A:hover,
+.dropdown .dropdown-menu LI:hover,
 .dropdown .dropdown-menu LABEL:hover {
 	background-color: #08C;
 	color: #FFF;
