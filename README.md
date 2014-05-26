@@ -66,6 +66,22 @@ with Java:
 java -classpath jars/rhino.jar:jars/compiler.jar org.mozilla.javascript.tools.shell.Main js/libs/r.js -o build.js
 ```
 
+### Step 4) Unit Testing
+
+Head over to `tests/index.html`. 
+Add all you unit tests as module to the index.html. You can write unit tests either in JavaScript or in CoffeeScript.
+
+If you want to run them in the CLI, you need to install NodeJS Package manager (e.g. `apt-get install npm`) and the module `grunt-cli` (`npm install -g grunt-cli`).
+
+(Once) execute `npm install` to download all other dependencies locally
+
+And now you can execute all unit tests
+```
+grunt
+```
+
+If you wish to let it watch for file changes and rerun the test, use `grunt watch`
+
 ### Documentation
 
 1) [`prod_amd.html`](#)
@@ -82,6 +98,15 @@ users has no AMD loader. BioJS automatically uses almond and registers as global
 * [require-cs](https://raw.githubusercontent.com/jrburke/require-cs/latest/cs.js)
 * [r.js](https://github.com/jrburke/r.js/)
 * [almond](https://github.com/jrburke/almond)
+
+## Used libraries for testing 
+
+* [qunit](http://qunitjs.com/)
+* [grunt](http://gruntjs.com/getting-started)
+* [PhantomJS](http://phantomjs.org/)
+* [grunt-contrib-qunit](https://github.com/gruntjs/grunt-contrib-qunit)
+* [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint)
+* [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch)
 
 ### Used libraries for the documentation
 
