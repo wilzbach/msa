@@ -10,7 +10,7 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
       seqs = []
 
       lines = text.split("\n")
-      # The first line in the file must start with the words "CLUSTAL W" or "CLUSTALW".
+      # The first line in the file must start with the words "CLUSTAL"
       if lines[0][0..5] is not "CLUSTAL"
         throw "Invalid CLUSTAL Header"
 
@@ -39,8 +39,8 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
             continue
           if blockstate is 1
             # new block recognized - reset
-              seqCounter = 0
-              blockstate = 0
+            seqCounter = 0
+            blockstate = 0
 
           regex = /^(?:\s*)(\S+)(?:\s+)(\S+)(?:\s*)(\d*)(?:\s*|$)/g
           match = regex.exec(line)

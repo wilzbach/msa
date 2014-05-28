@@ -25,9 +25,9 @@ rootDir = path.dirname(path.realpath(__file__))
 
 def main():
     if shutil.which("grunt"):
-        print("Executing unit tests")
+        print("Executing unit tests and linting")
         subprocess.call(["grunt", "--gruntfile", \
-                path.join(rootDir, "Gruntfile.js"), "qunit:all"])
+                path.join(rootDir, "Gruntfile.js"), "build"])
     else:
         print("Warning: you have no grunt installed.")
 

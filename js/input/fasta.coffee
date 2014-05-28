@@ -16,14 +16,14 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
           # extract IDs and push them to the meta dict
           if line.contains "|"
             identifiers = label.split("|")
-            k=1
+            k = 1
             while k < identifiers.length
               database = identifiers[k]
-              databaseID = identifiers[(k+1)]
+              databaseID = identifiers[(k + 1)]
               currentSeq.meta[database] = databaseID
-              k+=2
+              k += 2
             # assume the last entry is the label
-            currentSeq.name = identifiers[identifiers.length-1]
+            currentSeq.name = identifiers[identifiers.length - 1]
         else
           currentSeq.seq += line
       return seqs

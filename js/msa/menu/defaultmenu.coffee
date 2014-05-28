@@ -40,7 +40,8 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
 
       menuFile.addNode "Export image", =>
         console.log "trying to render"
-        HTML2canvas @msa.container, {
+        require ["html2canvas"], (HTML2canvas) =>
+          HTML2canvas @msa.container, {
             onrendered: (canvas) =>
               console.log "rendered"
               #@msa.container.appendChild canvas
@@ -48,14 +49,19 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
               aLink.href = canvas.toDataURL()
               # only for some browsers
               #aLink.href = canvas.toDataURL("image/jpeg")
-              aLink.download = "msa.png"; # Setup name file
-              aLink.href = aLink.href.replace(/^data[:]image\/(png|jpg|jpeg)[;]/i, "data:application/octet-stream;");
+              aLink.download = "msa.png" # Setup name file
+              aLink.href = aLink.href.replace( /// # cs heregexes
+              /^data[:]image\/(png|jpg|jpeg)[;]/i
+              ///, "data:application/octet-stream;")
 
               aLink.textContent = "save locally"
               aLink.target = "_blank"
-              window.location.href aLink.href
-              #@msa.container.appendChild aLink
+              #window.location.href aLink.href
+              @msa.container.appendChild aLink
           }
+        , ->
+          # on module loading error
+          console.log "couldn't load HTML2canvas"
 
 
       menuFile.buildDOM()
