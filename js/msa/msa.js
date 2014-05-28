@@ -1,4 +1,4 @@
-define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator", "./row", "cs!./highlightor", "cs!msa/eventhandler"], function(Colorator, Sequence, Ordering, Utils, LabelColorator, Row, Highlightor, Eventhandler) {
+define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator", "./row",  "cs!msa/eventhandler"], function(Colorator, Sequence, Ordering, Utils, LabelColorator, Row, Eventhandler) {
   return function msa(divName, config){
 
     var _self = this;
@@ -16,7 +16,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
     this.colorscheme = new Colorator(); 
     this.labelColorScheme = new LabelColorator();
     this.ordering = new Ordering();
-    this.highlightor = new Highlightor(this);
+    //this.highlightor = new Highlightor(this);
 
     this.visibleElements = {
       labels: true, sequences: true, menubar: true, ruler: true};

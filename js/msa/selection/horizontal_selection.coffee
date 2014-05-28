@@ -1,4 +1,4 @@
-define ["./selection.coffee"], (Selection) ->
+define ["cs!./selection"], (Selection) ->
   class HorizontalSection extends Selection
 
     constructor: (@msa) ->
