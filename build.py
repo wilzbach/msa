@@ -8,6 +8,7 @@ import re
 from lxml.html import parse,fromstring
 from lxml import etree, html
 from os import path
+import os
 import distutils.core
 import json
 import sys
@@ -26,32 +27,47 @@ rootDir = path.dirname(path.realpath(__file__))
 def main():
     if shutil.which("grunt"):
         print("Executing unit tests and linting")
-        subprocess.call(["grunt", "--gruntfile", \
-                path.join(rootDir, "Gruntfile.js"), "build"])
+        testProcess = subprocess.Popen(["grunt", "--gruntfile", \
+                path.join(rootDir, "Gruntfile.js"), "build"], stdout=subprocess.PIPE)
+        out, err = testProcess.communicate()
+        out = out.decode("utf8")
+        print(out)
+        if "Aborted" in out:
+            sys.exit("unit test failed")
     else:
         print("Warning: you have no grunt installed.")
 
     print("Cleaning build dir")
     shutil.rmtree(buildDir, True)
 
+    if not path.exists(buildDir):
+        os.makedirs(buildDir)
+
     print("Compiling to biojs.js")
     # check for node
     if shutil.which("node"):
         # call requires via node and compile the lib
-        subprocess.call(["node", path.join(rootDir,"js/libs/r.js"),  "-o", \
-                path.join(rootDir, "build.js")])
+        buildProcess = subprocess.Popen(["node", path.join(rootDir,"js/libs/r.js"),  "-o", \
+                path.join(rootDir, "config/build.js")], stdout=subprocess.PIPE)
     elif shutil.which("java"):
-        subprocess.call(["java", "-classpath", path.join(rootDir, "jars/rhino.jar") + ":"+ \
+        buildProcess = subprocess.Popen(["java", "-classpath", path.join(rootDir, "jars/rhino.jar") + ":"+ \
                 path.join(rootDir, "jars/compiler.jar"), "org.mozilla.javascript.tools.shell.Main", \
-                path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")])
+                path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")], stdout=subprocess.PIPE)
     else:
         print("You have neither node nor java installed. Can't call requirejs compiler")
-        sys.exit()
+        sys.exit("r.js optimizer failed")
+
+    if buildProcess:
+        out, err = buildProcess.communicate()
+        out = out.decode("utf8")
+        print(out)
+        if "error" in out:
+            sys.exit()
 
     print("Starting to build documentation")
 
     for devFile in devFiles:
-        buildDocumentation(devFile)
+        buildDocumentation(path.join(rootDir, devFile))
 
     # copy operations
     print("Copying static files and libs")

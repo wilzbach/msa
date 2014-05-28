@@ -1,4 +1,4 @@
-define(["cs!./vertical_selection", "cs!./horizontal_selection.coffee"], function (HorizontalSelection, VerticalSelection) {
+define(["cs!./vertical_selection", "cs!./horizontal_selection"], function (HorizontalSelection, VerticalSelection) {
     return {
         version: "0.1",
         verticial_selection: VerticalSelection,

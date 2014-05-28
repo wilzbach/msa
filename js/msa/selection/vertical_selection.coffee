@@ -1,4 +1,4 @@
-define ["./highlightor.coffee"], (Selection) ->
+define ["cs!./selection"], (Selection) ->
   class VerticalSelection extends Selection
 
     constructor: () ->

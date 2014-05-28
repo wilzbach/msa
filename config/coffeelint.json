@@ -30,14 +30,6 @@
       "level": "warn"
     },
 
-    "no_unnecessary_double_quotes": {
-      "level": "warn"
-    },
-
-    "non_empty_constructor_needs_parens": {
-      "level" : "warn"
-    },
-
     "space_operators" : {
         "level" : "error"
     }
