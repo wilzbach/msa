@@ -12,7 +12,7 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
       lines = text.split("\n")
       # The first line in the file must start with the words "CLUSTAL"
       if lines[0][0..5] is not "CLUSTAL"
-        throw "Invalid CLUSTAL Header"
+        throw new Error "Invalid CLUSTAL Header"
 
       k = 0
       # 0: reading sequences, 1: reading new lines
