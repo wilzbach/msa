@@ -38,6 +38,27 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       menuFile.addNode "Hide Menu", =>
         @deleteMenu()
 
+      menuFile.addNode "Export image", =>
+        console.log "trying to render"
+        HTML2canvas @msa.container, {
+            onrendered: (canvas) =>
+              console.log "rendered"
+              #@msa.container.appendChild canvas
+              aLink = document.createElement "a"
+              aLink.href = canvas.toDataURL()
+              # only for some browsers
+              #aLink.href = canvas.toDataURL("image/jpeg")
+              aLink.download = "msa.png"; # Setup name file
+              aLink.href = aLink.href.replace(/^data[:]image\/(png|jpg|jpeg)[;]/i, "data:application/octet-stream;");
+
+              aLink.textContent = "save locally"
+              aLink.target = "_blank"
+              window.location.href aLink.href
+              #@msa.container.appendChild aLink
+          }
+
+
+      menuFile.buildDOM()
       menuFile.buildDOM()
 
     _createColorSchemeMenu: () ->
