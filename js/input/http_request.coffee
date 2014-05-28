@@ -1,9 +1,9 @@
 define [], () ->
   class HttpRequest
 
-    @fetch:(url, callback)->
+    @fetch:(url, callback) ->
       req = @getXMLRequest()
-      req.addEventListener 'readystatechange', =>
+      req.addEventListener 'readystatechange', ->
         if req.readyState is 4
           # 0 is returned by PhantomJS
           successResultCodes = [0,200, 304]
@@ -33,6 +33,6 @@ define [], () ->
             return new ActiveXObject("Msxml2.XMLHTTP.3.0")
           catch error
           try
-              return new ActiveXObject("Microsoft.XMLHTTP")
+            return new ActiveXObject("Microsoft.XMLHTTP")
           catch error
           throw new Error("This browser does not support XMLHttpRequest.")

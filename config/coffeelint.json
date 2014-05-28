@@ -1,0 +1,44 @@
+{
+    "arrow_spacing": {
+        "level": "error"
+    },
+    "indentation" : {
+        "level" : "error",
+        "value" : 2
+    },
+
+    "cyclomatic_complexity" : {
+        "level" : "warn",
+        "value" : 11
+    },
+
+    "line_endings" : {
+        "value" : "unix",
+        "level" : "error"
+    },
+
+    "no_empty_functions" : {
+      "level" : "warn"
+    },
+
+    "no_implicit_braces" : {
+      "level": "error"
+    },
+
+
+    "no_stand_alone_at": {
+      "level": "warn"
+    },
+
+    "no_unnecessary_double_quotes": {
+      "level": "warn"
+    },
+
+    "non_empty_constructor_needs_parens": {
+      "level" : "warn"
+    },
+
+    "space_operators" : {
+        "level" : "error"
+    }
+}
