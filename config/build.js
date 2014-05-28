@@ -1,5 +1,5 @@
 ({
-  baseUrl: 'js',
+  baseUrl: '../js',
 
 out: 'build/biojs.js',
 //optimize: 'uglify2',
@@ -15,8 +15,8 @@ stubModules: ['cs', 'text'],
 // enables compatibility with non-AMD projects
 //wrap: true,
 wrap: {
-  startFile: 'config/start.frag',
-  endFile: 'config/end.frag',
+  startFile: 'start.frag',
+  endFile: 'end.frag',
 },
 
 paths: {

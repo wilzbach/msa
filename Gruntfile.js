@@ -1,13 +1,6 @@
 /*global module:false*/
 module.exports = function(grunt) {
 
-	//"use:strict";
-  
-  // load tasks
-  grunt.loadNpmTasks('grunt-contrib-qunit');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-
   // Project configuration.
   grunt.initConfig({
   	pkg: grunt.file.readJSON('package.json'),
@@ -26,25 +19,7 @@ module.exports = function(grunt) {
       },
     },
   },
-  "qunit_amd": {
-  	unit: {
-  		include: [
-  		'../libs/require.js',
-  		],
-  		tests: [
-  		"test_fasta.js"
-  		],
-  		require: {
-  			baseUrl: '../js',
-  			paths: {
-          "jquery": "../libs/jquery2",
-          cs: 'libs/cs',
-         'coffee-script': 'libs/coffee-script',
-  			}
-  		}
-  	}
-  },
-  jshint: {
+   jshint: {
     files: {
         src: ['js/msa/*.js'],
     },
@@ -66,11 +41,25 @@ module.exports = function(grunt) {
       }
     }
   },
+  coffeelint: {
+      app: ['js/**/*.coffee', 'tests/*/*.coffee'],
+      options: {
+        configFile: "config/coffeelint.json",
+      },
+    },
 });
 
+	// load tasks
+  grunt.loadNpmTasks('grunt-contrib-qunit');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-coffeelint');
 
-  // Default task.
+
+
+  // Define tasks
   grunt.registerTask('default', ['qunit']);
+  grunt.registerTask('build', ['qunit', 'coffeelint']);
 
   grunt.event.on('qunit.error.onError', function (message, stackTrace) {
     grunt.log.ok("Error: " + message);

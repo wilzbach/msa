@@ -10,9 +10,15 @@ modifing the first 3 scripts will break it -->
 requirejs.config({
 	baseUrl: 'js',
 	"paths": {
-	"jquery": "../libs/jquery2",
-	cs: 'libs/cs',
-	'coffee-script': 'libs/coffee-script',
+		"jquery": "../libs/jquery2",
+		cs: 'libs/cs',
+		'coffee-script': 'libs/coffee-script',
+		'html2canvas': '../libs/html2canvas',
+	},
+	shim: {
+		"html2canvas": {
+			exports: "html2canvas",
+		},
 	}
 });
 </script>

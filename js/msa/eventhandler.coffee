@@ -2,29 +2,29 @@ define [], () ->
   class EventHandler
     constructor: (@log) ->
 
-    onColumnSelect: (pos)->
-      @log "column was clicked at pos"+ pos
+    onColumnSelect: (pos) ->
+      @log "column was clicked at pos" + pos
 
-    onRowSelect: (id)->
-      @log "row was clicked at id"+ id
+    onRowSelect: (id) ->
+      @log "row was clicked at id" + id
 
-    onPositionClicked: (id, pos)->
-      @log "seq " +id +" was clicked at " + pos
+    onPositionClicked: (id, pos) ->
+      @log "seq " + id +" was clicked at " + pos
 
-    onAnnotationClicked: ()->
+    onAnnotationClicked: () ->
       @log "not implemented yet"
 
-    onRegionSelected: ()->
+    onRegionSelected: () ->
       @log "not implemented yet"
 
-    onZoom: ()->
+    onZoom: () ->
       @log "not implemented yet"
 
-    onScroll: ()->
+    onScroll: () ->
       @log "not implemented yet"
 
-    onColorSchemeChanged: ()->
+    onColorSchemeChanged: () ->
       @log "not implemented yet"
 
-    onDisplayEventChanged: ()->
+    onDisplayEventChanged: () ->
       @log "not implemented yet"
