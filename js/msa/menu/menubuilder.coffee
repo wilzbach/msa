@@ -1,7 +1,7 @@
 define ["cs!utils/bmath"], (BMath) ->
   class MenuBuilder
 
-    constructor : (@name) ->
+    constructor: (@name) ->
       @_nodes =  []
 
     addNode: (label, callback) ->
