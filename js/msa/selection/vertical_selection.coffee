@@ -1,30 +1,26 @@
 define ["cs!./selection"], (Selection) ->
   class VerticalSelection extends Selection
 
-    constructor: () ->
-      @_currentColumn = -1
+    constructor: (@msa, @_column) ->
+      @_region = new Region
 
-    select: (selColumn) =>
-      @_cleanupSelections()
+    getId: ->
+      @_column
 
-      if selColumn >= 0
-        columnGroup = @msa._seqMarkerLayer.childNodes[selColumn]
-        @msa.colorscheme.colorSelectedColumn columnGroup, selColumn
-        for key,seq of @msa.seqs
-          singlePos = seq.layer.children[1].childNodes[selColumn]
-          @msa.colorscheme.colorSelectedResidueColumn singlePos,
-            seq.tSeq,singlePos.rowPos
+    select: =>
+      @_selectLabel @msa.colorscheme.colorSelectedColumn
+      @_selectResidues @msa.colorscheme.colorSelectedResidueColumn
 
-      @_currentColumn = selColumn
+    deselect: ->
+      @_selectLabel @msa.colorscheme.colorColumn
+      @_selectResidues @msa.colorscheme.colorResidue
 
-    disselect: () ->
-      currentColumn = @_currentColumn
-      if currentColumn >= 0
-        columnGroup = @msa._seqMarkerLayer.childNodes[currentColumn]
-        @msa.colorscheme.colorColumn columnGroup, currentColumn
-        for key,seq of @msa.seqs
-          singlePos = seq.layer.childNodes[1].childNodes[currentColumn]
-          @msa.colorscheme.colorResidue singlePos,seq.tSeq,singlePos.rowPos
+    _selectLabel: (colorCall) ->
+      columnGroup = @msa._seqMarkerLayer.childNodes[@_column]
+      colorCall columnGroup, @_column
 
-      # save the reset
-      _currentColumn = -1
+    _selectResidues: (colorCall) ->
+      for key,seq of @msa.seqs
+        singlePos = seq.layer.children[1].childNodes[@_column]
+        @msa.colorscheme.colorSelectedResidueColumn singlePos,
+          seq.tSeq,singlePos.rowPos

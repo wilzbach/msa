@@ -7,7 +7,7 @@ define ["cs!utils/bmath"], (BMath) ->
     addNode: (label, callback) ->
       @_nodes.push {label: label, callback: callback}
 
-    buildDOM: () ->
+    buildDOM: ->
       menu = document.createElement "div"
       menu.className = "dropdown dropdown-tip"
       menu.id = "adrop-" + BMath.uniqueId()

@@ -1,5 +1,5 @@
 define ["./utils"], (Utils) ->
-  Colorator = ->
+  class Colorator
     @scheme = "taylor"
     @colorResidue = (aminoGroup, tSeq, pos) ->
 
@@ -84,8 +84,6 @@ define ["./utils"], (Utils) ->
       @scheme = name
       @scheme = name.toLowerCase()
       return
-
-    return
 
   Colorator::taylorColors = {
     V: "99ff00"

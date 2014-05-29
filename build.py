@@ -34,6 +34,9 @@ def main():
         print(out)
         if "Aborted" in out:
             sys.exit("unit test failed")
+
+        # whether to show version info
+        showVersions()
     else:
         print("Warning: you have no grunt installed.")
 
@@ -76,6 +79,10 @@ def main():
     distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
     print("\nEverything is ok. You rock!")
+
+def showVersions():
+    subprocess.call(["npm", "list", "codo"], cwd=rootDir)
+
 
 def buildDocumentation(devFile):
 
