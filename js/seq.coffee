@@ -1,4 +1,4 @@
-define [], () ->
+define [], ->
   class Seq
     meta: {}
     constructor: (@seq, @name, @id) ->
