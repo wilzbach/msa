@@ -1,6 +1,6 @@
 define [], ->
   # math utilities
-  class Math
+  class BMath
     @randomInt: (lower, upper) ->
       # Called with one argument
       [lower, upper] = [0, lower]     unless upper?
