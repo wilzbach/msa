@@ -1,7 +1,22 @@
-biojs-core
+biojs-msa-amd
 ==========
 
-Sandbox for the BioJS MSA Viewer with AMD and CoffeeScript
+The BioJS MSA Viewer written in CoffeeScript and AMD modules
+
+```
+          .         .                                              
+         ,8.       ,8.            d888888o.           .8.          
+        ,888.     ,888.         .`8888:' `88.        .888.         
+       .`8888.   .`8888.        8.`8888.   Y8       :88888.        
+      ,8.`8888. ,8.`8888.       `8.`8888.          . `88888.       
+     ,8'8.`8888,8^8.`8888.       `8.`8888.        .8. `88888.      
+    ,8' `8.`8888' `8.`8888.       `8.`8888.      .8`8. `88888.     
+   ,8'   `8.`88'   `8.`8888.       `8.`8888.    .8' `8. `88888.    
+  ,8'     `8.`'     `8.`8888.  8b   `8.`8888.  .8'   `8. `88888.   
+ ,8'       `8        `8.`8888. `8b.  ;8.`8888 .888888888. `88888.  
+,8'         `         `8.`8888. `Y8888P ,88P'.8'       `8. `88888.
+```
+
 
 ### Step 1) Embed components
 
@@ -101,12 +116,14 @@ users has no AMD loader. BioJS automatically uses almond and registers as global
 
 ## Used libraries for testing 
 
-* [qunit](http://qunitjs.com/)
+* [coffeelint](http://www.coffeelint.org/)
 * [grunt](http://gruntjs.com/getting-started)
-* [PhantomJS](http://phantomjs.org/)
+* [grunt-coffeelint](https://github.com/vojtajina/grunt-coffeelint)
 * [grunt-contrib-qunit](https://github.com/gruntjs/grunt-contrib-qunit)
 * [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint)
 * [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch)
+* [PhantomJS](http://phantomjs.org/)
+* [qunit](http://qunitjs.com/)
 
 ### Used libraries for the documentation
 
