@@ -5,17 +5,17 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       @menu = document.getElementById @divName
       @menu.className = "biojs_msa_menubar";
 
-    createMenu: () ->
+    createMenu: ->
       @menu.appendChild @_createFileSchemeMenu()
       @menu.appendChild @_createColorSchemeMenu()
       @menu.appendChild @_createOrderingMenu()
       @menu.appendChild document.createElement("p")
 
-    deleteMenu: () ->
+    deleteMenu: ->
       #BioJS.Utils.removeAllChilds(this.menu);
       return "a"
 
-    _createFileSchemeMenu: () ->
+    _createFileSchemeMenu: ->
       menuFile = new MenuBuilder("Settings")
       menuFile.addNode "Hide Marker", =>
         if @msa.visibleElements.ruler is true
@@ -67,7 +67,7 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       menuFile.buildDOM()
       menuFile.buildDOM()
 
-    _createColorSchemeMenu: () ->
+    _createColorSchemeMenu: ->
       menuColor = new MenuBuilder("Color scheme")
       menuColor.addNode "Zappo",(e) =>
         @msa.colorscheme.setScheme "zappo"
@@ -83,7 +83,7 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
 
       menuColor.buildDOM()
 
-    _createOrderingMenu: () ->
+    _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
         @msa.orderSeqsAfterScheme "numeric"

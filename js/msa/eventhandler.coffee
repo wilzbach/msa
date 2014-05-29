@@ -1,6 +1,7 @@
 define [], ->
   class EventHandler
     constructor: (@log) ->
+      undefined
 
     onColumnSelect: (pos) ->
       @log "column was clicked at pos" + pos
@@ -11,20 +12,20 @@ define [], ->
     onPositionClicked: (id, pos) ->
       @log "seq " + id +" was clicked at " + pos
 
-    onAnnotationClicked: () ->
+    onAnnotationClicked: ->
       @log "not implemented yet"
 
-    onRegionSelected: () ->
+    onRegionSelected: ->
       @log "not implemented yet"
 
-    onZoom: () ->
+    onZoom: ->
       @log "not implemented yet"
 
-    onScroll: () ->
+    onScroll: ->
       @log "not implemented yet"
 
-    onColorSchemeChanged: () ->
+    onColorSchemeChanged: ->
       @log "not implemented yet"
 
-    onDisplayEventChanged: () ->
+    onDisplayEventChanged: ->
       @log "not implemented yet"

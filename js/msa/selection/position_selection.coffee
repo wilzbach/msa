@@ -1,31 +1,22 @@
 define ["cs!./selection"], (Selection) ->
   class PositionSelection extends Selection
 
-    constructor: (@msa) ->
-      @_currentPos = {'x': -1, 'y': -1 }
+    constructor: (@msa, @_id, @_column) ->
+      if not @_id? or not @_column?
+        throw new Error "invalid selection coordinates"
 
-    select:  (id,rowPos) =>
-      @_cleanupSelections()
+    getId: ->
+      return "x{@_id}y{@_column}"
 
-      tSeq = @msa.seqs[id].tSeq
+    select: =>
+      tSeq = @msa.seqs[@_id].tSeq
 
       # color the selected residue
-      singleResidue = @msa.seqs[id].layer.children[1].children[rowPos]
-      @msa.colorscheme.colorSelectedResidueSingle singleResidue,tSeq,rowPos
+      singleResidue = @msa.seqs[@_id].layer.children[1].children[@_column]
+      @msa.colorscheme.colorSelectedResidueSingle singleResidue,tSeq,@_column
 
-      @_currentPos.y = id
-      @_currentPos.x = rowPos
-
-    disselect: () =>
-      currentPos = @_currentPos
-      if currentPos.x >= 0 && currentPos.y >= 0
-        posY = @msa.seqs[currentPos.y]
-        singlePos = posY.layer.childNodes[1].childNodes[currentPos.x]
-        tSeq = posY.tSeq
-        @msa.colorscheme.colorResidue singlePos,tSeq,currentPos.x
-
-      # reset
-      _currentPos = {'x': -1, 'y': -1 }
-
-
-
+    deselect: =>
+      posY = @msa.seqs[@_id]
+      singlePos = posY.layer.childNodes[1].childNodes[@_column]
+      tSeq = posY.tSeq
+      @msa.colorscheme.colorResidue singlePos,tSeq,@_column

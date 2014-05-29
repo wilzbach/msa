@@ -1,43 +1,30 @@
 define ["cs!./selection"], (Selection) ->
-  class HorizontalSection extends Selection
+  class HorizontalSelection extends Selection
 
-    constructor: (@msa) ->
-      @_currentRow = -1
+    constructor: (@msa, @_id) ->
+      undefined
+
+    getId: ->
+      @_id
 
     # Selects a row (does not send any event)
-    select: (id) =>
-      @_cleanupSelections()
+    select: ->
+      @_selectLabel @msa.labelColorScheme.colorSelectedLabel
+      @_selectResidues @msa.colorscheme.colorSelectedResidue
 
-      currentLayer = @msa.seqs[id].layer
-      tSeq = @msa.seqs[id].tSeq
+    deselect: ->
+      @_selectLabel @msa.labelColorScheme.colorLabel
+      @_selectResidues @msa.colorscheme.colorResidue
 
-      # color selected row
+    _selectLabel: (colorCall) ->
+      tSeq = @msa.seqs[@_id].tSeq
+      currentLayerLabel = @msa.seqs[@_id].layer.childNodes[0]
+      colorCall currentLayerLabel,tSeq
+
+    _selectResidues: (colorCall) ->
+      currentLayer = @msa.seqs[@_id].layer
+      tSeq = @msa.seqs[@_id].tSeq
+
       childs = currentLayer.childNodes[1].childNodes
       for child, i in childs
-        @msa.colorscheme.colorSelectedResidue child,tSeq,i
-
-      # label
-      currentLayerLabel = currentLayer.children[0]
-      @msa.labelColorScheme.colorSelectedLabel currentLayerLabel, tSeq
-
-      @_currentRow = id
-
-    disselect: () ->
-      currentRow = @_currentRow
-      if currentRow >= 0
-        tSeq = @msa.seqs[currentRow].tSeq
-        currentLayer = @msa.seqs[currentRow].layer
-
-        # all residues
-        childs = currentLayer.childNodes[1].childNodes
-        for child,i in childs
-          @msa.colorscheme.colorResidue child,tSeq,i
-
-        # label
-        currentLayerLabel = currentLayer.childNodes[0]
-        @msa.labelColorScheme.colorLabel currentLayerLabel,tSeq
-
-      # save reset
-      _currentRow = -1
-
-
+        colorCall child,tSeq,i
