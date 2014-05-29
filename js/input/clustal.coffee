@@ -27,12 +27,12 @@ define ["cs!utils/strings", "cs!input/generic_reader", "cs!seq"], (Str,
           continue
 
         # okay we have an empty line
-        if Str.trim(line).length is 0
+        if line.trim().length is 0
           blockstate = 1
           continue
         else
           # ignore annotations
-          if Str.contains "*", line
+          if Str.contains line , "*"
             continue
           if blockstate is 1
             # new block recognized - reset

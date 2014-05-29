@@ -5,7 +5,7 @@ define(["cs!input/clustal"], function (Clustal) {
       expect(1);
 
       Clustal.read("../dummy/samples/p53.clustalo.clustal", function(seqs) {
-        equal(34, seqs.length, "invalid seq length");
+        equal(seqs.length, 34, "invalid seq length");
         start();
       });
     });
@@ -15,7 +15,7 @@ define(["cs!input/clustal"], function (Clustal) {
       expect(1);
 
       Clustal.read("../dummy/samples/p53.clustalo.clustal", function(seqs) {
-        equal(34, seqs.length, "invalid seq length");
+        equal(seqs.length, 34, "invalid seq length");
         start();
       });
     });

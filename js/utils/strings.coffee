@@ -1,8 +1,5 @@
 define [], ->
   {
-    contains: (a, str) ->
-      return -1 isnt a.indexOf str
-
-    trim: (str) ->
-      str.replace(/^\s+|\s+$/g, '')
+    contains: (text, search) ->
+      return ''.indexOf.call(text, search, 0) isnt -1
   }

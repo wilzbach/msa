@@ -10,7 +10,8 @@ module.exports = function(grunt) {
   },
   watch: {
     scripts: {
-      files: ['tests/**/*.js', 'tests/**/*.html', 'js/**/*.js'],
+      files: ['tests/**/*.js', 'tests/**/*.html',"tests/**/*.coffee", 
+            'js/**/*.js', "js/**/*.coffee"],
       tasks: ['qunit'],
       options: {
         spawn: false,
@@ -42,7 +43,7 @@ module.exports = function(grunt) {
     }
   },
   coffeelint: {
-      app: ['js/**/*.coffee', 'tests/*/*.coffee'],
+      app: ['js/**/*.coffee', 'tests/**/*.coffee'],
       options: {
         configFile: "config/coffeelint.json",
       },
