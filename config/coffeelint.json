@@ -106,6 +106,6 @@
   },
   "non_empty_constructor_needs_parens": {
     "name": "non_empty_constructor_needs_parens",
-    "level": "warn"
+    "level": "ignore"
   }
 }
