@@ -1,5 +1,5 @@
-define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
-  String::contains = (str) -> -1 isnt this.indexOf str
+define ["cs!utils/strings", "cs!input/generic_reader", "cs!seq"], (Str,
+  GenericReader, Seq) ->
 
   class Fasta extends GenericReader
 
@@ -14,7 +14,7 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
           seqs.push currentSeq
 
           # extract IDs and push them to the meta dict
-          if line.contains "|"
+          if Str.contains "|", line
             identifiers = label.split("|")
             k = 1
             while k < identifiers.length
