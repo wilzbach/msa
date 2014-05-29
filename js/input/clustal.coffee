@@ -6,7 +6,7 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
 
   class Clustal extends GenericReader
 
-    @parse:(text) ->
+    @parse: (text) ->
       seqs = []
 
       lines = text.split("\n")

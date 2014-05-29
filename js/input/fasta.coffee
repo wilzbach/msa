@@ -3,7 +3,7 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
 
   class Fasta extends GenericReader
 
-    @parse:(text) ->
+    @parse: (text) ->
       seqs = []
       for line in text.split("\n")
         # check for header

@@ -1,7 +1,7 @@
-define [], () ->
+define [], ->
   class HttpRequest
 
-    @fetch:(url, callback) ->
+    @fetch: (url, callback) ->
       req = @getXMLRequest()
       req.addEventListener 'readystatechange', ->
         if req.readyState is 4
