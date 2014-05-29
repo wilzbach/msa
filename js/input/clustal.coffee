@@ -1,8 +1,5 @@
-define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
-  String::contains = (str) -> -1 isnt this.indexOf str
-  if (typeof String::trim != 'function')
-    String::trim = ->
-      this.replace(/^\s+|\s+$/g, '')
+define ["cs!utils/strings", "cs!input/generic_reader", "cs!seq"], (Str,
+  GenericReader, Seq) ->
 
   class Clustal extends GenericReader
 
@@ -30,12 +27,12 @@ define ["cs!input/generic_reader", "cs!seq"], (GenericReader, Seq) ->
           continue
 
         # okay we have an empty line
-        if line.trim().length is 0
+        if Str.trim(line).length is 0
           blockstate = 1
           continue
         else
           # ignore annotations
-          if line.contains "*"
+          if Str.contains "*", line
             continue
           if blockstate is 1
             # new block recognized - reset

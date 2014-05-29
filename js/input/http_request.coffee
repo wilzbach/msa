@@ -20,7 +20,7 @@ define [], ->
       req.send()
 
     # support for IE
-    @getXMLRequest: () ->
+    @getXMLRequest: ->
       if XMLHttpRequest?
         return new XMLHttpRequest()
       else
