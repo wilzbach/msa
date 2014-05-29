@@ -116,12 +116,14 @@ users has no AMD loader. BioJS automatically uses almond and registers as global
 
 ## Used libraries for testing 
 
-* [qunit](http://qunitjs.com/)
+* [coffeelint](http://www.coffeelint.org/)
 * [grunt](http://gruntjs.com/getting-started)
-* [PhantomJS](http://phantomjs.org/)
+* [grunt-coffeelint](https://github.com/vojtajina/grunt-coffeelint)
 * [grunt-contrib-qunit](https://github.com/gruntjs/grunt-contrib-qunit)
 * [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint)
 * [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch)
+* [PhantomJS](http://phantomjs.org/)
+* [qunit](http://qunitjs.com/)
 
 ### Used libraries for the documentation
 
