@@ -1,7 +1,7 @@
 biojs-msa-amd
 ==========
 
-The BioJS MSA Viewer with AMD and CoffeeScript
+The BioJS MSA Viewer written in CoffeeScript and AMD modules
 
 ```
           .         .                                              
