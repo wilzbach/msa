@@ -1,4 +1,4 @@
-define [], () ->
+define [], ->
   class EventHandler
     constructor: (@log) ->
 
