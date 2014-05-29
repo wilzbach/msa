@@ -47,6 +47,14 @@ module.exports = function(grunt) {
         configFile: "config/coffeelint.json",
       },
     },
+  codo: {
+      options: {
+        title: "BioJS MSA",
+        name: "BioJS documentation",
+        output: 'build/doc',
+        inputs: ["js"]
+      }
+    },
 });
 
 	// load tasks
@@ -54,12 +62,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-coffeelint');
+  grunt.loadNpmTasks('grunt-codo');
 
 
 
   // Define tasks
   grunt.registerTask('default', ['qunit']);
-  grunt.registerTask('build', ['qunit', 'coffeelint']);
+  grunt.registerTask('build', ['qunit', 'coffeelint', 'codo']);
 
   grunt.event.on('qunit.error.onError', function (message, stackTrace) {
     grunt.log.ok("Error: " + message);

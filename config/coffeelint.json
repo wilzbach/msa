@@ -9,6 +9,19 @@
     "level": "error"
   },
 
+  "space_operators" : {
+    "level" : "error"
+  },
+
+  "colon_assignment_spacing": {
+    "name": "colon_assignment_spacing",
+    "level": "warn",
+    "spacing": {
+      "left": 0,
+      "right": 1
+    }
+  },
+
   "no_tabs": {
     "name": "no_tabs",
     "level": "error"
@@ -21,16 +34,16 @@
     "allowed_in_empty_lines": true
   },
 
+  "no_trailing_semicolons": {
+    "name": "no_trailing_semicolons",
+    "level": "error"
+  },
+
   "max_line_length": {
     "name": "max_line_length",
     "value": 80,
     "level": "warn",
     "limitComments": true
-  },
-
-  "no_trailing_semicolons": {
-    "name": "no_trailing_semicolons",
-    "level": "error"
   },
 
   "indentation" : {
@@ -43,14 +56,7 @@
     "level": "error"
   },
 
-  "colon_assignment_spacing": {
-    "name": "colon_assignment_spacing",
-    "level": "warn",
-    "spacing": {
-      "left": 0,
-      "right": 1
-    }
-  },
+
   "cyclomatic_complexity" : {
     "level" : "warn",
     "value" : 11
@@ -84,18 +90,11 @@
     "level": "warn"
   },
 
-  "space_operators" : {
-    "level" : "error"
-  },
-
   "duplicate_key": {
     "name": "duplicate_key",
     "level": "error"
   },
-  "empty_constructor_needs_parens": {
-    "name": "empty_constructor_needs_parens",
-    "level": "ignore"
-  },
+
   "no_unnecessary_fat_arrows": {
     "name": "no_unnecessary_fat_arrows",
     "level": "warn"
@@ -103,6 +102,11 @@
   "missing_fat_arrows": {
     "name": "missing_fat_arrows",
     "level": "warn"
+  },
+
+  "empty_constructor_needs_parens": {
+    "name": "empty_constructor_needs_parens",
+    "level": "ignore"
   },
   "non_empty_constructor_needs_parens": {
     "name": "non_empty_constructor_needs_parens",

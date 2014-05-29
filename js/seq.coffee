@@ -1,7 +1,7 @@
 define [], ->
   class Seq
-    meta: {}
     constructor: (@seq, @name, @id) ->
+      @meta: {}
 
     # Returns the reverse complement sequence.
     #reverse_complement: ->
