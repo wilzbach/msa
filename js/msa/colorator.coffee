@@ -4,18 +4,20 @@ define ["msa/utils"], (Utils) ->
     scheme: "taylor"
 
     constructor: () ->
+      @
 
     colorResidue: (aminoGroup, tSeq, pos) =>
 
+      console.log "abc"
       # TODO: use CSS classes for that
       aminoGroup.className = "biojs_msa_single_residue"
       residue = tSeq.seq.charAt(pos)
       colorResidue = "ffffff"
-      if @scheme is "taylor"
+      if @scheme is "taylor" and residue of Colorator.taylorColors
         colorResidue = Colorator.taylorColors[residue]
-      else if @scheme is "zappo"
+      else if @scheme is "zappo" and residue of Colorator.zappoColors
         colorResidue = Colorator.zappoColors[residue]
-      else if @scheme is "hydrophobicity"
+      else if @scheme is "hydrophobicity" and residue of Colorator.hydrophobicityColors
         colorResidue = Colorator.hydrophobicityColors[residue]
       else
         colorResidue = Colorator.taylorColors[residue]
