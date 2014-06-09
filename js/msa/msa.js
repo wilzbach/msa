@@ -20,7 +20,6 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
     this.colorscheme = new Colorator(); 
     this.labelColorScheme = new LabelColorator();
     this.ordering = new Ordering();
-    this.selmanager = new selection.SelectionManager(_self);
     //this.highlightor = new Highlightor(this);
 
     this.visibleElements = {
@@ -132,9 +131,6 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
           var id = this.parentNode.seqid;
           var selPos = new selection.PositionSelect(_self,id,this.rowPos);
           _self.selmanager.handleSel(selPos, evt);
-
-          // send event
-          _self.events.onPositionClicked(id,this.rowPos);
         }, false);
 
 
@@ -142,7 +138,6 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
           residueSpan.addEventListener('mouseover',function(evt){
             var id = this.parentNode.seqid;
             _self.selmanager.changeSel(new selection.PositionSelect(_self,id,this.rowPos));
-            _self.events.onPositionClicked(id,this.rowPos);
           }, false);
         }
 
@@ -191,13 +186,11 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
 
         residueSpan.addEventListener('click',function(evt){
           _self.selmanager.handleSel(new selection.VerticalSelection(_self,this.rowPos, this.stepPos), evt);
-          _self.events.onColumnSelect(this.rowPos);
         }, false);
 
         if( this.registerMoveOvers === true){
           residueSpan.addEventListener('mouseover',function(evt){
             _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos, this.stepPos), evt);
-            _self.events.onColumnSelect(this.rowPos);
           }, false);
         }
 
@@ -226,14 +219,12 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       labelGroup.addEventListener('click',function(evt){
         var id = this.seqid;
         _self.selmanager.handleSel(new selection.HorizontalSelection(_self,id), evt);
-        _self.events.onRowSelect(id);
       }, false);
 
       if( this.registerMoveOvers === true){
         labelGroup.addEventListener('mouseover',function(evt){
           var id = this.seqid;
           _self.selmanager.changeSel(new selection.HorizontalSelection(_self,id));
-          _self.events.onRowSelect(id);
         }, false);
       }
 
@@ -371,15 +362,13 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
      * some quick & dirty helper
      */
     this.log = function(msg){
-      // append as a new line
-      //   var msgEl = document.createElement("p");
-      //    msgEl.textContent = msg;
-      if(typeof this.console !== "undefined" ){
-        this.console.innerHTML = msg;
+      if(typeof _self.console !== "undefined" ){
+        _self.console.innerHTML = msg;
       }
     };
 
     this.events = new Eventhandler(this.log);
+    this.selmanager = new selection.SelectionManager(_self, this.events);
 
   };
 });

@@ -11,14 +11,14 @@ define [], ->
 
     # TODO: apply observer pattern and deprecate all callbacks
 
-    onColumnSelect: (pos) ->
-      @log "column was clicked at #{pos}"
-
-    onRowSelect: (id) ->
-      @log "row was clicked at #{id}"
-
-    onPositionClicked: (id, pos) =>
-      @log "seq #{id} was clicked at #{pos}"
+    onSelectionChanged: (sel) ->
+      name = sel.constructor.name if sel?
+      if sel?
+        @log "column was clicked at #{sel.column}" if name is "VerticalSelection"
+        @log "row was clicked at #{sel.id}" if name is "HorizontalSelection"
+        @log "seq #{sel.id} was clicked at #{sel.column}" if name is "PositionSelection"
+      else
+        @log "empty selection"
 
     onAnnotationClicked: ->
       @log "not implemented yet"
