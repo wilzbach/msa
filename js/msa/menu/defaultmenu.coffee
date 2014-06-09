@@ -71,15 +71,15 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       menuColor = new MenuBuilder("Color scheme")
       menuColor.addNode "Zappo",(e) =>
         @msa.colorscheme.setScheme "zappo"
-        @msa.redraw()
+        @msa.recolorRows()
 
       menuColor.addNode "Taylor", =>
         @msa.colorscheme.setScheme "taylor"
-        @msa.redraw()
+        @msa.recolorRows()
 
       menuColor.addNode "Hydrophobicity", =>
         @msa.colorscheme.setScheme "hydrophobicity"
-        @msa.redraw()
+        @msa.recolorRows()
 
       menuColor.buildDOM()
 
