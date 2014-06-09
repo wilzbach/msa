@@ -1,7 +1,7 @@
 define ["cs!msa/selection/selectionlist"],(SelectionList) ->
   class SelectionManager
 
-    constructor: (@msa) ->
+    constructor: (@msa, @eventhandler) ->
 
     changeSel: (sel) ->
       # remove old
@@ -10,6 +10,9 @@ define ["cs!msa/selection/selectionlist"],(SelectionList) ->
       # apply now
       @currentSelection = sel
       sel.select() if sel?
+
+      # broadcast to event handler
+      @eventhandler.onSelectionChanged(sel)
 
     # detects shiftKey
     handleSel: (sel, evt) ->

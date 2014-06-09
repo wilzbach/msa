@@ -1,11 +1,11 @@
 define ["cs!msa/selection/selection"], (Selection) ->
   class HorizontalSelection extends Selection
 
-    constructor: (@msa, @_id) ->
+    constructor: (@msa, @id) ->
       undefined
 
     getId: ->
-      "h" + @_id
+      "h" + @id
 
     # Selects a row (does not send any event)
     select: =>
@@ -17,13 +17,13 @@ define ["cs!msa/selection/selection"], (Selection) ->
       @_selectResidues @msa.colorscheme.colorResidue
 
     _selectLabel: (colorCall) ->
-      tSeq = @msa.seqs[@_id].tSeq
-      currentLayerLabel = @msa.seqs[@_id].layer.childNodes[0]
+      tSeq = @msa.seqs[@id].tSeq
+      currentLayerLabel = @msa.seqs[@id].layer.childNodes[0]
       colorCall currentLayerLabel,tSeq
 
     _selectResidues: (colorCall) ->
-      currentLayer = @msa.seqs[@_id].layer
-      tSeq = @msa.seqs[@_id].tSeq
+      currentLayer = @msa.seqs[@id].layer
+      tSeq = @msa.seqs[@id].tSeq
 
       childs = currentLayer.childNodes[1].childNodes
       for child, i in childs
