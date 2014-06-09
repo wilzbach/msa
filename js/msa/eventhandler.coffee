@@ -17,6 +17,7 @@ define [], ->
         @log "column was clicked at #{sel.column}" if name is "VerticalSelection"
         @log "row was clicked at #{sel.id}" if name is "HorizontalSelection"
         @log "seq #{sel.id} was clicked at #{sel.column}" if name is "PositionSelection"
+        @log "multiple selections available" if name is "SelectionList"
       else
         @log "empty selection"
 
