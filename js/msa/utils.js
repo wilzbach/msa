@@ -36,7 +36,7 @@ define([], function(){
    */
   Utils.rgb = function (r,g,b) {
     // we use the overloaded, shorthand form (color)
-    if( g === "undefined"){
+    if( typeof g === "undefined"){
       return Utils.rgb(r.r,r.g,r.b);
     }
     return ["rgb(", [(r||0),(g||0),(b||0)].join(','), ')'].join();
@@ -44,7 +44,7 @@ define([], function(){
 
   Utils.rgba = function (r,g,b,a) {
     // we use the overloaded, shorthand form (color, a)
-    if( b === "undefined"){
+    if( typeof b === "undefined"){
       return Utils.rgba(r.r,r.g,r.b,g);
     }
     return ["rgba(", [(r||0),(g||0),(b||0), (a||1)].join(','), ')'].join("");
