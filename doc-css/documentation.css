@@ -7,6 +7,10 @@ pre{
     border: 0px;
 }
 
+.hljs {
+    white-space: pre-wrap;
+}
+
 .source-code, .live-preview{
     float: left;
     width: 50%;

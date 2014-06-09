@@ -187,15 +187,16 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
         residueSpan.style.width = this.columnWidth * stepSize + "px";
         residueSpan.style.display = "inline-block";
         residueSpan.rowPos = n;
+        residueSpan.stepPos = n / stepSize;
 
         residueSpan.addEventListener('click',function(evt){
-          _self.selmanager.handleSel(new selection.VerticalSelection(_self,this.rowPos), evt);
+          _self.selmanager.handleSel(new selection.VerticalSelection(_self,this.rowPos, this.stepPos), evt);
           _self.events.onColumnSelect(this.rowPos);
         }, false);
 
         if( this.registerMoveOvers === true){
           residueSpan.addEventListener('mouseover',function(evt){
-            _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos));
+            _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos, this.stepPos), evt);
             _self.events.onColumnSelect(this.rowPos);
           }, false);
         }

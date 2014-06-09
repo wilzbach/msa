@@ -1,8 +1,9 @@
 define ["cs!msa/selection/selection"], (Selection) ->
   class VerticalSelection extends Selection
 
-    constructor: (@msa, @_column) ->
-      #@_region = new Region
+    constructor: (@msa, @_column, @_labelColumn) ->
+      if not @_labelColumn?
+        @_labelColumn = @_column
 
     getId: ->
       "v" + @_column
@@ -16,8 +17,8 @@ define ["cs!msa/selection/selection"], (Selection) ->
       @_selectResidues @msa.colorscheme.colorResidue
 
     _selectLabel: (colorCall) ->
-      columnGroup = @msa._seqMarkerLayer.childNodes[@_column]
-      colorCall columnGroup, @_column
+      columnGroup = @msa._seqMarkerLayer.childNodes[@_labelColumn]
+      colorCall columnGroup, @_labelColumn
 
     _selectResidues: (colorCall) ->
       for key,seq of @msa.seqs
