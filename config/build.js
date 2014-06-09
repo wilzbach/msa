@@ -1,7 +1,7 @@
 ({
   baseUrl: '../js',
 
-out: 'build/biojs.js',
+out: '../build/biojs.js',
 //optimize: 'uglify2',
 optimize: "none",
 
@@ -16,14 +16,14 @@ stubModules: ['cs', 'text'],
 //wrap: true,
 wrap: {
   startFile: 'start.frag',
-  endFile: 'end.frag',
+endFile: 'end.frag',
 },
 
-paths: {
-  backbone: 'libs/backbone-amd',
-jquery: 'libs/jquery',
-cs: 'libs/cs',
-'coffee-script': 'libs/coffee-script',
-text: 'libs/text'
-}
+  paths: {
+    backbone: 'libs/backbone-amd',
+    jquery: 'libs/jquery',
+    cs: 'libs/cs',
+    'coffee-script': 'libs/coffee-script',
+    text: 'libs/text'
+  }
 })

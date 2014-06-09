@@ -105,6 +105,10 @@ users has an AMD loader (RequireJS). BioJS is loaded as a AMD dependency.
 2) [`prod_non_amd.html`](#)
 users has no AMD loader. BioJS automatically uses almond and registers as global variable
 
+### Things to know
+
+* almond doesn't play well with relative paths and coffeescript -> use absolute paths
+  for cs
 
 ### Used libraries
 
