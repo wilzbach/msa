@@ -23,8 +23,13 @@ libName = "biojs"
 
 content = ""
 rootDir = path.dirname(path.realpath(__file__))
+buildDir = path.join(rootDir,buildDir)
 
 def main():
+
+    print("Cleaning build dir: "+ str(buildDir))
+    shutil.rmtree(buildDir, True)
+
     if shutil.which("grunt"):
         print("Executing unit tests and linting")
         testProcess = subprocess.Popen(["grunt", "--gruntfile", \
@@ -40,8 +45,6 @@ def main():
     else:
         print("Warning: you have no grunt installed.")
 
-    print("Cleaning build dir")
-    shutil.rmtree(buildDir, True)
 
     if not path.exists(buildDir):
         os.makedirs(buildDir)
@@ -81,12 +84,13 @@ def main():
     print("\nEverything is ok. You rock!")
 
 def showVersions():
+    print("Installed lib version")
     subprocess.call(["npm", "list", "codo"], cwd=rootDir)
 
 
 def buildDocumentation(devFile):
 
-    devFileName = path.splitext(devFile)[0]
+    devFileName = path.splitext(path.basename(devFile))[0]
 
     # html files
     fnBuildAMD= path.join(buildDir,devFileName + "_amd.html")
@@ -99,7 +103,6 @@ def buildDocumentation(devFile):
     # snippet files
     fSnipFileAMD= path.join(buildDir,snipFileAMD)
     fSnipFileNonAMD= path.join(buildDir,snipFileNonAMD)
-
 
     with open(devFile, "r") as file:
         content = file.read()

@@ -72,8 +72,8 @@
   },
 
   "no_implicit_braces" : {
-    "level": "error",
-    "strict": true
+    "level": "warn",
+    "strict": false
   },
 
   "no_backticks": {
