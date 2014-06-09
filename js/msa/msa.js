@@ -123,7 +123,9 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
         residueSpan.addEventListener('click',function(evt){
 
           var id = this.parentNode.seqid;
-          _self.selmanager.changeSel(new selection.PositionSelect(_self,id,this.rowPos));
+          var selPos = new selection.PositionSelect(_self,id,this.rowPos);
+          _self.selmanager.handleSel(selPos, evt);
+
           // send event
           _self.events.onPositionClicked(id,this.rowPos);
         }, false);
@@ -166,7 +168,7 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
         residueSpan.rowPos = n;
 
         residueSpan.addEventListener('click',function(evt){
-          _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos));
+          _self.selmanager.handleSel(new selection.VerticalSelection(_self,this.rowPos), evt);
           _self.events.onColumnSelect(this.rowPos);
         }, false);
 
@@ -199,7 +201,7 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
 
       labelGroup.addEventListener('click',function(evt){
         var id = this.seqid;
-        _self.selmanager.changeSel(new selection.HorizontalSelection(_self,id));
+        _self.selmanager.handleSel(new selection.HorizontalSelection(_self,id), evt);
         _self.events.onRowSelect(id);
       }, false);
 
