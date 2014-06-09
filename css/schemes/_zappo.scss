@@ -1,0 +1,317 @@
+$normalOpacity: 0.3;
+$selectedOpacity: 1.0;
+$schemeName: zappo;
+
+$colorA: #ff6666;
+$colorB: #fff;
+$colorC: #ffff00;
+$colorD: #33cc00;
+$colorE: #33cc00;
+$colorF: #ff9900;
+$colorG: #cc33cc;
+$colorH: #cc0000;
+$colorI: #ff6666;
+$colorJ: #fff;
+$colorK: #cc0000;
+$colorL: #ff6666;
+$colorM: #ff6666;
+$colorN: #3366ff;
+$colorO: #fff;
+$colorP: #cc33cc;
+$colorQ: #3366ff;
+$colorR: #cc0000;
+$colorS: #3366ff;
+$colorT: #3366ff;
+$colorU: #fff;
+$colorV: #ff6666;
+$colorW: #ff9900;
+$colorX: #fff;
+$colorY: #ff9900;
+$colorZ: #fff;
+$colorGap: #fff;
+
+
+$colorA-selected: black;
+$colorB-selected: $colorB;
+$colorC-selected: $colorC;
+$colorD-selected: $colorD;
+$colorE-selected: $colorE;
+$colorF-selected: $colorF;
+$colorG-selected: $colorG;
+$colorH-selected: $colorH;
+$colorI-selected: $colorI;
+$colorJ-selected: $colorJ;
+$colorK-selected: $colorK;
+$colorL-selected: $colorL;
+$colorM-selected: black;
+$colorN-selected: $colorN;
+$colorO-selected: $colorO;
+$colorP-selected: $colorP;
+$colorQ-selected: $colorQ;
+$colorR-selected: $colorR;
+$colorS-selected: $colorS;
+$colorT-selected: $colorT;
+$colorU-selected: $colorU;
+$colorV-selected: $colorV;
+$colorW-selected: $colorW;
+$colorX-selected: $colorX;
+$colorY-selected: $colorY;
+$colorZ-selected: $colorZ;
+$colorGap-selected: black;
+
+/**  pure file
+$colorA-selected: $colorA;
+$colorB-selected: $colorB;
+$colorC-selected: $colorC;
+$colorD-selected: $colorD;
+$colorE-selected: $colorE;
+$colorF-selected: $colorF;
+$colorG-selected: $colorG;
+$colorH-selected: $colorH;
+$colorI-selected: $colorI;
+$colorJ-selected: $colorJ;
+$colorK-selected: $colorK;
+$colorL-selected: $colorL;
+$colorM-selected: $colorM;
+$colorN-selected: $colorN;
+$colorO-selected: $colorO;
+$colorP-selected: $colorP;
+$colorQ-selected: $colorQ;
+$colorR-selected: $colorR;
+$colorS-selected: $colorS;
+$colorT-selected: $colorT;
+$colorU-selected: $colorU;
+$colorV-selected: $colorV;
+$colorW-selected: $colorW;
+$colorX-selected: $colorX;
+$colorY-selected: $colorY;
+$colorZ-selected: $colorZ;
+$colorGap-selected: $colorGap;
+**/
+
+
+.biojs-msa-schemes-#{$schemeName}{
+
+	.biojs-msa-aa-A-selected {
+		color: white;
+	}
+
+	.biojs-msa-aa-M-selected {
+		color: white;
+	}
+
+	.biojs-msa-aa-Gap-selected {
+		color: white;
+	}
+
+	/* normal residues */
+
+	.biojs-msa-aa-A {
+		background-color: rgba($colorA,$normalOpacity);
+	}
+
+	.biojs-msa-aa-B {
+		background-color: rgba($colorB,$normalOpacity);
+	}
+
+	.biojs-msa-aa-C {
+		background-color: rgba($colorC,$normalOpacity);
+	}
+
+	.biojs-msa-aa-D {
+		background-color: rgba($colorD,$normalOpacity);
+	}
+
+	.biojs-msa-aa-E {
+		background-color: rgba($colorE,$normalOpacity);
+	}
+
+	.biojs-msa-aa-F {
+		background-color: rgba($colorF,$normalOpacity);
+	}
+
+	.biojs-msa-aa-G {
+		background-color: rgba($colorG,$normalOpacity);
+	}
+
+	.biojs-msa-aa-H {
+		background-color: rgba($colorH,$normalOpacity);
+	}
+
+	.biojs-msa-aa-I {
+		background-color: rgba($colorI,$normalOpacity);
+	}
+
+	.biojs-msa-aa-J {
+		background-color: rgba($colorJ,$normalOpacity);
+	}
+
+	.biojs-msa-aa-K {
+		background-color: rgba($colorK,$normalOpacity);
+	}
+
+	.biojs-msa-aa-L {
+		background-color: rgba($colorL,$normalOpacity);
+	}
+
+	.biojs-msa-aa-M {
+		background-color: rgba($colorM,$normalOpacity);
+	}
+
+	.biojs-msa-aa-N {
+		background-color: rgba($colorN,$normalOpacity);
+	}
+
+	.biojs-msa-aa-O {
+		background-color: rgba($colorO,$normalOpacity);
+	}
+
+	.biojs-msa-aa-P {
+		background-color: rgba($colorP,$normalOpacity);
+	}
+
+	.biojs-msa-aa-Q {
+		background-color: rgba($colorQ,$normalOpacity);
+	}
+
+	.biojs-msa-aa-R {
+		background-color: rgba($colorR,$normalOpacity);
+	}
+
+	.biojs-msa-aa-S {
+		background-color: rgba($colorS,$normalOpacity);
+	}
+
+	.biojs-msa-aa-T {
+		background-color: rgba($colorT,$normalOpacity);
+	}
+
+	.biojs-msa-aa-U {
+		background-color: rgba($colorU,$normalOpacity);
+	}
+
+	.biojs-msa-aa-V {
+		background-color: rgba($colorV,$normalOpacity);
+	}
+
+	.biojs-msa-aa-W {
+		background-color: rgba($colorV,$normalOpacity);
+	}
+
+	.biojs-msa-aa-Y {
+		background-color: rgba($colorY,$normalOpacity);
+	}
+
+	.biojs-msa-aa-Z {
+		background-color: rgba($colorZ,$normalOpacity);
+	}
+
+	.biojs-msa-aa-Gap {
+		background-color: rgba($colorGap,$normalOpacity);
+	}
+	
+	
+	.biojs-msa-aa-A-selected {
+		background-color: rgba($colorA-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-B-selected {
+		background-color: rgba($colorB-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-C-selected {
+		background-color: rgba($colorC-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-D-selected {
+		background-color: rgba($colorD-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-E-selected {
+		background-color: rgba($colorE-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-F-selected {
+		background-color: rgba($colorF-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-G-selected {
+		background-color: rgba($colorG-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-H-selected {
+		background-color: rgba($colorH-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-I-selected {
+		background-color: rgba($colorI-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-J-selected {
+		background-color: rgba($colorJ-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-K-selected {
+		background-color: rgba($colorK-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-L-selected {
+		background-color: rgba($colorL-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-M-selected {
+		background-color: rgba($colorM-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-N-selected {
+		background-color: rgba($colorN-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-O-selected {
+		background-color: rgba($colorO-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-P-selected {
+		background-color: rgba($colorP-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-Q-selected {
+		background-color: rgba($colorQ-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-R-selected {
+		background-color: rgba($colorR-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-S-selected {
+		background-color: rgba($colorS-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-T-selected {
+		background-color: rgba($colorT-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-U-selected {
+		background-color: rgba($colorU-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-V-selected {
+		background-color: rgba($colorV-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-W-selected {
+		background-color: rgba($colorV-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-Y-selected {
+		background-color: rgba($colorY-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-Z-selected {
+		background-color: rgba($colorZ-selected,$selectedOpacity);
+	}
+
+	.biojs-msa-aa-Gap-selected{
+		background-color: rgba($colorGap-selected,$selectedOpacity);
+	}
+}
