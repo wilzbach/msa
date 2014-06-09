@@ -271,12 +271,13 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       // remove offset
       if(this.visibleElements.labels === false){
         this._seqMarkerLayer.style.paddingLeft= "0px";
+      }else{
+        this._seqMarkerLayer.style.paddingLeft= this.seqOffset + "px";
       }
 
       if( this.visibleElements.ruler === true){
         val = spacePerCell;
         this._seqMarkerLayer.appendChild(this._drawSeqMarker(nMax));
-        this._seqMarkerLayer.style.paddingLeft= this.seqOffset + "px";
       }
 
       var frag = document.createDocumentFragment();
