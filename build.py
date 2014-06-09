@@ -15,6 +15,8 @@ import sys
 from copy import deepcopy
 import subprocess
 import shutil
+import argparse
+
 
 devFiles = ["msa.html"]
 buildDir = "build"
@@ -25,12 +27,17 @@ content = ""
 rootDir = path.dirname(path.realpath(__file__))
 buildDir = path.join(rootDir,buildDir)
 
+parser = argparse.ArgumentParser(description='Build script for BioJS MSA')
+parser.add_argument("-s","--skipunittests", action="store_false", dest="executeUnitTests",
+        default=True, help="Skips the unit tests")
+args = parser.parse_args()
+
 def main():
 
     print("Cleaning build dir: "+ str(buildDir))
     shutil.rmtree(buildDir, True)
 
-    if shutil.which("grunt"):
+    if shutil.which("grunt") and args.executeUnitTests:
         print("Executing unit tests and linting")
         testProcess = subprocess.Popen(["grunt", "--gruntfile", \
                 path.join(rootDir, "Gruntfile.js"), "build"], stdout=subprocess.PIPE)
@@ -225,6 +232,9 @@ def replaceCodeElements(body,oFile,removeRequired=False):
             else:
                 className = hScript.replace("/", ".")
                 className = className.replace("cs!", "")
+
+                if className[-5:] == ".main" :
+                    className = className[:-5]
 
                 # search for all oc
                 # variable needs whitespace on the left and either '(',
