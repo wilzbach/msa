@@ -9,7 +9,9 @@ define [], ->
     addSelection: (sel) ->
       eId = sel.getId()
       if @_sels[eId]?
-        console.log "duplicate selection"
+        # duplicate selection, remove from selection
+        sel.deselect()
+        delete @_sels[eId]
       else
         @_sels[eId] = sel
         sel.select()
