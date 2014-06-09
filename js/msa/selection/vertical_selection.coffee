@@ -1,13 +1,13 @@
-define ["cs!./selection"], (Selection) ->
+define ["cs!msa/selection/selection"], (Selection) ->
   class VerticalSelection extends Selection
 
     constructor: (@msa, @_column) ->
-      @_region = new Region
+      #@_region = new Region
 
     getId: ->
       @_column
 
-    select: =>
+    select: ->
       @_selectLabel @msa.colorscheme.colorSelectedColumn
       @_selectResidues @msa.colorscheme.colorSelectedResidueColumn
 
@@ -22,5 +22,5 @@ define ["cs!./selection"], (Selection) ->
     _selectResidues: (colorCall) ->
       for key,seq of @msa.seqs
         singlePos = seq.layer.children[1].childNodes[@_column]
-        @msa.colorscheme.colorSelectedResidueColumn singlePos,
+        colorCall singlePos,
           seq.tSeq,singlePos.rowPos

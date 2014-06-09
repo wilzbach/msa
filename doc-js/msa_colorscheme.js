@@ -1,4 +1,4 @@
-require(["msa/msa", "msa/colorator"], function (MSA, Colorator) {
+require(["msa/msa", "cs!msa/colorator"], function (MSA, Colorator) {
 
   var msa = new MSA('msa-colorscheme');
   // currently only zappo, taylor and hydrophobicity
