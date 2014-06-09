@@ -1,4 +1,4 @@
-define ["cs!./selection"], (Selection) ->
+define ["cs!msa/selection/selection"], (Selection) ->
   class PositionSelection extends Selection
 
     constructor: (@msa, @_id, @_column) ->

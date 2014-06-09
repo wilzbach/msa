@@ -1,16 +1,24 @@
 define [], ->
   class EventHandler
     constructor: (@log) ->
-      undefined
+      @subscribers = []
+
+    notifyNewItemReleased: (item) ->
+      subscriber.callback(item) for subscriber in @subscribers when subscriber.item is item
+
+    subscribe: (to, onNewItemReleased) ->
+      @subscribers.push {'item': to, 'callback': onNewItemReleased}
+
+    # TODO: apply observer pattern and deprecate all callbacks
 
     onColumnSelect: (pos) ->
-      @log "column was clicked at pos" + pos
+      @log "column was clicked at #{pos}"
 
     onRowSelect: (id) ->
-      @log "row was clicked at id" + id
+      @log "row was clicked at #{id}"
 
-    onPositionClicked: (id, pos) ->
-      @log "seq " + id +" was clicked at " + pos
+    onPositionClicked: (id, pos) =>
+      @log "seq #{id} was clicked at #{pos}"
 
     onAnnotationClicked: ->
       @log "not implemented yet"
