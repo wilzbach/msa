@@ -5,7 +5,7 @@ define ["cs!msa/selection/selection"], (Selection) ->
       #@_region = new Region
 
     getId: ->
-      @_column
+      "v" + @_column
 
     select: ->
       @_selectLabel @msa.colorscheme.colorSelectedColumn

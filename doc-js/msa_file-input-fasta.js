@@ -6,11 +6,13 @@ require(["jquery", "cs!input/fasta", "msa/msa"], function ($, Fasta, MSA) {
 
     // cut the seqs for demo purpose
     seqs.forEach(function(seq){
-      seq.seq = seq.seq.substring(0,50);
+      seq.name = seq.name.substring(0,50);
     });
 
     var msa = new MSA('msa-file-input-fasta');
-    msa.seqOffset = 1000;
+    msa.columnWidth = 4;
+    msa.seqOffset = 300;
+    msa.labelFontsize= 9;
     msa.addSequences(seqs);
   });
 });

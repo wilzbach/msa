@@ -17,7 +17,6 @@ import subprocess
 import shutil
 import argparse
 
-
 devFiles = ["msa.html"]
 buildDir = "build"
 externalLibs = ["jquery"]
@@ -82,11 +81,26 @@ def main():
     for devFile in devFiles:
         buildDocumentation(path.join(rootDir, devFile))
 
+    # compile all scss
+    cssFolder = path.join(rootDir, "css")
+    cssBuildFolder = path.join(buildDir, "css")
+    os.mkdir(cssBuildFolder)
+
+    if not shutil.which("scss"):
+        print("no scss compiler installer");
+    else:
+        for file in os.listdir(cssFolder):
+            if file.endswith(".scss") and not file[0] == "_":
+                inFile = path.join(cssFolder, file)
+                outFile = path.join(cssBuildFolder, file[:-5]+".css")
+                print("SCSS: %s -> %s" %(inFile, outFile))
+                subprocess.call(["scss",inFile,outFile])
+
     # copy operations
     print("Copying static files and libs")
-    distutils.dir_util.copy_tree(path.join(rootDir, 'css'), path.join(buildDir, 'css'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'dummy'), path.join(buildDir, 'dummy'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'libs'), path.join(buildDir, 'libs'))
+    distutils.dir_util.copy_tree(path.join(rootDir, 'doc-css'), path.join(buildDir, 'css'))
     distutils.dir_util.copy_tree(path.join(rootDir, 'doc-js'), path.join(buildDir, 'doc-js'))
     print("\nEverything is ok. You rock!")
 

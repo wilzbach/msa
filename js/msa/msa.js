@@ -15,6 +15,7 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
     this.columnSpacing = 5;
     // how much space for the labels?
     this.seqOffset = 140;
+    this.labelFontsize = 13;
 
     this.colorscheme = new Colorator(); 
     this.labelColorScheme = new LabelColorator();
@@ -83,6 +84,7 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       }
 
       layer.className = "biojs_msa_layer";
+      layer.style.height = this.columnHeight + "px";
 
       // append to DOM
       this.stage.appendChild(layer);
@@ -117,7 +119,12 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       for(var n = 0; n < tSeq.seq.length; n++) {
         var residueSpan = document.createElement("span");
         residueSpan.style.width = this.columnWidth + "px";
-        residueSpan.textContent = tSeq.seq[n];
+        residueSpan.style.height = this.columnHeight + "px";
+        if( this.columnWidth >= 5 ){
+          residueSpan.textContent = tSeq.seq[n];
+        }else{
+          residueSpan.textContent = "\u00a0";
+        }
         residueSpan.rowPos = n;
 
         residueSpan.addEventListener('click',function(evt){
@@ -147,7 +154,7 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
 
       var residueSpan = document.createElement("span");
       residueSpan.seqid = tSeq.id;
-      residueSpan.className = "biojs_msa_sequence_block";
+      this.colorscheme.colorRow(residueSpan, tSeq.id)
       residueSpan.appendChild(residueGroup);
       return residueSpan;
     };
@@ -159,11 +166,25 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       // http://jsperf.com/innerhtml-vs-createelement-test/6
       var residueGroup = document.createDocumentFragment();
 
-      for(var n = 0; n < nMax; n++) {
+      var stepSize = 1;
+
+      if( this.columnWidth <= 4){
+        stepSize =5;
+      }
+
+      if( this.columnWidth <= 2){
+        stepSize = 10;
+      }
+
+      if( this.columnWidth == 1 ){
+        stepSize = 20;
+      }
+
+      for(var n = 0; n < nMax; n += stepSize) {
         var residueSpan = document.createElement("span");
 
         residueSpan.textContent = n;
-        residueSpan.style.width = this.columnWidth + "px";
+        residueSpan.style.width = this.columnWidth * stepSize + "px";
         residueSpan.style.display = "inline-block";
         residueSpan.rowPos = n;
 
@@ -198,6 +219,8 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       labelGroup.seqid= tSeq.id;
       labelGroup.className = "biojs_msa_labels";
       labelGroup.style.width = this.seqOffset + "px";
+      labelGroup.style.height = this.columnHeight + "px";
+      labelGroup.style.fontSize = this.labelFontsize + "px";
 
       labelGroup.addEventListener('click',function(evt){
         var id = this.seqid;
@@ -271,10 +294,11 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
       this.stage.width = ( this.seqOffset + nMax * this.columnWidth);
 
     };
+
     /*
      * redraws the entire MSA
      */
-    this.redraw = function(){
+    this.recolorEntire = function(){
 
       this.selmanager.cleanup();
 
@@ -294,6 +318,20 @@ define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolor
         var currentLayerLabel = currentLayer.childNodes[0];
         _self.labelColorScheme.colorLabel(currentLayerLabel,tSeq);
 
+      }
+    };
+
+    /*
+     * recolors the rows
+     */
+    this.recolorRows = function(){
+      // all columns
+      for( var curRow in _self.seqs){
+        var tSeq = _self.seqs[curRow].tSeq;
+        var currentLayer = _self.seqs[curRow].layer;
+
+        var rowGroup = currentLayer.childNodes[1];
+        _self.colorscheme.colorRow(rowGroup, rowGroup.seqid);
       }
     };
 
