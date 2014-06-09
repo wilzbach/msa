@@ -6,7 +6,7 @@ define ["cs!msa/selection/selection"], (Selection) ->
         throw new Error "invalid selection coordinates"
 
     getId: ->
-      return "x{@_id}y{@_column}"
+      return "x#{@_id}y#{@_column}"
 
     select: =>
       tSeq = @msa.seqs[@_id].tSeq

@@ -8,7 +8,6 @@ define ["msa/utils"], (Utils) ->
 
     colorResidue: (aminoGroup, tSeq, pos) =>
 
-      console.log "abc"
       # TODO: use CSS classes for that
       aminoGroup.className = "biojs_msa_single_residue"
       residue = tSeq.seq.charAt(pos)
