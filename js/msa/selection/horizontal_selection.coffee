@@ -5,7 +5,7 @@ define ["cs!msa/selection/selection"], (Selection) ->
       undefined
 
     getId: ->
-      @_id
+      "h" + @_id
 
     # Selects a row (does not send any event)
     select: =>

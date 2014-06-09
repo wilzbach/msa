@@ -4,109 +4,56 @@ define ["msa/utils"], (Utils) ->
     scheme: "taylor"
 
     constructor: () ->
-      @
 
     colorResidue: (aminoGroup, tSeq, pos) =>
 
-      # TODO: use CSS classes for that
       aminoGroup.className = "biojs_msa_single_residue"
-      residue = tSeq.seq.charAt(pos)
-      colorResidue = "ffffff"
-      if @scheme is "taylor" and residue of Colorator.taylorColors
-        colorResidue = Colorator.taylorColors[residue]
-      else if @scheme is "zappo" and residue of Colorator.zappoColors
-        colorResidue = Colorator.zappoColors[residue]
-      else if @scheme is "hydrophobicity" and residue of Colorator.hydrophobicityColors
-        colorResidue = Colorator.hydrophobicityColors[residue]
-      else
-        colorResidue = Colorator.taylorColors[residue]
 
-      colorResidue = "ffffff"  if typeof colorResidue is "undefined"
-      colorInHex = Utils.hex2rgb(colorResidue)
-      aminoGroup.color = colorInHex
-      aminoGroup.style.backgroundColor = Utils.rgba(colorInHex, 0.3)
-      aminoGroup.style.borderTop = "none"
-      aminoGroup.style.borderLeft = "none"
-      aminoGroup.style.borderRight = "none"
-      aminoGroup.style.borderBottom = "none"
-
-      #rect.setShadowOpacity(0.0);
-      aminoGroup.style.color = "black"
-      return
+      residue = Colorator.getResidue tSeq,pos
+      aminoGroup.className += " biojs-msa-aa-" + residue
 
     colorSelectedResidue: (aminoGroup, tSeq, pos) =>
-      color = aminoGroup.color
 
-      #aminoGroup.style.borderTop = "thick solid #0000FF";
-      #aminoGroup.style.borderBottom = "thick solid #0000FF";
-      aminoGroup.style.backgroundColor = Utils.rgba(color, 0.8) \
-        unless @reverseColoring(aminoGroup)
-      return
-
-
-    #aminoGroup.className +=  " shadowed";
-    reverseColoring: (aminoGroup) ->
-      if aminoGroup.color.r is 255 and aminoGroup.color.g is 255 \
-          and aminoGroup.color.b is 255
-        color = aminoGroup.color
-        aminoGroup.style.color = Utils.rgba(color, 0.8)
-        color = Utils.hex2rgb("000000")
-        aminoGroup.style.backgroundColor = Utils.rgba(color, 0.8)
-        true
-      else
-        false
+      aminoGroup.className = "biojs_msa_single_residue"
+      residue = Colorator.getResidue tSeq,pos
+      aminoGroup.className += " biojs-msa-aa-" + residue + "-selected"
 
     colorSelectedResidueColumn: (aminoGroup, tSeq, pos) =>
-      color = aminoGroup.color
-      aminoGroup.style.backgroundColor = Utils.rgba(color, 0.8) \
-        unless @reverseColoring(aminoGroup)
+      aminoGroup.className = "biojs_msa_single_residue"
+      residue = Colorator.getResidue tSeq,pos
+      aminoGroup.className += " biojs-msa-aa-" + residue + "-selected"
 
 
-    #aminoGroup.style.borderLeft = "thick solid #0000FF";
-    #aminoGroup.style.borderRight = "thick solid #0000FF";
     colorSelectedResidueSingle : (aminoGroup, tSeq, pos) ->
-      color = aminoGroup.color
-      aminoGroup.style.backgroundColor = Utils.rgba(color, 0.8) \
-        unless @reverseColoring(aminoGroup)
-
-      #
-      #         aminoGroup.style.borderTop = "thick solid #0000FF";
-      #         aminoGroup.style.borderLeft = "thick solid #0000FF";
-      #         aminoGroup.style.borderRight = "thick solid #0000FF";
-      #         aminoGroup.style.borderBottom = "thick solid #0000FF";
-      #
+      aminoGroup.className = "biojs_msa_single_residue"
+      residue = Colorator.getResidue tSeq,pos
+      aminoGroup.className += " biojs-msa-aa-" + residue + "-selected"
       aminoGroup.className += " shadowed"
 
     colorColumn: (columnGroup, columnPos) ->
       columnGroup.style.backgroundColor = "transparent"
+      columnGroup.style.color = ""
 
     colorSelectedColumn: (columnGroup, columnPos) ->
-      columnGroup.style.backgroundColor = "red"
+      columnGroup.style.backgroundColor =
+        Utils.rgba(Utils.hex2rgb("ff0000"),1.0)
+      columnGroup.style.color = "white"
+
+    colorRow: (rowGroup, rowId) ->
+      rowGroup.className = "biojs_msa_sequence_block"
+      rowGroup.className += " biojs-msa-schemes-" + @scheme
+
 
     setScheme: (name) ->
       @scheme = name
       @scheme = name.toLowerCase()
 
-    @taylorColors: {
-      V: "99ff00"
-      I: "66ff00"
-      L: "33ff00"
-      F: "00ff66"
-      Y: "00ffcc"
-      W: "00ccff"
-      H: "0066ff"
-      R: "0000ff"
-      K: "6600ff"
-      N: "cc00ff"
-      Q: "ff00cc"
-      E: "ff0066"
-      D: "ff0000"
-      S: "ff3300"
-      T: "ff6600"
-      G: "ff9900"
-      P: "ffcc00"
-      C: "ffff00"
-    }
+    @getResidue: (tSeq,pos) ->
+      residue = tSeq.seq.charAt(pos)
+      if residue is "-"
+        "Gap"
+      else
+        residue
 
     @zappoColors: {
       V: "ff6666"
