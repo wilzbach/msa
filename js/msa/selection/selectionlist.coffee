@@ -1,18 +1,22 @@
 define [], ->
   class SelectionList
 
+    isList: true
+
     constructor: ->
       @_sels = []
 
     addSelection: (sel) ->
       eId = sel.getId()
-      if eId of @_self
+      if @_sels[eId]?
         console.log "duplicate selection"
       else
         @_sels[eId] = sel
-        sel.select
+        sel.select()
 
+    select: ->
+      undefined
 
-    desselect: ->
-      for key, value of @_self
-        value.disselect()
+    deselect: ->
+      for key, value of @_sels
+        value.deselect()
