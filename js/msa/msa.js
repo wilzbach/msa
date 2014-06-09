@@ -1,4 +1,7 @@
-define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator", "./row",  "cs!msa/eventhandler"], function(Colorator, Sequence, Ordering, Utils, LabelColorator, Row, Eventhandler) {
+define(["cs!msa/colorator", "./sequence", "./ordering", "./utils", "./labelcolorator",
+    "./row",  "cs!msa/eventhandler", "./selection/main"
+    ], function(Colorator, Sequence,
+      Ordering, Utils, LabelColorator, Row, Eventhandler, selection) {
   return function msa(divName, config){
 
     var _self = this;
@@ -16,6 +19,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
     this.colorscheme = new Colorator(); 
     this.labelColorScheme = new LabelColorator();
     this.ordering = new Ordering();
+    this.selmanager = new selection.SelectionManager(_self);
     //this.highlightor = new Highlightor(this);
 
     this.visibleElements = {
@@ -34,7 +38,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
     if ( typeof config.registerMoveOvers !== "undefined"){
       this.registerMoveOvers = true;
       this.container.addEventListener('mouseout',function(evt){
-        _self.highlightor._cleanupSelections();
+        _self.selmanager.cleanup();
       });
     }else{
       this.registerMoveOvers = false;
@@ -119,7 +123,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
         residueSpan.addEventListener('click',function(evt){
 
           var id = this.parentNode.seqid;
-          _self.highlightor.selectResidue(id,this.rowPos);
+          _self.selmanager.changeSel(new selection.PositionSelect(_self,id,this.rowPos));
           // send event
           _self.events.onPositionClicked(id,this.rowPos);
         }, false);
@@ -128,7 +132,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
         if( this.registerMoveOvers === true){
           residueSpan.addEventListener('mouseover',function(evt){
             var id = this.parentNode.seqid;
-            _self.highlightor.selectResidue(id,this.rowPos);
+            _self.selmanager.changeSel(new selection.PositionSelect(_self,id,this.rowPos));
             _self.events.onPositionClicked(id,this.rowPos);
           }, false);
         }
@@ -162,13 +166,13 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
         residueSpan.rowPos = n;
 
         residueSpan.addEventListener('click',function(evt){
-          _self.highlightor.selectColumn(this.rowPos);
+          _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos));
           _self.events.onColumnSelect(this.rowPos);
         }, false);
 
         if( this.registerMoveOvers === true){
           residueSpan.addEventListener('mouseover',function(evt){
-            _self.highlightor.selectColumn(this.rowPos);
+            _self.selmanager.changeSel(new selection.VerticalSelection(_self,this.rowPos));
             _self.events.onColumnSelect(this.rowPos);
           }, false);
         }
@@ -195,14 +199,14 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
 
       labelGroup.addEventListener('click',function(evt){
         var id = this.seqid;
-        _self.highlightor.selectSeq(id);
+        _self.selmanager.changeSel(new selection.HorizontalSelection(_self,id));
         _self.events.onRowSelect(id);
       }, false);
 
       if( this.registerMoveOvers === true){
         labelGroup.addEventListener('mouseover',function(evt){
           var id = this.seqid;
-          _self.highlightor.selectSeq(id);
+          _self.selmanager.changeSel(new selection.HorizontalSelection(_self,id));
           _self.events.onRowSelect(id);
         }, false);
       }
@@ -270,7 +274,7 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
      */
     this.redraw = function(){
 
-      this.highlightor._cleanupSelections();
+      this.selmanager.cleanup();
 
       // all columns
       for( var curRow in _self.seqs){
@@ -331,7 +335,6 @@ define(["./colorator", "./sequence", "./ordering", "./utils", "./labelcolorator"
       if(typeof this.console !== "undefined" ){
         this.console.innerHTML = msg;
       }
-      //  console.log(msg);
     };
 
     this.events = new Eventhandler(this.log);

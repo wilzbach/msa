@@ -1,4 +1,4 @@
-define ["cs!./selection"], (Selection) ->
+define ["cs!msa/selection/selection"], (Selection) ->
   class HorizontalSelection extends Selection
 
     constructor: (@msa, @_id) ->
@@ -8,11 +8,11 @@ define ["cs!./selection"], (Selection) ->
       @_id
 
     # Selects a row (does not send any event)
-    select: ->
+    select: =>
       @_selectLabel @msa.labelColorScheme.colorSelectedLabel
       @_selectResidues @msa.colorscheme.colorSelectedResidue
 
-    deselect: ->
+    deselect: =>
       @_selectLabel @msa.labelColorScheme.colorLabel
       @_selectResidues @msa.colorscheme.colorResidue
 
