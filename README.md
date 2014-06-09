@@ -117,6 +117,7 @@ users has no AMD loader. BioJS automatically uses almond and registers as global
 * [require-cs](https://raw.githubusercontent.com/jrburke/require-cs/latest/cs.js)
 * [r.js](https://github.com/jrburke/r.js/)
 * [almond](https://github.com/jrburke/almond)
+* [sass](http://sass-lang.com/)
 
 ## Used libraries for testing 
 
