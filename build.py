@@ -36,7 +36,7 @@ def main():
     print("Cleaning build dir: "+ str(buildDir))
     shutil.rmtree(buildDir, True)
 
-    if shutil.which("grunt") and args.executeUnitTests:
+    if which("grunt") and args.executeUnitTests:
         print("Executing unit tests and linting")
         testProcess = subprocess.Popen(["grunt", "--gruntfile", \
                 path.join(rootDir, "Gruntfile.js"), "build"], stdout=subprocess.PIPE)
@@ -57,11 +57,11 @@ def main():
 
     print("Compiling to biojs.js")
     # check for node
-    if shutil.which("node"):
+    if which("node"):
         # call requires via node and compile the lib
         buildProcess = subprocess.Popen(["node", path.join(rootDir,"js/libs/r.js"),  "-o", \
                 path.join(rootDir, "config/build.js")], stdout=subprocess.PIPE)
-    elif shutil.which("java"):
+    elif which("java"):
         buildProcess = subprocess.Popen(["java", "-classpath", path.join(rootDir, "jars/rhino.jar") + ":"+ \
                 path.join(rootDir, "jars/compiler.jar"), "org.mozilla.javascript.tools.shell.Main", \
                 path.join(rootDir, "js/libs/r.js"), "-o", path.join(rootDir, "build.js")], stdout=subprocess.PIPE)
@@ -86,7 +86,7 @@ def main():
     cssBuildFolder = path.join(buildDir, "css")
     os.mkdir(cssBuildFolder)
 
-    if not shutil.which("scss"):
+    if not which("scss"):
         print("no scss compiler installer");
     else:
         for file in os.listdir(cssFolder):
@@ -305,5 +305,21 @@ def replaceCodeElements(body,oFile,removeRequired=False):
 
     return body
 
+def which(program):
+    def is_exe(fpath):
+        return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
+
+    fpath, fname = os.path.split(program)
+    if fpath:
+        if is_exe(program):
+            return program
+    else:
+        for path in os.environ["PATH"].split(os.pathsep):
+            path = path.strip('"')
+            exe_file = os.path.join(path, program)
+            if is_exe(exe_file):
+                return exe_file
+
+    return None
 if __name__ == "__main__":
     main()
