@@ -47,6 +47,7 @@ Have fun coding.
 
 ### Step 3) Compiling
 
+Run `npm install` once to install all dependencies.
 
 * all sources are bundled to one JS file (`build/biojs.js`)
 * CoffeeScript is compiled by R.js
@@ -65,6 +66,16 @@ You might need install the Python module `lxml`, therefore run
 ```
 pip3 install lxml 
 ```
+
+Or use a package e.g. `apt-get install python3-lxml`.
+
+If you are an unluckily user and can't run python3, this script works fine for
+python2.
+
+The unit tests and linting depend on grunt, therefore be sure to have `npm`
+installed.
+
+For a complete build you also need SASS. `ruby-sass` or `gem install sass`.
 
 ### Just building biojs.js
 
