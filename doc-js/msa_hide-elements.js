@@ -1,4 +1,4 @@
-require(["msa/msa"], function (MSA) {
+require(["cs!msa/msa"], function (MSA) {
 
   var msa = new MSA('msa-hide-elements');
   msa.visibleElements.ruler = false;

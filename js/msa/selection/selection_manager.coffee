@@ -16,7 +16,7 @@ define ["cs!msa/selection/selectionlist"],(SelectionList) ->
 
     # detects shiftKey
     handleSel: (sel, evt) ->
-      if evt.ctrlKey
+      if evt.ctrlKey or evt.metaKey
         # check whether we already have a list
         if @currentSelection?.isList?
           selList = @currentSelection

@@ -1,4 +1,4 @@
-require(["jquery", "cs!input/clustal", "msa/msa"], function ($, Clustal, MSA) {
+require(["jquery", "cs!input/clustal", "cs!msa/msa"], function ($, Clustal, MSA) {
   
   // as a async, non-blocking call
   Clustal.read("dummy/samples/p53.clustalo.clustal", function(seqs) {

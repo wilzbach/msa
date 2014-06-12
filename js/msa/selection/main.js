@@ -1,8 +1,9 @@
 define(["cs!./vertical_selection", "cs!./horizontal_selection", "cs!./region_select",
-    "cs!./position_selection", "cs!./selection_manager", "cs!./selectionlist"],
+    "cs!./position_selection", "cs!./selection_manager", "cs!./selectionlist",
+    "cs!./rectangular_select"],
     function (VerticalSelection, HorizontalSelection, RegionSelect,
       PositionSelect, SelectionManager, SelectionList,
-      Selection) {
+      RectangularSelect) {
     return {
         VerticalSelection: VerticalSelection,
         HorizontalSelection: HorizontalSelection,
@@ -11,6 +12,8 @@ define(["cs!./vertical_selection", "cs!./horizontal_selection", "cs!./region_sel
         PositionSelect: PositionSelect,
         SelectionManager: SelectionManager,
         SelectionList: SelectionList,
+
+        RectangularSelect: RectangularSelect,
     }
 });
 

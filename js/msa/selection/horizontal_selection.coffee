@@ -9,11 +9,11 @@ define ["cs!msa/selection/selection"], (Selection) ->
 
     # Selects a row (does not send any event)
     select: =>
-      @_selectLabel @msa.labelColorScheme.colorSelectedLabel
+      @_selectLabel @msa.colorscheme.colorSelectedLabel
       @_selectResidues @msa.colorscheme.colorSelectedResidue
 
     deselect: =>
-      @_selectLabel @msa.labelColorScheme.colorLabel
+      @_selectLabel @msa.colorscheme.colorLabel
       @_selectResidues @msa.colorscheme.colorResidue
 
     _selectLabel: (colorCall) ->

@@ -1,4 +1,4 @@
-require(["jquery", "cs!input/fasta", "msa/msa"], function ($, Fasta, MSA) {
+require(["jquery", "cs!input/fasta", "cs!msa/msa"], function ($, Fasta, MSA) {
   
   // as a async, non-blocking call
   Fasta.read("dummy/foo.fasta", function(seqs) {

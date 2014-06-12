@@ -5,6 +5,10 @@ define ["msa/utils"], (Utils) ->
 
     constructor: () ->
 
+    setScheme: (name) ->
+      @scheme = name
+      @scheme = name.toLowerCase()
+
     colorResidue: (aminoGroup, tSeq, pos) =>
 
       aminoGroup.className = "biojs_msa_single_residue"
@@ -43,10 +47,20 @@ define ["msa/utils"], (Utils) ->
       rowGroup.className = "biojs_msa_sequence_block"
       rowGroup.className += " biojs-msa-schemes-" + @scheme
 
+    colorLabel: (labelGroup, tSeq) ->
+      if not labelGroup.color?
+        color = {}
+        color.r = Math.ceil(Math.random() * 255)
+        color.g = Math.ceil(Math.random() * 255)
+        color.b = Math.ceil(Math.random() * 255)
+        labelGroup.color = color
+      labelGroup.style.backgroundColor = Utils.rgba(labelGroup.color, 0.5)
 
-    setScheme: (name) ->
-      @scheme = name
-      @scheme = name.toLowerCase()
+    colorSelectedLabel: (labelGroup, tSeq) ->
+      rect = labelGroup.children[0]
+      label = labelGroup.children[1]
+      labelGroup.style.textColor = "white"
+      labelGroup.style.backgroundColor = Utils.rgba(labelGroup.color, 1.0)
 
     @getResidue: (tSeq,pos) ->
       residue = tSeq.seq.charAt(pos)
@@ -54,52 +68,3 @@ define ["msa/utils"], (Utils) ->
         "Gap"
       else
         residue
-
-    @zappoColors: {
-      V: "ff6666"
-      I: "ff6666"
-      L: "ff6666"
-      A: "ff6666"
-      M: "ff6666"
-      F: "ff9900"
-      Y: "ff9900"
-      W: "ff9900"
-      H: "cc0000"
-      R: "cc0000"
-      K: "cc0000"
-      E: "33cc00"
-      D: "33cc00"
-      S: "3366ff"
-      T: "3366ff"
-      N: "3366ff"
-      Q: "3366ff"
-      G: "cc33cc"
-      P: "cc33cc"
-      C: "ffff00"
-    }
-
-    @hydrophobicityColors: {
-      I: "ff0000"
-      V: "f60009"
-      L: "ea0015"
-      F: "cb0034"
-      C: "c2003d"
-      M: "b0004f"
-      A: "ad0052"
-      G: "6a0095"
-      X: "680097"
-      T: "61009e"
-      S: "5e00a1"
-      W: "5b00a4"
-      Y: "4f00b0"
-      P: "4600b9"
-      H: "1500ea"
-      E: "0c00f3"
-      Z: "0c00f3"
-      Q: "0c00f3"
-      D: "0c00f3"
-      B: "0c00f3"
-      N: "0c00f3"
-      K: "0000ff"
-      R: "0000ff"
-    }
