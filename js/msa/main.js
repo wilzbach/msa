@@ -1,7 +1,7 @@
-define(["./msa","cs!./colorator", "./sequence", "./ordering", "./menu/main",
-    "./utils", "./labelcolorator", "./row", "cs!./eventhandler", "./selection/main"], 
+define(["./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
+    "./utils", "./row", "cs!./eventhandler", "./selection/main"], 
     function(Msa,Colorator, Sequence, Ordering, Menu,
-      Utils, LabelColorator, Row, Eventhandler, Selection) {
+      Utils, Row, Eventhandler, Selection) {
   return {
     msa: Msa,
     colorator: Colorator,
@@ -9,7 +9,6 @@ define(["./msa","cs!./colorator", "./sequence", "./ordering", "./menu/main",
     ordering: Ordering,
     menu: Menu,
     utils: Utils,
-    labelColorator: LabelColorator,
     row: Row,
     eventhandler: Eventhandler,
     selection: Selection,

@@ -1,4 +1,4 @@
-require(["msa/msa", "cs!seq"], function (MSA, Sequence) {
+require(["cs!msa/msa", "cs!seq"], function (MSA, Sequence) {
 
   var msa = new MSA('msa-first-example');
   msa.setConsole('msa-first-console');

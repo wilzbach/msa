@@ -1,4 +1,4 @@
-require(["msa/msa", "cs!msa/menu/defaultmenu"], function (MSA, DefaultMenu) {
+require(["cs!msa/msa", "cs!msa/menu/defaultmenu"], function (MSA, DefaultMenu) {
 
   var msa = new MSA('msa-show-menu');
   msa.addDummySequences();
