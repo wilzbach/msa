@@ -1,4 +1,4 @@
-require(["msa/msa", "msa/selection/main"], function (MSA, selection) {
+require(["cs!msa/msa", "msa/selection/main"], function (MSA, selection) {
 
   var msa = new MSA('msa-highlighting');
   msa.setConsole('msa-highlighting-console');
