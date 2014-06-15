@@ -13,6 +13,6 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa"], function ($, Fasta, MSA) {
     msa.columnWidth = 4;
     msa.seqOffset = 300;
     msa.labelFontsize= 9;
-    msa.addSequences(seqs);
+    msa.addSeqs(seqs);
   });
 });

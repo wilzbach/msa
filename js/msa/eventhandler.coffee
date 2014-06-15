@@ -12,7 +12,7 @@ define [], ->
     # TODO: apply observer pattern and deprecate all callbacks
 
     onSelectionChanged: (sel) ->
-      name = sel.constructor.name if sel?
+      name = sel.__proto__.constructor.name if sel?
       if sel?
         @log "column was clicked at #{sel.column}" if name is "VerticalSelection"
         @log "row was clicked at #{sel.id}" if name is "HorizontalSelection"
