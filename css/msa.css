@@ -1,3 +1,6 @@
+.biojs_msa_stage {
+  cursor: default; }
+
 .biojs_msa_labels {
   color: black;
   display: inline-block;
@@ -18,7 +21,8 @@
 
 .biojs_msa_sequence_block {
   color: black;
-  white-space: nowrap; }
+  white-space: nowrap;
+  vertical-align: middle; }
 
 .shadowed {
   box-shadow: 7px 7px 8px #818181;

@@ -6,7 +6,9 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
       undefined
 
     _addSeqs: (tSeqs) ->
-      if true
+      @msa.zoomer.autofit tSeqs if @msa.config.autofit
+      # check whether array or single seq
+      unless tSeqs.id?
         @_addSeq e for e in tSeqs
       else
         @_addSeq tSeqs
@@ -24,6 +26,17 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
       # save the layer
       @msa.seqs[tSeq.id] = new Row tSeq, layer
 
+    # recolors all entire stage
+    recolorStage: ->
+      @selmanager.cleanup()
+
+      # all columns
+      for curRow of @seqs
+        currentLayer = @seqs[curRow].layer
+        @colorscheme.colorLabel LabelBuilder.recolorLabel currentLayer.childNodes[0],@seqs[curRow].tSeq
+        seqmgr.recolorRow currentLayer.childNodes[1]
+
+    # recolor a single row - without the label
     recolorRow: (row) ->
       # all residues
       childs = row.childNodes
@@ -32,6 +45,13 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
       while i < childs.length
         @msa.colorscheme.colorResidue childs[i], tSeq, childs[i].rowPos
         i++
+
+    removeSeq: (id) ->
+      seqs[id].layer.destroy()
+      delete seqs[id]
+      # reorder
+      @orderSeqsAfterScheme()
+      # TODO: maybe redraw ?
 
     addDummySequences: ->
       seqs = [
@@ -43,7 +63,8 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
 
     _createLabel: (tSeq) ->
       labelGroup = document.createElement("span")
-      labelGroup.textContent = tSeq.name
+      if @msa.zoomer.level >= 2
+        labelGroup.textContent = tSeq.name
       labelGroup.seqid = tSeq.id
       labelGroup.className = "biojs_msa_labels"
       labelGroup.style.width = "#{@msa.zoomer.seqOffset}px"
@@ -56,7 +77,7 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
         return
       ), false
 
-      if @msa.config.registerMoveOvers?
+      if @msa.config.registerMoveOvers
         labelGroup.addEventListener "mouseover", ((evt) =>
           id = evt.target.seqid
           @msa.selmanager.changeSel new selection.HorizontalSelection(@msa, id)
@@ -69,6 +90,7 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
     _createRow: (tSeq) ->
       residueGroup = document.createDocumentFragment()
       n = 0
+
 
       while n < tSeq.seq.length
         residueSpan = document.createElement("span")
@@ -89,7 +111,7 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
           @msa.selmanager.handleSel selPos, evt
         ), false
 
-        if @registerMoveOvers is true
+        if @registerMoveOvers
           residueSpan.addEventListener "mouseover", ((evt) =>
             id = event.target.parentNode.seqid
             @msa.selmanager.changeSel new selection.PositionSelect(@msa, id,
@@ -105,4 +127,5 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
       residueSpan.seqid = tSeq.id
       @msa.colorscheme.colorRow residueSpan, tSeq.id
       residueSpan.appendChild residueGroup
+      residueSpan.style.fontSize = "#{@msa.zoomer.residueFontsize}px"
       return residueSpan

@@ -1,8 +1,9 @@
-require(["cs!msa/msa"], function (MSA) {
+require(["cs!msa/msa", "cs!msa/zoombar"], function (MSA, ZoomBar) {
 
   var msa = new MSA('msa-zooming');
   msa.columnWidth = 15;
-  msa.zoomer.addZoombar();
 
   msa.seqmgr.addDummySequences();
+
+  msa.addPlugin(new ZoomBar(msa), "zoombar");
 });
