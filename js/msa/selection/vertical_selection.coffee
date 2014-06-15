@@ -17,8 +17,11 @@ define ["cs!msa/selection/selection"], (Selection) ->
       @_selectResidues @msa.colorscheme.colorResidue
 
     _selectLabel: (colorCall) ->
-      columnGroup = @msa._seqMarkerLayer.childNodes[@_labelColumn]
-      colorCall columnGroup, @_labelColumn
+      if @msa.marker._seqMarkerLayer?.childNodes[@_labelColumn]?
+        columnGroup = @msa.marker._seqMarkerLayer.childNodes[@_labelColumn]
+        colorCall columnGroup, @_labelColumn
+      else
+        console.log "warning."
 
     _selectResidues: (colorCall) ->
       for key,seq of @msa.seqs

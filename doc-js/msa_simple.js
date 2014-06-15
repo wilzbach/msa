@@ -1,8 +1,8 @@
 require(["cs!msa/msa", "cs!seq"], function (MSA, Sequence) {
 
   var msa = new MSA('msa-first-example');
-  msa.setConsole('msa-first-console');
-  msa.addSequences([new Sequence("MSPFTACAPDRLNNPPLKRTRTLSLRNPSETSTLSRSDRRNSMFLEGERIMNAFGQQPSS", "awesome name", 1)
+  msa.log.setConsole('msa-first-console');
+  msa.addSeqs([new Sequence("MSPFTACAPDRLNNPPLKRTRTLSLRNPSETSTLSRSDRRNSMFLEGERIMNAFGQQPSS", "awesome name", 1)
     ,new Sequence("QQTSPLQQQDILDMTVYCDSNFSMYQQNLHHHHHHHHHQRPPAHPSGYGLGEYSSPSTNP", "awesome name3", 2)
     ,new Sequence("YLWMNSPGITSTPYLSSPNGGSYIQSGFGSNQRQFLPPPTGFGSADLGWLSISSQQELFK", "awesome name2", 3)
     ,new Sequence("MVRPPYSYSALIAMAIQNAQDKKLTLSQIYQYVADNFPFYKKSKAGWQNSIRHNLSLNDC", "awesome name5", 4)

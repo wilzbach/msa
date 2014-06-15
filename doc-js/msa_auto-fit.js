@@ -2,5 +2,5 @@ require(["cs!msa/msa"], function (MSA) {
 
   var msa = new MSA('msa-auto-fit');
 
-  msa.addDummySequences();
+  msa.seqmgr.addDummySequences();
 });

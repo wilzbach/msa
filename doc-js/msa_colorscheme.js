@@ -3,11 +3,11 @@ require(["cs!msa/msa", "cs!msa/colorator"], function (MSA, Colorator) {
   var msa = new MSA('msa-colorscheme');
   // currently only zappo, taylor and hydrophobicity
   msa.colorscheme.setScheme('zappo');
-  msa.addDummySequences();
+  msa.seqmgr.addDummySequences();
 
   var msa2 = new MSA('msa-colorscheme2');
   msa2.colorscheme.setScheme('hydrophobicity');
-  msa2.addDummySequences();
+  msa2.seqmgr.addDummySequences();
 
   var msaOwn = new MSA('msa-colorscheme-own');
   // inheritance in JS
@@ -40,5 +40,5 @@ require(["cs!msa/msa", "cs!msa/colorator"], function (MSA, Colorator) {
   AwesomeScheme.prototype.colorSelectedResidueColumn = simpleRed;
 
   msaOwn.colorscheme = new AwesomeScheme();
-  msaOwn.addDummySequences();
+  msaOwn.seqmgr.addDummySequences();
 });

@@ -13,6 +13,9 @@ define [], ->
     getSeqOrder: (seqs) =>
       Ordering.orderSeqsAfterScheme seqs, @type
 
+    setOrdering: (seqOrdering) ->
+      @type = "own"
+      @seqOrdering = seqOrdering
 
     #
     # * uses a predefined schema to order sequences
@@ -40,6 +43,8 @@ define [], ->
         while i < tuples.length
           ordering.unshift tuples[i][0]
           i++
+      else if type is "own"
+        ordering = @seqOrdering
       if ordering.length is 0
         console.log "invalid type selected"
       else
