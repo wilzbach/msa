@@ -39,15 +39,16 @@ define ["./utils", "./selection/main"],(Utils, selection) ->
           residueSpan.rowPos = n
           residueSpan.stepPos = n / stepSize
 
-          residueSpan.addEventListener "click", ((evt) =>
+          residueSpan.addEventListener "click", (evt) =>
+            console.log "hi there"
             @msa.selmanager.handleSel new selection.VerticalSelection(@msa,
-              event.target.rowPos, event.target.stepPos), evt
-          ), false
+              evt.target.rowPos, evt.target.stepPos), evt
+          , false
 
           if @msa.config.registerMoveOvers
             residueSpan.addEventListener "mouseover", ((evt) =>
               @msa.selmanager.changeSel new selection.VerticalSelection(@msa,
-                event.target.rowPos, event.target.stepPos), evt
+                evt.target.rowPos, evt.target.stepPos), evt
             ), false
 
           # color it nicely
