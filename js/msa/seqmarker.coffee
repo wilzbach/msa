@@ -25,10 +25,7 @@ define ["./utils", "./selection/main"],(Utils, selection) ->
         # try to minimize DOM updates as much as possible
         # http://jsperf.com/innerhtml-vs-createelement-test/6
         residueGroup = document.createDocumentFragment()
-        stepSize = 1
-        stepSize = 5  if @columnWidth <= 4
-        stepSize = 10  if @columnWidth <= 2
-        stepSize = 20  if @columnWidth is 1
+        stepSize = @msa.zoomer.getStepSize()
         n = 0
 
         while n < @msa._nMax
