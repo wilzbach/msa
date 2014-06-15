@@ -3,12 +3,23 @@ define [], ->
 
     constructor: (@msa) ->
       @x1 = @y1 = @x2 = @y2 = 0
+      @container = @createElement()
 
     createElement: ->
       @rectangularSelect = document.createElement "div"
       @rectangularSelect.className = "biojs-rectangular-select"
       @rectangularSelect.hidden = 1
+
+      # TODO: maybe a better approach here
+      @msa.container.addEventListener 'mousemove',@onMouseMove
+      @msa.container.addEventListener 'mousedown',@onMouseDown
+      @msa.container.addEventListener 'mouseup',@onMouseUp
+
       @rectangularSelect
+
+    # always returns the same element
+    draw: ->
+      @container
 
     calcRectangle: ->
       x3 = Math.min @x1,@x2

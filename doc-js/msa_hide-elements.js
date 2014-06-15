@@ -1,8 +1,8 @@
 require(["cs!msa/msa"], function (MSA) {
 
   var msa = new MSA('msa-hide-elements');
-  msa.visibleElements.ruler = false;
-  msa.addDummySequences();
+  msa.config.visibleElements.ruler = false;
+  msa.seqmgr.addDummySequences();
 
   // as an example we switch between different states
   /*  var state = 0;
@@ -20,6 +20,6 @@ require(["cs!msa/msa"], function (MSA) {
   */
 
   var msa2 = new MSA('msa-hide-elements-labels');
-  msa2.visibleElements.labels = false;
-  msa2.addDummySequences();
+  msa2.config.visibleElements.labels = false;
+  msa2.seqmgr.addDummySequences();
 });

@@ -17,14 +17,20 @@ define ["cs!msa/selection/selection"], (Selection) ->
       @_selectResidues @msa.colorscheme.colorResidue
 
     _selectLabel: (colorCall) ->
-      tSeq = @msa.seqs[@id].tSeq
-      currentLayerLabel = @msa.seqs[@id].layer.childNodes[0]
-      colorCall currentLayerLabel,tSeq
+      unless @msa.seqs[@id]?
+        console.log "warning, could not find a sequence"
+      else
+        tSeq = @msa.seqs[@id].tSeq
+        currentLayerLabel = @msa.seqs[@id].layer.childNodes[0]
+        colorCall currentLayerLabel,tSeq
 
     _selectResidues: (colorCall) ->
-      currentLayer = @msa.seqs[@id].layer
-      tSeq = @msa.seqs[@id].tSeq
+      unless @msa.seqs[@id]?
+        console.log "warning, could not find a sequence"
+      else
+        currentLayer = @msa.seqs[@id].layer
+        tSeq = @msa.seqs[@id].tSeq
 
-      childs = currentLayer.childNodes[1].childNodes
-      for child, i in childs
-        colorCall child,tSeq,i
+        childs = currentLayer.childNodes[1].childNodes
+        for child, i in childs
+          colorCall child,tSeq,i

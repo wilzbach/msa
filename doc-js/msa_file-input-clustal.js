@@ -20,6 +20,6 @@ require(["jquery", "cs!input/clustal", "cs!msa/msa"], function ($, Clustal, MSA)
     msa.columnHeight = 10;
     msa.columnSpacing = 0;
     msa.seqOffset = 100;
-    msa.addSequences(seqs);
+    msa.addSeqs(seqs);
   });
 });
