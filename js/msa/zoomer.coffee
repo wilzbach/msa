@@ -11,13 +11,13 @@ define [], ->
       @level = value
 
       @columnWidth = 1 * value
-      @labelFontsize = 3 + 1 * value
-      @residueFontsize = 3 + 1 * value
+      @labelFontsize = Math.floor(3 + 0.8 * value)
+      @residueFontsize = Math.floor(3 + 0.8 * value)
       @columnHeight = 5 + 1 * value
       @columnSpacing = 0
 
       if @maxLabelLength > 0
-        @seqOffset = @maxLabelLength * @labelFontsize / 2 + 1 * value
+        @seqOffset = @maxLabelLength * @labelFontsize / 2 + 2 * value
 
       if value is 1
         @seqOffset = 20
@@ -28,8 +28,9 @@ define [], ->
 
     getStepSize: ->
       stepSize = 1
-      stepSize = 5  if @columnWidth <= 4
-      stepSize = 10  if @columnWidth <= 2
+      stepSize = 2  if @columnWidth <= 10
+      stepSize = 5  if @columnWidth <= 5
+      stepSize = 10  if @columnWidth is 2
       stepSize = 20  if @columnWidth is 1
       stepSize
 

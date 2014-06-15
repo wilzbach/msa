@@ -2,3 +2,4 @@ build/
 *.log
 .sass-cache/
 node_modules/
+dummy/external/

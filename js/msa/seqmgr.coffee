@@ -106,16 +106,16 @@ define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
         residueSpan.rowPos = n
 
         residueSpan.addEventListener "click", ((evt) =>
-          id = event.target.parentNode.seqid
-          selPos = new selection.PositionSelect(@msa, id, event.target.rowPos)
+          id = evt.target.parentNode.seqid
+          selPos = new selection.PositionSelect(@msa, id, evt.target.rowPos)
           @msa.selmanager.handleSel selPos, evt
         ), false
 
         if @registerMoveOvers
           residueSpan.addEventListener "mouseover", ((evt) =>
-            id = event.target.parentNode.seqid
+            id = evt.target.parentNode.seqid
             @msa.selmanager.changeSel new selection.PositionSelect(@msa, id,
-              event.target.rowPos)
+              evt.target.rowPos)
           ), false
 
         # color it nicely
