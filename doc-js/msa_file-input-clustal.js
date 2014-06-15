@@ -14,12 +14,6 @@ require(["jquery", "cs!input/clustal", "cs!msa/msa"], function ($, Clustal, MSA)
     // only display ten seqs
     //seqs = seqs.slice(0,10);
 
-    var msa = new MSA('msa-file-input-clustal');
-    msa.zoomer.columnWidth = 2;
-    msa.zoomer.labelFontsize= 7;
-    msa.zoomer.columnHeight = 10;
-    msa.zoomer.columnSpacing = 0;
-    msa.zoomer.seqOffset = 100;
-    msa.addSeqs(seqs);
+    var msa = new MSA('msa-file-input-clustal',seqs);
   });
 });

@@ -4,10 +4,10 @@ define ["cs!utils/strings"], (Str) ->
 
   test "str contains", ->
 
-    equal( false, Str.contains "a", "b")
-    equal( true, Str.contains "a", "a")
+    equal false, Str.contains "a", "b"
+    equal true, Str.contains "a", "a"
 
-    equal( true, Str.contains "xxbaxx", "ba")
-    equal( false, Str.contains "xxbaxx", "c")
+    equal true, Str.contains "xxbaxx", "ba"
+    equal false, Str.contains "xxbaxx", "c"
 
-    equal( false, Str.contains "", "a")
+    equal false, Str.contains "", "a"

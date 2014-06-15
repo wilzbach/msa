@@ -19,7 +19,6 @@ define ["./utils", "./selection/main"],(Utils, selection) ->
           @_seqMarkerLayer.style.paddingLeft = "#{@msa.zoomer.seqOffset}px"
 
         spacePerCell = @columnHeight + @columnSpacing
-        val = spacePerCell
 
         # using fragments is the fastest way
         # try to minimize DOM updates as much as possible
@@ -41,7 +40,7 @@ define ["./utils", "./selection/main"],(Utils, selection) ->
               event.target.rowPos, event.target.stepPos), evt
           ), false
 
-          if @msa.config.registerMoveOvers?
+          if @msa.config.registerMoveOvers
             residueSpan.addEventListener "mouseover", ((evt) =>
               @msa.selmanager.changeSel new selection.VerticalSelection(@msa,
                 event.target.rowPos, event.target.stepPos), evt

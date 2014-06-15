@@ -12,7 +12,7 @@ module.exports = function(grunt) {
     scripts: {
       files: ['tests/**/*.js', 'tests/**/*.html',"tests/**/*.coffee", 
             'js/**/*.js', "js/**/*.coffee"],
-      tasks: ['qunit', "coffeelint"],
+      tasks: ['qunit'],
       options: {
         spawn: false,
         event: ['all'],

@@ -1,53 +1,47 @@
 define ["cs!msa/colorator", "cs!msa/ordering", "./utils",
   "cs!msa/eventhandler", "./selection/main", "cs!msa/zoomer",
-  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage", "cs!msa/seqmarker"],(Colorator,
+  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage", "cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
   Ordering, Utils, Eventhandler, selection, Zoomer, SeqMgr, Logger,
-  Stage, SeqMarker) ->
+  Stage, SeqMarker, arrays) ->
 
   class MSA
 
-    constructor: (divName, @config) ->
+    constructor: (divName, seqsInit, conf) ->
+
+      @_loadDefaultConfig(conf)
+      @container = document.getElementById divName
 
       @colorscheme = new Colorator()
       @ordering = new Ordering()
 
       @log = new Logger()
-      @events = new Eventhandler(@log.log)
-      @selmanager = new selection.SelectionManager(this, @events)
+      @events = new Eventhandler @log.log
+      @selmanager = new selection.SelectionManager this, @events
 
-      @zoomer = new Zoomer()
-
-      # support for only one argument
-      @config = {} unless config?
-
-      # TODO: better default querying
-      unless @config.visibleElements
-        @config.visibleElements = {
-          labels: true, sequences: true, menubar: true, ruler: true
-        }
+      @zoomer = new Zoomer(this)
 
       @seqs = []
       @seqmgr = new SeqMgr(this)
 
-      @container = document.getElementById divName
 
       @plugs = []
 
       # plugins
-      @marker = new SeqMarker(this)
-      #@stage.appendChild(marker.createContainer())
-      @plugs.push @marker
+      if @config.visibleElements.ruler
+        @marker = new SeqMarker this
+        @plugs["marker"] = @marker
 
       # essential stage
-      @stage =  new Stage(this)
-      #@container.appendChild(@stage.initStage())
-      @plugs.push @stage
+      @stage =  new Stage this
+      @plugs["stage"] = @stage
+
+      @addSeqs seqsInit if seqsInit?
 
       # TODO: rect select
       #@plugs.push  new RectangularSelect()
 
       # post hooks
-      if @config.registerMoveOvers?
+      if @config.registerMoveOvers
         @container.addEventListener 'mouseout', =>
           @selmanager.cleanup()
 
@@ -56,49 +50,54 @@ define ["cs!msa/colorator", "cs!msa/ordering", "./utils",
       @seqmgr._addSeqs tSeq
       @_draw()
 
+    # TODO: use a user ordering
+    addPlugin: (plugin, key) ->
+      @plugs[key] = plugin
+      @_draw()
+
     _draw: ->
 
-      @_nMax = 0
-      (@_nMax = Math.max @_nMax, value.tSeq.seq.length) for key,value of @seqs
+      @_nMax = @zoomer.getMaxLength @seqs
+
+      #@zoomer.autofit() if @config.autofit
 
       frag = document.createDocumentFragment()
-      for entry in @plugs
+
+      # load plugins
+      for key,entry of @plugs
         node = entry.draw()
-        unless node
-          #console.log "plugin #{entry.constructor.name} is hidden. "
-        else
+        if node
           frag.appendChild node
 
       # replace the current container with the new
       Utils.removeAllChilds @container
       @container.appendChild frag
 
-    # redraws the entire MSA
-    recolorEntire: ->
-      @selmanager.cleanup()
-
-      # all columns
-      for curRow of @seqs
-        currentLayer = @seqs[curRow].layer
-        @colorscheme.colorLabel LabelBuilder.recolorLabel currentLayer.childNodes[0],@seqs[curRow].tSeq
-        seqmgr.recolorRow currentLayer.childNodes[1]
-
-    recolorRows: ->
-      seqmgr.recolorRow value.layer.childNodes[1] for key,value in @seqs
-
-    removeSeq: (id) ->
-      seqs[id].layer.destroy()
-      delete seqs[id]
-      # reorder
-      @orderSeqsAfterScheme()
-
-    redrawEntire: ->
+    redrawContainer: ->
       tSeqs = []
       tSeqs.push @seqs[tSeq].tSeq for tSeq of @seqs
 
-      @resetStage()
-      @addSequences tSeqs
+      @_resetContainer()
+      @addSeqs tSeqs
 
     # TODO: do we create memory leaks here?
-    resetStage: ->
-      Utils.removeAllChilds @stage
+    _resetContainer: ->
+      Utils.removeAllChilds @container
+
+    _loadDefaultConfig: (conf) ->
+
+      @config = conf
+
+      defaultConf = {
+        visibleElements: {
+          labels: true, sequences: true, menubar: true, ruler: true
+        },
+        registerMoveOvers: false,
+        autofit: true,
+      }
+
+      if @config?
+        arrays.recursiveDictFiller defaultConf, @config
+      else
+        @config = defaultConf
+
