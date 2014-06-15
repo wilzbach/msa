@@ -14,6 +14,9 @@
   white-space: nowrap;
   cursor: pointer; }
 
+.biojs_msa_marker span {
+  text-align: center; }
+
 .biojs_msa_single_residue {
   display: inline-block;
   cursor: pointer;
