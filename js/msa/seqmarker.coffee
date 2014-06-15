@@ -27,7 +27,11 @@ define ["./utils", "./selection/main"],(Utils, selection) ->
         stepSize = @msa.zoomer.getStepSize()
         n = 0
 
-        while n < @msa._nMax
+        nMax = @msa.zoomer.len
+        if nMax is 0
+          nMax = @msa.zoomer.getMaxLength
+
+        while n < nMax
           residueSpan = document.createElement("span")
           residueSpan.textContent = n
           residueSpan.style.width = @msa.zoomer.columnWidth * stepSize + "px"
