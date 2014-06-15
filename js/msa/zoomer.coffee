@@ -32,3 +32,10 @@ define [], ->
         @redrawEntire()
 
       @container.appendChild zoomForm
+
+    getStepSize: ->
+      stepSize = 1
+      stepSize = 5  if @columnWidth <= 4
+      stepSize = 10  if @columnWidth <= 2
+      stepSize = 20  if @columnWidth is 1
+      stepSize

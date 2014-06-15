@@ -15,11 +15,11 @@ require(["jquery", "cs!input/clustal", "cs!msa/msa"], function ($, Clustal, MSA)
     //seqs = seqs.slice(0,10);
 
     var msa = new MSA('msa-file-input-clustal');
-    msa.columnWidth = 2;
-    msa.labelFontsize= 7;
-    msa.columnHeight = 10;
-    msa.columnSpacing = 0;
-    msa.seqOffset = 100;
+    msa.zoomer.columnWidth = 2;
+    msa.zoomer.labelFontsize= 7;
+    msa.zoomer.columnHeight = 10;
+    msa.zoomer.columnSpacing = 0;
+    msa.zoomer.seqOffset = 100;
     msa.addSeqs(seqs);
   });
 });

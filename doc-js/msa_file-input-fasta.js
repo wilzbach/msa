@@ -10,9 +10,9 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa"], function ($, Fasta, MSA) {
     });
 
     var msa = new MSA('msa-file-input-fasta');
-    msa.columnWidth = 4;
-    msa.seqOffset = 300;
-    msa.labelFontsize= 9;
+    msa.zoomer.columnWidth = 4;
+    msa.zoomer.seqOffset = 300;
+    msa.zoomer.labelFontsize= 9;
     msa.addSeqs(seqs);
   });
 });
