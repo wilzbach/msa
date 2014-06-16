@@ -128,4 +128,5 @@ define ["cs!seq", "msa/row", "msa/selection/main" ], (Sequence, Row, selection) 
       @msa.colorscheme.colorRow residueSpan, tSeq.id
       residueSpan.appendChild residueGroup
       residueSpan.style.fontSize = "#{@msa.zoomer.residueFontsize}px"
+
       return residueSpan
