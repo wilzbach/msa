@@ -1,4 +1,4 @@
-define ["./utils"], (Utils) ->
+define ["msa/utils"], (Utils) ->
   class Stage
 
     constructor: (@msa) ->
