@@ -42,7 +42,7 @@ def main():
                 path.join(rootDir, "Gruntfile.js"), "build"], stdout=subprocess.PIPE)
         out, err = testProcess.communicate()
         out = out.decode("utf8")
-        sys.stdout.write(out.encode('utf8'))
+        sys.stdout.write(out)
         if "Aborted" in out:
             sys.exit("unit test failed")
 
