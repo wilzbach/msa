@@ -7,6 +7,8 @@ define [], ->
       @setZoomLevel 2
       @len = 0
 
+      @_setWidth()
+
     setZoomLevel: (value) ->
       @level = value
 
@@ -34,25 +36,30 @@ define [], ->
       stepSize = 20  if @columnWidth is 1
       stepSize
 
+    _setWidth: ->
+      # totally slow - draws the entire container
+      _rect = @msa.container.getBoundingClientRect()
+      @_width = _rect.right - _rect.left
+
+
     guessZoomLevel:(tSeqs) ->
-      width = @msa.container.offsetWidth
       @len = @getMaxLength tSeqs
       @maxLabelLength =  @getMaxLabelLength tSeqs
 
       level = 2
 
-      if @len > width
+      if @len > @_width
         # go to minzoom
         return 1
       else
         # increase as long as possible
         @setZoomLevel level
-        while @msa.stage.width(@len) < width or level is 200
+        while @msa.stage.width(@len) < @_width or level is 200
           level++
           @setZoomLevel level
 
         if level is 2
-          console.log "len: #{@len} - width: #{width}"
+          console.log "len: #{@len} - width: #{@_width}"
           console.log "stage: #{@msa.stage.width(@len)}"
           console.log "stage: #{@msa.container.id}"
         return level - 1
