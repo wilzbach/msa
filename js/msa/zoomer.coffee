@@ -35,8 +35,7 @@ define [], ->
       stepSize
 
     guessZoomLevel:(tSeqs) ->
-      _rect = @msa.container.getBoundingClientRect()
-      width = _rect.right - _rect.left
+      width = @msa.container.offsetWidth
       @len = @getMaxLength tSeqs
       @maxLabelLength =  @getMaxLabelLength tSeqs
 
