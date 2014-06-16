@@ -1,5 +1,5 @@
 define(["./utils", "cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
-    "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar], 
+    "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar"], 
     function(Utils,Msa,Colorator, Sequence, Ordering, Menu,
        Row, Eventhandler, Selection, ZoomBar) {
   return {
