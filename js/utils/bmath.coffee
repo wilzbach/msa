@@ -14,3 +14,7 @@ define [], ->
       id = ""
       id += Math.random().toString(36).substr(2) while id.length < length
       id.substr 0, length
+
+    # Returns a random integer between min (inclusive) and max (inclusive)
+    @getRandomInt: (min, max) ->
+      return Math.floor(Math.random() * (max - min + 1)) + min
