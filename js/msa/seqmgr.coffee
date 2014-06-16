@@ -1,4 +1,5 @@
-define ["cs!seq", "msa/row", "msa/selection/main" ], (Sequence, Row, selection) ->
+define ["cs!seq", "msa/row", "msa/selection/main",
+          "cs!utils/bmath"], (Sequence, Row, selection, BMath) ->
 
   class SeqBuilder
 
@@ -53,13 +54,27 @@ define ["cs!seq", "msa/row", "msa/selection/main" ], (Sequence, Row, selection) 
       @orderSeqsAfterScheme()
       # TODO: maybe redraw ?
 
+    @_generateSequence: (len) ->
+      text = ""
+      possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+      for i in [0..len - 1] by 1
+        text += possible.charAt Math.floor(Math.random() * possible.length)
+      return text
+
+    getDummySequences: (len, seqLen) ->
+      seqs = []
+      len = BMath.getRandomInt 3,5 unless len?
+      seqLen = BMath.getRandomInt 50,200 unless seqLen?
+
+      for i in [0..len - 1] by 1
+        seqs.push new Sequence(SeqBuilder._generateSequence(seqLen), "seq" + i,
+        i)
+      return seqs
+
     addDummySequences: ->
-      seqs = [
-        new Sequence("MSPFTACAPDRLNAGECTF", "awesome name", 1),
-        new Sequence("QQTSPLQQQDILDMTVYCD", "awesome name2", 2),
-        new Sequence("FTQHGMSGHEISPPSEPGH", "awesome name3", 3),
-      ]
-      @msa.addSeqs seqs
+      @msa.addSeqs @getDummySequences()
+      @msa._draw()
 
     _createLabel: (tSeq) ->
       labelGroup = document.createElement("span")
