@@ -1,4 +1,4 @@
-define ["cs!seq", "./row", "./selection/main" ], (Sequence, Row, selection) ->
+define ["cs!seq", "msa/row", "msa/selection/main" ], (Sequence, Row, selection) ->
 
   class SeqBuilder
 
