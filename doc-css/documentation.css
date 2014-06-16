@@ -44,3 +44,9 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 .qtext{
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
+
+.h-anchor {
+    color: grey;
+    font-size: 20px;
+    text-decoration: none;
+}
