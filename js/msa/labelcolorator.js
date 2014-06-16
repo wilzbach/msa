@@ -1,4 +1,4 @@
-define(["./utils"], function(Utils){
+define(["msa/utils"], function(Utils){
 	return function(){
 
 

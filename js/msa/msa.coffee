@@ -1,5 +1,5 @@
-define ["cs!msa/colorator", "cs!msa/ordering", "./utils",
-  "cs!msa/eventhandler", "./selection/main", "cs!msa/zoomer",
+define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
+  "cs!msa/eventhandler", "msa/selection/main", "cs!msa/zoomer",
   "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage", "cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
   Ordering, Utils, Eventhandler, selection, Zoomer, SeqMgr, Logger,
   Stage, SeqMarker, arrays) ->

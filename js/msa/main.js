@@ -1,7 +1,7 @@
-define(["cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
-    "./utils", "./row", "cs!./eventhandler", "./selection/main"], 
-    function(Msa,Colorator, Sequence, Ordering, Menu,
-      Utils, Row, Eventhandler, Selection) {
+define(["./utils", "cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
+    "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar], 
+    function(Utils,Msa,Colorator, Sequence, Ordering, Menu,
+       Row, Eventhandler, Selection, ZoomBar) {
   return {
     msa: Msa,
     colorator: Colorator,
@@ -12,5 +12,6 @@ define(["cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main
     row: Row,
     eventhandler: Eventhandler,
     selection: Selection,
+    zoombar: ZoomBar,
   };
 });
