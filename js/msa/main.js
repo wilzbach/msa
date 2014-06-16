@@ -1,4 +1,4 @@
-define(["./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
+define(["cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
     "./utils", "./row", "cs!./eventhandler", "./selection/main"], 
     function(Msa,Colorator, Sequence, Ordering, Menu,
       Utils, Row, Eventhandler, Selection) {
