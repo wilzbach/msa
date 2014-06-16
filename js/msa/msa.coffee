@@ -45,6 +45,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
         @container.addEventListener 'mouseout', =>
           @selmanager.cleanup()
 
+      @container.addEventListener 'dblclick', =>
+        @selmanager.cleanup()
 
     addSeqs: (tSeq) ->
       @seqmgr._addSeqs tSeq

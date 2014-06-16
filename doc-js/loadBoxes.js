@@ -1,5 +1,15 @@
 // this displays the source code from the snippet
 // due to browser restriction we have to download the file again as 'text' object
+
+function convertToSlug(Text)
+{
+    return Text
+        .toLowerCase()
+        .replace(/[^\w ]+/g,'')
+        .replace(/ +/g,'-')
+        ;
+}
+
 require(["jquery"], function(jQuery){
   jQuery(document).ready(function() {
 
@@ -28,5 +38,15 @@ require(["jquery"], function(jQuery){
 
 
     });
+
+   // load anchors
+    jQuery('h3').each(function(i, e) {
+
+      var h3 = jQuery(e);
+      var name = e.textContent.trim();
+      name = convertToSlug(name);
+      e.id = name;
+      h3.append("<a name="+name+"></a><a class='h-anchor' href='#" + name + "'>#</a>");
+   });
   });
 });

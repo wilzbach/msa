@@ -12,11 +12,17 @@ define ["cs!msa/selection/selection"], (Selection) ->
       tSeq = @msa.seqs[@id].tSeq
 
       # color the selected residue
-      singleResidue = @msa.seqs[@id].layer.children[1].children[@column]
+      if @msa.seqs[@id].layer.children[1]?
+        singleResidue = @msa.seqs[@id].layer.children[1].children[@column]
+      else
+        singleResidue = @msa.seqs[@id].layer.children[0].children[@column]
       @msa.colorscheme.colorSelectedResidueSingle singleResidue,tSeq,@column
 
     deselect: =>
       posY = @msa.seqs[@id]
-      singlePos = posY.layer.childNodes[1].childNodes[@column]
+      if posY.layer.childNodes[1]?
+        singlePos = posY.layer.childNodes[1].childNodes[@column]
+      else
+        singlePos = posY.layer.childNodes[0].childNodes[@column]
       tSeq = posY.tSeq
       @msa.colorscheme.colorResidue singlePos,tSeq,@column
