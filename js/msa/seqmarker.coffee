@@ -1,4 +1,4 @@
-define ["./utils", "./selection/main"],(Utils, selection) ->
+define ["msa/utils", "./selection/main"],(Utils, selection) ->
   class SeqMarker
 
     constructor: (@msa) ->
