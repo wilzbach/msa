@@ -5,5 +5,5 @@ require(["cs!msa/msa", "cs!msa/zoombar"], function (MSA, ZoomBar) {
 
   msa.seqmgr.addDummySequences();
 
-  msa.addPlugin(new ZoomBar(msa), "zoombar");
+  msa.addPlugin(new ZoomBar(msa), "0_zoombar");
 });

@@ -24,7 +24,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
       @seqmgr = new SeqMgr(this)
 
 
-      @plugs = []
+      @plugs = {}
+      @plugsDOM = {}
 
       # plugins
       if @config.visibleElements.ruler
@@ -65,22 +66,35 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       frag = document.createDocumentFragment()
 
+      # sort plugs
+      plugsSort = []
+      plugsSort.push key for key of @plugs
+      plugsSort.sort()
+
       # load plugins
-      for key,entry of @plugs
+      for key in plugsSort
+        entry = @plugs[key]
         node = entry.draw()
         if node
           frag.appendChild node
+          @plugsDOM[key] = node
 
       # replace the current container with the new
       Utils.removeAllChilds @container
       @container.appendChild frag
 
-    redrawContainer: ->
-      tSeqs = []
-      tSeqs.push @seqs[tSeq].tSeq for tSeq of @seqs
+    redraw: (plugin) ->
+      newDOM = @plugs[plugin].draw()
 
+      plugDOM= @plugsDOM[plugin]
+      plugDOM.parentNode.replaceChild newDOM, plugDOM
+
+      @plugsDOM[plugin] = newDOM
+
+
+    redrawContainer: ->
+      @plugs['stage'].reset()
       @_resetContainer()
-      @addSeqs tSeqs
 
     # TODO: do we create memory leaks here?
     _resetContainer: ->
