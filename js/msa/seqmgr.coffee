@@ -28,27 +28,36 @@ define ["cs!seq", "msa/row", "msa/selection/main",
       @msa.seqs[tSeq.id] = new Row tSeq, layer
 
     # recolors all entire stage
-    recolorStage: ->
-      @selmanager.cleanup()
+    recolorStage: =>
+      @msa.selmanager.cleanup()
+
+      # TODO: redundant
 
       # all columns
-      for curRow of @seqs
-        currentLayer = @seqs[curRow].layer
-        @colorscheme.colorLabel LabelBuilder.recolorLabel currentLayer.childNodes[0],@seqs[curRow].tSeq
-        seqmgr.recolorRow currentLayer.childNodes[1]
+      for key,curRow of @msa.seqs
+        currentLayer = curRow.layer
+        currentLayer.style.height = "#{@msa.zoomer.columnHeight}px"
+
+        # label
+        @_setLabelPosition currentLayer.childNodes[0], curRow.tSeq
+        @recolorRow currentLayer.childNodes[1], curRow.tSeq
+
+        # row
 
     # recolor a single row - without the label
-    recolorRow: (row) ->
+    recolorRow: (row, tSeq) ->
       # all residues
       childs = row.childNodes
 
+      @_recolorRow row, tSeq
+
       i = 0
       while i < childs.length
-        @msa.colorscheme.colorResidue childs[i], tSeq, childs[i].rowPos
+        @_setResiduePosition childs[i],tSeq
         i++
 
     removeSeq: (id) ->
-      seqs[id].layer.destroy()
+      @msa.seqs[id].layer.destroy()
       delete seqs[id]
       # reorder
       @orderSeqsAfterScheme()
@@ -76,15 +85,23 @@ define ["cs!seq", "msa/row", "msa/selection/main",
       @msa.addSeqs @getDummySequences()
       @msa._draw()
 
+    _setLabelPosition: (label,tSeq) ->
+      label.style.width = "#{@msa.zoomer.seqOffset}px"
+      label.style.height = "#{@msa.zoomer.columnHeight}px"
+      label.style.fontSize = "#{@msa.zoomer.labelFontsize}px"
+      if @msa.zoomer.isTextVisible()
+        label.textContent = tSeq.name
+      else
+        label.textContent = ""
+
+      @msa.colorscheme.colorLabel label,tSeq
+
     _createLabel: (tSeq) ->
       labelGroup = document.createElement("span")
-      if @msa.zoomer.level >= 2
-        labelGroup.textContent = tSeq.name
       labelGroup.seqid = tSeq.id
       labelGroup.className = "biojs_msa_labels"
-      labelGroup.style.width = "#{@msa.zoomer.seqOffset}px"
-      labelGroup.style.height = "#{@msa.zoomer.columnHeight}px"
-      labelGroup.style.fontSize = "#{@msa.zoomer.labelFontsize}px"
+
+      @_setLabelPosition labelGroup,tSeq
 
       labelGroup.addEventListener "click", ((evt) =>
         id = evt.target.seqid
@@ -99,8 +116,23 @@ define ["cs!seq", "msa/row", "msa/selection/main",
           return
         ), false
 
-      @msa.colorscheme.colorLabel labelGroup, tSeq
       labelGroup
+
+    _recolorRow: (row,tSeq) ->
+      row.style.fontSize = "#{@msa.zoomer.residueFontsize}px"
+      @msa.colorscheme.colorRow row, tSeq.id
+
+    _setResiduePosition: (residue,tSeq) ->
+      residue.style.width = "#{@msa.zoomer.columnWidth}px"
+      residue.style.height = "#{@msa.zoomer.columnHeight}px"
+
+      # pseudo semantic zooming
+      if @msa.zoomer.isTextVisible()
+        residue.textContent = tSeq.seq[residue.rowPos]
+      else
+        residue.textContent = " "
+
+      @msa.colorscheme.colorResidue residue,tSeq, residue.rowPos
 
     _createRow: (tSeq) ->
       residueGroup = document.createDocumentFragment()
@@ -109,16 +141,8 @@ define ["cs!seq", "msa/row", "msa/selection/main",
 
       while n < tSeq.seq.length
         residueSpan = document.createElement("span")
-        residueSpan.style.width = "#{@msa.zoomer.columnWidth}px"
-        residueSpan.style.height = "#{@msa.zoomer.columnHeight}px"
-
-        # pseudo semantic zooming
-        if @msa.zoomer.columnWidth >= 5
-          residueSpan.textContent = tSeq.seq[n]
-        else
-          residueSpan.textContent = " "
-
         residueSpan.rowPos = n
+        @_setResiduePosition residueSpan,tSeq
 
         residueSpan.addEventListener "click", ((evt) =>
           id = evt.target.parentNode.seqid
@@ -140,8 +164,8 @@ define ["cs!seq", "msa/row", "msa/selection/main",
 
       residueSpan = document.createElement("span")
       residueSpan.seqid = tSeq.id
-      @msa.colorscheme.colorRow residueSpan, tSeq.id
+
+      @_recolorRow residueSpan, tSeq
       residueSpan.appendChild residueGroup
-      residueSpan.style.fontSize = "#{@msa.zoomer.residueFontsize}px"
 
       return residueSpan

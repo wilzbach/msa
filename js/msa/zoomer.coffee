@@ -28,6 +28,12 @@ define [], ->
       level = @guessZoomLevel tSeqs
       @setZoomLevel level
 
+    isTextVisible: ->
+      if @labelFontsize > 5
+        true
+      else
+        false
+
     getStepSize: ->
       stepSize = 1
       stepSize = 2  if @columnWidth <= 10
