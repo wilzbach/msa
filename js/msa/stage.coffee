@@ -13,6 +13,11 @@ define ["msa/utils"], (Utils) ->
     width: (n) ->
       return @msa.zoomer.seqOffset + n * @msa.zoomer.columnWidth
 
+    reset: ->
+      tSeqs = []
+      tSeqs.push @msa.seqs[tSeq].tSeq for tSeq of @msa.seqs
+      @msa.addSeqs tSeqs
+
     draw: ->
 
       orderList = @msa.ordering.getSeqOrder(@msa.seqs)
