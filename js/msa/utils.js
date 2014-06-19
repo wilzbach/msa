@@ -26,9 +26,12 @@ define([], function(){
    * @param element {Element} The element for which all childs should be removed
    */
   Utils.removeAllChilds = function (element){
+    var count = 0;
     while (element.firstChild) {
+      count++;
       element.removeChild(element.firstChild);
     }
+    console.log("removed "+ count + " elements");
   };
 
   /*
