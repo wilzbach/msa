@@ -1,5 +1,4 @@
-require(["jquery", "cs!input/fasta", "cs!msa/msa",
-    "cs!msa/zoombar"], function ($, Fasta, MSA, ZoomBar) {
+require(["jquery", "cs!input/fasta", "cs!msa/msa","cs!msa/zoombar"], function ($, Fasta, MSA, ZoomBar) {
   
   // as a async, non-blocking call
   Fasta.read("dummy/PF00072.fasta", function(seqs) {
