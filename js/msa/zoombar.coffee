@@ -7,7 +7,11 @@ define [], ->
       zoomSlider.type = "range"
       zoomSlider.name = "points"
       zoomSlider.min = 1
-      zoomSlider.max = 15
+      zoomSlider.max = 30
+      zoomSlider.style.width = "60%"
+
+      zoomSlider.value = @msa.zoomer.level
+
       zoomForm.appendChild zoomSlider
       @locked = false
 
@@ -29,7 +33,7 @@ define [], ->
     _reDraw: =>
       console.log @zoomSlider.value
       value = @zoomSlider.value
-      @msa.zoomer.setZoomLevel(value * 2)
+      @msa.zoomer.setZoomLevel(value)
       @msa.config.autofit = false
       @msa.redraw('stage')
       @msa.redraw('marker')
