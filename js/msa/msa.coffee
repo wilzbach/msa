@@ -50,7 +50,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
         @selmanager.cleanup()
 
     addSeqs: (tSeq) ->
-      @seqmgr._addSeqs tSeq
+      @stage.addSeqs tSeq
+      # TODO: do we want to draw the entire MSA not only the stage)
       @_draw()
 
     # TODO: use a user ordering

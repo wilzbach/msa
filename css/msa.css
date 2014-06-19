@@ -25,7 +25,8 @@
 .biojs_msa_sequence_block {
   color: black;
   white-space: nowrap;
-  vertical-align: middle; }
+  vertical-align: middle;
+  font-family: monospace; }
 
 .shadowed {
   box-shadow: 7px 7px 8px #818181;
@@ -59,6 +60,126 @@
 
 .biojs_msa_menubar .biojs_msa_menubar_alink:hover {
   cursor: pointer; }
+
+.biojs-msa-stage-level1 span {
+  height: 5 + 1px;
+  width: 1px; }
+
+.biojs-msa-stage-level2 span {
+  height: 5 + 2px;
+  width: 2px; }
+
+.biojs-msa-stage-level3 span {
+  height: 5 + 3px;
+  width: 3px; }
+
+.biojs-msa-stage-level4 span {
+  height: 5 + 4px;
+  width: 4px; }
+
+.biojs-msa-stage-level5 span {
+  height: 5 + 5px;
+  width: 5px; }
+
+.biojs-msa-stage-level6 span {
+  height: 5 + 6px;
+  width: 6px; }
+
+.biojs-msa-stage-level7 span {
+  height: 5 + 7px;
+  width: 7px; }
+
+.biojs-msa-stage-level8 span {
+  height: 5 + 8px;
+  width: 8px; }
+
+.biojs-msa-stage-level9 span {
+  height: 5 + 9px;
+  width: 9px; }
+
+.biojs-msa-stage-level10 span {
+  height: 5 + 10px;
+  width: 10px; }
+
+.biojs-msa-stage-level11 span {
+  height: 5 + 11px;
+  width: 11px; }
+
+.biojs-msa-stage-level12 span {
+  height: 5 + 12px;
+  width: 12px; }
+
+.biojs-msa-stage-level13 span {
+  height: 5 + 13px;
+  width: 13px; }
+
+.biojs-msa-stage-level14 span {
+  height: 5 + 14px;
+  width: 14px; }
+
+.biojs-msa-stage-level15 span {
+  height: 5 + 15px;
+  width: 15px; }
+
+.biojs-msa-stage-level16 span {
+  height: 5 + 16px;
+  width: 16px; }
+
+.biojs-msa-stage-level17 span {
+  height: 5 + 17px;
+  width: 17px; }
+
+.biojs-msa-stage-level18 span {
+  height: 5 + 18px;
+  width: 18px; }
+
+.biojs-msa-stage-level19 span {
+  height: 5 + 19px;
+  width: 19px; }
+
+.biojs-msa-stage-level20 span {
+  height: 5 + 20px;
+  width: 20px; }
+
+.biojs-msa-stage-level21 span {
+  height: 5 + 21px;
+  width: 21px; }
+
+.biojs-msa-stage-level22 span {
+  height: 5 + 22px;
+  width: 22px; }
+
+.biojs-msa-stage-level23 span {
+  height: 5 + 23px;
+  width: 23px; }
+
+.biojs-msa-stage-level24 span {
+  height: 5 + 24px;
+  width: 24px; }
+
+.biojs-msa-stage-level25 span {
+  height: 5 + 25px;
+  width: 25px; }
+
+.biojs-msa-stage-level26 span {
+  height: 5 + 26px;
+  width: 26px; }
+
+.biojs-msa-stage-level27 span {
+  height: 5 + 27px;
+  width: 27px; }
+
+.biojs-msa-stage-level28 span {
+  height: 5 + 28px;
+  width: 28px; }
+
+.biojs-msa-stage-level29 span {
+  height: 5 + 29px;
+  width: 29px; }
+
+.biojs-msa-stage-level30 span {
+  height: 5 + 30px;
+  width: 30px; }
 
 /**  pure file
 $colorA-selected: $colorA;

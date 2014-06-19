@@ -1,4 +1,5 @@
-require(["jquery", "cs!input/fasta", "cs!msa/msa"], function ($, Fasta, MSA) {
+require(["jquery", "cs!input/fasta", "cs!msa/msa",
+    "cs!msa/zoombar"], function ($, Fasta, MSA, ZoomBar) {
   
   // as a async, non-blocking call
   Fasta.read("dummy/PF00072.fasta", function(seqs) {
@@ -10,5 +11,6 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa"], function ($, Fasta, MSA) {
     });
 
     var msa = new MSA('msa-file-input-fasta',seqs);
+    msa.addPlugin(new ZoomBar(msa), "0_zoombar");
   });
 });
