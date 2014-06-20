@@ -1,6 +1,6 @@
 define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
   "cs!msa/eventhandler", "msa/selection/main", "cs!msa/zoomer",
-  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage", "cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
+  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage/stage", "cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
   Ordering, Utils, Eventhandler, selection, Zoomer, SeqMgr, Logger,
   Stage, SeqMarker, arrays) ->
 
@@ -107,7 +107,7 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       defaultConf = {
         visibleElements: {
-          labels: true, sequences: true, menubar: true, ruler: true
+          labels: true, seqs: true, menubar: true, ruler: true
         },
         registerMoveOvers: false,
         autofit: true,

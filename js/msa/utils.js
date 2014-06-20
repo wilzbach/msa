@@ -31,7 +31,6 @@ define([], function(){
       count++;
       element.removeChild(element.firstChild);
     }
-    console.log("removed "+ count + " elements");
   };
 
   /*
