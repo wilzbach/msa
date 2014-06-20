@@ -23,15 +23,12 @@ define [], ->
           @lastValue = @zoomSlider.value
           unless @locked
             @locked = true
-            window.setTimeout @_reDraw,10
-          else
-            console.log "locked"
+            window.setTimeout @_reDraw,30
 
       # save for the future
       @zoomSlider = zoomSlider
 
     _reDraw: =>
-      console.log @zoomSlider.value
       value = @zoomSlider.value
       @msa.zoomer.setZoomLevel(value)
       @msa.config.autofit = false
