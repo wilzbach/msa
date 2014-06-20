@@ -1,4 +1,5 @@
-define ["msa/utils", "msa/row", "msa/stage"], (Utils, Row,stage) ->
+define ["msa/utils", "msa/row", "./main"], (Utils, Row,stage) ->
+
   class Stage
 
     constructor: (@msa) ->
@@ -8,10 +9,10 @@ define ["msa/utils", "msa/row", "msa/stage"], (Utils, Row,stage) ->
 
       @elements = []
       if @msa.config.visibleElements.labels
-        @elemens.push new LabelElement @msa
+        @elements.push new stage.labelElement @msa
 
       if @msa.config.visibleElements.seqs
-        @elemens.push new SeqElement @msa
+        @elements.push new stage.seqElement @msa
 
     _createContainer: ->
       # TODO: remove old canvas
@@ -20,7 +21,9 @@ define ["msa/utils", "msa/row", "msa/stage"], (Utils, Row,stage) ->
       @canvas.setAttribute "class", "biojs_msa_stage"
 
     width: (n) ->
-      width += el.width() for el of elements
+      width = 0
+      width += el.width n for el in @elements
+      return width
 
     reset: ->
       Utils.removeAllChilds @canvas
@@ -50,8 +53,8 @@ define ["msa/utils", "msa/row", "msa/stage"], (Utils, Row,stage) ->
     drawSeq: (row) ->
       layer = document.createElement "div"
 
-      for element in @elements
-        layer.appendChild new @element.create row.tSeq
+      for el in @elements
+        layer.appendChild el.create row.tSeq
 
       layer.className = "biojs_msa_layer"
       layer.style.height = "#{@msa.zoomer.columnHeight}px"
@@ -103,5 +106,5 @@ define ["msa/utils", "msa/row", "msa/stage"], (Utils, Row,stage) ->
         # TODO: redundant
         currentLayer.style.height = "#{@msa.zoomer.columnHeight}px"
 
-        for i in [0..elements.length - 1] by 1
-          @elements.redraw currentLayer.childNodes[i], curRow.tSeq, textVisibilityChanged
+        for i in [0..@elements.length - 1] by 1
+          @elements[i].redraw currentLayer.childNodes[i], curRow.tSeq, textVisibilityChanged

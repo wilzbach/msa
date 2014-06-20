@@ -1,7 +1,7 @@
 define(["./utils", "cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
-    "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar"], 
+    "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar", "./stage/main"], 
     function(Utils,Msa,Colorator, Sequence, Ordering, Menu,
-       Row, Eventhandler, Selection, ZoomBar) {
+       Row, Eventhandler, Selection, ZoomBar, stage) {
   return {
     msa: Msa,
     colorator: Colorator,
@@ -12,6 +12,7 @@ define(["./utils", "cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "
     row: Row,
     eventhandler: Eventhandler,
     selection: Selection,
-    zoombar: ZoomBar,
+    zoombar: ZoomBar, 
+    stage: stage,
   };
 });
