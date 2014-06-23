@@ -34,3 +34,22 @@ define ["cs!msa/selection/selectionlist"],(SelectionList) ->
     cleanup: ->
       @changeSel(undefined)
 
+    # TODO: split int two methods
+    getInvolvedSeqs: ->
+      if @currentSelection?
+        name = @currentSelection.__proto__.constructor.name
+        return @msa.seqs if name is "VerticalSelection"
+        return [@msa.seqs[@currentSelection.id]] if name is "HorizontalSelection" or name is
+        "PositionSelection"
+
+        if name is "SelectionList"
+          seqs = []
+          for key,sel of @currentSelection._sels
+            name = sel.__proto__.constructor.name
+            if name is "HorizontalSelection" or name is "PositionSelection"
+              seqs.push @msa.seqs[sel.id]
+          return seqs
+      else
+        console.log "no involved seqs"
+        return undefined
+

@@ -78,6 +78,14 @@ define([], function(){
       ("0" + parseInt(rgb[3],10).toString(16)).slice(-2);
   };
 
+  Utils.splitNChars = function(txt, num) {
+    var result = [];
+    for (var i = 0; i < txt.length; i += num) {
+      result.push(txt.substr(i, num));
+    }
+    return result;
+  };
+
   // count a associative array
   Object.size = function(obj) {
     var size = 0, key;

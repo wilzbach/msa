@@ -4,7 +4,7 @@ define [], ->
     isList: true
 
     constructor: ->
-      @_sels = []
+      @_sels =  {}
 
     addSelection: (sel) ->
       eId = sel.getId()
