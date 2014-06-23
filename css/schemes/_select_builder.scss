@@ -3,7 +3,7 @@ $residuesSelected:  map-merge($residues, $residuesSelected);
 
 .biojs-msa-schemes-#{$schemeName}{
 @each $key,$value in $residues{
-	.biojs-msa-aa-#{$key}-selected {
+	.biojs-msa-aa-#{$key} {
 		background-color: rgba($value,$normalOpacity);
 	}
 	.biojs-msa-aa-#{$key}-selected {
