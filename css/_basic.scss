@@ -10,15 +10,9 @@
 	vertical-align:top;
 }
 
-.biojs_msa_marker{
-	color:grey;
-	font-size:10px;
-	white-space: nowrap;
-	cursor: pointer;
-}
-
-.biojs_msa_marker span{
-	text-align: center;
+.biojs_msa_labels-special {
+	color:red;
+	font-weight: bold;
 }
 
 .biojs_msa_single_residue{

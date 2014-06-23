@@ -31,6 +31,12 @@ define ["msa/utils", "msa/selection/main"],(Utils, selection) ->
         if nMax is 0
           nMax = @msa.zoomer.getMaxLength
 
+        # special markers
+        if @msa.plugs.marker.specials?
+          specialCounter = 0
+        else
+          specialCounter = -1
+
         while n < nMax
           residueSpan = document.createElement("span")
           residueSpan.textContent = n
@@ -40,7 +46,6 @@ define ["msa/utils", "msa/selection/main"],(Utils, selection) ->
           residueSpan.stepPos = n / stepSize
 
           residueSpan.addEventListener "click", (evt) =>
-            console.log "hi there"
             @msa.selmanager.handleSel new selection.VerticalSelection(@msa,
               evt.target.rowPos, evt.target.stepPos), evt
           , false
@@ -50,6 +55,11 @@ define ["msa/utils", "msa/selection/main"],(Utils, selection) ->
               @msa.selmanager.changeSel new selection.VerticalSelection(@msa,
                 evt.target.rowPos, evt.target.stepPos), evt
             ), false
+
+          if specialCounter isnt -1
+            if @msa.plugs.marker.specials[specialCounter] is n
+              residueSpan.className = "biojs_msa_marker-special"
+              specialCounter++
 
           # color it nicely
           @msa.colorscheme.colorColumn residueSpan, n

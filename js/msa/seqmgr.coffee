@@ -27,17 +27,3 @@ define ["cs!msa/sequence", "msa/row", "msa/selection/main",
     addDummySequences: ->
       @msa.addSeqs SeqManager.getDummySequences()
       @msa._draw()
-
-
-    @exportFasta: (seqs) ->
-
-      text = ""
-      for seqObj in seqs
-        seq = seqObj.tSeq
-        #FASTA header
-        text += ">#{seq.name}\n"
-        # seq
-        text += (Utils.splitNChars seq.seq, 80).join "\n"
-
-        text += "\n"
-      return text
