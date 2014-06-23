@@ -1,5 +1,6 @@
 define ["cs!msa/sequence", "msa/row", "msa/selection/main",
-          "cs!utils/bmath"], (Sequence, Row, selection, BMath) ->
+          "cs!utils/bmath", "msa/utils"], (Sequence, Row, selection, BMath,
+          Utils) ->
 
   class SeqManager
 
@@ -27,3 +28,16 @@ define ["cs!msa/sequence", "msa/row", "msa/selection/main",
       @msa.addSeqs SeqManager.getDummySequences()
       @msa._draw()
 
+
+    @exportFasta: (seqs) ->
+
+      text = ""
+      for seqObj in seqs
+        seq = seqObj.tSeq
+        #FASTA header
+        text += ">#{seq.name}\n"
+        # seq
+        text += (Utils.splitNChars seq.seq, 80).join "\n"
+
+        text += "\n"
+      return text

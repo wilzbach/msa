@@ -9,6 +9,7 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       @menu.appendChild @_createFileSchemeMenu()
       @menu.appendChild @_createColorSchemeMenu()
       @menu.appendChild @_createOrderingMenu()
+      @menu.appendChild @_createExportMenu()
       @menu.appendChild document.createElement("p")
 
     deleteMenu: ->
@@ -38,34 +39,53 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
       menuFile.addNode "Hide Menu", =>
         @deleteMenu()
 
-      menuFile.addNode "Export image", =>
+      menuFile.buildDOM()
+
+    _createExportMenu: ->
+      menuExport = new MenuBuilder("Export")
+
+      menuExport.addNode "Export all", =>
+        # limit at about 256k
+        require ["saveAs", "cs!export/fasta"], (saveAs, FastaExporter) =>
+          access = (seq) -> seq.tSeq
+          text = FastaExporter.export @msa.seqs,access
+          blob = new Blob([text], {type : 'text/plain'})
+          saveAs blob, "all.fasta"
+
+      menuExport.addNode "Export selection", =>
+        require ["saveAs", "cs!export/fasta"], (saveAs, FastaExporter) =>
+          selection = @msa.selmanager.getInvolvedSeqs()
+          unless selection?
+            selection = @msa.seqs
+            console.log "no selection found"
+          access = (seq) -> seq.tSeq
+          text = FastaExporter.export selection,access
+          blob = new Blob([text], {type : 'text/plain'})
+          saveAs blob, "all.fasta"
+
+      menuExport.addNode "Export image", =>
         console.log "trying to render"
-        require ["html2canvas"], (HTML2canvas) =>
+        require ["html2canvas", "saveAs"], (HTML2canvas, saveAs) =>
           HTML2canvas @msa.container, {
             onrendered: (canvas) =>
-              console.log "rendered"
-              #@msa.container.appendChild canvas
-              aLink = document.createElement "a"
-              aLink.href = canvas.toDataURL()
+              #url = canvas.toDataURL()
               # only for some browsers
-              #aLink.href = canvas.toDataURL("image/jpeg")
-              aLink.download = "msa.png" # Setup name file
-              aLink.href = aLink.href.replace( /// # cs heregexes
-              /^data[:]image\/(png|jpg|jpeg)[;]/i
-              ///, "data:application/octet-stream;")
+              #url = canvas.toDataURL("image/jpeg")
+              #url = url.replace( /// # cs heregexes
+              #/^data[:]image\/(png|jpg|jpeg)[;]/i
+              #///, "data:application/octet-stream;")
 
-              aLink.textContent = "save locally"
-              aLink.target = "_blank"
-              #window.location.href aLink.href
-              @msa.container.appendChild aLink
+              canvas.toBlob( (blob) ->
+                saveAs blob, "biojs-msa.png"
+              , "image/png")
+
+              #win = window.open url, '_blank'
           }
         , ->
           # on module loading error
           console.log "couldn't load HTML2canvas"
 
-
-      menuFile.buildDOM()
-      menuFile.buildDOM()
+      menuExport.buildDOM()
 
     _createColorSchemeMenu: ->
       menuColor = new MenuBuilder("Color scheme")
