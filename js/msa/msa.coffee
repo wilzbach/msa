@@ -37,8 +37,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       @addSeqs seqsInit if seqsInit?
 
-      # TODO: rect select
-      #@plugs.push  new RectangularSelect()
+      if @config.allowRectSelect
+        @plugs["rect_select"] = new selection.RectangularSelect this
 
       # post hooks
       if @config.registerMoveOvers
@@ -108,7 +108,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
       defaultConf = {
         visibleElements: {
           labels: true, seqs: true, menubar: true, ruler: true,
-          features: false
+          features: false,
+          allowRectSelect: false,
         },
         registerMoveOvers: false,
         autofit: true,

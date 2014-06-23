@@ -2,7 +2,8 @@ define [], ->
   class RegionSelect
 
     constructor: (@msa, @_y, @_column, @_width, @_height) ->
-      undefined
+      if not @_y? or not @_column?
+        throw new Error "invalid selection coordinates"
 
     getId: ->
       return "x{@_id}y{@_column}w{@_width}h{@_height}"
@@ -21,4 +22,5 @@ define [], ->
         for col in [@_column .. @_column + @_width]
 
           singleResidue = curSeq.layer.children[1].children[@_column]
-          colorCall singleResidue,curSeq.tSeq,col
+          @msa.colorscheme.colorResidue singleResidue,curSeq.tSeq,col
+          console.log singleResidue
