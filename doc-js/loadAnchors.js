@@ -16,7 +16,11 @@ require(["jquery"], function(jQuery){
       var name = e.textContent.trim();
       name = convertToSlug(name);
       e.id = name;
-      h3.append("<a name="+name+"> </a><a class='h-anchor' href='#" + name + "'> #</a>");
+      h3.append("<a name="+name+"> </a><a class='h-anchor' href='#" + name + "' target='_self'> #</a>");
    });
+    jQuery('.trello-link').each(function(i, e) {
+      var links = jQuery(e);
+      e.target = "_blank";
+    });
   });
 });

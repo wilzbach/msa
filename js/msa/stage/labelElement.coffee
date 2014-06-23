@@ -17,6 +17,9 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
       else
         label.textContent = ""
 
+      if tSeq.special? is true
+        label.className += " biojs_msa_labels-special"
+
       @msa.colorscheme.colorLabel label,tSeq
 
     redraw: (el,row,textVisibilityChanged) ->
