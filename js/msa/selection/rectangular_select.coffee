@@ -15,7 +15,7 @@ define [], ->
       @msa.container.addEventListener 'mousedown',@onMouseDown
       @msa.container.addEventListener 'mouseup',@onMouseUp
 
-      @rectangularSelect
+      return @rectangularSelect
 
     # always returns the same element
     draw: ->

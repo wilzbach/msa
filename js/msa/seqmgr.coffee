@@ -24,6 +24,6 @@ define ["cs!msa/sequence", "msa/row", "msa/selection/main",
         i)
       return seqs
 
-    addDummySequences: ->
-      @msa.addSeqs SeqManager.getDummySequences()
+    addDummySequences: (len,seqLen) ->
+      @msa.addSeqs SeqManager.getDummySequences(len,seqLen)
       @msa._draw()
