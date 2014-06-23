@@ -1,4 +1,4 @@
-require(["cs!msa/msa", "msa/sequence"], function (MSA, Sequence) {
+require(["cs!msa/msa", "cs!msa/sequence"], function (MSA, Sequence) {
 
   var msa = new MSA('msa-ordering');
   msa.log.setConsole('msa-ordering-console');

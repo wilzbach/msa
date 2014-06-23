@@ -1,4 +1,4 @@
-define(["./utils", "cs!./msa","cs!./colorator", "./sequence", "cs!./ordering", "./menu/main",
+define(["./utils", "cs!./msa","cs!./colorator", "cs!./sequence", "cs!./ordering", "./menu/main",
     "./row", "cs!./eventhandler", "./selection/main" , "cs!./zoombar", "./stage/main"], 
     function(Utils,Msa,Colorator, Sequence, Ordering, Menu,
        Row, Eventhandler, Selection, ZoomBar, stage) {

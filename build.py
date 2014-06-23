@@ -219,12 +219,12 @@ def replaceCodeElements(body,oFile,removeRequired=False):
             print(len(groups))
 
         # recognize internal scripts
-        regex = re.compile(r'(\[.*\])')
+        regex = re.compile(r'(\[.*\])', re.MULTILINE  | re.DOTALL)
         headerFiles = regex.search(headerGroup).groups()[0]
         headerFiles = json.loads(headerFiles)
 
         # recognize vars
-        regex = re.compile(r'function[ ]*\((.*)\)')
+        regex = re.compile(r'function[ ]*\((.*)\)', re.MULTILINE  | re.DOTALL)
         headerVars = regex.search(headerGroup).groups()[0].split(",")
         headerVars = [x.strip(' ') for x in headerVars]
 

@@ -1,4 +1,4 @@
-define ["msa/utils", "msa/row", "./main"], (Utils, Row,stage) ->
+define ["msa/utils", "msa/row", "./main", "cs!msa/feature"], (Utils, Row,stage, Feature) ->
 
   class Stage
 
@@ -13,6 +13,9 @@ define ["msa/utils", "msa/row", "./main"], (Utils, Row,stage) ->
 
       if @msa.config.visibleElements.seqs
         @elements.push new stage.seqElement @msa
+
+      if @msa.config.visibleElements.features
+        @elements.push new stage.featureElement @msa
 
     _createContainer: ->
       # TODO: remove old canvas
@@ -54,10 +57,10 @@ define ["msa/utils", "msa/row", "./main"], (Utils, Row,stage) ->
       layer = document.createElement "div"
 
       for el in @elements
-        layer.appendChild el.create row.tSeq
+        layer.appendChild el.create row
 
       layer.className = "biojs_msa_layer"
-      layer.style.height = "#{@msa.zoomer.columnHeight}px"
+      #layer.style.height = "#{@msa.zoomer.columnHeight}px"
 
       row.layer = layer
 
@@ -104,7 +107,10 @@ define ["msa/utils", "msa/row", "./main"], (Utils, Row,stage) ->
       for key,curRow of @msa.seqs
         currentLayer = curRow.layer
         # TODO: redundant
-        currentLayer.style.height = "#{@msa.zoomer.columnHeight}px"
+        #currentLayer.style.height = "#{@msa.zoomer.columnHeight}px"
 
         for i in [0..@elements.length - 1] by 1
-          @elements[i].redraw currentLayer.childNodes[i], curRow.tSeq, textVisibilityChanged
+          if currentLayer.childNodes[i]?
+            @elements[i].redraw currentLayer.childNodes[i], curRow, textVisibilityChanged
+          else
+            console.log "a plugin wasn't loaded yet."
