@@ -1,0 +1,14 @@
+// overwrite only changed selection colors
+$residuesSelected:  map-merge($residues, $residuesSelected);
+
+.biojs-msa-schemes-#{$schemeName}{
+@each $key,$value in $residues{
+	.biojs-msa-aa-#{$key}-selected {
+		background-color: rgba($value,$normalOpacity);
+	}
+	.biojs-msa-aa-#{$key}-selected {
+		color: #{$value};
+		background-color: rgba(map-get($residuesSelected,$key),$selectedOpacity);
+	}
+}
+}
