@@ -1,4 +1,4 @@
-define ["msa/utils", "msa/row", "./main", "cs!msa/feature"], (Utils, Row,stage, Feature) ->
+define ["msa/utils", "msa/row", "msa/stage/main", "cs!msa/feature"], (Utils, Row,stage, Feature) ->
 
   class Stage
 
