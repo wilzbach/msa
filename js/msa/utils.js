@@ -54,11 +54,20 @@ define([], function(){
 
   Utils.hex2rgb = function(hex){
     var bigint = parseInt(hex, 16);
-    var r = (bigint >> 16) & 255;
-    var g = (bigint >> 8) & 255;
-    var b = bigint & 255;
-
-    return {"r":r ,"g": g ,"b": b};
+    if( !isNaN(bigint)){
+      var r = (bigint >> 16) & 255;
+      var g = (bigint >> 8) & 255;
+      var b = bigint & 255;
+      return {"r":r ,"g": g ,"b": b};
+    }else{
+      if( hex === "red"){
+        return {"r":255 ,"g": 0 ,"b": 0};
+      } else if( hex === "green"){
+        return {"r":0,"g": 255 ,"b": 0};
+      } else if( hex === "blue"){
+        return {"r":0,"g": 0 ,"b": 255};
+      }
+    }
   };
 
   Utils.rgb2hex = function (rgb){

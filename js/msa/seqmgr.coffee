@@ -1,4 +1,4 @@
-define ["cs!seq", "msa/row", "msa/selection/main",
+define ["cs!msa/sequence", "msa/row", "msa/selection/main",
           "cs!utils/bmath"], (Sequence, Row, selection, BMath) ->
 
   class SeqManager
@@ -13,7 +13,7 @@ define ["cs!seq", "msa/row", "msa/selection/main",
         text += possible.charAt Math.floor(Math.random() * possible.length)
       return text
 
-    getDummySequences: (len, seqLen) ->
+    @getDummySequences: (len, seqLen) ->
       seqs = []
       len = BMath.getRandomInt 3,5 unless len?
       seqLen = BMath.getRandomInt 50,200 unless seqLen?
@@ -24,6 +24,6 @@ define ["cs!seq", "msa/row", "msa/selection/main",
       return seqs
 
     addDummySequences: ->
-      @msa.addSeqs @getDummySequences()
+      @msa.addSeqs SeqManager.getDummySequences()
       @msa._draw()
 

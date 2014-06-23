@@ -41,6 +41,15 @@
   border: 1px dotted #000;
   position: absolute; }
 
+.biojs-msa-feature {
+  display: block; }
+
+.biojs-msa-feature-row {
+  display: block; }
+
+.biojs-msa-feature-row span {
+  display: inline-block; }
+
 .biojs_msa_menubar .biojs_msa_menubar_alink {
   background: #3498db;
   background-image: -webkit-linear-gradient(top, #3498db, #2980b9);

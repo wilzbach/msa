@@ -19,7 +19,8 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
 
       #@msa.colorscheme.colorResidue residue,tSeq, residue.rowPos
 
-    redraw: (el,tSeq,textVisibilityChanged) ->
+    redraw: (el,row,textVisibilityChanged) ->
+      tSeq = row.tSeq
       @redrawDiv el, tSeq
 
       if textVisibilityChanged
@@ -32,7 +33,8 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
       @msa.colorscheme.colorRow row, tSeq.id
       row.className += " biojs-msa-stage-level" + @msa.zoomer.level
 
-    create: (tSeq) ->
+    create: (row) ->
+      tSeq = row.tSeq
       residueGroup = document.createDocumentFragment()
       n = 0
 

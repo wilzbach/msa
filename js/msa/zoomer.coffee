@@ -36,7 +36,7 @@ define [], ->
 
     getStepSize: ->
       stepSize = 1
-      stepSize = 2  if @columnWidth <= 10
+      stepSize = 2  if @columnWidth <= 15
       stepSize = 5  if @columnWidth <= 5
       stepSize = 10  if @columnWidth is 2
       stepSize = 20  if @columnWidth is 1
