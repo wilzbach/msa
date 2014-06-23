@@ -89,12 +89,19 @@ def main():
     if not which("scss"):
         print("no scss compiler installer");
     else:
+        subprocess.call(["scss","-v"])
+
         for file in os.listdir(cssFolder):
             if file.endswith(".scss") and not file[0] == "_":
                 inFile = path.join(cssFolder, file)
                 outFile = path.join(cssBuildFolder, file[:-5]+".css")
                 print("SCSS: %s -> %s" %(inFile, outFile))
-                subprocess.call(["scss",inFile,outFile])
+                p = subprocess.Popen(["scss",inFile,outFile],stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                stdout, stderr = p.communicate()
+                if stdout:
+                    print(stdout)
+                if stderr:
+                    print("Error %s" % stderr)
 
     # copy operations
     print("Copying static files and libs")
