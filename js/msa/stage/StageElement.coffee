@@ -5,10 +5,10 @@ define [], ->
       undefined
 
     width: (n) ->
+      return 0
+
+    redraw: (el,row,textVisibilityChanged) ->
       undefined
 
-    redraw: (el,tSeq,textVisibilityChanged) ->
-      undefined
-
-    create: ->
+    create: (row) ->
       undefined

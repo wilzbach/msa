@@ -19,10 +19,12 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
 
       @msa.colorscheme.colorLabel label,tSeq
 
-    redraw: (el,tSeq,textVisibilityChanged) ->
-      @_setLabelPosition el,tSeq
+    redraw: (el,row,textVisibilityChanged) ->
+      @_setLabelPosition el,row.tSeq
 
-    create: (tSeq) ->
+    create: (row) ->
+      tSeq = row.tSeq
+
       labelGroup = document.createElement("span")
       labelGroup.seqid = tSeq.id
       labelGroup.className = "biojs_msa_labels"

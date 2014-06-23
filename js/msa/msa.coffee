@@ -23,7 +23,6 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
       @seqs = []
       @seqmgr = new SeqMgr(this)
 
-
       @plugs = {}
       @plugsDOM = {}
 
@@ -88,6 +87,7 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
       newDOM = @plugs[plugin].draw()
 
       plugDOM= @plugsDOM[plugin]
+      # better use container than parentNode
       plugDOM.parentNode.replaceChild newDOM, plugDOM
 
       @plugsDOM[plugin] = newDOM
@@ -107,7 +107,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       defaultConf = {
         visibleElements: {
-          labels: true, seqs: true, menubar: true, ruler: true
+          labels: true, seqs: true, menubar: true, ruler: true,
+          features: false
         },
         registerMoveOvers: false,
         autofit: true,
