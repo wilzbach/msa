@@ -17,7 +17,7 @@ import subprocess
 import shutil
 import argparse
 
-devFiles = ["msa.html"]
+devFiles = ["msa.html", "msa_speed.html"]
 buildDir = "build"
 externalLibs = ["jquery"]
 libName = "biojs"
