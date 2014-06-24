@@ -3,13 +3,15 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
   class CanvasStage extends stage.stage
 
     constructor: (@msa) ->
+      @msa.zoomer.setZoomLevel 1
 
     width: ->
       0
 
     draw: ->
 
-      if @canvas?
+      #if @canvas?
+      if false
         console.log "canvas is there"
       else
         @_createCanvas()
@@ -26,7 +28,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
           colors[key] = []
 
         pos = 0
-        seqs = @msa.seqs.slice 0,999
+        seqs = @msa.seqs.slice 0,1999
         console.log seqs[0].tSeq.name
 
         for key,value of seqs
@@ -62,13 +64,12 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
         console.log "Calc rects: #{(new Date().getTime() - start)} ms"
         start = new Date().getTime()
 
-        @msa.zoomer.setZoomLevel 1
 
         height = @msa.zoomer.columnHeight
         width = @msa.zoomer.columnWidth
 
-        height = 1
-        width = 1
+        #height = 1
+        #width = 1
 
         for residue,color of CanvasStage.taylorColors
           @ctx.fillStyle = "#" + color
@@ -93,7 +94,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
       @canvas = document.createElement "canvas"
       @canvas.width = @msa.zoomer.getMaxLength()
       @canvas.height = @msa.seqs.length
-      @canvas.height = 300
+      @canvas.height = 1000
       @ctx = @canvas.getContext "2d"
       @canvas.setAttribute "id","#{@globalID}_canvas"
 

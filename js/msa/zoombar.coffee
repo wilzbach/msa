@@ -1,13 +1,17 @@
 define [], ->
   class ZoomBar
 
-    constructor: (@msa) ->
+    constructor: (@msa, min, max) ->
       zoomForm = document.createElement("form")
       zoomSlider = document.createElement("input")
       zoomSlider.type = "range"
       zoomSlider.name = "points"
-      zoomSlider.min = 1
-      zoomSlider.max = 30
+
+      min = 1 unless min?
+      max = 30 unless max?
+
+      zoomSlider.min = min
+      zoomSlider.max = max
       zoomSlider.style.width = "60%"
 
       zoomSlider.value = @msa.zoomer.level
@@ -33,7 +37,7 @@ define [], ->
       @msa.zoomer.setZoomLevel(value)
       @msa.config.autofit = false
       @msa.redraw('stage')
-      @msa.redraw('marker')
+      #@msa.redraw('marker')
       @locked = false
 
     draw: ->
