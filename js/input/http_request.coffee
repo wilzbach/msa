@@ -8,14 +8,16 @@ define [], ->
           # 0 is returned by PhantomJS
           successResultCodes = [0,200, 304]
           if req.status in successResultCodes
-            text = req.responseText
-            callback text
+            end = new Date().getTime()
+            console.log "XMLHttpRequest time: #{(end-req.start)} ms"
+            callback req.responseText
           else
             console.log req.status
             console.log 'Error loading data...'
 
       # prevent xml parsing by Firefox
       req.overrideMimeType 'text/plain'
+      req.start = new Date().getTime()
       req.open "GET", url,true
       req.send()
 

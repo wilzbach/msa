@@ -60,7 +60,7 @@ define [], ->
       else
         # increase as long as possible
         @setZoomLevel level
-        while @msa.stage.width(@len) < @_width or level is 200
+        while @msa.stage.width(@len) < @_width and level <= 100
           level++
           @setZoomLevel level
 

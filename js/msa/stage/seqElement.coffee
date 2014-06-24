@@ -15,7 +15,7 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
       if @msa.zoomer.isTextVisible()
         residue.textContent = tSeq.seq[residue.rowPos]
       else
-        residue.textContent = " "
+        residue.textContent = ""
 
       #@msa.colorscheme.colorResidue residue,tSeq, residue.rowPos
 
@@ -36,6 +36,7 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
     create: (row) ->
       tSeq = row.tSeq
       residueGroup = document.createDocumentFragment()
+      spanGlobal = document.createElement("span")
       n = 0
 
 
@@ -44,11 +45,12 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
         residueSpan.rowPos = n
         @setResiduePosition residueSpan,tSeq
 
-        residueSpan.addEventListener "click", ((evt) =>
-          id = evt.target.parentNode.seqid
-          selPos = new selection.PositionSelect(@msa, id, evt.target.rowPos)
-          @msa.selmanager.handleSel selPos, evt
-        ), false
+        unless @msa.config.speed
+          residueSpan.addEventListener "click", ((evt) =>
+            id = evt.target.parentNode.seqid
+            selPos = new selection.PositionSelect(@msa, id, evt.target.rowPos)
+            @msa.selmanager.handleSel selPos, evt
+          ), false
 
         if @msa.config.registerMoveOvers
           residueSpan.addEventListener "mouseover", ((evt) =>
@@ -58,13 +60,13 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
           ), false
 
         # color it nicely
+        #unless @msa.config.speed
         @msa.colorscheme.colorResidue residueSpan, tSeq, n
-        residueGroup.appendChild residueSpan
+        spanGlobal.appendChild residueSpan
 
-      residueSpan = document.createElement("span")
       residueSpan.seqid = tSeq.id
 
-      @redrawDiv residueSpan, tSeq
-      residueSpan.appendChild residueGroup
+      @redrawDiv spanGlobal, tSeq
+      #residueSpan.appendChild residueGroup
 
-      return residueSpan
+      return spanGlobal

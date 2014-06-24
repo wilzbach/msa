@@ -3,7 +3,11 @@ define ["cs!input/http_request"], (HttpRequest) ->
 
     @read: (url, callback) ->
       onret = (text) => @_onRetrieval(text,callback)
-      HttpRequest.fetch(url, onret, callback)
+      HttpRequest.fetch(url, onret)
 
     @_onRetrieval: (text, callback) ->
-      return callback(@parse(text))
+      start = new Date().getTime()
+      rText = @parse(text)
+      end = new Date().getTime()
+      console.log "Parsing time: #{(end - start)} ms"
+      callback rText
