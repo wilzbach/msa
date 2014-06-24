@@ -14,11 +14,12 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa","cs!msa/zoombar"], function ($
 
     var msa = new MSA('msa-speed',seqs, {speed: true, visibleElements: { ruler: false }});
     msa.log.setConsole('msa-speed-console');
-    //msa.addPlugin(new ZoomBar(msa), "0_zoombar");
+    msa.addPlugin(new ZoomBar(msa,1,5), "0_zoombar");
 
     var end = new Date().getTime();
     console.log("Rendering time: " + (end-start) + " ms");
 
+    /*
     Node.prototype.countChildNodes = function() {
     return this.hasChildNodes()
       ? Array.prototype.slice.apply(this.childNodes).map(function(el) {
@@ -29,6 +30,7 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa","cs!msa/zoombar"], function ($
       : 0;
       };
     msa.log.log("DOM elements" + document.getElementById("msa-speed").countChildNodes());
+    */
 
   });
 });
