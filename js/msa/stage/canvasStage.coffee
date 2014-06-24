@@ -26,7 +26,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
           colors[key] = []
 
         pos = 0
-        seqs = @msa.seqs
+        seqs = @msa.seqs.slice 0,999
         console.log seqs[0].tSeq.name
 
         for key,value of seqs
@@ -93,7 +93,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
       @canvas = document.createElement "canvas"
       @canvas.width = @msa.zoomer.getMaxLength()
       @canvas.height = @msa.seqs.length
-      #@canvas.height = 300
+      @canvas.height = 300
       @ctx = @canvas.getContext "2d"
       @canvas.setAttribute "id","#{@globalID}_canvas"
 
