@@ -1,8 +1,9 @@
 define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
   "cs!msa/eventhandler", "msa/selection/main", "cs!msa/zoomer",
-  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage/stage", "cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
+  "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage/domStage",
+  "cs!msa/stage/canvasStage","cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
   Ordering, Utils, Eventhandler, selection, Zoomer, SeqMgr, Logger,
-  Stage, SeqMarker, arrays) ->
+  DomStage, CanvasStage, SeqMarker, arrays) ->
 
   class MSA
 
@@ -32,7 +33,10 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
         @plugs["marker"] = @marker
 
       # essential stage
-      @stage =  new Stage this
+      if @config.speed
+        @stage =  new CanvasStage this
+      else
+        @stage =  new DomStage this
       @plugs["stage"] = @stage
 
       @addSeqs seqsInit if seqsInit?
@@ -74,7 +78,12 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
       # load plugins
       for key in plugsSort
         entry = @plugs[key]
+
+        start = new Date().getTime()
         node = entry.draw()
+        end = new Date().getTime()
+        console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
+
         if node
           frag.appendChild node
           @plugsDOM[key] = node
@@ -110,6 +119,7 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
           labels: true, seqs: true, menubar: true, ruler: true,
           features: false,
           allowRectSelect: false,
+          speed: false,
         },
         registerMoveOvers: false,
         autofit: true,
