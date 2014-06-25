@@ -67,13 +67,13 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
 
     pauseEvent: (e) ->
-      e=e || window.event
+      e= window.event if not e?
       if e.stopPropagation
         e.stopPropagation()
       if e.preventDefault
         e.preventDefault()
-      e.cancelBubble=true
-      e.returnValue=false
+      e.cancelBubble = true
+      e.returnValue = false
       return false
 
 
@@ -228,15 +228,8 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
       tile = cx.getImageData 0,0,@tileSize,@tileSize
       @map[height][i][j] = tile
-      cx.clearRect(0, 0, @canvasTile.width, @canvasTile.height);
+      cx.clearRect(0, 0, @canvasTile.width, @canvasTile.height)
       return tile
-
-    getRandomColor: ->
-      letters = '0123456789ABCDEF'.split('')
-      color = '#'
-      for i in [0..5] by 1
-          color += letters[Math.floor(Math.random() * 16)]
-      color
 
     _createCanvas: ->
       @canvas = document.createElement "canvas"
