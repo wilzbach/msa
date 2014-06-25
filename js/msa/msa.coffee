@@ -1,9 +1,9 @@
 define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
   "cs!msa/eventhandler", "msa/selection/main", "cs!msa/zoomer",
   "cs!msa/seqmgr", "cs!msa/logger", "cs!msa/stage/domStage",
-  "cs!msa/stage/canvasStage","cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
+  "cs!msa/stage/canvasStage","cs!msa/stage/tileStage","cs!msa/seqmarker", "cs!utils/arrays"],(Colorator,
   Ordering, Utils, Eventhandler, selection, Zoomer, SeqMgr, Logger,
-  DomStage, CanvasStage, SeqMarker, arrays) ->
+  DomStage, CanvasStage, TilesStage, SeqMarker, arrays) ->
 
   class MSA
 
@@ -34,7 +34,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       # essential stage
       if @config.speed
-        @stage =  new CanvasStage this
+        #@stage =  new CanvasStage this
+        @stage =  new TilesStage this
       else
         @stage =  new DomStage this
       @plugs["stage"] = @stage
