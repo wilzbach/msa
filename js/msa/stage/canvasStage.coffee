@@ -10,6 +10,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
 
     draw: ->
 
+
       #if @canvas?
       if false
         console.log "canvas is there"
