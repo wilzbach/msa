@@ -36,6 +36,8 @@ QUnit.config.autoload = false;
 var testModules = ['../tests/test_clustal',
 	"cs!../tests/test_utils_str",
 	"cs!../tests/test_utils_arrays",
+	"cs!../tests/test_tiles_viewport",
+	"cs!../tests/test_tiles_dblclick",
 	"cs!../tests/test_fasta"];
 	//'cs!../tests/test_fasta']
 require(
@@ -52,7 +54,9 @@ require(
 <body>
 <div id="qunit"></div>
 <div id="qunit-fixture">
-<!-- all elements inside the fixture are resetted after each tests -->
+<!-- all elements inside the fixture are reseted after each tests -->
+
+<div id="msa"></div>
 
 </div>
 </body>
