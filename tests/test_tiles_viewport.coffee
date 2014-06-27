@@ -2,7 +2,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
 
   stage = null
 
-  module "tiles",
+  module "tiles.viewport",
     setup: ->
       stop()
       Fasta.read "../dummy/foo.fasta", (seqs) ->

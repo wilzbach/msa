@@ -5,7 +5,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
   testRangeEnd = 0
   testRangeStep = 5
 
-  module "tiles",
+  module "tiles.dblclick",
     setup: ->
       stop()
       #Fasta.read "../dummy/external/PF00072_rp15.txt", (seqs) =>
