@@ -57,7 +57,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
       @draglock = undefined
 
     _onMouseDown: (e) ->
-      [mouseX,mouseY]= getMouseCoords e
+      [mouseX,mouseY]= @getMouseCoords e
 
       unless @checkForEvents mouseX,mouseY
         @pauseEvent e
@@ -95,7 +95,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
       #  @rect = @canvas.getBoundingClientRect()
       @draglock = undefined
 
-      [mouseX,mouseY]= getMouseCoords e
+      [mouseX,mouseY]= @getMouseCoords e
 
       @moveCenter mouseX,mouseY
       @zoomCanvas @dblClickVx,@dblClickVy
@@ -150,9 +150,10 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
     checkForEvents: (mouseX, mouseY) ->
       for name,arr of @events
 
-        if (arr[0] <= mouseX and mouseX <= ar[2]) and
+        if (arr[0] <= mouseX and mouseX <= arr[2]) and
         (arr[1] <= mouseY and mouseY <= arr[3])
           arr[4]()
+      false
 
     checkPos: ->
       [@viewportX,@viewportY] = @_checkPos @viewportX,@viewportY
@@ -288,9 +289,12 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
       # zoom control
       @ctx.fillStyle = "red"
+      @ctx.globalAlpha = 0.5;
       @ctx.fillRect @canvas.width - 40, @canvas.height - 35,15,15
       callback = -> alert "hi"
-      @events.zoomIn = [@canvas.width - 40, @canvas.height - 35,15,15,callback]
+      @events.zoomIn = [@canvas.width - 40, @canvas.height - 35,@canvas.width -
+      25,@canvas.height - 20,callback]
+      @ctx.globalAlpha = 1
 
       @ctx.fillStyle = "blue"
       @ctx.fillRect @canvas.width - 40, @canvas.height - 20,15,15
