@@ -293,7 +293,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
       # zoom control
       @ctx.fillStyle = "red"
-      @ctx.globalAlpha = 0.5;
+      @ctx.globalAlpha = 0.5
       @ctx.fillRect @canvas.width - 40, @canvas.height - 35,15,15
       callback = -> alert "hi"
       @events.zoomIn = [@canvas.width - 40, @canvas.height - 35,@canvas.width -
