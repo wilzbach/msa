@@ -78,9 +78,13 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
       mouseX = e.offsetX
       mouseY = e.offsetY
 
-      unless e.offsetX?
+      unless mouseX?
         mouseX = e.layerX
         mouseY = e.layerY
+
+      unless mouseX?
+        mouseX = e.pageX
+        mouseY = e.pageY
 
       unless mouseX?
         console.log e
@@ -88,7 +92,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
         return
 
       # TODO: else
-      return [mouseX,mouseX]
+      return [mouseX,mouseY]
 
     _onDblClick: (e) ->
       #if not @rect? or @rect?.left is 0
