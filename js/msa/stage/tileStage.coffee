@@ -11,67 +11,69 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
       @tilesX = Math.ceil(@canvas.width / @tileSize)
       @tilesY = Math.ceil(@canvas.height / @tileSize)
 
-      console.log "#tiles x:" + @tilesX + ",y:" + @tilesY
+      #console.log "#tiles x:" + @tilesX + ",y:" + @tilesY
 
       @canvas.addEventListener "mousemove", (e) =>
-        @_onmousemove e
+        @_onMouseMove e
 
       @canvas.addEventListener "dblclick", (e) =>
         @_onDblClick e
 
+      @canvas.addEventListener "contextmenu", (e) =>
+        @_onContextMenu e
+
       @canvas.addEventListener "mousedown", (e) =>
-        return
-        @_onmousedown e
+        @_onMouseDown e
+
       @canvas.addEventListener "mouseup", (e) =>
-        @_onmouseup e
+        @_onMouseUp e
 
       @canvas.addEventListener "mouseout", (e) =>
-        @_onmouseout e
+        @_onMouseOut e
+
+      @events = {}
 
       @map = []
 
       @viewportX = 120
       @viewportY = 100
-      @dblClickVx = 1
-      @dblClickVy = 1
+      @dblClickVx = 2
+      @dblClickVy = 2
 
       #@animate()
       @timestamp = 0
 
-    _onmousemove: (e) ->
+    _onMouseMove: (e) ->
       if @dragStartX? and @draglock?
-        distX= e.pageX - @dragStartX
-        distY = e.pageY - @dragStartY
+        @moveCanvasDragEvent e
 
-        @viewportX = @dragViewStartX - distX
-        @viewportY = @dragViewStartY - distY
+    _onMouseUp: (e) ->
+      if @dragStartX? and @draglock?
+        @moveCanvasDragEvent e
 
-        @checkPos()
+      @draglock = undefined
 
-        #@draw()
-        console.log "#viewx:" + @viewportX + ",y:" + @viewportY
-        console.log "#tiles x:" + distX + ",y:" + distY
+    _onMouseOut: (e) ->
+      @draglock = undefined
+
+    _onMouseDown: (e) ->
+      [mouseX,mouseY]= getMouseCoords e
+
+      unless @checkForEvents mouseX,mouseY
         @pauseEvent e
+        @dragStartX = e.pageX
+        @dragStartY = e.pageY
+        @dragViewStartX = @viewportX
+        @dragViewStartY = @viewportY
+        @draglock = true
 
-    _onmouseup: (e) ->
-      @draglock = undefined
+    _onContextMenu: (e) ->
+      #TODO: only on dblclick
+      @zoomCanvas 1 / @dblClickVx, 1 / @dblClickVy
+      @draw()
 
-    _onmouseout: (e) ->
-      @draglock = undefined
-
-    _onmousedown: (e) ->
-      @pauseEvent e
-      @dragStartX = e.pageX
-      @dragStartY = e.pageY
-      @dragViewStartX = @viewportX
-      @dragViewStartY = @viewportY
-      @draglock = true
-
-    _onDblClick: (e) ->
-
-      #if not @rect? or @rect?.left is 0
-      #  @rect = @canvas.getBoundingClientRect()
-
+    # TODO: move to utils
+    getMouseCoords: (e) ->
       # center the view on double click
       mouseX = e.offsetX
       mouseY = e.offsetY
@@ -86,36 +88,71 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
         return
 
       # TODO: else
+      return [mouseX,mouseX]
 
-      centerX = Math.round( @viewportX + (mouseX) - (@canvas.width / 2) )
-      centerY = Math.round( @viewportY + (mouseY) - (@canvas.height / 2) )
+    _onDblClick: (e) ->
+      #if not @rect? or @rect?.left is 0
+      #  @rect = @canvas.getBoundingClientRect()
+      @draglock = undefined
 
-      height = @msa.zoomer.columnHeight
-      width = @msa.zoomer.columnWidth
-      @viewportX = centerX
-      @viewportY = centerY
-      @viewportX = Math.round(centerX / width * (width + @dblClickVx))
-      @viewportY = Math.round(centerY / height * (height + @dblClickVy))
+      [mouseX,mouseY]= getMouseCoords e
 
-
-      @msa.zoomer.columnWidth += @dblClickVx
-      @msa.zoomer.columnHeight += @dblClickVy
-      @refreshZoom()
-
-      @checkPos()
-
+      @moveCenter mouseX,mouseY
+      @zoomCanvas @dblClickVx,@dblClickVy
       @draw()
 
-      @msa.log.log "viewportX:" + @viewportX + ",viewportY:" + @viewportY
+      #console.log "#mouse:" + mouseX + ",y:" + mouseY
+      #console.log "#viewix:" + @viewportX + ",y:" + @viewportY
 
-      @ctx.fillStyle = "#ff0000"
-      @ctx.fillRect mouseX,mouseY,10,10
-      @ctx.fillRect @canvas.width/2,0,1,@canvas.height
+    moveCanvasDragEvent: (e) ->
+      distX = e.pageX - @dragStartX
+      distY = e.pageY - @dragStartY
 
-      console.log "#mouse:" + mouseX + ",y:" + mouseY
-      #console.log "#center:" + centerX + ",y:" + centerY
-      console.log "#viewix:" + @viewportX + ",y:" + @viewportY
-      @draglock = undefined
+      @viewportX = @dragViewStartX - distX
+      @viewportY = @dragViewStartY - distY
+
+      @checkPos()
+      @draw()
+      @pauseEvent e
+
+    # moves the center of the canvas to relative x,y
+    moveCenter: (mouseX,mouseY) ->
+
+      @viewportX = Math.round( @viewportX + (mouseX) - (@canvas.width / 2) )
+      @viewportY = Math.round( @viewportY + (mouseY) - (@canvas.height / 2) )
+
+      #TODO: do we need to check here -> redundant with zoomer
+      @checkPos()
+
+    # this rescales the center for vx and vy
+    zoomCanvas: (vx, vy) ->
+
+      newVx = @msa.zoomer.columnWidth * vx
+      newVy = @msa.zoomer.columnHeight * vy
+
+      if newVx < 1 or newVy < 1
+        console.log "invalid zoom level - x:" + newVx + "y:" + newVy
+      else
+        if vx isnt 0
+          @viewportX = Math.round(@viewportX / @msa.zoomer.columnWidth * (newVy))
+        if vy isnt 0
+          @viewportY = Math.round(@viewportY / @msa.zoomer.columnHeight * (newVx))
+
+        @msa.zoomer.columnWidth += vx
+        @msa.zoomer.columnHeight += vy
+
+        @refreshZoom()
+
+        #TODO: do we need to check here -> redundant with zoomer
+        @checkPos()
+
+    # goes through all events all checks for callbacks
+    checkForEvents: (mouseX, mouseY) ->
+      for name,arr of @events
+
+        if (arr[0] <= mouseX and mouseX <= ar[2]) and
+        (arr[1] <= mouseY and mouseY <= arr[3])
+          arr[4]()
 
     checkPos: ->
       [@viewportX,@viewportY] = @_checkPos @viewportX,@viewportY
@@ -239,8 +276,6 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
           else
             tile = @drawTile mapX,mapY
 
-          #@ctx.fillStyle = "red"
-          #@ctx.fillRect i * @tileSize, j * @tileSize,@tileSize,@tileSize
           #@ctx.fillRect tileX,tileY,@tileSize,@tileSize
           #@ctx.putImageData tile,0,0,tileX,tileY,@tileSize,@tileSize
 
@@ -248,6 +283,18 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
           #console.log "tile i:" + tileX + ",j:" + tileY
           @ctx.putImageData tile,tileX,tileY
           #@ctx.drawImage tile,tileX,tileY
+
+      # control overlays
+
+      # zoom control
+      @ctx.fillStyle = "red"
+      @ctx.fillRect @canvas.width - 40, @canvas.height - 35,15,15
+      callback = -> alert "hi"
+      @events.zoomIn = [@canvas.width - 40, @canvas.height - 35,15,15,callback]
+
+      @ctx.fillStyle = "blue"
+      @ctx.fillRect @canvas.width - 40, @canvas.height - 20,15,15
+      @events.zoomOut = [@canvas.width - 40, @canvas.height - 20,15,15,callback]
 
       return @canvasWrapper
 
@@ -331,6 +378,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
       @canvas.id = "can"
       @ctx = @canvas.getContext "2d"
       @canvas.setAttribute "id","#{@globalID}_canvas"
+      @canvas.style.cursor  = "move"
 
       @canvasWrapper = document.createElement "div"
       @canvasWrapper.appendChild @canvas
