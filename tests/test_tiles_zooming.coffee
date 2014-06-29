@@ -19,17 +19,17 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         start()
 
   test "zoom in middle", ->
-    stage._onDblClick {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
+    stage.evtHdlr._onDblClick {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
     equal stage.viewportX, xStart * 2, "xView"
     equal stage.viewportY, yStart * 2, "yView"
 
   test "zoom in and out", ->
-    stage._onDblClick {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
-    stage._onContextMenu {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
+    stage.evtHdlr._onDblClick {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
+    stage.evtHdlr._onContextMenu {offsetX: stage.canvas.width / 2, offsetY: stage.canvas.height / 2}
     equal stage.viewportX, xStart, "xView"
     equal stage.viewportY, yStart, "yView"
 
   test "zoom in right", ->
-    stage._onDblClick {offsetX: stage.canvas.width, offsetY: stage.canvas.height}
+    stage.evtHdlr._onDblClick {offsetX: stage.canvas.width, offsetY: stage.canvas.height}
     equal stage.viewportX, (xStart + stage.canvas.width / 2) * 2, "xView"
     equal stage.viewportY, (13) * 2, "yView"

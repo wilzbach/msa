@@ -1,6 +1,7 @@
 define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
 
   stage = null
+  evtHdlr = null
   testRangeStart = 0
   testRangeEnd = 0
   testRangeStep = 5
@@ -14,6 +15,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         stage = msa.stage
         stage.dblClickVx = 0
         stage.dblClickVy = 0
+        evtHdlr = stage.evtHdlr
         start()
 
   stageTest = (callback) ->
@@ -31,7 +33,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         stage.viewportY = startX
 
         # total left
-        stage._onDblClick {offsetX: 0, offsetY: 0}
+        evtHdlr._onDblClick {offsetX: 0, offsetY: 0}
 
         valX = Math.round startX - stage.canvas.width / 2
         valY = Math.round startX - stage.canvas.height / 2
@@ -47,7 +49,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         stage.viewportY = startX
 
         # middle
-        stage._onDblClick {offsetX: stage.canvas.width / 2, offsetY:
+        evtHdlr._onDblClick {offsetX: stage.canvas.width / 2, offsetY:
           stage.canvas.height / 2}
         equal stage.viewportX, startX, "viewportX"
         equal stage.viewportY, startX, "viewportY"
@@ -58,7 +60,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         stage.viewportX = startX
         stage.viewportY = startX
         # right
-        stage._onDblClick {offsetX: stage.canvas.width, offsetY: stage.canvas.height}
+        evtHdlr._onDblClick {offsetX: stage.canvas.width, offsetY: stage.canvas.height}
 
         valX = Math.round( startX + stage.canvas.width / 2 )
         valY = Math.round( startX + stage.canvas.height / 2 )
@@ -73,7 +75,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         stage.viewportX = startX
         stage.viewportY = startX
         # right
-        stage._onDblClick {offsetX: stage.canvas.width + 200, offsetY: stage.canvas.height + 200}
+        evtHdlr._onDblClick {offsetX: stage.canvas.width + 200, offsetY: stage.canvas.height + 200}
 
         valX = Math.round startX + stage.canvas.width / 2 + 200
         valY = Math.round startX + stage.canvas.height / 2 + 200
@@ -94,7 +96,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         console.log "rvalY" + randomY
         console.log "rvalX" + randomX
         # somewhere
-        stage._onDblClick {offsetX: randomX, offsetY: randomY}
+        evtHdlr._onDblClick {offsetX: randomX, offsetY: randomY}
 
         valX = Math.round(startX + randomX - stage.canvas.width / 2)
         valY = Math.round(startX + randomY - stage.canvas.height / 2)
@@ -117,7 +119,7 @@ define ["cs!input/fasta", "cs!msa/msa"], (Fasta, MSA) ->
         console.log "rvalY" + randomY
         console.log "rvalX" + randomX
         # somewhere
-        stage._onDblClick {offsetX: randomX, offsetY: randomY}
+        evtHdlr._onDblClick {offsetX: randomX, offsetY: randomY}
 
         valX = Math.round(startX + randomX - stage.canvas.width / 2)
         valY = Math.round(startX + randomY - stage.canvas.height / 2)
