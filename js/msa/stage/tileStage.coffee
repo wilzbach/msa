@@ -1,123 +1,26 @@
-define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage,CanvasStage) ->
+define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/stage/tileStageButtons", "cs!msa/stage/tileStageSequence"], (Utils,stage, TileEventHandler, TileStageButtons, TileStageSequence) ->
 
   class TileStage extends stage.stage
 
     constructor: (@msa) ->
       @msa.zoomer.setZoomLevel 1
-      @viewportX = 0
-      @viewportY = 0
       @tileSize = 200
+
+      @evtHdlr = new TileEventHandler this
+      @control = new TileStageButtons this
+      @seqtile = new TileStageSequence this
+
       @_createCanvas()
-      @tilesX = Math.ceil(@canvas.width / @tileSize)
-      @tilesY = Math.ceil(@canvas.height / @tileSize)
+      @_prepareCanvas()
 
-      #console.log "#tiles x:" + @tilesX + ",y:" + @tilesY
-
-      @canvas.addEventListener "mousemove", (e) =>
-        @_onMouseMove e
-
-      @canvas.addEventListener "dblclick", (e) =>
-        @_onDblClick e
-
-      @canvas.addEventListener "contextmenu", (e) =>
-        @_onContextMenu e
-
-      @canvas.addEventListener "mousedown", (e) =>
-        @_onMouseDown e
-
-      @canvas.addEventListener "mouseup", (e) =>
-        @_onMouseUp e
-
-      @canvas.addEventListener "mouseout", (e) =>
-        @_onMouseOut e
-
-      @events = {}
-
-      @map = []
+      # default, start values
 
       @viewportX = 120
       @viewportY = 100
       @dblClickVx = 2
       @dblClickVy = 2
 
-      #@animate()
-      @timestamp = 0
-
-    _onMouseMove: (e) ->
-      if @dragStartX? and @draglock?
-        @moveCanvasDragEvent e
-
-    _onMouseUp: (e) ->
-      if @dragStartX? and @draglock?
-        @moveCanvasDragEvent e
-
-      @draglock = undefined
-
-    _onMouseOut: (e) ->
-      @draglock = undefined
-
-    _onMouseDown: (e) ->
-      [mouseX,mouseY]= @getMouseCoords e
-
-      unless @checkForEvents mouseX,mouseY
-        @pauseEvent e
-        @dragStartX = e.pageX
-        @dragStartY = e.pageY
-        @dragViewStartX = @viewportX
-        @dragViewStartY = @viewportY
-        @draglock = true
-
-    _onContextMenu: (e) ->
-      #TODO: only on dblclick
-      @zoomCanvas 1 / @dblClickVx, 1 / @dblClickVy
-      @draw()
-
-    # TODO: move to utils
-    getMouseCoords: (e) ->
-      # center the view on double click
-      mouseX = e.offsetX
-      mouseY = e.offsetY
-
-      unless mouseX?
-        mouseX = e.layerX
-        mouseY = e.layerY
-
-      unless mouseX?
-        mouseX = e.pageX
-        mouseY = e.pageY
-
-      unless mouseX?
-        console.log e
-        console.log "no mouse event defined. your browser sucks"
-        return
-
-      # TODO: else
-      return [mouseX,mouseY]
-
-    _onDblClick: (e) ->
-      #if not @rect? or @rect?.left is 0
-      #  @rect = @canvas.getBoundingClientRect()
-      @draglock = undefined
-
-      [mouseX,mouseY]= @getMouseCoords e
-
-      @moveCenter mouseX,mouseY
-      @zoomCanvas @dblClickVx,@dblClickVy
-      @draw()
-
-      #console.log "#mouse:" + mouseX + ",y:" + mouseY
-      #console.log "#viewix:" + @viewportX + ",y:" + @viewportY
-
-    moveCanvasDragEvent: (e) ->
-      distX = e.pageX - @dragStartX
-      distY = e.pageY - @dragStartY
-
-      @viewportX = @dragViewStartX - distX
-      @viewportY = @dragViewStartY - distY
-
-      @checkPos()
-      @draw()
-      @pauseEvent e
+      @debug = 1
 
     # moves the center of the canvas to relative x,y
     moveCenter: (mouseX,mouseY) ->
@@ -150,15 +53,6 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
         #TODO: do we need to check here -> redundant with zoomer
         @checkPos()
 
-    # goes through all events all checks for callbacks
-    checkForEvents: (mouseX, mouseY) ->
-      for name,arr of @events
-
-        if (arr[0] <= mouseX and mouseX <= arr[2]) and
-        (arr[1] <= mouseY and mouseY <= arr[3])
-          arr[4]()
-      false
-
     checkPos: ->
       [@viewportX,@viewportY] = @_checkPos @viewportX,@viewportY
 
@@ -172,78 +66,6 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
       [x,y]
 
-    # TODO: move to utils
-    pauseEvent: (e) ->
-      e= window.event if not e?
-      if e.stopPropagation
-        e.stopPropagation()
-      if e.preventDefault
-        e.preventDefault()
-      e.cancelBubble = true
-      e.returnValue = false
-      return false
-
-    width: (n) ->
-      return 0
-
-    animate: (timestamp) =>
-      console.log "time:" + (timestamp - @timestamp)
-
-      @timestamp = timestamp
-      if @viewportX < 150 or not @vx?
-        @vx = 1
-      if @viewportX > 200
-        @vx = -1
-
-      if @msa.zoomer.columnWidth < 2
-        @vH = 1
-
-      if not @vH?
-        @vH = 1
-        @msa.zoomer.columnWidth = 1
-        @msa.zoomer.columnHeight = 1
-
-      if @msa.zoomer.columnWidth > 10
-        @vH = -1
-
-      @vx = 0
-      #@vH = 0
-
-      @msa.zoomer.columnWidth += @vH
-      @msa.zoomer.columnHeight += @vH
-
-      console.log "columnwidth: " + @msa.zoomer.columnWidth
-
-      @viewportX += @vx
-      @viewportY += @vx
-      #window.requestAnimationFrame @animate
-      window.setTimeout @animate, 200
-      @draw()
-
-    resetTiles: ->
-      @map = []
-
-    refreshZoom: ->
-      height = @msa.zoomer.columnHeight
-      width = @msa.zoomer.columnWidth
-      @maxWidth = @maxLength * width
-      @maxHeight= @msa.seqs.length * height
-      console.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
-      @msa.log.log "zoom:" + width
-
-    getFirstTile: ->
-      distViewToFirstX = @viewportX % @tileSize
-      distViewToFirstY = @viewportY % @tileSize
-
-      firstXTile = Math.floor(@viewportX / @tileSize)
-      firstYTile = Math.floor(@viewportY / @tileSize)
-
-      console.log "#viewDrawx:" + @viewportX + ",y:" + @viewportY
-      console.log "firstX:" + firstXTile
-      console.log "first to first x"  + distViewToFirstX
-
-      return [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile]
-
     draw: ->
 
       unless @orderList?
@@ -256,14 +78,13 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
 
       [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile] = @getFirstTile()
 
-      notExactFit = if distViewToFirstX is 0 then 0 else 2
-
       #console.log "tileX" + firstXTile + ",tileY:" + firstYTile
 
-      @ctx.clearRect 0, 0, @canvas.width, @canvas.height
+      # remove extra tiles on exact fit
+      notExactFit = if distViewToFirstX is 0 then 0 else 2
 
-      distViewToFirstX += @tileSize if distViewToFirstX < 0
-      distViewToFirstY += @tileSize if distViewToFirstY < 0
+
+      @ctx.clearRect 0, 0, @canvas.width, @canvas.height
 
       for i in [0..@tilesX - 1 + notExactFit] by 1
         for j in [0..@tilesY - 1 + notExactFit] by 1
@@ -279,105 +100,79 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/canvasStage"], (Utils,stage
           if @map[height]?[mapX]?[mapY]?
             tile = @map[height][mapX][mapY]
           else
-            tile = @drawTile mapX,mapY
-
-          #@ctx.fillRect tileX,tileY,@tileSize,@tileSize
-          #@ctx.putImageData tile,0,0,tileX,tileY,@tileSize,@tileSize
+            # put the cached sequence on stage
+            tile = @seqtile.drawTile mapX,mapY
 
           #console.log "tile i:" + mapX + ",j:" + mapY
           #console.log "tile i:" + tileX + ",j:" + tileY
           @ctx.putImageData tile,tileX,tileY
-          #@ctx.drawImage tile,tileX,tileY
+          #@ctx.drawImage tile,tileX,tileY # (slower)
 
       # control overlays
-
-      # zoom control
-      @ctx.fillStyle = "red"
-      @ctx.globalAlpha = 0.5
-      @ctx.fillRect @canvas.width - 40, @canvas.height - 35,15,15
-      callback = -> alert "hi"
-      @events.zoomIn = [@canvas.width - 40, @canvas.height - 35,@canvas.width -
-      25,@canvas.height - 20,callback]
-      @ctx.globalAlpha = 1
-
-      @ctx.fillStyle = "blue"
-      @ctx.fillRect @canvas.width - 40, @canvas.height - 20,15,15
-      @events.zoomOut = [@canvas.width - 40, @canvas.height - 20,15,15,callback]
+      @control.draw @ctx
 
       return @canvasWrapper
 
-    drawTile: (i,j) ->
+    getFirstTile: ->
+      distViewToFirstX = @viewportX % @tileSize
+      distViewToFirstY = @viewportY % @tileSize
 
-      # draw
+      # hack for negative tiles
+      distViewToFirstX += @tileSize if distViewToFirstX < 0
+      distViewToFirstY += @tileSize if distViewToFirstY < 0
+
+      firstXTile = Math.floor(@viewportX / @tileSize)
+      firstYTile = Math.floor(@viewportY / @tileSize)
+
+      #console.log "#viewDrawx:" + @tiler.viewportX + ",y:" + @tiler.viewportY
+      #console.log "firstX:" + firstXTile
+      #console.log "first to first x"  + distViewToFirstX
+
+      return [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile]
+
+    refreshZoom: ->
+      @tilesX = Math.ceil(@canvas.width / @tileSize)
+      @tilesY = Math.ceil(@canvas.height / @tileSize)
+
       height = @msa.zoomer.columnHeight
       width = @msa.zoomer.columnWidth
+      @maxWidth = @maxLength * width
+      @maxHeight= @msa.seqs.length * height
+      #console.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
+      @msa.log.log "zoom:" + width
 
-      @map[height] = [] unless @map[height]?
-      @map[height][i] = [] unless @map[height][i]?
+    width: (n) ->
+      return 0
 
-      #height = 1
-      #width = 1
-      tileX = i * @tileSize
-      tileY = j * @tileSize
+    resetTiles: ->
+      @map = []
 
-      cx = @ctxTile
+    _prepareCanvas: ->
+      @refreshZoom()
+      @viewportX = 0
+      @viewportY = 0
 
-      if @maxWidth > tileX and @maxHeight > tileY and tileX >= 0 and tileY >= 0
+      # empty, default values
+      @map = []
 
-        # calc position of seqs
-        seqStartX = Math.floor(tileX / width )
-        seqEndX = seqStartX + Math.ceil(@tileSize  / width )
+      # all events
+      @canvas.addEventListener "mousemove", (e) =>
+        @evtHdlr._onMouseMove e
 
-        seqStartY = Math.floor(tileY / height)
-        seqEndY = seqStartY + Math.ceil(@tileSize  / height)
+      @canvas.addEventListener "dblclick", (e) =>
+        @evtHdlr._onDblClick e
 
-        # no overflow
-        seqEndX = @maxLength if @maxLength > seqEndX
-        seqEndY = @msa.seqs.length if seqEndY > @msa.seqs.length
+      @canvas.addEventListener "contextmenu", (e) =>
+        @evtHdlr._onContextMenu e
 
-        # background bg for end
-        cx.fillStyle = "#eeeeee"
-        cx.fillRect 0,0,@tileSize,@tileSize
+      @canvas.addEventListener "mousedown", (e) =>
+        @evtHdlr._onMouseDown e
 
-        #console.log "endY:" + seqEndY
-        #console.log "endX:" + seqEndX
+      @canvas.addEventListener "mouseup", (e) =>
+        @evtHdlr._onMouseUp e
 
-        pos = 0
-        for seqNr in [seqStartY..seqEndY- 1] by 1
-          id = @orderList[seqNr]
-          seq = @msa.seqs[id].tSeq.seq
-          for index in [seqStartX..seqEndX - 1] by 1
-            color = CanvasStage.taylorColors[seq[index]]
-            if color is undefined
-              color = "111111"
-              continue
-            cx.fillStyle = "#" + color
-            cx.fillRect((index - seqStartX) * width,pos,width,height)
-
-          pos += height
-
-        #@ctxTile.fillStyle = "blue"
-        #@ctxTile.fillRect 0,0,@tileSize,@tileSize
-      else
-        #@ctxTile.fillStyle = @getRandomColor()
-        cx.fillStyle = "grey"
-        cx.fillRect 0,0,@tileSize,@tileSize
-
-
-      # debug drawing
-      cx.rect 0,0,@tileSize,@tileSize
-      cx.stroke()
-      cx.font = "30px Georgia"
-      cx.fillStyle = "#000000"
-      cx.fillText "#{j},#{i}",20,50
-      endPos = Math.floor @tileSize * 3 / 4
-      cx.fillText "#{j},#{i}",20,endPos
-      cx.fillText "#{j},#{i}",endPos,50
-      cx.fillText "#{j},#{i}",endPos,endPos
-      tile = cx.getImageData 0,0,@tileSize,@tileSize
-      @map[height][i][j] = tile
-      cx.clearRect(0, 0, @canvasTile.width, @canvasTile.height)
-      return tile
+      @canvas.addEventListener "mouseout", (e) =>
+        @evtHdlr._onMouseOut e
 
     _createCanvas: ->
       @canvas = document.createElement "canvas"
