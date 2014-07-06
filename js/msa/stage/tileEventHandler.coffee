@@ -4,6 +4,32 @@ define [], ->
 
     constructor: (@tiler) ->
 
+
+    init: ->
+      # all events
+      @tiler.canvas.addEventListener "mousemove", (e) =>
+        @_onMouseMove e
+
+      @tiler.canvas.addEventListener "dblclick", (e) =>
+        @_onDblClick e
+
+      @tiler.canvas.addEventListener "contextmenu", (e) =>
+        @_onContextMenu e
+
+      @tiler.canvas.addEventListener "mousedown", (e) =>
+        @_onMouseDown e
+
+      @tiler.canvas.addEventListener "mouseup", (e) =>
+        @_onMouseUp e
+
+      @tiler.canvas.addEventListener "mouseout", (e) =>
+        @_onMouseOut e
+
+      if @tiler.msa.config.keyevents
+        document.addEventListener "keydown", (e) =>
+          @_onKeyDown e
+
+
     _onMouseMove: (e) ->
       if @dragStartX? and @draglock?
         @moveCanvasDragEvent e
@@ -63,12 +89,47 @@ define [], ->
 
       [mouseX,mouseY]= @getMouseCoords e
 
-      @tiler.moveCenter mouseX,mouseY
+      @tiler.moveCenterTo mouseX,mouseY
+      console.log "#EVENT viewix:" + @tiler.viewportX + ",y:" + @tiler.viewportY
       @tiler.zoomCanvas @tiler.dblClickVx,@tiler.dblClickVy
       @tiler.draw()
 
-      #console.log "#mouse:" + mouseX + ",y:" + mouseY
-      #console.log "#viewix:" + @viewportX + ",y:" + @viewportY
+      console.log "#mouse:" + mouseX + ",y:" + mouseY
+
+    _onKeyDown: (e) ->
+      key = e.keyCode
+      dist = 100
+
+      switch key
+        when 37, 72
+          # left, h
+          @tiler.moveView -dist,0
+        when 38, 75
+          # up,k
+          @tiler.moveView 0, -dist
+        when 39, 76
+          # right, l
+          @tiler.moveView  +dist,0
+        when 40, 74
+          # down, j
+          @tiler.moveView 0,dist
+        when 33
+          #pgdown
+          @tiler.moveView 0,-@tiler.canvas.height
+        when 34
+          #pgup
+          @tiler.moveView 0,+@tiler.canvas.height
+        when 107
+          # add
+          @tiler.zoomCanvas 2,2
+        when 109
+          # substract
+          @tiler.zoomCanvas 0.5,0.5
+
+      @pauseEvent e
+      @tiler.checkPos()
+      @tiler.draw()
+
 
     moveCanvasDragEvent: (e) ->
       distX = e.pageX - @dragStartX
