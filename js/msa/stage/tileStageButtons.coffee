@@ -5,7 +5,7 @@ define [], ->
     constructor: (@tiler) ->
       @events = {}
 
-      imgdir = "css/img/"
+      imgdir = "res/img/"
 
       @btnFullscreen = new Image()
       @btnFullscreen.src = imgdir + "fullscreen.png"
