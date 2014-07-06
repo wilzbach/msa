@@ -1,4 +1,6 @@
-define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/stage/tileStageButtons", "cs!msa/stage/tileStageSequence"], (Utils,stage, TileEventHandler, TileStageButtons, TileStageSequence) ->
+define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler",
+      "cs!msa/stage/tileStageButtons"
+      "cs!msa/stage/tileStageSequence"],(Utils,stage, TileEventHandler, TileStageButtons, TileStageSequence) ->
 
   class TileStage extends stage.stage
 
@@ -23,15 +25,27 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
       @debug = 1
 
     # moves the center of the canvas to relative x,y
-    moveCenter: (mouseX,mouseY) ->
+    #
+    # @param [int] x xCoord of the new center
+    # @param [int] y yCoord of the new center
+    moveCenterTo: (mouseX,mouseY) ->
+      @moveView Math.round( (mouseX) - (@canvas.width / 2) ) , Math.round( (mouseY) - (@canvas.height / 2) )
 
-      @viewportX = Math.round( @viewportX + (mouseX) - (@canvas.width / 2) )
-      @viewportY = Math.round( @viewportY + (mouseY) - (@canvas.height / 2) )
-
-      #TODO: do we need to check here -> redundant with zoomer
-      @checkPos()
+    # moves the viewport for the value of (x,y)
+    #
+    # @param [int] x relative viewport move on x-axis
+    # @param [int] y relative viewport move on y-axis
+    moveView: (x,y) ->
+      @viewportX += x
+      @viewportY += y
 
     # this rescales the center for vx and vy
+    # 1 means no zooming
+    # 2 means zooming with factor 2
+    # 0.5 zooming out with factor 2
+    #
+    # @param [int] vx xVelocity
+    # @param [int] vy yVelocity
     zoomCanvas: (vx, vy) ->
 
       newVx = @msa.zoomer.columnWidth * vx
@@ -40,22 +54,32 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
       if newVx < 1 or newVy < 1
         console.log "invalid zoom level - x:" + newVx + "y:" + newVy
       else
-        if vx isnt 0
-          @viewportX = Math.round(@viewportX / @msa.zoomer.columnWidth * (newVy))
-        if vy isnt 0
-          @viewportY = Math.round(@viewportY / @msa.zoomer.columnHeight * (newVx))
+        console.log "#BEFORE viewix:" + @viewportX + ",y:" + @viewportY
 
-        @msa.zoomer.columnWidth += vx
-        @msa.zoomer.columnHeight += vy
+        if vx isnt 0
+          centerX = @viewportX + @canvas.width / 2
+          centerX = centerX / @msa.zoomer.columnWidth * (newVx)
+          @viewportX = Math.round(centerX - @canvas.width / 2)
+        if vy isnt 0
+          centerY = @viewportY + @canvas.height / 2
+          centerY = centerY / @msa.zoomer.columnHeight * (newVy)
+          @viewportY = Math.round(centerY - @canvas.height / 2)
+
+        console.log "#AFTER viewix:" + @viewportX + ",y:" + @viewportY
+
+        @msa.zoomer.columnWidth = newVx
+        @msa.zoomer.columnHeight = newVy
 
         @refreshZoom()
 
-        #TODO: do we need to check here -> redundant with zoomer
-        @checkPos()
+      # needs to be done in all cases - moveCenter doesnt check
+      @checkPos()
 
+    # checks whether the viewport is out of bounds
     checkPos: ->
       [@viewportX,@viewportY] = @_checkPos @viewportX,@viewportY
 
+    # checks whether the viewport is out of bounds
     _checkPos: (x,y) ->
       # do not allow out of bounds
       x = 0 if x < 0
@@ -66,7 +90,30 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
 
       [x,y]
 
+    # method to load the tiles asynchronously
+    asyncLoaderParallel: ->
+      p = new Parallel @msa.seqs
+      p.spawn( (data) =>
+
+        return data
+      ).then (data) =>
+        @moveView 300,300
+        @draw
+
+    asyncLoader: (height,x,y,vx,vy) ->
+      if height is @msa.zoomer.columnHeight
+        if x < @maxWidth / @tileSize and y < @maxHeight / @tileSize and x >= 0 and y >= 0
+          unless @map[height]?[x]?[y]?
+            # prerender the cached sequence on stage
+            console.log "prerender:" + x + ",j:" + y
+            @seqtile.drawTile x,y
+
+          # draw left triangular
+          setTimeout (=> @asyncLoader height,x + vx,y + vy,vx,vy),100
+
+    # draws all the tiles
     draw: ->
+
 
       unless @orderList?
         @orderList = @msa.ordering.getSeqOrder @msa.seqs
@@ -76,18 +123,27 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
         @msa.zoomer.columnHeight = 1
         @refreshZoom()
 
+        # render the whole alignment in the background
+        if @msa.config.prerender
+          @asyncLoader 1,0,0,0,1
+          @asyncLoader 1,1,0,0,1
+          @asyncLoader 1,2,0,0,1
+          @asyncLoader 1,3,0,0,1
+
+      height = @msa.zoomer.columnHeight
       [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile] = @getFirstTile()
 
       #console.log "tileX" + firstXTile + ",tileY:" + firstYTile
 
       # remove extra tiles on exact fit
-      notExactFit = if distViewToFirstX is 0 then 0 else 2
+      notExactFitX = if distViewToFirstX is 0 then 0 else 2
+      notExactFitY = if distViewToFirstY is 0 then 0 else 2
 
 
       @ctx.clearRect 0, 0, @canvas.width, @canvas.height
 
-      for i in [0..@tilesX - 1 + notExactFit] by 1
-        for j in [0..@tilesY - 1 + notExactFit] by 1
+      for i in [0..@tilesX - 1 + notExactFitX] by 1
+        for j in [0..@tilesY - 1 + notExactFitY] by 1
 
           mapX = i + firstXTile
           mapY = j + firstYTile
@@ -95,7 +151,6 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
           tileX = i * @tileSize - distViewToFirstX
           tileY = j * @tileSize - distViewToFirstY
 
-          height = @msa.zoomer.columnHeight
 
           if @map[height]?[mapX]?[mapY]?
             tile = @map[height][mapX][mapY]
@@ -124,8 +179,8 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
       firstXTile = Math.floor(@viewportX / @tileSize)
       firstYTile = Math.floor(@viewportY / @tileSize)
 
-      #console.log "#viewDrawx:" + @tiler.viewportX + ",y:" + @tiler.viewportY
-      #console.log "firstX:" + firstXTile
+      #console.log "#viewDrawx:" + @viewportX + ",y:" + @viewportY
+      #console.log "firstY:" + firstYTile
       #console.log "first to first x"  + distViewToFirstX
 
       return [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile]
@@ -155,24 +210,7 @@ define ["msa/utils", "msa/stage/main", "cs!msa/stage/tileEventHandler", "cs!msa/
       # empty, default values
       @map = []
 
-      # all events
-      @canvas.addEventListener "mousemove", (e) =>
-        @evtHdlr._onMouseMove e
-
-      @canvas.addEventListener "dblclick", (e) =>
-        @evtHdlr._onDblClick e
-
-      @canvas.addEventListener "contextmenu", (e) =>
-        @evtHdlr._onContextMenu e
-
-      @canvas.addEventListener "mousedown", (e) =>
-        @evtHdlr._onMouseDown e
-
-      @canvas.addEventListener "mouseup", (e) =>
-        @evtHdlr._onMouseUp e
-
-      @canvas.addEventListener "mouseout", (e) =>
-        @evtHdlr._onMouseOut e
+      @evtHdlr.init()
 
     _createCanvas: ->
       @canvas = document.createElement "canvas"

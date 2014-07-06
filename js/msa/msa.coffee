@@ -124,6 +124,8 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
         },
         registerMoveOvers: false,
         autofit: true,
+        keyevents: false,
+        prerender: false,
       }
 
       if @config?
