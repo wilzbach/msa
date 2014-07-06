@@ -12,7 +12,8 @@ require(["jquery", "cs!input/fasta", "cs!msa/msa","cs!msa/zoombar"], function ($
     //seqs = seqs.slice(0,1000);
     var start = new Date().getTime();
 
-    var msa = new MSA('msa-speed',seqs, {speed: true, visibleElements: { ruler: false }});
+    var msa = new MSA('msa-speed',seqs, {speed: true,
+      keyevents: true, visibleElements: { ruler: false }});
     msa.log.setConsole('msa-speed-console');
     //msa.addPlugin(new ZoomBar(msa,1,5), "0_zoombar");
 
