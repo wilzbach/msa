@@ -19,20 +19,20 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
     _createFileSchemeMenu: ->
       menuFile = new MenuBuilder("Settings")
       menuFile.addNode "Hide Marker", =>
-        if @msa.visibleElements.ruler is true
+        if @msa.config.visibleElements.ruler is true
           #$(this).children().first().text "Display Marker"
-          @msa.visibleElements.ruler = false
+          @msa.config.visibleElements.ruler = false
         else
           #$(this).children().first().text "Hide Marker"
           @msa.visibleElements.ruler = true
-        @msa.orderSeqsAfterScheme()
+        @msa.redrawEntire()
 
       menuFile.addNode "Hide Labels", =>
-        if @msa.visibleElements.labels is true
-          @msa.visibleElements.labels = false
+        if @msa.config.visibleElements.labels is true
+          @msa.config.visibleElements.labels = false
           #$(this).children().first().text "Display Labels"
         else
-          @msa.visibleElements.labels = true
+          @msa.config.visibleElements.labels = true
           #$(this).children().first().text "Hide Labels"
         @msa.redrawEntire()
 
@@ -106,15 +106,15 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
-        @msa.orderSeqsAfterScheme "numeric"
+        @msa.ordering.orderSeqsAfterScheme "numeric"
 
       menuOrdering.addNode "ID Desc", =>
-        @msa.orderSeqsAfterScheme "reverse-numeric"
+        @msa.ordering.orderSeqsAfterScheme "reverse-numeric"
 
       menuOrdering.addNode "Label", =>
-        @msa.orderSeqsAfterScheme "alphabetic"
+        @msa.ordering.orderSeqsAfterScheme "alphabetic"
 
       menuOrdering.addNode "Label Desc", =>
-        @msa.orderSeqsAfterScheme "reverse-alphabetic"
+        @msa.ordering.orderSeqsAfterScheme "reverse-alphabetic"
 
       menuOrdering.buildDOM()
