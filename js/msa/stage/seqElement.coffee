@@ -64,7 +64,7 @@ define ["cs!msa/stage/StageElement","msa/selection/main"], (StageElement,
         @msa.colorscheme.colorResidue residueSpan, tSeq, n
         spanGlobal.appendChild residueSpan
 
-      residueSpan.seqid = tSeq.id
+      spanGlobal.seqid = tSeq.id
 
       @redrawDiv spanGlobal, tSeq
       #residueSpan.appendChild residueGroup
