@@ -37,7 +37,7 @@ define [], ->
       @msa.zoomer.setZoomLevel(value)
       @msa.config.autofit = false
       @msa.redraw('stage')
-      #@msa.redraw('marker')
+      @msa.redraw('marker')
       @locked = false
 
     draw: ->
