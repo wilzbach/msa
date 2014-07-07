@@ -25,7 +25,7 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
         else
           #$(this).children().first().text "Hide Marker"
           @msa.visibleElements.ruler = true
-        @msa.redrawEntire()
+        @msa.redrawContainer()
 
       menuFile.addNode "Hide Labels", =>
         if @msa.config.visibleElements.labels is true
@@ -34,7 +34,7 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
         else
           @msa.config.visibleElements.labels = true
           #$(this).children().first().text "Hide Labels"
-        @msa.redrawEntire()
+        @msa.redrawContainer()
 
       menuFile.addNode "Hide Menu", =>
         @deleteMenu()
@@ -106,15 +106,15 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
-        @msa.ordering.orderSeqsAfterScheme "numeric"
+        @msa.ordering.setOrdering "numeric"
 
       menuOrdering.addNode "ID Desc", =>
-        @msa.ordering.orderSeqsAfterScheme "reverse-numeric"
+        @msa.ordering.setOrdering "reverse-numeric"
 
       menuOrdering.addNode "Label", =>
-        @msa.ordering.orderSeqsAfterScheme "alphabetic"
+        @msa.ordering.setOrdering "alphabetic"
 
       menuOrdering.addNode "Label Desc", =>
-        @msa.ordering.orderSeqsAfterScheme "reverse-alphabetic"
+        @msa.ordering.setOrdering "reverse-alphabetic"
 
       menuOrdering.buildDOM()
