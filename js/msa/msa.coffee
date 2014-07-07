@@ -106,6 +106,7 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
     redrawContainer: ->
       @plugs['stage'].reset()
       @_resetContainer()
+      @_draw()
 
     # TODO: do we create memory leaks here?
     _resetContainer: ->

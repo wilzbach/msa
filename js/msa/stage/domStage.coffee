@@ -3,8 +3,10 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
   class DomStage extends stage.stage
 
     constructor: (@msa) ->
-      # unique stage id
+      @elements = []
+      @_createElements()
 
+    _createElements: ->
       @elements = []
       if @msa.config.visibleElements.labels
         @elements.push new stage.labelElement @msa
@@ -23,6 +25,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
 
     reset: ->
       Utils.removeAllChilds @canvas
+      @_createElements()
 
     drawSeq: (row) ->
       layer = document.createElement "div"
@@ -37,7 +40,7 @@ define ["msa/utils", "msa/stage/main"], (Utils,stage) ->
 
     draw: ->
       # check whether we need to reload the stage
-      if @canvas?
+      if @canvas?.childNodes.length > 0
         @recolorStage()
       else
         @_createContainer()
