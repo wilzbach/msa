@@ -53,7 +53,8 @@ define [], ->
     @sortSeqArrayAlphabetically = (seqs) ->
       tuples = []
       for key of seqs
-        continue
+        tuples.push key
+
       tuples.sort (a, b) ->
         nameA = a[1]
         nameB = b[1]
