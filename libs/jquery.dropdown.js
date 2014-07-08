@@ -125,7 +125,6 @@ var jQueryDropDown = function(){
         });
       } else {
         // ...or relative to document
-        console.log("actual" +  parseInt(trigger.css('left')) + "vs."+ trigger.offset().left);
         dropdown.offset({
           left: dropdown.hasClass('dropdown-anchor-right') ?
           trigger.offset().left - (dropdown.outerWidth() - trigger.outerWidth()) + hOffset : trigger.offset().left + hOffset,
