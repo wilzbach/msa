@@ -11,6 +11,7 @@ define ["cs!msa/colorator", "cs!msa/ordering", "msa/utils",
 
       @_loadDefaultConfig(conf)
       @container = document.getElementById divName
+      @container.className += " biojs_msa_div"
 
       @colorscheme = new Colorator()
       @ordering = new Ordering()

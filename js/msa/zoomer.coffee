@@ -47,6 +47,11 @@ define [], ->
       _rect = @msa.container.getBoundingClientRect()
       @_width = _rect.right - _rect.left
 
+      # fix for inline-block - try parent
+      if @_width is 0
+        _rect = @msa.container.parentNode.getBoundingClientRect()
+        @_width = _rect.right - _rect.left
+
 
     guessZoomLevel:(tSeqs) ->
       @len = @getMaxLength tSeqs
