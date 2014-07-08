@@ -54,7 +54,7 @@ FastaExporter) ->
           saveAs blob, "all.fasta"
 
       menuExport.addNode "Export selection", =>
-        require ["saveAs"], (saveAs, FastaExporter) =>
+        require ["saveAs"], (saveAs) =>
           selection = @msa.selmanager.getInvolvedSeqs()
           unless selection?
             selection = @msa.seqs
