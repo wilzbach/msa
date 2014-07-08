@@ -1,4 +1,5 @@
-define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
+define ["cs!msa/menu/menubuilder", "cs!export/fasta"], (MenuBuilder,
+FastaExporter) ->
   class DefaultMenu
 
     constructor: (@divName, @msa) ->
@@ -46,14 +47,14 @@ define ["cs!msa/menu/menubuilder"], (MenuBuilder) ->
 
       menuExport.addNode "Export all", =>
         # limit at about 256k
-        require ["saveAs", "cs!export/fasta"], (saveAs, FastaExporter) =>
+        require ["saveAs"], (saveAs) =>
           access = (seq) -> seq.tSeq
           text = FastaExporter.export @msa.seqs,access
           blob = new Blob([text], {type : 'text/plain'})
           saveAs blob, "all.fasta"
 
       menuExport.addNode "Export selection", =>
-        require ["saveAs", "cs!export/fasta"], (saveAs, FastaExporter) =>
+        require ["saveAs"], (saveAs, FastaExporter) =>
           selection = @msa.selmanager.getInvolvedSeqs()
           unless selection?
             selection = @msa.seqs
