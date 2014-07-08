@@ -8,7 +8,7 @@ define [], ->
       zoomSlider.name = "points"
 
       min = 1 unless min?
-      max = 30 unless max?
+      max = Math.max 30,@msa.zoomer.level unless max?
 
       zoomSlider.min = min
       zoomSlider.max = max
