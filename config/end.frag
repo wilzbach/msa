@@ -2,7 +2,13 @@
     //this snippet. Ask almond to synchronously require the
     //module value for 'main' here and return it as the
     //value to use for the public API for the built file.
-    window.define = define;
-    window.require = require;
+
+
+    // dirty hack to allow script loading in almond
+    if (typeof window.define !== 'function' || ! window.define.amd) {
+		window.define = define;
+		window.require = require;
+    }
+
     return require('main');
 }));
