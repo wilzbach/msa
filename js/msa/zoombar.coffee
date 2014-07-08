@@ -22,8 +22,13 @@ define [], ->
       #zoomSlider.addEventListener "change", (evt) =>
       #  @_reDraw()
 
+      zoomSlider.addEventListener "click", (evt) =>
+        @firstClick = true
+        @_reDraw()
+
       zoomSlider.addEventListener "mousemove", (evt) =>
-        if @lastValue isnt @zoomSlider.value
+        # only update after first click and on value change
+        if @lastValue isnt @zoomSlider.value and @firstClick?
           @lastValue = @zoomSlider.value
           unless @locked
             @locked = true
