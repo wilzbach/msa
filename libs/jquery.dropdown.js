@@ -61,6 +61,9 @@ var jQueryDropDown = function(){
 
       // Position it
       position();
+      // doing that twice is a dirty hack - but we now got a valid offset
+      // for slides
+      position();
 
       // Trigger the show callback
       dropdown
@@ -114,7 +117,7 @@ var jQueryDropDown = function(){
 
       // Position the dropdown relative-to-parent...
       if (dropdown.hasClass('dropdown-relative')) {
-        dropdown.css({
+        dropdown.offset({
           left: dropdown.hasClass('dropdown-anchor-right') ?
           trigger.position().left - (dropdown.outerWidth(true) - trigger.outerWidth(true)) - parseInt(trigger.css('margin-right'), 10) + hOffset :
           trigger.position().left + parseInt(trigger.css('margin-left'), 10) + hOffset,
@@ -122,7 +125,8 @@ var jQueryDropDown = function(){
         });
       } else {
         // ...or relative to document
-        dropdown.css({
+        console.log("actual" +  parseInt(trigger.css('left')) + "vs."+ trigger.offset().left);
+        dropdown.offset({
           left: dropdown.hasClass('dropdown-anchor-right') ?
           trigger.offset().left - (dropdown.outerWidth() - trigger.outerWidth()) + hOffset : trigger.offset().left + hOffset,
           top: trigger.offset().top + trigger.outerHeight() + vOffset
