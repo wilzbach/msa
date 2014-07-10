@@ -232,10 +232,16 @@ var saveAs = saveAs
 // while `this` is nsIContentFrameMessageManager
 // with an attribute `content` that corresponds to the window
 
+amdDefine = window.define;
+if( typeof amdDefine === "undefined" && (typeof window.almond !== "undefined" 
+    && "define" in window.almond )){
+  amdDefine = window.almond.define;
+}
+
 if (typeof module !== "undefined" && module !== null) {
   module.exports = saveAs;
-} else if ((typeof define !== "undefined" && define !== null) && (define.amd != null)) {
-  define("saveAs",[], function() {
+} else if ((typeof amdDefine !== "undefined" && amdDefine !== null) && (amdDefine.amd != null)) {
+  amdDefine("saveAs",[], function() {
     return saveAs;
   });
 }
