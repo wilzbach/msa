@@ -7,28 +7,28 @@
  *
  */
 var jQueryDropDown = function(){
-  if (jQuery) (function ($) {
+  if (jQuery) (function (jQuery) {
 
-    $.extend($.fn, {
+    jQuery.extend($.fn, {
       dropdown: function (method, data) {
 
         switch (method) {
           case 'show':
-            show(null, $(this));
-            return $(this);
+            show(null, jQuery(this));
+            return jQuery(this);
           case 'hide':
             hide();
-            return $(this);
+            return jQuery(this);
           case 'attach':
-            return $(this).attr('data-dropdown', data);
+            return jQuery(this).attr('data-dropdown', data);
           case 'detach':
             hide();
-            return $(this).removeAttr('data-dropdown');
+            return jQuery(this).removeAttr('data-dropdown');
           case 'disable':
-            return $(this).addClass('dropdown-disabled');
+            return jQuery(this).addClass('dropdown-disabled');
           case 'enable':
             hide();
-            return $(this).removeClass('dropdown-disabled');
+            return jQuery(this).removeClass('dropdown-disabled');
         }
 
       }
@@ -36,18 +36,18 @@ var jQueryDropDown = function(){
 
     function show(event, object) {
 
-      var trigger = event ? $(this) : object,
-          dropdown = $(trigger.attr('data-dropdown')),
+      var trigger = event ? jQuery(this) : object,
+          dropdown = jQuery(trigger.attr('data-dropdown')),
           isOpen = trigger.hasClass('dropdown-open');
 
       // In some cases we don't want to show it
       if (event) {
-        if ($(event.target).hasClass('dropdown-ignore')) return;
+        if (jQuery(event.target).hasClass('dropdown-ignore')) return;
 
         event.preventDefault();
         event.stopPropagation();
       } else {
-        if (trigger !== object.target && $(object.target).hasClass('dropdown-ignore')) return;
+        if (trigger !== object.target && jQuery(object.target).hasClass('dropdown-ignore')) return;
       }
       hide();
 
@@ -77,7 +77,14 @@ var jQueryDropDown = function(){
     function hide(event) {
 
       // In some cases we don't hide them
-      var targetGroup = event ? $(event.target).parents().addBack() : null;
+      var targetGroup = typeof event !== "undefined" ? jQuery(event.target).parents() : null;
+
+      // SW: hack for strange cases
+      if( targetGroup !== null && "addBack" in targetGroup ){
+        targetGroup = targetGroup.addBack();
+      }else{
+        targetGroup = null;
+      }
 
       // Are we clicking anywhere in a dropdown?
       if (targetGroup && targetGroup.is('.dropdown')) {
@@ -93,8 +100,8 @@ var jQueryDropDown = function(){
       }
 
       // Hide any dropdown that may be showing
-      $(document).find('.dropdown:visible').each(function () {
-        var dropdown = $(this);
+      jQuery(document).find('.dropdown:visible').each(function () {
+        var dropdown = jQuery(this);
         dropdown
         .hide()
         .removeData('dropdown-trigger')
@@ -102,13 +109,13 @@ var jQueryDropDown = function(){
       });
 
       // Remove all dropdown-open classes
-      $(document).find('.dropdown-open').removeClass('dropdown-open');
+      jQuery(document).find('.dropdown-open').removeClass('dropdown-open');
     }
 
 
     function position() {
 
-      var dropdown = $('.dropdown:visible').eq(0),
+      var dropdown = jQuery('.dropdown:visible').eq(0),
           trigger = dropdown.data('dropdown-trigger'),
           hOffset = trigger ? parseInt(trigger.attr('data-horizontal-offset') || 0, 10) : null,
           vOffset = trigger ? parseInt(trigger.attr('data-vertical-offset') || 0, 10) : null;
@@ -133,9 +140,9 @@ var jQueryDropDown = function(){
       }
     }
 
-    $(document).on('click.dropdown', '[data-dropdown]', show);
-    $(document).on('click.dropdown', hide);
-    $(window).on('resize', position);
+    jQuery(document).on('click.dropdown', '[data-dropdown]', show);
+    jQuery(document).on('click.dropdown', hide);
+    jQuery(window).on('resize', position);
 
   })(jQuery);
 };
