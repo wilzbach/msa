@@ -22,7 +22,7 @@ define [], ->
       #zoomSlider.addEventListener "change", (evt) =>
       #  @_reDraw()
 
-      zoomSlider.addEventListener "click", (evt) =>
+      zoomSlider.addEventListener "mousedown", (evt) =>
         @firstClick = true
         @_reDraw()
 
