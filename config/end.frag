@@ -6,8 +6,9 @@
 
     // dirty hack to allow script loading in almond
     if (typeof window.define !== 'function' || ! window.define.amd) {
-		window.define = define;
-		window.require = require;
+      window.almond = {};
+	  window.almond.define = define;
+	  window.almond.require = require;
     }
 
     return require('main');
