@@ -4,3 +4,4 @@ coverage
 tmp
 test/all_test.js
 .sass-cache
+build
