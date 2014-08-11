@@ -19,6 +19,8 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 [![Build Status](https://drone.io/github.com/greenify/biojs-vis-msa/status.png)](https://drone.io/github.com/greenify/biojs-vis-msa/latest)
 
+[![Code Climate](https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/biojs-vis-msa)
+
 ### Step 1) Embed components
 
 Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
