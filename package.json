@@ -18,7 +18,7 @@
     "biojs-model": "^0.0.2"
   },
   "devDependencies": {
-	"jquery": "^2.1.1",
+    "jquery": "^2.1.1",
     "browserify": "~4.2.0",
     "chai": "^1.9.1",
     "coffee-script": "^1.7.1",
@@ -38,7 +38,7 @@
   "scripts": {
     "test": "bash ./test/test.sh",
     "prepublish": "coffee --bare --compile --output lib/ src/",
-    "watch": "watchify -v -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
+    "watch": "mkdir -p build; watchify -v -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
     "build-browser": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
   },
   "license": "Apache 2"
