@@ -21,16 +21,16 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 ### Step 1) Embed components
 
-Have a look at the [quick start examples](https://cdn.rawgit.com/greenify/biojs-msa-amd/master/msa.html).
+Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 ```
 <script src="biojs.js"></script>
 <link type="text/css" rel="stylesheet" href="css/msa.css" />
 ```
 
-This library is [AMD-compatible](#), so you can also embedd it with an AMD loader of your choice.
-
 The whole API is coming soon.
+
+You can __fetch prebuilt files__ [here](https://drone.io/github.com/greenify/biojs-vis-msa/files)
 
 ### Step 2) Developing 
 
