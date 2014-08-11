@@ -36,7 +36,7 @@
   "scripts": {
     "test": "bash ./test/test.sh",
     "watch": "watchify -v -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
-    "build-browser": "browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
+    "build-browser": "mkdir -p; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
   },
   "license": "Apache 2"
 }
