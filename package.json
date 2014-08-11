@@ -12,11 +12,13 @@
     "email": "biojs-technical@googlegroups.com"
   },
   "dependencies": {
+    "biojs-events": "0.0.1",
     "biojs-io-clustal": "0.0.4",
     "biojs-io-fasta": "0.0.5",
-    "biojs-model": "^0.0.2"
+    "biojs-model": "^0.0.2",
   },
   "devDependencies": {
+	"jquery": "^2.1.1"
     "browserify": "~4.2.0",
     "chai": "^1.9.1",
     "coffee-script": "^1.7.1",
