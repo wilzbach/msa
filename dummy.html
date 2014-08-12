@@ -1,19 +1,33 @@
-<html>
 <link type="text/css" rel="stylesheet" href="css/msa.css" />
-<body>
 <script src="build/biojs_vis_msa.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="./node_modules/jquery/dist/jquery.min.js"></script>
 <script src="./node_modules/biojs-model/biojs.model.min.js"></script>
+
 <div id='msa'></div>
 
+
+<script>
+var msa = new biojs.vis.msa.msa('msa');
+var seqs = biojs.vis.msa.seqmgr.getDummySequences(3,45);
+
+// features
+var f1 = new biojs.vis.msa.feature(2,20,"foo1", "red");
+seqs[0].features = [f1];
+
+msa.addSeqs(seqs);
+
+msa.on("all", function(eventName, arg){
+	console.log(eventName)
+	console.log(arg)
+})
+
+</script>
 
 Another snippet
 <div id='msa-ordering'></div>
 <script src="./snippets/msa_ordering.js"></script>
 
-<script>
-var msa = new biojs.vis.msa.msa('msa');
-msa.seqmgr.addDummySequences();
-</script>
-</body>
-</html>
+Another snippet
+<div id='msa-show-features'></div>
+<script src="./snippets/msa_show-features.js"></script>
+

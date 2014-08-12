@@ -38,12 +38,22 @@ module.exports =
           rect = @drawRectangle feature
           # look for an row to put in
           for occ in occs
+
+
             occLength = occ.childNodes.length
             if occLength is 0 or occ.childNodes[occLength - 1]?.xEnd < feature.xStart
               if occLength > 0
                 rect.style.marginLeft = "#{@msa.zoomer.columnWidth * (feature.xStart - 1 - occ.childNodes[occLength - 1].xEnd)}px"
               else if occLength is 0
                 rect.style.marginLeft = "#{@msa.zoomer.columnWidth * (feature.xStart)}px"
+
+              # add click event
+              rect.addEventListener 'mouseover', =>
+                @msa.trigger "annotationhover",feature
+
+              rect.addEventListener 'click', =>
+                @msa.trigger "annotationclicked",feature
+
               occ.appendChild rect
               break
 

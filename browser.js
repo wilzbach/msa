@@ -4,4 +4,4 @@ if (typeof biojs === 'undefined') {
 if (typeof biojs.vis === 'undefined') {
   module.exports = biojs.vis = {}
 }
-biojs.vis.msa = require('./')
+biojs.vis.msa = require('./index')

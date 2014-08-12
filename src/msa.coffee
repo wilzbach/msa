@@ -1,7 +1,7 @@
 Colorator = require "./colorator"
 Ordering = require "./ordering"
 Utils = require "./utils/general"
-Eventhandler = require "./eventhandler"
+Eventhandler = require "biojs-events"
 selection = require "./selection/index"
 Zoomer = require "./zoomer"
 SeqMgr = require "./seqmgr"
@@ -12,139 +12,143 @@ TilesStage = require "./stage/tileStage"
 SeqMarker= require "./seqmarker"
 arrays = require "./utils/arrays"
 
-module.exports =
-  class MSA
+class MSA
 
-    constructor: (divName, seqsInit, conf) ->
+  constructor: (divName, seqsInit, conf) ->
 
-      @_loadDefaultConfig(conf)
-      if typeof divName is "string"
-        @container = document.getElementById divName
-      else
-        @container = divName
+    Eventhandler.mixin MSA.prototype
 
-      @container.className = "" unless @container.className?
-      @container.className += " biojs_msa_div"
+    console.log this
 
-      @colorscheme = new Colorator()
-      @ordering = new Ordering()
+    @_loadDefaultConfig(conf)
+    if typeof divName is "string"
+      @container = document.getElementById divName
+    else
+      @container = divName
 
-      @log = new Logger()
-      @events = new Eventhandler @log.log
-      @selmanager = new selection.SelectionManager this, @events
+    @container.className = "" unless @container.className?
+    @container.className += " biojs_msa_div"
 
-      @zoomer = new Zoomer(this)
+    @colorscheme = new Colorator()
+    @ordering = new Ordering()
 
-      @seqs = []
-      @seqmgr = new SeqMgr(this)
+    @log = new Logger()
+    @selmanager = new selection.SelectionManager this
 
-      @plugs = {}
-      @plugsDOM = {}
+    @zoomer = new Zoomer(this)
 
-      # plugins
-      if @config.visibleElements.ruler
-        @marker = new SeqMarker this
-        @plugs["marker"] = @marker
+    @seqs = []
+    @seqmgr = new SeqMgr(this)
 
-      # essential stage
-      if @config.speed
-        #@stage =  new CanvasStage this
-        @stage =  new TilesStage this
-      else
-        @stage =  new DomStage this
-      @plugs["stage"] = @stage
+    @plugs = {}
+    @plugsDOM = {}
 
-      @addSeqs seqsInit if seqsInit?
+    # plugins
+    if @config.visibleElements.ruler
+      @marker = new SeqMarker this
+      @plugs["marker"] = @marker
 
-      if @config.allowRectSelect
-        @plugs["rect_select"] = new selection.RectangularSelect this
+    # essential stage
+    if @config.speed
+      #@stage =  new CanvasStage this
+      @stage =  new TilesStage this
+    else
+      @stage =  new DomStage this
+    @plugs["stage"] = @stage
 
-      # post hooks
-      if @config.registerMoveOvers
-        @container.addEventListener 'mouseout', =>
-          @selmanager.cleanup()
+    @addSeqs seqsInit if seqsInit?
 
-      @container.addEventListener 'dblclick', =>
+    if @config.allowRectSelect
+      @plugs["rect_select"] = new selection.RectangularSelect this
+
+    # post hooks
+    if @config.registerMoveOvers
+      @container.addEventListener 'mouseout', =>
         @selmanager.cleanup()
 
-    addSeqs: (tSeq) ->
-      @stage.addSeqs tSeq
-      # TODO: do we want to draw the entire MSA not only the stage)
-      @_draw()
+    @container.addEventListener 'dblclick', =>
+      @selmanager.cleanup()
 
-    # TODO: use a user ordering
-    addPlugin: (plugin, key) ->
-      @plugs[key] = plugin
-      @_draw()
+  addSeqs: (tSeq) ->
+    @stage.addSeqs tSeq
+    # TODO: do we want to draw the entire MSA not only the stage)
+    @_draw()
 
-    _draw: ->
+  # TODO: use a user ordering
+  addPlugin: (plugin, key) ->
+    @plugs[key] = plugin
+    @_draw()
 
-      @_nMax = @zoomer.getMaxLength @seqs
+  _draw: ->
 
-      #@zoomer.autofit() if @config.autofit
+    @_nMax = @zoomer.getMaxLength @seqs
 
-      frag = document.createDocumentFragment()
+    #@zoomer.autofit() if @config.autofit
 
-      # sort plugs
-      plugsSort = []
-      plugsSort.push key for key of @plugs
-      plugsSort.sort()
+    frag = document.createDocumentFragment()
 
-      # load plugins
-      for key in plugsSort
-        entry = @plugs[key]
+    # sort plugs
+    plugsSort = []
+    plugsSort.push key for key of @plugs
+    plugsSort.sort()
 
-        start = new Date().getTime()
-        node = entry.draw()
-        end = new Date().getTime()
-        console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
+    # load plugins
+    for key in plugsSort
+      entry = @plugs[key]
 
-        if node
-          frag.appendChild node
-          @plugsDOM[key] = node
+      start = new Date().getTime()
+      node = entry.draw()
+      end = new Date().getTime()
+      console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
 
-      # replace the current container with the new
-      Utils.removeAllChilds @container
-      @container.appendChild frag
+      if node
+        frag.appendChild node
+        @plugsDOM[key] = node
 
-    redraw: (plugin) ->
-      newDOM = @plugs[plugin].draw()
+    # replace the current container with the new
+    Utils.removeAllChilds @container
+    @container.appendChild frag
 
-      plugDOM= @plugsDOM[plugin]
-      # better use container than parentNode
-      plugDOM.parentNode.replaceChild newDOM, plugDOM
+  redraw: (plugin) ->
+    newDOM = @plugs[plugin].draw()
 
-      @plugsDOM[plugin] = newDOM
+    plugDOM= @plugsDOM[plugin]
+    # better use container than parentNode
+    plugDOM.parentNode.replaceChild newDOM, plugDOM
+
+    @plugsDOM[plugin] = newDOM
 
 
-    redrawContainer: ->
-      @plugs['stage'].reset()
-      @_resetContainer()
-      @_draw()
+  redrawContainer: ->
+    @plugs['stage'].reset()
+    @_resetContainer()
+    @_draw()
+    @.trigger "redrawEvent"
 
-    # TODO: do we create memory leaks here?
-    _resetContainer: ->
-      Utils.removeAllChilds @container
+  # TODO: do we create memory leaks here?
+  _resetContainer: ->
+    Utils.removeAllChilds @container
 
-    _loadDefaultConfig: (conf) ->
+  _loadDefaultConfig: (conf) ->
 
-      @config = conf
+    @config = conf
 
-      defaultConf = {
-        visibleElements: {
-          labels: true, seqs: true, menubar: true, ruler: true,
-          features: false,
-          allowRectSelect: false,
-          speed: false,
-        },
-        registerMoveOvers: false,
-        autofit: true,
-        keyevents: false,
-        prerender: false,
-      }
+    defaultConf = {
+      visibleElements: {
+        labels: true, seqs: true, menubar: true, ruler: true,
+        features: false,
+        allowRectSelect: false,
+        speed: false,
+      },
+      registerMoveOvers: false,
+      autofit: true,
+      keyevents: false,
+      prerender: false,
+    }
 
-      if @config?
-        arrays.recursiveDictFiller defaultConf, @config
-      else
-        @config = defaultConf
+    if @config?
+      arrays.recursiveDictFiller defaultConf, @config
+    else
+      @config = defaultConf
 
+module.exports = MSA
