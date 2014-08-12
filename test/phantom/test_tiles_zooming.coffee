@@ -33,6 +33,7 @@ test "zoom in and out", ->
   assert.equal stage.viewportX, xStart, "xView"
   assert.equal stage.viewportY, yStart, "yView"
 
+
 test "zoom in right", ->
   stage.evtHdlr._onDblClick {offsetX: stage.canvas.width, offsetY: stage.canvas.height}
   assert.equal stage.viewportX + stage.canvas.width / 2, (xStart + stage.canvas.width ) * 2, "xView"
