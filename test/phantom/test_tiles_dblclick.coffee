@@ -103,7 +103,7 @@ test "test double click canvas uneven width/height", ->
       valX = Math.round(startX + randomX - stage.canvas.width / 2)
       valY = Math.round(startX + randomY - stage.canvas.height / 2)
 
-      console.log "valX:" + valX + "valY:" + valY
+      #console.log "valX:" + valX + "valY:" + valY
       [valX,valY] = stage._checkPos valX,valY
 
       assert.equal stage.viewportX,valX, "viewportX"
@@ -118,15 +118,15 @@ test "test double click somewhere", ->
       randomX = Math.floor(Math.random() * (stage.canvas.width + 1))
       randomY = Math.floor(Math.random() * (stage.canvas.height + 1))
 
-      console.log "rvalY" + randomY
-      console.log "rvalX" + randomX
+      #console.log "rvalY" + randomY
+      #console.log "rvalX" + randomX
       # somewhere
       evtHdlr._onDblClick {offsetX: randomX, offsetY: randomY}
 
       valX = Math.round(startX + randomX - stage.canvas.width / 2)
       valY = Math.round(startX + randomY - stage.canvas.height / 2)
 
-      console.log "valX:" + valX + "valY:" + valY
+      #console.log "valX:" + valX + "valY:" + valY
       [valX,valY] = stage._checkPos valX,valY
 
       assert.equal stage.viewportX,valX, "viewportX"

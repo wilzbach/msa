@@ -6,13 +6,15 @@ var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var run = require('gulp-run');
 var sass = require('gulp-ruby-sass');
+var rename = require('gulp-rename');
+var gutil = require('gulp-util');
 
 // for mocha
 require('coffee-script/register');
 
 var paths = {
-  scripts: ['client/js/**/*.coffee', '!client/external/**/*.coffee'],
-  testCoffee: ['./test/tests/**/*.coffee']
+  scripts: ['src/**/*.coffee'],
+  testCoffee: ['./test/phantom/index.coffee']
 };
 
 var browserifyOptions =  {
@@ -22,13 +24,23 @@ var browserifyOptions =  {
 
 
 
-gulp.task('default', ['lint','sass']);
+gulp.task('default', ['lint','build-browser']);
+
+gulp.task('build-browser', function() {
+  // browserify
+  return gulp.src(paths.scripts,  { read: false })
+  .pipe(browserify(browserifyOptions))
+      .pipe(rename('biojs_vis_msa.min.js'))
+    .pipe(gulp.dest('build'));
+});
 
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
   return gulp.src(paths.testCoffee,  { read: false })
-  .pipe(browserify(browserifyOptions))
-      .pipe(concat('all_test.js'))
+    .pipe(browserify(browserifyOptions))
+    .on('error', gutil.log)
+    .on('error', gutil.beep)
+    .pipe(concat('all_test.js'))
     .pipe(gulp.dest('test'));
 });
 
@@ -70,3 +82,9 @@ gulp.task('sass', function () {
       .pipe(gulp.dest('./css'));
 });
 
+gulp.task('watch', function() {
+   // watch coffee files
+   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
+     gulp.run('test');
+   });
+});
