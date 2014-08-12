@@ -8,9 +8,11 @@ module.exports =
       @ID =  String.fromCharCode(65 + Math.floor(Math.random() * 26))
       @globalID = 'biojs_msa_' + @ID
 
+    # calculates the width of this element
     width: (n) ->
       width = 0
-      width += el.width n for el in @elements
+      if @elements?
+        width += el.width n for el in @elements
       return width
 
 

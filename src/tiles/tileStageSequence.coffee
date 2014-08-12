@@ -1,5 +1,3 @@
-CanvasStage = require "./canvasStage"
-
 module.exports =
 
   class TileStageSequence
@@ -43,7 +41,7 @@ module.exports =
           id = @tiler.orderList[seqNr]
           seq = @tiler.msa.seqs[id].tSeq.seq
           for index in [seqStartX..seqEndX - 1] by 1
-            color = CanvasStage.taylorColors[seq[index]]
+            color = TileStageSequence.taylorColors[seq[index]]
             if color is undefined
               color = "111111"
               continue
@@ -75,3 +73,24 @@ module.exports =
       cx.fillText "#{j},#{i}",20,endPos
       cx.fillText "#{j},#{i}",endPos,50
       cx.fillText "#{j},#{i}",endPos,endPos
+
+    @taylorColors = {
+      V: "99ff00"
+      I: "66ff00"
+      L: "33ff00"
+      F: "00ff66"
+      Y: "00ffcc"
+      W: "00ccff"
+      H: "0066ff"
+      R: "0000ff"
+      K: "6600ff"
+      N: "cc00ff"
+      Q: "ff00cc"
+      E: "ff0066"
+      D: "ff0000"
+      S: "ff3300"
+      T: "ff6600"
+      G: "ff9900"
+      P: "ffcc00"
+      C: "ffff00"
+    }
