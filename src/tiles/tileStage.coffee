@@ -2,7 +2,7 @@ Utils = require "../utils/general"
 TileEventHandler = require "./tileEventHandler"
 TileStageButtons = require "./tileStageButtons"
 TileStageSequence = require "./tileStageSequence"
-stage = require "./stage"
+stage = require "../stage/stage"
 
 module.exports =
 
@@ -56,9 +56,9 @@ module.exports =
       newVy = @msa.zoomer.columnHeight * vy
 
       if newVx < 1 or newVy < 1
-        console.log "invalid zoom level - x:" + newVx + "y:" + newVy
+        @msa.log "invalid zoom level - x:" + newVx + "y:" + newVy
       else
-        console.log "#BEFORE viewix:" + @viewportX + ",y:" + @viewportY
+        @msa.log "#BEFORE viewix:" + @viewportX + ",y:" + @viewportY
 
         if vx isnt 0
           centerX = @viewportX + @canvas.width / 2
@@ -69,7 +69,7 @@ module.exports =
           centerY = centerY / @msa.zoomer.columnHeight * (newVy)
           @viewportY = Math.round(centerY - @canvas.height / 2)
 
-        console.log "#AFTER viewix:" + @viewportX + ",y:" + @viewportY
+        @msa.log "#AFTER viewix:" + @viewportX + ",y:" + @viewportY
 
         @msa.zoomer.columnWidth = newVx
         @msa.zoomer.columnHeight = newVy
@@ -109,7 +109,7 @@ module.exports =
         if x < @maxWidth / @tileSize and y < @maxHeight / @tileSize and x >= 0 and y >= 0
           unless @map[height]?[x]?[y]?
             # prerender the cached sequence on stage
-            console.log "prerender:" + x + ",j:" + y
+            @msa.log "prerender:" + x + ",j:" + y
             @seqtile.drawTile x,y
 
           # draw left triangular
@@ -137,7 +137,7 @@ module.exports =
       height = @msa.zoomer.columnHeight
       [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile] = @getFirstTile()
 
-      #console.log "tileX" + firstXTile + ",tileY:" + firstYTile
+      #@msa.log "tileX" + firstXTile + ",tileY:" + firstYTile
 
       # remove extra tiles on exact fit
       notExactFitX = if distViewToFirstX is 0 then 0 else 2
@@ -162,8 +162,8 @@ module.exports =
             # put the cached sequence on stage
             tile = @seqtile.drawTile mapX,mapY
 
-          #console.log "tile i:" + mapX + ",j:" + mapY
-          #console.log "tile i:" + tileX + ",j:" + tileY
+          #@msa.log "tile i:" + mapX + ",j:" + mapY
+          #@msa.log "tile i:" + tileX + ",j:" + tileY
           @ctx.putImageData tile,tileX,tileY
           #@ctx.drawImage tile,tileX,tileY # (slower)
 
@@ -183,9 +183,9 @@ module.exports =
       firstXTile = Math.floor(@viewportX / @tileSize)
       firstYTile = Math.floor(@viewportY / @tileSize)
 
-      #console.log "#viewDrawx:" + @viewportX + ",y:" + @viewportY
-      #console.log "firstY:" + firstYTile
-      #console.log "first to first x"  + distViewToFirstX
+      #@msa.log "#viewDrawx:" + @viewportX + ",y:" + @viewportY
+      #@msa.log "firstY:" + firstYTile
+      #@msa.log "first to first x"  + distViewToFirstX
 
       return [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile]
 
@@ -197,8 +197,8 @@ module.exports =
       width = @msa.zoomer.columnWidth
       @maxWidth = @maxLength * width
       @maxHeight= @msa.seqs.length * height
-      #console.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
-      @msa.log.log "zoom:" + width
+      #@msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
+      @msa.log "zoom:" + width
 
     width: (n) ->
       return 0
