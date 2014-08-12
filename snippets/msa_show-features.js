@@ -17,3 +17,8 @@ seqs[1].features = [f1,f2,f3,f4,f5];
 
 msa.addSeqs(seqs);
 msa.addPlugin(new biojs.vis.msa.zoombar(msa), "0_zoombar");
+
+msa.on("all", function(eventName, arg){
+  console.log(eventName)
+  console.log(arg)
+})

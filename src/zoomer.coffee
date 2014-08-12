@@ -24,6 +24,8 @@ module.exports =
       if value is 1
         @seqOffset = 20
 
+      @msa.trigger "zoom", value
+
     autofit: (tSeqs) ->
       level = @guessZoomLevel tSeqs
       @setZoomLevel level

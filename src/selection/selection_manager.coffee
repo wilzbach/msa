@@ -3,7 +3,7 @@ SelectionList = require "./selectionlist"
 module.exports =
   class SelectionManager
 
-    constructor: (@msa, @eventhandler) ->
+    constructor: (@msa) ->
 
     changeSel: (sel) ->
       # remove old
@@ -14,7 +14,7 @@ module.exports =
       sel.select() if sel?
 
       # broadcast to event handler
-      @eventhandler.onSelectionChanged(sel)
+      @msa.trigger("onSelectionChanged",sel)
 
     # detects shiftKey
     handleSel: (sel, evt) ->
