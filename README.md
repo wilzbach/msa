@@ -36,6 +36,20 @@ The whole API is coming soon.
 
 You can __fetch prebuilt files__ [here](https://drone.io/github.com/greenify/biojs-vis-msa/files)
 
+Documentation
+-------------
+
+online [Codo](http://coffeedoc.info/github/greenify/biojs-vis-msa/master/)
+
+offline 
+
+```
+npm install
+npm gulp codo
+```
+
+and open `build/codo`
+
 ### Step 2) Developing 
 
 Run `npm install` once to install all dependencies.
