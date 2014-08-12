@@ -53,7 +53,7 @@
   "scripts": {
     "test": "gulp test",
     "prepublish": "npm test && npm run build-browser && coffee --bare --compile --output lib/ src/",
-    "watch": "mkdir -p build; watchify -v -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
+    "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
     "build-browser": "gulp build-browser",
     "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
   },

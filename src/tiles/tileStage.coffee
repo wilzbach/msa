@@ -197,7 +197,7 @@ module.exports =
       width = @msa.zoomer.columnWidth
       @maxWidth = @maxLength * width
       @maxHeight= @msa.seqs.length * height
-      #@msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
+      @msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
       @msa.log "zoom:" + width
 
     width: (n) ->
