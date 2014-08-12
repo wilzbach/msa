@@ -1,4 +1,4 @@
-biojs-msa-amd
+biojs-vis-msa
 ==========
 
 The BioJS MSA Viewer written in CoffeeScript. 
