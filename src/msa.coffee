@@ -8,7 +8,7 @@ SeqMgr = require "./seqmgr"
 Logger = require "./utils/logger"
 DomStage = require "./stage/domStage"
 TilesStage = require "./tiles/tileStage.coffee"
-SeqMarker = require "./seqmarker"
+SeqMarker = require "./dom/seqmarker"
 arrays = require "./utils/arrays"
 
 class MSA
