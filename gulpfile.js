@@ -5,6 +5,7 @@ var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var run = require('gulp-run');
+var sass = require('gulp-ruby-sass');
 
 // for mocha
 require('coffee-script/register');
@@ -18,6 +19,10 @@ var browserifyOptions =  {
   transform: ['coffeeify'],
   extensions: ['.coffee']
 };
+
+
+
+gulp.task('default', ['lint','sass']);
 
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
@@ -57,3 +62,11 @@ gulp.task('codo', function () {
   run('codo src -o build/doc').exec()  
     .pipe(gulp.dest('output'))    
 });
+
+gulp.task('sass', function () {
+    gulp.src('./css/msa.scss')
+      .pipe(sass())
+      .pipe(concat('msa_compiled.css'))
+      .pipe(gulp.dest('./css'));
+});
+
