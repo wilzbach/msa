@@ -1,4 +1,7 @@
 module.exports =
+  #
+  # displays a zoom slider
+  #
   class ZoomBar
 
     constructor: (@msa, min, max) ->

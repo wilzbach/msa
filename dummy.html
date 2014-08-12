@@ -11,7 +11,7 @@ var msa = new biojs.vis.msa.msa('msa');
 var seqs = biojs.vis.msa.seqmgr.getDummySequences(3,45);
 
 // features
-var f1 = new biojs.vis.msa.feature(2,20,"foo1", "red");
+var f1 = new biojs.vis.easy_features.model(2,20,"foo1", "red");
 seqs[0].features = [f1];
 
 msa.addSeqs(seqs);

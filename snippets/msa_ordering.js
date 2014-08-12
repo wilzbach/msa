@@ -1,5 +1,5 @@
 var msa = new biojs.vis.msa.msa('msa-ordering');
-msa.log.setConsole('msa-ordering-console');
+//msa.log.setConsole('msa-ordering-console');
 
 // define seqs
 var seqs = [new biojs.model.seq("MSPFTACAPDRLNAGECTF", "awesome name", 1)

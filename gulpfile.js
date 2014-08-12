@@ -15,6 +15,8 @@ var mkdirp = require('mkdirp');
 // for mocha
 require('coffee-script/register');
 
+var outputFile = "biojs_vis_msa.min.js";
+
 var paths = {
   scripts: ['src/**/*.coffee'],
   testCoffee: ['./test/phantom/index.coffee']
@@ -37,10 +39,10 @@ gulp.task('clean', function() {
 
 gulp.task('build-browser',['clean'], function() {
   // browserify
-  return gulp.src(paths.scripts,  { read: false })
+  return gulp.src("browser.js")
   .pipe(browserify(browserifyOptions))
-      .pipe(rename('biojs_vis_msa.min.js'))
-    .pipe(gulp.dest('build'));
+  .pipe(rename(outputFile))
+  .pipe(gulp.dest('build'));
 });
 
 gulp.task('build-test', function() {
