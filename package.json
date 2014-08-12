@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "biojs-events": "0.0.1",
-    "biojs-io-clustal": "0.0.5",
-    "biojs-io-fasta": "0.0.6",
+    "biojs-io-clustal": "0.0.6",
+    "biojs-io-fasta": "0.0.7",
     "biojs-model": "^0.0.2",
     "underscore": "^1.6.0"
   },
@@ -27,6 +27,7 @@
     "coffeelint": "^1.5.4",
     "gulp": "^3.8.7",
     "gulp-browserify": "^0.5.0",
+    "gulp-clean": "^0.3.1",
     "gulp-coffeelint": "^0.3.3",
     "gulp-concat": "^2.3.4",
     "gulp-mocha": "^0.5.2",
@@ -37,6 +38,7 @@
     "gulp-util": "^3.0.0",
     "gulp-watch": "^0.6.9",
     "jquery": "^2.1.1",
+    "mkdirp": "^0.5.0",
     "mocha": "^1.21.4",
     "mocha-phantomjs": "^3.5.0",
     "nock": "^0.43.0",
@@ -52,7 +54,8 @@
     "test": "gulp test",
     "prepublish": "npm test && npm run build-browser && coffee --bare --compile --output lib/ src/",
     "watch": "mkdir -p build; watchify -v -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
-    "build-browser": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
+    "build-browser": "gulp build-browser",
+    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
   },
   "license": "Apache 2"
 }

@@ -8,6 +8,9 @@ var run = require('gulp-run');
 var sass = require('gulp-ruby-sass');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
+var clean = require('gulp-clean');
+var coffeelint = require('gulp-coffeelint');
+var mkdirp = require('mkdirp');
 
 // for mocha
 require('coffee-script/register');
@@ -23,10 +26,16 @@ var browserifyOptions =  {
 };
 
 
+gulp.task('default', ['lint','build-browser', 'codo']);
 
-gulp.task('default', ['lint','build-browser']);
+gulp.task('clean', function() {
+  gulp.src('./build/').pipe(clean());
+  mkdirp('./build', function (err) {
+    if (err) console.error(err)
+});
+});
 
-gulp.task('build-browser', function() {
+gulp.task('build-browser',['clean'], function() {
   // browserify
   return gulp.src(paths.scripts,  { read: false })
   .pipe(browserify(browserifyOptions))
@@ -36,6 +45,7 @@ gulp.task('build-browser', function() {
 
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
+  gulp.src('./test/all_test.js').pipe(clean());
   return gulp.src(paths.testCoffee,  { read: false })
     .pipe(browserify(browserifyOptions))
     .on('error', gutil.log)
@@ -61,7 +71,6 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
-var coffeelint = require('gulp-coffeelint');
 
 gulp.task('lint', function () {
     gulp.src('./src/**/*.coffee')
@@ -70,9 +79,8 @@ gulp.task('lint', function () {
 });
 
 
-gulp.task('codo', function () {
-  run('codo src -o build/doc').exec()  
-    .pipe(gulp.dest('output'))    
+gulp.task('codo', ['clean'],function () {
+  run('codo src -o build/doc ').exec(); 
 });
 
 gulp.task('sass', function () {
