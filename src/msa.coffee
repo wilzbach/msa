@@ -7,9 +7,9 @@ Zoomer = require "./zoomer"
 SeqMgr = require "./seqmgr"
 Logger = require "./utils/logger"
 DomStage = require "./stage/domStage"
-CanvasStage = require "./stage/canvasStage"
-TilesStage = require "./stage/tileStage"
-SeqMarker= require "./seqmarker"
+CanvasStage = require "./tiles/canvasStage"
+TilesStage = require "./tiles/tileStage.coffee"
+SeqMarker = require "./seqmarker"
 arrays = require "./utils/arrays"
 
 class MSA
@@ -32,7 +32,7 @@ class MSA
     @colorscheme = new Colorator()
     @ordering = new Ordering()
 
-    @log = new Logger()
+    @log = new Logger().log
     @selmanager = new selection.SelectionManager this
 
     @zoomer = new Zoomer(this)
