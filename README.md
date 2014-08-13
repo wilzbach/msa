@@ -36,6 +36,13 @@ The whole API is coming soon.
 
 You can __fetch prebuilt files__ [here](https://drone.io/github.com/greenify/biojs-vis-msa/files)
 
+Demo
+-----
+
+(in rebuild)
+
+Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) for a nice example.
+
 Documentation
 -------------
 

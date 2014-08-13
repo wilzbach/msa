@@ -27,7 +27,7 @@ var paths = {
 
 var browserifyOptions =  {
   transform: ['coffeeify'],
-  extensions: ['.coffee']
+  extensions: ['.coffee'],
 };
 
 
@@ -42,8 +42,12 @@ gulp.task('clean', function() {
 
 gulp.task('build-browser',['clean'], function() {
   // browserify
+  dBrowserifyOptions = {};
+  for( var key in browserifyOptions )
+     dBrowserifyOptions[ key ] = browserifyOptions[ key ];
+  dBrowserifyOptions["debug"] = true;
   return gulp.src("browser.js")
-  .pipe(browserify(browserifyOptions))
+  .pipe(browserify(dBrowserifyOptions))
   .pipe(rename(outputFile + ".js"))
   .pipe(gulp.dest('build'));
 });
@@ -94,6 +98,9 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
+gulp.task('build', ['clean','build-browser','build-browser-min'],function () {
+  return true;
+});
 
 gulp.task('lint', function () {
     gulp.src('./src/**/*.coffee')
