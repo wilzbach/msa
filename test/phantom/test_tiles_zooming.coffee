@@ -12,6 +12,10 @@ suite "tiles.zooming"
 beforeEach "loading msa", (done) ->
   Fasta.read "dummy/foo.fasta", (seqs) ->
     msa = new MSA "msa", seqs, {speed: true}
+    msa.zoomer.setZoomLevel 1
+    msa.zoomer.columnHeight = 1
+    msa.zoomer.columnWidth  = 1
+
     stage = msa.stage
     stage.tileSize = 200
     stage.viewportX = xStart
