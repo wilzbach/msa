@@ -53,7 +53,7 @@ gulp.task('build-browser-min',['clean'], function() {
   return gulp.src("browser.js")
   .pipe(browserify(browserifyOptions))
   .pipe(uglify())
-  .pipe(rename(outputFile + "min.js"))
+  .pipe(rename(outputFile + ".min.js"))
   .pipe(gulp.dest('build'));
 });
 
