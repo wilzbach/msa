@@ -1,6 +1,8 @@
 // as a async, non-blocking call
 biojs.io.fasta.parse.read("http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp15.txt", function(seqs) {
-  $("#msa-file-input-fasta-seq").append(seqs.length+ " sequences read");
+
+  // fullscreen by default
+  document.body.style.margin = 0;
 
   // cut the seqs for demo purpose
   //seqs.forEach(function(seq){

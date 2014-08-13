@@ -2,12 +2,15 @@ Utils = require "../utils/general"
 TileEventHandler = require "./tileEventHandler"
 TileStageButtons = require "./tileStageButtons"
 TileStageSequence = require "./tileStageSequence"
+AsyncLoader = require "./asyncLoader"
 stage = require "../stage/stage"
 
 module.exports =
 
   class TileStage extends stage
 
+    # builds the tile stage
+    # @param [MSA] msa the MSA instance
     constructor: (@msa) ->
       @msa.zoomer.setZoomLevel 1
       @tileSize = 200
@@ -15,14 +18,14 @@ module.exports =
       @evtHdlr = new TileEventHandler this
       @control = new TileStageButtons this
       @seqtile = new TileStageSequence this
+      @loader = new AsyncLoader this
 
       @_createCanvas()
       @_prepareCanvas()
 
       # default, start values
-
-      @viewportX = 120
-      @viewportY = 100
+      @viewportX = 0
+      @viewportY = 0
       @dblClickVx = 2
       @dblClickVy = 2
 
@@ -94,45 +97,24 @@ module.exports =
 
       [x,y]
 
-    # method to load the tiles asynchronously
-    asyncLoaderParallel: ->
-      p = new Parallel @msa.seqs
-      p.spawn( (data) =>
-
-        return data
-      ).then (data) =>
-        @moveView 300,300
-        @draw
-
-    asyncLoader: (height,x,y,vx,vy) ->
-      if height is @msa.zoomer.columnHeight
-        if x < @maxWidth / @tileSize and y < @maxHeight / @tileSize and x >= 0 and y >= 0
-          unless @map[height]?[x]?[y]?
-            # prerender the cached sequence on stage
-            @msa.log "prerender:" + x + ",j:" + y
-            @seqtile.drawTile x,y
-
-          # draw left triangular
-          setTimeout (=> @asyncLoader height,x + vx,y + vy,vx,vy),100
 
     # draws all the tiles
     draw: ->
-
 
       unless @orderList?
         @orderList = @msa.ordering.getSeqOrder @msa.seqs
         @maxLength = @msa.zoomer.getMaxLength()
         #@animate()
-        @msa.zoomer.columnWidth = 1
-        @msa.zoomer.columnHeight = 1
+        @msa.zoomer.columnWidth = @msa.zoomer.columnWidth
+        @msa.zoomer.columnHeight = @msa.zoomer.columnHeight
         @refreshZoom()
 
         # render the whole alignment in the background
         if @msa.config.prerender
-          @asyncLoader 1,0,0,0,1
-          @asyncLoader 1,1,0,0,1
-          @asyncLoader 1,2,0,0,1
-          @asyncLoader 1,3,0,0,1
+          @loader.asyncLoader 1,0,0,0,1
+          @loader.asyncLoader 1,1,0,0,1
+          @loader.asyncLoader 1,2,0,0,1
+          @loader.asyncLoader 1,3,0,0,1
 
       height = @msa.zoomer.columnHeight
       [distViewToFirstX,distViewToFirstY,firstXTile,firstYTile] = @getFirstTile()
@@ -142,7 +124,6 @@ module.exports =
       # remove extra tiles on exact fit
       notExactFitX = if distViewToFirstX is 0 then 0 else 2
       notExactFitY = if distViewToFirstY is 0 then 0 else 2
-
 
       @ctx.clearRect 0, 0, @canvas.width, @canvas.height
 
@@ -154,7 +135,6 @@ module.exports =
 
           tileX = i * @tileSize - distViewToFirstX
           tileY = j * @tileSize - distViewToFirstY
-
 
           if @map[height]?[mapX]?[mapY]?
             tile = @map[height][mapX][mapY]
@@ -172,6 +152,7 @@ module.exports =
 
       return @canvasWrapper
 
+    # returns the first visible tile
     getFirstTile: ->
       distViewToFirstX = @viewportX % @tileSize
       distViewToFirstY = @viewportY % @tileSize
@@ -196,16 +177,22 @@ module.exports =
       height = @msa.zoomer.columnHeight
       width = @msa.zoomer.columnWidth
       @maxWidth = @maxLength * width
-      @maxHeight= @msa.seqs.length * height
+      @maxHeight = @msa.seqs.length * height
+
+      @msa.log @msa.zoomer.columnWidth
+      @msa.log @msa.zoomer.columnHeight
       @msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
       @msa.log "zoom:" + width
 
+    # get the width of the component
     width: (n) ->
-      return 0
+      return n * @msa.zoomer.columnWidth
 
+    # TODO: not used??
     resetTiles: ->
       @map = []
 
+    # init zoom + event handler
     _prepareCanvas: ->
       @refreshZoom()
       @viewportX = 0
@@ -216,10 +203,11 @@ module.exports =
 
       @evtHdlr.init()
 
+    # init the canvas
     _createCanvas: ->
       @canvas = document.createElement "canvas"
-      @canvas.width = 500
-      @canvas.height = 500
+      @canvas.width = @msa.container.offsetWidth
+      @canvas.height = @msa.container.parentNode.offsetHeight
       @canvas.id = "can"
       @ctx = @canvas.getContext "2d"
       @canvas.setAttribute "id","#{@globalID}_canvas"
@@ -227,8 +215,8 @@ module.exports =
 
       @canvasWrapper = document.createElement "div"
       @canvasWrapper.appendChild @canvas
-      @canvasWrapper.style.overflow = "scroll"
-      @canvasWrapper.style.height = "550px"
+      #@canvasWrapper.style.overflow = "scroll"
+      #@canvasWrapper.style.height = "550px"
 
       @canvasTile = document.createElement "canvas"
       @canvasTile.width = @tileSize

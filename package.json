@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -33,9 +33,11 @@
     "gulp-concat": "^2.3.4",
     "gulp-mocha": "^0.5.2",
     "gulp-mocha-phantomjs": "^0.4.0",
+    "gulp-mocha-selenium": "^1.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-run": "^1.6.3",
+    "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "gulp-watch": "^0.6.9",
     "jquery": "^2.1.1",
@@ -53,10 +55,10 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "gulp test",
-    "prepublish": "npm test && npm run build-browser && coffee --bare --compile --output lib/ src/",
-    "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.min.js",
+    "prepublish": "npm test && gulp build-browser-min && coffee --bare --compile --output lib/ src/",
+    "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.js",
     "build-browser": "gulp build-browser",
-    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.min.js"
+    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.js"
   },
   "license": "Apache 2"
 }

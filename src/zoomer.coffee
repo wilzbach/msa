@@ -55,6 +55,11 @@ module.exports =
         @_width = _rect.right - _rect.left
 
 
+    # simple getter for the current level
+    getLevel: ->
+      console.log "level:" + @level
+      return @level
+
     guessZoomLevel:(tSeqs) ->
       @len = @getMaxLength tSeqs
       @maxLabelLength =  @getMaxLabelLength tSeqs
@@ -67,7 +72,11 @@ module.exports =
       else
         # increase as long as possible
         @setZoomLevel level
-        while @msa.stage.width(@len) < @_width and level <= 100
+        width = 0
+
+        while width < @_width and level <= 100
+          width = @msa.stage.width(@len)
+
           level++
           @setZoomLevel level
 
