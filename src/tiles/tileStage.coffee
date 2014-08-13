@@ -61,7 +61,7 @@ module.exports =
       if newVx < 1 or newVy < 1
         @msa.log "invalid zoom level - x:" + newVx + "y:" + newVy
       else
-        @msa.log "#BEFORE viewix:" + @viewportX + ",y:" + @viewportY
+        #@msa.log "#BEFORE viewix:" + @viewportX + ",y:" + @viewportY
 
         if vx isnt 0
           centerX = @viewportX + @canvas.width / 2
@@ -72,7 +72,7 @@ module.exports =
           centerY = centerY / @msa.zoomer.columnHeight * (newVy)
           @viewportY = Math.round(centerY - @canvas.height / 2)
 
-        @msa.log "#AFTER viewix:" + @viewportX + ",y:" + @viewportY
+        #@msa.log "#AFTER viewix:" + @viewportX + ",y:" + @viewportY
 
         @msa.zoomer.columnWidth = newVx
         @msa.zoomer.columnHeight = newVy
@@ -179,10 +179,10 @@ module.exports =
       @maxWidth = @maxLength * width
       @maxHeight = @msa.seqs.length * height
 
-      @msa.log @msa.zoomer.columnWidth
-      @msa.log @msa.zoomer.columnHeight
-      @msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
-      @msa.log "zoom:" + width
+      #@msa.log @msa.zoomer.columnWidth
+      #@msa.log @msa.zoomer.columnHeight
+      #@msa.log "maxWidth:" + @maxWidth + ",maxHeight:" + @maxHeight
+      #@msa.log "zoom:" + width
 
     # get the width of the component
     width: (n) ->

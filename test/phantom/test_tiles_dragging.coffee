@@ -16,7 +16,6 @@ beforeEach "loading msa", (done) ->
   Fasta.read "./dummy/foo.fasta", (seqs) ->
     debugger
     msa = new MSA "msa", seqs, {speed: true}
-    console.log "foo"
     stage = msa.stage
     evtHdlr = stage.evtHdlr
     stage.tileSize = 200

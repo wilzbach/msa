@@ -20,10 +20,10 @@ module.exports =
       @msa.zoomer.autofit tSeqs if @msa.config.autofit
       # check whether array or single seq
       unless tSeqs.id?
-        start = new Date().getTime()
+        #start = new Date().getTime()
         @addSeq e for e in tSeqs
-        end = new Date().getTime()
-        console.log "Adding seq time: #{(end - start)} ms"
+        #end = new Date().getTime()
+        #console.log "Adding seq time: #{(end - start)} ms"
       else
         @addSeq tSeqs
 

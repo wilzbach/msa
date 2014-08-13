@@ -44,7 +44,7 @@ module.exports =
       coords[1]],callback
 
     setEvent: (name,coords,callback) ->
-      console.log "new event:" + name + ","+ coords.join(",")
+      #console.log "new event:" + name + ","+ coords.join(",")
       coords.push callback
       @events[name] = coords
 
