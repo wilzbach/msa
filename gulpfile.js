@@ -78,6 +78,7 @@ gulp.task('test-mocha', function () {
     return gulp.src('./test/mocha/**/*.coffee', {read: false})
         .pipe(mocha({reporter: 'spec',
                     ui: "qunit",
+                    useColors: false,
                     compilers: "coffee:coffee-script/register"}));
 });
 

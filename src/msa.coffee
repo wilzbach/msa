@@ -115,7 +115,7 @@ class MSA
       start = new Date().getTime()
       node = entry.draw()
       end = new Date().getTime()
-      console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
+      #console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
 
       if node
         frag.appendChild node

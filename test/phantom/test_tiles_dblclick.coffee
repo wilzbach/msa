@@ -95,8 +95,6 @@ test "test double click canvas uneven width/height", ->
       randomX = 56
       randomY = 9
 
-      console.log "rvalY" + randomY
-      console.log "rvalX" + randomX
       # somewhere
       evtHdlr._onDblClick {offsetX: randomX, offsetY: randomY}
 
