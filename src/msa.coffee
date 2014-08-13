@@ -9,24 +9,38 @@ Logger = require "./utils/logger"
 DomStage = require "./stage/domStage"
 TilesStage = require "./tiles/tileStage.coffee"
 SeqMarker = require "./dom/seqmarker"
-arrays = require "./utils/arrays"
+Arrays = require "./utils/arrays"
 
 class MSA
 
+  # @param [String] divID (or reference to a DOM element)
+  # @param [SeqArray] seqs Array of sequences for initlization
+  # @param [Dict] conf user config (will overwrite the default config
   constructor: (divName, seqsInit, conf) ->
 
+    # merge this class with the event class
     Eventhandler.mixin MSA.prototype
 
-    console.log this
-
+    # merge the config
     @_loadDefaultConfig(conf)
+
+    # support strID and reference
     if typeof divName is "string"
       @container = document.getElementById divName
     else
       @container = divName
 
-    @container.className = "" unless @container.className?
     @container.className += " biojs_msa_div"
+
+    @_initPlugins()
+    @_initListeners()
+    @_loadStage()
+
+    # load the sequences
+    @addSeqs seqsInit if seqsInit?
+
+  # loads all available plugins
+  _initPlugins: ->
 
     @colorscheme = new Colorator()
     @ordering = new Ordering()
@@ -47,20 +61,23 @@ class MSA
       @marker = new SeqMarker this
       @plugs["marker"] = @marker
 
-    # essential stage
+    if @config.allowRectSelect
+      @plugs["rect_select"] = new selection.RectangularSelect this
+
+  # loads the sequence stage
+  # e.g. DOM or CanvasTiles
+  _loadStage: ->
+    # choose type of stage
     if @config.speed
-      #@stage =  new CanvasStage this
       @stage =  new TilesStage this
     else
       @stage =  new DomStage this
     @plugs["stage"] = @stage
 
-    @addSeqs seqsInit if seqsInit?
 
-    if @config.allowRectSelect
-      @plugs["rect_select"] = new selection.RectangularSelect this
+  # registers event listeners
+  _initListeners: ->
 
-    # post hooks
     if @config.registerMoveOvers
       @container.addEventListener 'mouseout', =>
         @selmanager.cleanup()
@@ -128,6 +145,8 @@ class MSA
   _resetContainer: ->
     Utils.removeAllChilds @container
 
+  # merges the default config
+  # with the user config
   _loadDefaultConfig: (conf) ->
 
     @config = conf
@@ -146,7 +165,7 @@ class MSA
     }
 
     if @config?
-      arrays.recursiveDictFiller defaultConf, @config
+      Arrays.recursiveDictFiller defaultConf, @config
     else
       @config = defaultConf
 

@@ -9,13 +9,16 @@ var sass = require('gulp-ruby-sass');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 var clean = require('gulp-clean');
+var uglify = require('gulp-uglify');
 var coffeelint = require('gulp-coffeelint');
 var mkdirp = require('mkdirp');
+
+var mochaSelenium = require('gulp-mocha-selenium');
 
 // for mocha
 require('coffee-script/register');
 
-var outputFile = "biojs_vis_msa.min.js";
+var outputFile = "biojs_vis_msa";
 
 var paths = {
   scripts: ['src/**/*.coffee'],
@@ -41,7 +44,16 @@ gulp.task('build-browser',['clean'], function() {
   // browserify
   return gulp.src("browser.js")
   .pipe(browserify(browserifyOptions))
-  .pipe(rename(outputFile))
+  .pipe(rename(outputFile + ".js"))
+  .pipe(gulp.dest('build'));
+});
+
+gulp.task('build-browser-min',['clean'], function() {
+  // browserify
+  return gulp.src("browser.js")
+  .pipe(browserify(browserifyOptions))
+  .pipe(uglify())
+  .pipe(rename(outputFile + "min.js"))
   .pipe(gulp.dest('build'));
 });
 
@@ -65,6 +77,14 @@ gulp.task('test-phantom', ["build-test"], function () {
 gulp.task('test-mocha', function () {
     return gulp.src('./test/mocha/**/*.coffee', {read: false})
         .pipe(mocha({reporter: 'spec',
+                    ui: "qunit",
+                    compilers: "coffee:coffee-script/register"}));
+});
+
+// runs the mocha test in your browser
+gulp.task('test-mocha-selenium', function () {
+    return gulp.src('./test/mocha/**/*.coffee', {read: false})
+        .pipe(mochaSelenium({reporter: 'spec',
                     ui: "qunit",
                     compilers: "coffee:coffee-script/register"}));
 });

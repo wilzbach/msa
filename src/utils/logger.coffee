@@ -6,4 +6,7 @@ module.exports =
 
     # quick & dirty logger
     log: (msg) ->
-      @console.innerHTML = msg  if typeof @console isnt "undefined"
+      if typeof @console isnt "undefined"
+        @console.innerHTML = msg
+      else
+        console.log msg
