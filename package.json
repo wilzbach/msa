@@ -58,6 +58,7 @@
     "prepublish": "npm test && gulp build-browser-min && coffee --bare --compile --output lib/ src/",
     "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.js",
     "build-browser": "gulp build-browser",
+	"build-browser-min": "gulp build-browser-min",
     "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.js"
   },
   "license": "Apache 2"
