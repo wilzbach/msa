@@ -2,66 +2,78 @@ module.exports =
   class Ordering
 
     constructor: ->
-      @type = "numeric"
+      @sorter = Ordering.orderID
+      @reverse = false
 
-    # TODO: do some error checking?
-    setType: (type) ->
-      @type = type
-      return
+    # customize the sorting
+    # @param type [function] e.g. Ordering.orderID, Ordering.orderName
+    # your custom function could look like this:
+    # function(seqs, ordering){
+    #   return ordering.sort();
+    # }
+    setSort: (sort) ->
+      unless sort?
+        console.log "Hey I don't like empty pointers. Please specify a valid sorter"
+      else
+        @sorter = sort
+
+    # sets the reverse method
+    # @param reverse [boolean] whether the array should be sorted in reverse
+    setReverse: (reverse) ->
+      @reverse = reverse
 
     # using last known ordering type
-    getSeqOrder: (seqs) =>
-      Ordering.orderSeqsAfterScheme seqs, @type
+    # this method is called by the MSA viewer
+    # so you need to save your properties
+    calcSeqOrder: (seqs) =>
+      Ordering._orderSeqsAfterScheme seqs, @sorter, @reverse
 
-    setOrdering: (seqOrdering) ->
-      @type = "own"
-      @seqOrdering = seqOrdering
+    # uses a predefined schema to order sequences
+    # @param seqs [[Sequences]] all sequence to sort = dictionary of all rows
+    # @param type [function] sort function: e.g. Ordering.numeric,Ordering.alphabetic
+    # @param reverse [boolean] (optional) reversed the sorted array
+    # @returns sorted array of the seqids
+    @_orderSeqsAfterScheme = (seqs, sorter, reverse) ->
 
-    #
-    # * uses a predefined schema to order sequences
-    # * e.g. alphabatic or numeric
-    #
-    @orderSeqsAfterScheme = (seqs, type) ->
       ordering = []
-      if type is "numeric"
-        for seq of seqs
-          ordering.push seqs[seq].tSeq.id
-      else if type is "reverse-numeric"
-        for seq of seqs
-          ordering.unshift seqs[seq].tSeq.id
-      else if type is "alphabetic"
-        tuples = Ordering.sortSeqArrayAlphabetically(seqs)
-        i = 0
+      for key,seq of seqs
+        ordering.push key
 
-        while i < tuples.length
-          ordering.push tuples[i][0]
-          i++
-      else if type is "reverse-alphabetic"
-        tuples = Ordering.sortSeqArrayAlphabetically(seqs)
-        i = 0
+      ordering = sorter seqs,ordering
 
-        while i < tuples.length
-          ordering.unshift tuples[i][0]
-          i++
-      else if type is "own"
-        ordering = @seqOrdering
       if ordering.length is 0
-        console.log "invalid type selected"
+        throw "invalid type selected. component will crash."
+        return []
+
+      #check whether we have to reverse the array
+      if reverse
+        return ordering.reverse()
       else
-        ordering
+        return ordering
 
-    @sortSeqArrayAlphabetically = (seqs) ->
-      tuples = []
-      for key of seqs
-        tuples.push key
+    # orders after seq id
+    @orderID: (seqs, ordering) ->
+        return ordering.sort();
 
-      tuples.sort (a, b) ->
-        nameA = a[1]
-        nameB = b[1]
+    # sorts after the sequence name
+    @orderName: (seqs, ordering) ->
+      ordering.sort (a, b) ->
+        nameA = seqs[a].tSeq.name
+        nameB = seqs[b].tSeq.name
         if nameA < nameB
           -1
         else if nameA > nameB
           1
         else
           0
-      tuples
+    # sorts after the sequence
+    @orderSeq: (seqs, ordering) ->
+      ordering.sort (a, b) ->
+        nameA = seqs[a].tSeq.seq
+        nameB = seqs[b].tSeq.seq
+        if nameA < nameB
+          -1
+        else if nameA > nameB
+          1
+        else
+          0
