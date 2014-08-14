@@ -50,12 +50,16 @@ online [Codo](http://coffeedoc.info/github/greenify/biojs-vis-msa/master/)
 
 offline 
 
-```
+```bash
+gem install sass
 npm install
 npm gulp codo
 ```
 
 and open `build/codo`
+
+At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
+support SASS 3.3.
 
 ### Step 2) Developing 
 
@@ -94,7 +98,7 @@ Execute once `npm install` to download all other dependencies locally
 
 And now you can execute all unit tests
 ```
-grunt
+gulp test
 ```
 
 If you wish to let it watch for file changes and rerun the test, use `grunt watch`
@@ -108,6 +112,14 @@ For a complete build you also need SASS. `ruby-sass` or `gem install sass`.
 
 in rebuild
 
+### FAQ
+
+#### My sass exec is not there?
+
+```
+bundle install --path .gems
+```
+
 ### Used libraries
 
 * [coffeescript](https://github.com/jashkenas/coffee-script)
@@ -116,13 +128,9 @@ in rebuild
 ## Used libraries for testing 
 
 * [coffeelint](http://www.coffeelint.org/)
-* [grunt](http://gruntjs.com/getting-started)
-* [grunt-coffeelint](https://github.com/vojtajina/grunt-coffeelint)
-* [grunt-contrib-qunit](https://github.com/gruntjs/grunt-contrib-qunit)
-* [grunt-contrib-jshint](https://github.com/gruntjs/grunt-contrib-jshint)
-* [grunt-contrib-watch](https://github.com/gruntjs/grunt-contrib-watch)
 * [PhantomJS](http://phantomjs.org/)
-* [qunit](http://qunitjs.com/)
+
+... a lot more.
 
 ### Used libraries for the documentation
 
