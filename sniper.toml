@@ -1,3 +1,3 @@
-snippetJS = [ "/node_modules/jquery/dist/jquery.min.js", "/build/biojs_vis_msa.js" ]
-snippetCSS = ["/css/msa.css"]
+js = [ "/node_modules/jquery/dist/jquery.min.js", "/build/biojs_vis_msa.js" ]
+css = ["/build/msa.css"]
 snippets = ["snippets"]

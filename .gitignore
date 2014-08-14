@@ -9,3 +9,4 @@ lib
 bower_components/
 .bundle
 .gems
+.idea

@@ -1,5 +1,5 @@
 Ordering = require "../../src/ordering"
-StageContainer = require "../../src/stage/stageContainer"
+StageContainer = require "../../src/seqManager"
 Seq = require("biojs-model").seq
 assert = require("chai").assert
 equal = assert.deepEqual

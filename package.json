@@ -14,19 +14,20 @@
   "dependencies": {
     "biojs-events": "0.0.4",
     "biojs-io-clustal": "0.0.6",
-    "biojs-io-fasta": "0.0.7",
+    "biojs-io-fasta": "0.0.8",
     "biojs-model": "^0.0.2",
-    "biojs-vis-easy_features": "0.0.2",
+    "biojs-vis-easy_features": "0.0.3",
     "underscore": "^1.6.0"
   },
   "devDependencies": {
     "biojs-sniper": "git://github.com/greenify/biojs-sniper",
-    "browserify": "~4.2.0",
+    "browserify": "^5.10.0",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
     "coffee-script": "^1.7.1",
     "coffeeify": "^0.7.0",
     "coffeelint": "^1.5.5",
+    "deepcopy": "^0.3.3",
     "gulp": "^3.8.7",
     "gulp-browserify": "^0.5.0",
     "gulp-chmod": "^1.1.0",
@@ -51,7 +52,7 @@
     "phantomjs": "^1.9.7-15",
     "shelljs": "^0.3.0",
     "uglify-js": "~2.4.15",
-    "watchify": "^1.0.1"
+    "watchify": "^1.0.2"
   },
   "keywords": [
     "bio"

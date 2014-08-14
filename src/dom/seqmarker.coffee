@@ -68,7 +68,7 @@ class SeqMarker
             specialCounter++
 
         # color it nicely
-        @msa.colorscheme.colorColumn residueSpan, n
+        @msa.colorscheme.trigger "column:color", {target: residueSpan, rowPos: n}
         residueGroup.appendChild residueSpan
         n += stepSize
 

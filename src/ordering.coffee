@@ -71,9 +71,6 @@ module.exports =
       ordering.sort (a, b) ->
         nameA = seqs[a].tSeq.seq
         nameB = seqs[b].tSeq.seq
-        if nameA < nameB
-          -1
-        else if nameA > nameB
-          1
-        else
-          0
+        return -1 if nameA < nameB
+        return 1  if nameA > nameB
+        0
