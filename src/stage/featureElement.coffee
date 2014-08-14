@@ -26,7 +26,7 @@ class FeatureElement extends StageElement
     el = @stage.create featureSpan,row.tSeq.features,width,seqLen
 
     #event forwarding
-    @stage.on "all", (eventName,feature) =>
+    @stage.onAll (eventName,feature) =>
       @msa.trigger "anno_" + eventName,feature
 
     return el
