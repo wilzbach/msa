@@ -187,7 +187,7 @@ function checkForSASS(){
 }
 
 function checkBundleExec(){
-    if (exec('sass --help > /dev/null 2>&1').code !== 0) {
+    if (exec('bundle exec sass --help',{silent:true}).code !== 0) {
       return { bundleExec: true };
     } else {
       return undefined;
