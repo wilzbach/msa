@@ -1,8 +1,8 @@
 if (typeof biojs === 'undefined') {
-  module.exports = biojs = {}
+  module.exports = biojs = {};
 }
 if (typeof biojs.vis === 'undefined') {
-  module.exports = biojs.vis = {}
+  module.exports = biojs.vis = {};
 }
 biojs.vis.msa = require('./index');
 
