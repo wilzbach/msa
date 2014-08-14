@@ -12,6 +12,7 @@
     "email": "biojs-technical@googlegroups.com"
   },
   "dependencies": {
+    "biojs-events": "0.0.4",
     "biojs-io-clustal": "0.0.6",
     "biojs-io-fasta": "0.0.7",
     "biojs-model": "^0.0.2",
