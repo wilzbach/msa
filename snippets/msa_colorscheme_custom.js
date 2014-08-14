@@ -2,7 +2,7 @@ var msa = new biojs.vis.msa.msa(yourDiv);
 
 // inheritance in JS
 AwesomeScheme = function(){};
-AwesomeScheme.prototype = new Colorator();
+AwesomeScheme.prototype = new biojs.vis.msa.colorator();
 
 // choosing between two colors depending on the numerical value of the char
 AwesomeScheme.prototype.colorResidue = function (aminoGroup, tSeq, pos){

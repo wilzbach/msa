@@ -1,5 +1,5 @@
 // as a async, non-blocking call
-biojs.io.clustal.read("test/dummy/samples/p53.clustalo.clustal", function(seqs) {
+biojs.io.clustal.read("/test/dummy/samples/p53.clustalo.clustal", function(seqs) {
 
   // cut the seqs for demo purpose
   /*

@@ -1,3 +1,3 @@
-snippetJS = [ "node_modules/jquery/dist/jquery.min.js", "https://drone.io/github.com/greenify/biojs-vis-msa/files/build/biojs_vis_msa.js" ]
+snippetJS = [ "/node_modules/jquery/dist/jquery.min.js", "/build/biojs_vis_msa.js" ]
 snippetCSS = ["/css/msa.css"]
-snippets = ["folder1", "fodler2"]
+snippets = ["snippets"]
