@@ -48,13 +48,13 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
-gulp.task('build', ['css','build-browser','build-browser-min'],function () {
+gulp.task('build', ['css','build-browser','build-browser-min', 'build-browser-all'],function () {
   return true;
 });
 
 
+// browserify debug
 gulp.task('build-browser',['init'], function() {
-  // browserify
   var fileName = outputFile + ".js";
   gulp.src(join(buildDir,fileName)).pipe(clean());
 
@@ -68,16 +68,18 @@ gulp.task('build-browser',['init'], function() {
   .pipe(gulp.dest(buildDir));
 });
 
+// browserify min
 gulp.task('build-browser-min',['init'], function() {
-  // browserify
   var fileName = outputFile + ".min.js";
   gulp.src(join(buildDir,fileName)).pipe(clean());
-
-  return gulp.src(browserFile)
-  .pipe(browserify(browserifyOptions))
-  .pipe(uglify())
-  .pipe(rename(fileName))
-  .pipe(gulp.dest(buildDir));
+  return mBrowserify(browserFile,fileName);
+});
+ 
+// browserify all (with the parsers)
+gulp.task('build-browser-all',['init'], function() {
+  var fileName = outputFile + "_all.min.js";
+  gulp.src(join(buildDir,fileName)).pipe(clean());
+  return mBrowserify("./browser_all.js",fileName);
 });
 
 gulp.task('build-test', function() {
@@ -167,6 +169,13 @@ gulp.task('init', function() {
   });
 });
 
+function mBrowserify(browserFile,fileName){
+  return gulp.src(browserFile)
+  .pipe(browserify(browserifyOptions))
+  .pipe(uglify())
+  .pipe(rename(fileName))
+  .pipe(gulp.dest(buildDir));
+}
 
 // -----------------------------------------
 // SASS part
