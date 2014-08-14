@@ -1,20 +1,26 @@
 var gulp = require('gulp');
-var path = require('path');
-var join = path.join;
-var concat = require('gulp-concat');
 var browserify = require('gulp-browserify');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
 var run = require('gulp-run');
-var sass = require('gulp-ruby-sass');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
-var clean = require('gulp-clean');
 var uglify = require('gulp-uglify');
 var coffeelint = require('gulp-coffeelint');
+require('shelljs/global');
+
+// css
+var sass = require('gulp-ruby-sass'); // gulp-sass is also available (faster, feature-less)
+var minifyCSS = require('gulp-minify-css');
+
+// path stuff
 var chmod = require('gulp-chmod');
+var clean = require('gulp-clean');
 var mkdirp = require('mkdirp');
+var path = require('path');
+var join = path.join;
+var concat = require('gulp-concat');
 
 var mochaSelenium = require('gulp-mocha-selenium');
 
@@ -42,7 +48,7 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
-gulp.task('build', ['sass','build-browser','build-browser-min'],function () {
+gulp.task('build', ['css','build-browser','build-browser-min'],function () {
   return true;
 });
 
@@ -118,12 +124,26 @@ gulp.task('codo', ['init'],function () {
   run('codo src -o build/doc ').exec(); 
 });
 
+
 gulp.task('sass',['init'], function () {
+    var opts = checkForSASS();
+    opts.sourcemap = true;
+
     gulp.src('./css/msa.scss')
-      .pipe(sass())
-      .pipe(rename('msa.css'))
+      .pipe(sass(opts))
+      //.pipe(rename('msa.css'))
       .pipe(chmod(644))
       .pipe(gulp.dest(buildDir));
+});
+
+gulp.task('css',['sass'], function () {
+    if(checkForSASS() !== undefined){
+      gulp.src(join(buildDir,"msa.css"))
+      .pipe(minifyCSS())
+      .pipe(rename('msa.min.css'))
+      .pipe(chmod(644))
+      .pipe(gulp.dest(buildDir));
+    }
 });
 
 gulp.task('watch', function() {
@@ -148,3 +168,36 @@ gulp.task('init', function() {
 });
 
 
+// -----------------------------------------
+// SASS part
+
+// check whether there is a way to run SASS
+function checkForSASS(){
+  if (exec('sass --help',{silent:true}).code !== 0) {
+    echo('Error: No SASS installed');
+    var checkBundle = checkBundleExec();
+    if( checkBundle !== undefined){
+      return checkBundle;
+    }else{
+      installBundle();
+      checkBundleExec();
+    }
+  }
+  return {};
+}
+
+function checkBundleExec(){
+    if (exec('sass --help > /dev/null 2>&1').code !== 0) {
+      return { bundleExec: true };
+    } else {
+      return undefined;
+    }
+}
+
+function installBundle(){
+    if(exec("bundle install --path .gems").code !== 0){
+      echo('Install ruby and bundle');
+      return false;
+    } 
+    return true;
+}
