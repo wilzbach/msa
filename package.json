@@ -19,6 +19,7 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
+    "biojs-sniper": "git://github.com/greenify/biojs-sniper",
     "browserify": "~4.2.0",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
@@ -58,7 +59,8 @@
     "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.js",
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
-    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.js"
+    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.js",
+    "sniper": "node_modules/biojs-sniper/bin/sniper"
   },
   "license": "Apache 2"
 }
