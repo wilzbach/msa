@@ -1,9 +1,31 @@
 SelectionList = require "./selectionlist"
+selection = require "./"
 
 module.exports =
   class SelectionManager
 
     constructor: (@msa) ->
+
+      # residues
+      @msa.on "residue:click", (data) =>
+        selPos = new selection.PositionSelect(@msa, data.seqId, data.rowPos)
+        @handleSel selPos, data.evt
+      @msa.on "residue:mouseover", (data) ->
+        @msa.selmanager.changeSel new selection.PositionSelect(@msa, data.seqId,
+            evt.target.rowPos)
+      @msa.on "residue:mouseout", (data) ->
+
+      # rows
+      # click is done by the label
+      @msa.on "row:click", (data) ->
+      @msa.on "row:mouseover", (data) ->
+      @msa.on "row:mouseout", (data) ->
+
+      # column
+      # click is done by the marker
+      @msa.on "column:click", (data) ->
+      @msa.on "column:mouseover", (data) ->
+      @msa.on "column:mouseout", (data) ->
 
     changeSel: (sel) ->
       # remove old
@@ -14,7 +36,7 @@ module.exports =
       sel.select() if sel?
 
       # broadcast to event handler
-      @msa.trigger("onSelectionChanged",sel)
+      @msa.trigger "onSelectionChanged",sel
 
     # detects shiftKey
     handleSel: (sel, evt) ->

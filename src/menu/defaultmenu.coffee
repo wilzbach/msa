@@ -1,5 +1,7 @@
-MenuBuilder = require "./menubuilder.coffee"
+MenuBuilder = require "./menubuilder"
 FastaExporter = require("biojs-io-fasta").writer
+saveAs = require "../../external/saver"
+Ordering = require "../ordering"
 
 module.exports =
   class DefaultMenu
@@ -49,22 +51,20 @@ module.exports =
 
       menuExport.addNode "Export all", =>
         # limit at about 256k
-        require ["saveAs"], (saveAs) =>
-          access = (seq) -> seq.tSeq
-          text = FastaExporter.export @msa.seqs,access
-          blob = new Blob([text], {type : 'text/plain'})
-          saveAs blob, "all.fasta"
+        access = (seq) -> seq.tSeq
+        text = FastaExporter.export @msa.seqs,access
+        blob = new Blob([text], {type : 'text/plain'})
+        saveAs blob, "all.fasta"
 
       menuExport.addNode "Export selection", =>
-        require ["saveAs"], (saveAs) =>
-          selection = @msa.selmanager.getInvolvedSeqs()
-          unless selection?
-            selection = @msa.seqs
-            console.log "no selection found"
-          access = (seq) -> seq.tSeq
-          text = FastaExporter.export selection,access
-          blob = new Blob([text], {type : 'text/plain'})
-          saveAs blob, "all.fasta"
+        selection = @msa.selmanager.getInvolvedSeqs()
+        unless selection?
+          selection = @msa.seqs
+          console.log "no selection found"
+        access = (seq) -> seq.tSeq
+        text = FastaExporter.export selection,access
+        blob = new Blob([text], {type : 'text/plain'})
+        saveAs blob, "all.fasta"
 
       menuExport.addNode "Export image", =>
         console.log "trying to render"
@@ -94,34 +94,45 @@ module.exports =
       menuColor = new MenuBuilder("Color scheme")
       menuColor.addNode "Zappo",(e) =>
         @msa.colorscheme.setScheme "zappo"
-        @msa.stage.recolorStage()
+        @msa.stage.redrawStage()
 
       menuColor.addNode "Taylor", =>
         @msa.colorscheme.setScheme "taylor"
-        @msa.stage.recolorStage()
+        @msa.stage.redrawStage()
 
       menuColor.addNode "Hydrophobicity", =>
         @msa.colorscheme.setScheme "hydrophobicity"
-        @msa.stage.recolorStage()
+        @msa.stage.redrawStage()
 
       menuColor.buildDOM()
 
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
-        @msa.ordering.setType "numeric"
+        @msa.ordering.setSort Ordering.orderID
         @msa.redrawContainer()
 
       menuOrdering.addNode "ID Desc", =>
-        @msa.ordering.setType "reverse-numeric"
+        @msa.ordering.setSort Ordering.orderID
+        @msa.ordering.setReverse true
         @msa.redrawContainer()
 
       menuOrdering.addNode "Label", =>
-        @msa.ordering.setType "alphabetic"
+        @msa.ordering.setSort Ordering.orderName
         @msa.redrawContainer()
 
       menuOrdering.addNode "Label Desc", =>
-        @msa.ordering.setType "reverse-alphabetic"
+        @msa.ordering.setSort Ordering.orderName
+        @msa.ordering.setReverse true
+        @msa.redrawContainer()
+
+      menuOrdering.addNode "Seq", =>
+        @msa.ordering.setSort Ordering.orderName
+        @msa.redrawContainer()
+
+      menuOrdering.addNode "Seq Desc", =>
+        @msa.ordering.setSort Ordering.orderSeq
+        @msa.ordering.setReverse true
         @msa.redrawContainer()
 
       menuOrdering.buildDOM()

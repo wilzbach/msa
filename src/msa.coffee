@@ -1,35 +1,42 @@
-Colorator = require "./colorator"
-Ordering = require "./ordering"
-Utils = require "./utils/general"
 Eventhandler = require "biojs-events"
-selection = require "./selection/index"
-Zoomer = require "./zoomer"
-SeqMgr = require "./seqmgr"
-Logger = require "./utils/logger"
-DomStage = require "./stage/domStage"
-TilesStage = require "./tiles/tileStage.coffee"
+
+# sequence
 SeqMarker = require "./dom/seqmarker"
-Arrays = require "./utils/arrays"
+SeqMgr = require "./seqManager"
+
+# working with seqs
+Colorator = require "./coloring/colorator"
+Ordering = require "./ordering"
+selection = require "./selection/index"
+
+# stages
+DomStage = require "./stage/domStage"
+#TilesStage = require "./tiles/tileStage.coffee"
+
+# utils
+Utils = require "./utils/general"
+Zoomer = require "./zoomer"
+Logger = require "./utils/logger"
+Config = require "./config"
+
 
 class MSA
 
   # @param [String] divID (or reference to a DOM element)
   # @param [SeqArray] seqs Array of sequences for initlization
   # @param [Dict] conf user config (will overwrite the default config
-  constructor: (divName, seqsInit, conf) ->
-
-    # merge this class with the event class
-    Eventhandler.mixin MSA.prototype
+  constructor: (div, seqsInit, conf) ->
 
     # merge the config
-    @_loadDefaultConfig(conf)
+    @config = Config conf
 
     # support strID and reference
-    if typeof divName is "string"
-      @container = document.getElementById divName
+    if typeof div is "string"
+      @container = document.getElementById div
     else
-      @container = divName
+      @container = div
 
+    @container.className = "" unless @container.className?
     @container.className += " biojs_msa_div"
 
     @_initPlugins()
@@ -42,16 +49,13 @@ class MSA
   # loads all available plugins
   _initPlugins: ->
 
-    @colorscheme = new Colorator()
+    @colorscheme = new Colorator this
     @ordering = new Ordering()
 
     @log = new Logger().log
     @selmanager = new selection.SelectionManager this
 
     @zoomer = new Zoomer(this)
-
-    @seqs = []
-    @seqmgr = new SeqMgr(this)
 
     @plugs = {}
     @plugsDOM = {}
@@ -74,6 +78,9 @@ class MSA
       @stage =  new DomStage this
     @plugs["stage"] = @stage
 
+    @seqmgr = new SeqMgr @stage
+    # reference - access is more convenient
+    @seqs = @seqmgr.seqs
 
   # registers event listeners
   _initListeners: ->
@@ -85,28 +92,32 @@ class MSA
     @container.addEventListener 'dblclick', =>
       @selmanager.cleanup()
 
-  addSeqs: (tSeq) ->
-    @stage.addSeqs tSeq
+  # adds one or multiple sequences
+  # @param tSeqs [[Sequences]] array of sequences you want to add
+  addSeqs: (tSeqs) ->
+    @zoomer.autofit tSeqs if @zoomer?
+    @seqmgr.addSeqs tSeqs
     # TODO: do we want to draw the entire MSA not only the stage)
     @_draw()
 
-  # TODO: use a user ordering
+  # adds a plugin
+  # @param plugin [Plugin] provides draw
+  # @param id [String] Id for later access
   addPlugin: (plugin, key) ->
+    unless plugin?
+      throw "Invalid plugin. "
+    # fallback for custom ordering
+    plugin.ordering = key unless plugin.ordering?
     @plugs[key] = plugin
     @_draw()
 
+  # draws the entire component
   _draw: ->
 
     @_nMax = @zoomer.getMaxLength @seqs
-
-    #@zoomer.autofit() if @config.autofit
-
     frag = document.createDocumentFragment()
 
-    # sort plugs
-    plugsSort = []
-    plugsSort.push key for key of @plugs
-    plugsSort.sort()
+    plugsSort = @_sortPlugins()
 
     # load plugins
     for key in plugsSort
@@ -114,8 +125,7 @@ class MSA
 
       start = new Date().getTime()
       node = entry.draw()
-      end = new Date().getTime()
-      #console.log "Plugin[#{key}] drawing time: #{(end - start)} ms"
+      #console.log "Plugin[#{key}] drawing time: #{(new Date().getTime() - start)} ms"
 
       if node
         frag.appendChild node
@@ -125,17 +135,32 @@ class MSA
     Utils.removeAllChilds @container
     @container.appendChild frag
 
-  redraw: (plugin) ->
+  # sorts the plugins after their given ordering
+  # @returns sorted list of keys (of the plugins)
+  _sortPlugins: ->
+    # sort plugs
+    plugsSort = []
+    plugsSort.push key for key of @plugs
+    plugsSort.sort (a,b) =>
+        nameA = @plugs[a].ordering
+        nameB = @plugs[b].ordering
+        return -1 if nameA < nameB
+        return 1  if nameA > nameB
+        0
+    return plugsSort
+
+  # redraws a special plugin
+  # @param id [String] Id of the plugin
+  redrawPlugin: (plugin) ->
     newDOM = @plugs[plugin].draw()
 
     plugDOM= @plugsDOM[plugin]
     # better use container than parentNode
     plugDOM.parentNode.replaceChild newDOM, plugDOM
-
     @plugsDOM[plugin] = newDOM
 
-
-  redrawContainer: ->
+  # total redraw of the entire component
+  redraw: ->
     @plugs['stage'].reset()
     @_resetContainer()
     @_draw()
@@ -145,28 +170,6 @@ class MSA
   _resetContainer: ->
     Utils.removeAllChilds @container
 
-  # merges the default config
-  # with the user config
-  _loadDefaultConfig: (conf) ->
-
-    @config = conf
-
-    defaultConf = {
-      visibleElements: {
-        labels: true, seqs: true, menubar: true, ruler: true,
-        features: false,
-        allowRectSelect: false,
-        speed: false,
-      },
-      registerMoveOvers: false,
-      autofit: true,
-      keyevents: false,
-      prerender: false,
-    }
-
-    if @config?
-      Arrays.recursiveDictFiller defaultConf, @config
-    else
-      @config = defaultConf
-
+# merge this class with the event class
+Eventhandler.mixin MSA.prototype
 module.exports = MSA

@@ -22,6 +22,10 @@ var path = require('path');
 var join = path.join;
 var concat = require('gulp-concat');
 
+// watchify
+var watchify = require("watchify");
+var deepcopy = require("deepcopy");
+
 var mochaSelenium = require('gulp-mocha-selenium');
 
 // for mocha
@@ -39,8 +43,11 @@ var paths = {
 var browserifyOptions =  {
   transform: ['coffeeify'],
   extensions: ['.coffee'],
+
 };
 
+var outputFileSt = outputFile + ".js";
+var outputFilePath = join(buildDir,outputFileSt);
 
 gulp.task('default', ['clean','test','lint','build', 'codo']);
 
@@ -55,8 +62,7 @@ gulp.task('build', ['css','build-browser','build-browser-min', 'build-browser-al
 
 // browserify debug
 gulp.task('build-browser',['init'], function() {
-  var fileName = outputFile + ".js";
-  gulp.src(join(buildDir,fileName)).pipe(clean());
+  gulp.src(outputFilePath).pipe(clean());
 
   dBrowserifyOptions = {};
   for( var key in browserifyOptions )
@@ -64,7 +70,7 @@ gulp.task('build-browser',['init'], function() {
   dBrowserifyOptions["debug"] = true;
   return gulp.src(browserFile)
   .pipe(browserify(dBrowserifyOptions))
-  .pipe(rename(fileName))
+  .pipe(rename(outputFileSt))
   .pipe(gulp.dest(buildDir));
 });
 
@@ -153,6 +159,20 @@ gulp.task('watch', function() {
    gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
      gulp.run('test');
    });
+});
+
+// watch coffee files
+gulp.task('watchify', function() {
+    var options = deepcopy(browserifyOptions);
+    options.output = "";
+    options.cache = {};
+    options.packageCache = {};
+    options.fullPaths = true;
+    //var b = browserify(options);
+    debugger;
+    var b = new browserify("browser.js",options);
+    console.log(b);
+    var w = watchify(b);
 });
 
 // be careful when using this task.

@@ -1,4 +1,4 @@
-MSA = require "../../src/msa"
+MSA = require "../../../src/msa"
 Fasta = require("biojs-io-fasta").parse
 fs = require "fs"
 assert = require("chai").assert

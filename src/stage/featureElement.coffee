@@ -1,4 +1,4 @@
-StageElement = require "./StageElement"
+StageElement = require "./stageElement"
 FeatureStage = require("biojs-vis-easy_features").stage
 
 module.exports =
