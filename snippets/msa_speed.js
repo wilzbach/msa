@@ -12,11 +12,11 @@ biojs.io.fasta.parse.read("http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp
   //seqs = seqs.slice(0,1000);
   var start = new Date().getTime();
 
-  var msa = new biojs.vis.msa.msa('msa-speed',seqs, {speed: true,
+  var msa = new biojs.vis.msa.msa(yourDiv,seqs, {speed: true,
     keyevents: true, visibleElements: { ruler: false }});
   
   //msa.addPlugin(new ZoomBar(msa,1,5), "0_zoombar");
 
-  msa.log("Rendering time: " + (new Date().getTime()-start) + " ms");
+  //msa.log("Rendering time: " + (new Date().getTime()-start) + " ms");
 
 });

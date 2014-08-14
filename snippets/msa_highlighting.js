@@ -1,5 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-highlighting');
-msa.log.setConsole('msa-highlighting-console');
+var msa = new biojs.vis.msa.msa(yourDiv);
 msa.seqmgr.addDummySequences();
 
 var selList = new biojs.vis.msa.selection.SelectionList();

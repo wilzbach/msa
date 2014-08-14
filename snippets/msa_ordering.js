@@ -1,4 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-ordering');
+var msa = new biojs.vis.msa.msa(yourDiv);
 //msa.log.setConsole('msa-ordering-console');
 
 // define seqs
