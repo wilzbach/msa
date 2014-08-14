@@ -120,6 +120,54 @@ in rebuild
 bundle install --path .gems
 ```
 
+### Event system
+
+#### Rows
+
+```ruby
+# residues
+@msa.on "residue:click", (data) ->
+@msa.on "residue:mouseover", (data) ->
+@msa.on "residue:mouseout", (data) ->
+```
+data consists of
+
+```
+colPos: 
+rowPos:
+container: div container of the event
+```
+
+#### Rows
+
+```
+# rows (click done by the label)
+@msa.on "row:click", (data) ->
+@msa.on "row:mouseover", (data) ->
+@msa.on "row:mouseout", (data) ->
+```
+
+#### Columns
+
+```
+# click done by the
+@msa.on "column:click", (data) ->
+@msa.on "column:mouseover", (data) ->
+@msa.on "column:mouseout", (data) ->
+```
+
+#### Sequence events
+
+```
+@msa.on "seq:add" # data = sequence object
+```
+
+#### Further events
+
+```
+@msa.on "redraw"
+```
+
 ### Used libraries
 
 * [coffeescript](https://github.com/jashkenas/coffee-script)

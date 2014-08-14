@@ -18,13 +18,14 @@ module.exports =
         singleResidue = @msa.seqs[@id].layer.children[1].children[@column]
       else
         singleResidue = @msa.seqs[@id].layer.children[0].children[@column]
-      @msa.colorscheme.colorSelectedResidueSingle singleResidue,tSeq,@column
+        
+      @msa.colorscheme.trigger "residue:select", {target:singleResidue,seqId:@id,rowPos:@column}
 
     deselect: =>
       posY = @msa.seqs[@id]
-      if posY.layer.childNodes[1]?
-        singlePos = posY.layer.childNodes[1].childNodes[@column]
+      if posY.layer.childNodes[2]?
+        singleResidue = posY.layer.childNodes[2].childNodes[@column]
       else
-        singlePos = posY.layer.childNodes[0].childNodes[@column]
+        singleResidue = posY.layer.childNodes[0].childNodes[@column]
       tSeq = posY.tSeq
-      @msa.colorscheme.colorResidue singlePos,tSeq,@column
+      @msa.colorscheme.trigger "residue:color", {target:singleResidue,seqId:@id,rowPos:@column}

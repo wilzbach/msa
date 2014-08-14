@@ -1,6 +1,6 @@
 Utils = require "../utils/general"
 selection = require "../selection/index"
-StageElement = require "./StageElement"
+StageElement = require "./stageElement"
 
 module.exports =
   class LabelElement extends StageElement
@@ -23,7 +23,7 @@ module.exports =
       if tSeq.special? is true
         label.className += " biojs_msa_labels-special"
 
-      @msa.colorscheme.colorLabel label,tSeq
+      @msa.colorscheme.trigger "label:color", {target: label, seqId: tSeq.id}
 
     redraw: (el,row,textVisibilityChanged) ->
       @_setLabelPosition el,row.tSeq

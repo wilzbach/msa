@@ -2,23 +2,31 @@ Utils = require "../utils/general"
 stage = require "../stage/index"
 
 module.exports =
-
-  class DomStage extends stage.stage
+  class DomStage
 
     constructor: (@msa) ->
       @elements = []
-      @_createElements()
+      @_createRowElements()
 
-    _createElements: ->
+      # register events
+      @msa.on "redraw", @redraw
+      @msa.on "drawSeq", (seq) -> @drawSeq(seq)
+
+    # pushes the different vis plugins onto the DOM
+    _createRowElements: ->
       @elements = []
       if @msa.config.visibleElements.labels
         @elements.push new stage.labelElement @msa
 
+      #if @msa.config.visibleElements.features
+        @elements.push new stage.metaElement @msa
+
       if @msa.config.visibleElements.seqs
         @elements.push new stage.seqElement @msa
 
-      if @msa.config.visibleElements.features
+      #if @msa.config.visibleElements.features
         @elements.push new stage.featureElement @msa
+
 
     _createContainer: ->
       # TODO: remove old canvas
@@ -28,43 +36,41 @@ module.exports =
 
     reset: ->
       Utils.removeAllChilds @canvas
-      @_createElements()
+      @_createRowElements()
 
-    drawSeq: (row) ->
+    # draws a row
+    _drawRow: (row) ->
       layer = document.createElement "div"
 
       for el in @elements
         layer.appendChild el.create row
 
       layer.className = "biojs_msa_layer"
-      #layer.style.height = "#{@msa.zoomer.columnHeight}px"
-
       row.layer = layer
 
+    # loops over all RowPlugins and
+    # draws all of them per row
     draw: ->
       # check whether we need to reload the stage
       if @canvas?.childNodes.length > 0
-        @recolorStage()
+        @redrawStage()
       else
         @_createContainer()
         start = new Date().getTime()
-        @drawSeqs()
-        end = new Date().getTime()
-        console.log "Stage draw time: #{(end - start)} ms"
 
-        orderList = @msa.ordering.getSeqOrder @msa.seqs
+        # draw all seqs
+        for index,row of @msa.seqs
+          @_drawRow row
+        console.log "Stage draw time: #{(new Date().getTime() - start)} ms"
 
-        unless orderList?
-          console.log "empty seq stage"
-          return
+        orderList = @msa.ordering.calcSeqOrder @msa.seqs
 
         # consistency check
         if orderList.length != Object.size @msa.seqs
-          console.log "Length of the input array "+ orderList.length +
+          throw "Length of the input array "+ orderList.length +
             " does not match with the real world " + Object.size @msa.seqs
-          return
 
-        # prepare stage
+        # order all rows
         frag = document.createDocumentFragment()
         for i in[0..orderList.length - 1] by 1
           id = orderList[i]
@@ -72,11 +78,10 @@ module.exports =
           frag.appendChild @msa.seqs[id].layer
 
         @canvas.appendChild frag
-
       return @canvas
 
     # recolors all subchilds stage
-    recolorStage: =>
+    redrawStage: =>
       @msa.selmanager.cleanup()
 
       textVisibilityChanged = false
@@ -88,10 +93,17 @@ module.exports =
       for key,curRow of @msa.seqs
         currentLayer = curRow.layer
         # TODO: redundant
-        #currentLayer.style.height = "#{@msa.zoomer.columnHeight}px"
 
         for i in [0..@elements.length - 1] by 1
           if currentLayer.childNodes[i]?
             @elements[i].redraw currentLayer.childNodes[i], curRow, textVisibilityChanged
           else
             console.log "a plugin wasn't loaded yet."
+
+    # calculates the width of this element
+    # ask each element recursively
+    width: (n) ->
+      width = 0
+      if @elements?
+        width += el.width n for el in @elements
+      return width
