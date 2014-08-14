@@ -1,3 +1,2 @@
-var msa = new biojs.vis.msa.msa('msa-eventlistener', undefined, {registerMoveOvers : true});
-msa.log.setConsole('msa-eventlistener-console');
+var msa = new biojs.vis.msa.msa(yourDiv, undefined, {registerMoveOvers : true});
 msa.seqmgr.addDummySequences();

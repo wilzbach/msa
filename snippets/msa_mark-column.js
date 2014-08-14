@@ -1,4 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-mark-column');
+var msa = new biojs.vis.msa.msa(yourDiv);
 
 var seqs = biojs.vis.msa.seqmgr.getDummySequences(4,40);
 
