@@ -7,3 +7,5 @@ test/all_test.js
 build
 lib
 bower_components/
+.bundle
+.gems
