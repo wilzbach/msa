@@ -1,10 +1,11 @@
-var msaDiv = document.createElement(div);
-var zoomDiv = document.createElement(div);
-yourDiv.append(msaDiv);
-yourDiv.append(zoomDiv)
+var msaDiv = document.createElement("div");
+var zoomDiv = document.createElement("div");
+yourDiv.innerHTML = ""; // remove error msg
+yourDiv.appendChild(msaDiv);
+yourDiv.appendChild(zoomDiv);
   
 // as a async, non-blocking call
-Fasta.read("test/dummy/PF00072.fasta", function(seqs) {
+biojs.io.fasta.parse.read("/test/dummy/samples/p53.clustalo.fasta", function(seqs) {
   //$("#msa-file-input-fasta-seq").append(seqs.length+ " sequences read");
 
   // cut the seqs for demo purpose
