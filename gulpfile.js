@@ -173,21 +173,21 @@ gulp.task('init', function() {
 
 // check whether there is a way to run SASS
 function checkForSASS(){
-  if (exec('sass --help',{silent:true}).code !== 0) {
-    echo('Error: No SASS installed');
+  if (exec('sass --help 2> /dev/null',{silent:true}).code !== 0) {
     var checkBundle = checkBundleExec();
     if( checkBundle !== undefined){
       return checkBundle;
     }else{
+      echo('Error: No SASS installed. Trying to fix. You will need bundler to proceed.');
       installBundle();
-      checkBundleExec();
+      return checkBundleExec();
     }
   }
   return {};
 }
 
 function checkBundleExec(){
-    if (exec('bundle exec sass --help',{silent:true}).code !== 0) {
+    if (exec('bundle exec sass --help',{silent:true}).code === 0) {
       return { bundleExec: true };
     } else {
       return undefined;
