@@ -1,4 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-select-regions', undefined, { allowRectSelect : true });
+var msa = new biojs.vis.msa.msa(yourDiv, undefined, { allowRectSelect : true });
 
 msa.seqmgr.addDummySequences(5,50);
 

@@ -1,6 +1,5 @@
 // as a async, non-blocking call
-Clustal.read("test/dummy/samples/p53.clustalo.clustal", function(seqs) {
-  $("#msa-file-input-clustal-seq").append(seqs.length+ " sequences read");
+biojs.io.clustal.read("test/dummy/samples/p53.clustalo.clustal", function(seqs) {
 
   // cut the seqs for demo purpose
   /*
@@ -12,5 +11,5 @@ Clustal.read("test/dummy/samples/p53.clustalo.clustal", function(seqs) {
   // only display ten seqs
   //seqs = seqs.slice(0,10);
 
-  var msa = new biojs.vis.msa.msa('msa-file-input-clustal',seqs);
+  var msa = new biojs.vis.msa.msa(yourDiv,seqs);
 });

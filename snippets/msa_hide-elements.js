@@ -1,4 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-hide-elements');
+var msa = new biojs.vis.msa.msa(yourDiv);
 msa.config.visibleElements.ruler = false;
 msa.seqmgr.addDummySequences();
 
@@ -17,6 +17,4 @@ state = (state +1 ) % 2;
 }, 3000);
 */
 
-var msa2 = new biojs.vis.msa.msa('msa-hide-elements-labels');
-msa2.config.visibleElements.labels = false;
-msa2.seqmgr.addDummySequences();
+

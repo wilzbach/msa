@@ -1,2 +1,2 @@
-var msa = new biojs.vis.msa.msa('msa-semantic-zooming');
+var msa = new biojs.vis.msa.msa(yourDiv);
 msa.seqmgr.addDummySequences();

@@ -1,4 +1,4 @@
-var msa = new biojs.vis.msa.msa('msa-zooming');
+var msa = new biojs.vis.msa.msa(yourDiv);
 msa.columnWidth = 15;
 
 msa.seqmgr.addDummySequences();

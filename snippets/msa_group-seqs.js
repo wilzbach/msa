@@ -1,2 +1,2 @@
-var msa = new biojs.vis.msa.msa('msa-group-seqs');
+var msa = new biojs.vis.msa.msa(yourDiv);
 msa.seqmgr.addDummySequences();
