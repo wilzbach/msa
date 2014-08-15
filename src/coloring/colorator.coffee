@@ -12,7 +12,7 @@ class Colorator
     console.log @msa
 
     @.on "residue:color", (data) =>
-      data.target.className = "biojs_msa_single_residue"
+      #data.target.className = "biojs_msa_single_residue"
       residue = @getResidue data
       data.target.className += " biojs-msa-aa-" + residue
 
@@ -27,13 +27,13 @@ class Colorator
 
     @.on "row:color", (data) =>
       rowGroup = data.target
-      rowGroup.className = "biojs_msa_sequence_block"
+      rowGroup.className = "biojs_msa_seqblock"
       rowGroup.className += " biojs-msa-schemes-" + @scheme
 
     # TODO: fix me
     @msa.on "row:select", (data) =>
       rowGroup = data.target
-      rowGroup.className = "biojs_msa_sequence_block"
+      rowGroup.className = "biojs_msa_seqblock"
       rowGroup.className += " biojs-msa-schemes-" + @scheme
 
     @.on "column:color", (data) =>
@@ -71,8 +71,8 @@ class Colorator
     @scheme = name.toLowerCase()
 
   getResidue: (data) ->
-    tSeq = @msa.seqs[data.seqId].tSeq
-    residue = tSeq.seq.charAt(data.rowPos)
+    seq = @msa.seqs[data.seqId].seq
+    residue = seq.charAt(data.rowPos)
     if residue is "-"
       "Gap"
     else

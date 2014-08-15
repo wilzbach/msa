@@ -16,23 +16,21 @@
 	float:left;
 }
 
-.biojs_msa_labels-special {
-	color:red;
-	font-weight: bold;
-}
-
-.biojs_msa_single_residue{
-	display: inline-block;
+.biojs_msa_seqblock span{
 	cursor: pointer;
 	text-align: center;
+	flex-grow: 1;
 }
 
-.biojs_msa_sequence_block{
+.biojs_msa_seqblock {
+	display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+	align-items: center;
 	color: black;
 	white-space: nowrap;
 	vertical-align:middle;
 	font-family: monospace;
-	display: block;
 }
 
 .shadowed{
