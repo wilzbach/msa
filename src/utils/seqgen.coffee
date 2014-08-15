@@ -1,6 +1,5 @@
 Sequence = require("biojs-model").seq
 BMath = require "./bmath"
-Utils = require "./general"
 
 seqgen = module.exports =
   _generateSequence: (len) ->
@@ -23,3 +22,13 @@ seqgen = module.exports =
       seqs.push new Sequence(seqgen._generateSequence(seqLen), "seq" + i,
       i)
     return seqs
+
+  # TODO: not used -> removed ?
+  splitNChars: (txt, num) ->
+    result = []
+    i = 0
+
+    while i < txt.length
+      result.push txt.substr(i, num)
+      i += num
+    result

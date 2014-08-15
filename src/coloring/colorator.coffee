@@ -1,4 +1,4 @@
-Utils = require "../utils/general"
+Utils = require "../utils/color"
 EventHandler = require "biojs-events"
 
 # this is an example of how one could color the MSA
