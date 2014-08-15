@@ -1,20 +1,38 @@
-var msa = new biojs.vis.msa.msa('msa_menu', biojs.vis.msa.utils.seqgen.getDummySequences(4,50));
+var opts = {};
+opts.seqs = biojs.vis.msa.utils.seqgen.getDummySequences(4,50);
+opts.el = document.getElementById('msa_menu');
+var msa = new biojs.vis.msa.msa(opts);
 
 // the menu is independent to the MSA container
-var defMenu = new biojs.vis.msa.menu.defaultmenu("msa_menubar", msa);
-defMenu.createMenu();
+var menuOpts = {};
+menuOpts.el = document.getElementById("msa_menubar");
+menuOpts.msa = msa;
+var defMenu = new biojs.vis.msa.menu.defaultmenu(menuOpts);
+//defMenu.createMenu();
 
-var buffer = [];
-var logger = document.getElementById("msa_menubar_console");
-function log(){
-  for(var i=buffer.length-1;i >= 0;i--){
-      logger.innerHTML += buffer[i];
+msa.addView("menu", defMenu);
+
+var logger = document.getElementById("msa_menu_console");
+function log(text){
+  message = document.createElement("div");
+  message.textContent = text;
+  if(logger.childNodes.length > 0){
+    logger.insertBefore(message,logger.firstChild);
+  }else{
+    logger.appendChild(message);
+  }
+  if(logger.childNodes.length > 10){
+    logger.removeChild(logger.lastChild)
   }
 }
 
 msa.onAll(function(eventName, data){
-  buffer.push("eventName");
-  if(buffer.length > 10){
-    buffer.pop();
+  console.log(eventName);
+  if(data !== undefined){
+    log(eventName  + " triggered with " + JSON.stringify(data));
+  } else{
+    log(eventName  + " triggered");
   }
 });
+
+msa.render();

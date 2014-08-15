@@ -15,7 +15,7 @@ Config = require "./config"
 view = require("./views/view")
 pluginator = require("./views/pluginator")
 
-Stage = require "./test"
+Stage = require "./views/Stage"
 
 # opts consists ow
 # @param [String] el (id or reference to a DOM element)
@@ -23,21 +23,24 @@ Stage = require "./test"
 # @param [Dict] conf user config (will overwrite the default config
 MSAView = view.extend
 
-  className: "biojs_msa_div"
-
   events: {
-    "mouseout": "cleanup"
+    # "mouseout": "cleanup"
     "dblclick": "cleanup"
   }
 
   initialize: (data) ->
     console.log data
-    # merge the config
-    conf = {}
+
+    # program args
+    data.conf = {} unless data.conf?
+    @seqs = data.seqs
+
+    @el.setAttribute "class", "biojs_msa_div"
 
     # shared globals
     @g = {}
-    @g.config = Config conf
+    # merge the config
+    @g.config = Config data.conf
     @g.colorscheme = new Colorator this
     @g.ordering = new Ordering()
     @g.selmanager = new selection.SelectionManager this
@@ -45,16 +48,17 @@ MSAView = view.extend
 
     @g.zoomer.setZoomLevel 10
 
-    @seqmgr = new SeqMgr @stage
+    #@seqmgr = new SeqMgr()
     # seq reference - access is more convenient
-    @seqs = @seqmgr.seqs
+    #@seqs = @seqmgr.seqs
 
-    @addView "stage",new Stage {seqs: data.seqs, g: @g}
+    @addView "stage",new Stage {seqs: @seqs, g: @g}
 
     #if @config.allowRectSelect
     #@plugs["rect_select"] = new selection.RectangularSelect this
 
   render: ->
+    @.trigger "hello"
     @renderSubviews()
     @
 
@@ -66,8 +70,8 @@ MSAView = view.extend
     # TODO: do we want to draw the entire MSA not only the stage)
     @_draw()
 
-  cleanup:
-    @selmanager.cleanup()
+  cleanup: ->
+    @g.selmanager.cleanup()
 
 # mix and shake
 pluginator.mixin MSAView::
