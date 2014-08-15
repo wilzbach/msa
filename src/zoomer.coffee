@@ -46,12 +46,12 @@ module.exports =
 
     _setWidth: ->
       # totally slow - draws the entire container
-      _rect = @msa.container.getBoundingClientRect()
+      _rect = @msa.el.getBoundingClientRect()
       @_width = _rect.right - _rect.left
 
       # fix for inline-block - try parent
       if @_width is 0
-        _rect = @msa.container.parentNode.getBoundingClientRect()
+        _rect = @msa.el.parentNode.getBoundingClientRect()
         @_width = _rect.right - _rect.left
 
 

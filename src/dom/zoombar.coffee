@@ -44,8 +44,8 @@ module.exports =
       value = @zoomSlider.value
       @msa.zoomer.setZoomLevel(value)
       @msa.config.autofit = false
-      @msa.redraw('stage')
-      @msa.redraw('marker')
+      @msa.redraw 'stage'
+      @msa.redraw 'marker'
       @locked = false
 
     draw: ->

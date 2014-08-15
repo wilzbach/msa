@@ -2,6 +2,8 @@ Utils = require "../utils/general"
 stage = require "../stage/index"
 
 module.exports =
+  # manages all main MSA stage
+  # manages the elements of every row and calls these plugins
   class DomStage
 
     constructor: (@msa) ->
@@ -16,16 +18,16 @@ module.exports =
     _createRowElements: ->
       @elements = []
       if @msa.config.visibleElements.labels
-        @elements.push new stage.labelElement @msa
+        @elements.labels= new stage.labelElement @msa
 
       #if @msa.config.visibleElements.features
-        @elements.push new stage.metaElement @msa
+        @elements.meta = new stage.metaElement @msa
 
       if @msa.config.visibleElements.seqs
-        @elements.push new stage.seqElement @msa
+        @elements.seq = new stage.seqElement @msa
 
       #if @msa.config.visibleElements.features
-        @elements.push new stage.featureElement @msa
+        @elements.features =  new stage.featureElement @msa
 
 
     _createContainer: ->

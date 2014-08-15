@@ -1,2 +1,2 @@
-js = ["/external/jquery.dropdown.js"]
+js = ["/external/jquery.dropdown.js", "/node_modules/velocity-animate/jquery.velocity.min.js","/node_modules/velocity-animate/velocity.ui.min.js"]
 css = ["/external/jquery.dropdown.css"]
