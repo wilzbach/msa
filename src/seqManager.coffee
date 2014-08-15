@@ -1,4 +1,3 @@
-Utils = require "./utils/general"
 Row = require "./model/row"
 
 module.exports =

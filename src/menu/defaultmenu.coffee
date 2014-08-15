@@ -11,6 +11,7 @@ module.exports =
       @menu.className = "biojs_msa_menubar";
 
     createMenu: ->
+      @menu.appendChild @_createImportMenu()
       @menu.appendChild @_createFileSchemeMenu()
       @menu.appendChild @_createColorSchemeMenu()
       @menu.appendChild @_createOrderingMenu()
@@ -106,6 +107,22 @@ module.exports =
 
       menuColor.buildDOM()
 
+    _createImportMenu: ->
+      menuImport = new MenuBuilder("Import")
+      menuImport.addNode "FASTA",(e) =>
+        @msa.colorscheme.setScheme "zappo"
+        @msa.stage.redrawStage()
+
+      menuImport.addNode "CLUSTAL", =>
+        @msa.colorscheme.setScheme "taylor"
+        @msa.stage.redrawStage()
+
+      menuImport.addNode "more", =>
+        @msa.colorscheme.setScheme "hydrophobicity"
+        @msa.stage.redrawStage()
+
+      menuImport.buildDOM()
+
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
@@ -115,24 +132,32 @@ module.exports =
       menuOrdering.addNode "ID Desc", =>
         @msa.ordering.setSort Ordering.orderID
         @msa.ordering.setReverse true
-        @msa.redrawContainer()
+        @msa.redraw()
 
       menuOrdering.addNode "Label", =>
         @msa.ordering.setSort Ordering.orderName
-        @msa.redrawContainer()
+        @msa.redraw()
 
       menuOrdering.addNode "Label Desc", =>
         @msa.ordering.setSort Ordering.orderName
         @msa.ordering.setReverse true
-        @msa.redrawContainer()
+        @msa.redraw()
 
       menuOrdering.addNode "Seq", =>
         @msa.ordering.setSort Ordering.orderName
-        @msa.redrawContainer()
+        @msa.redraw()
 
       menuOrdering.addNode "Seq Desc", =>
+        $(@msa.container).velocity({ 
+            marginTop: 200
+        }, 1000);
         @msa.ordering.setSort Ordering.orderSeq
         @msa.ordering.setReverse true
-        @msa.redrawContainer()
+        @msa.redraw()
+        window.setTimeout -> 
+            $(@msa.container).velocity({ 
+                 marginTop: 0
+            }, 500);
+          , 1000
 
       menuOrdering.buildDOM()

@@ -27,6 +27,10 @@ module.exports =
       @msa.on "column:mouseover", (data) ->
       @msa.on "column:mouseout", (data) ->
 
+
+      #@msa.on "mouseout" =>
+
+
     changeSel: (sel) ->
       # remove old
       @currentSelection.deselect() if @currentSelection?
