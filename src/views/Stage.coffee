@@ -1,7 +1,7 @@
-view = require("./views/view")
-pluginator = require("./views/pluginator")
-RowView = require "./views/RowView"
-HeaderView = require "./views/HeaderView"
+view = require("./view")
+pluginator = require("./pluginator")
+RowView = require "./RowView"
+HeaderView = require "./HeaderView"
 
 DrawView = view.extend
 

@@ -99,7 +99,7 @@ module.exports =
         # internal dict
         seqs = @msa.seqs
         for key,value of seqs
-          nMax = Math.max nMax, value.tSeq.seq.length
+          nMax = Math.max nMax, value.seq.length
       return nMax
 
     getMaxLabelLength: (seqs) ->
@@ -114,5 +114,5 @@ module.exports =
         # internal dict
         seqs = @msa.seqs
         for key,value of seqs
-          nMax = Math.max nMax, value.tSeq.name.length
+          nMax = Math.max nMax, value.name.length
       return nMax

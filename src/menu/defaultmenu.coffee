@@ -3,24 +3,26 @@ FastaExporter = require("biojs-io-fasta").writer
 saveAs = require "../../external/saver"
 Ordering = require "../ordering"
 
-module.exports =
-  class DefaultMenu
+view = require("../views/view")
 
-    constructor: (@divName, @msa) ->
-      @menu = document.getElementById @divName
-      @menu.className = "biojs_msa_menubar";
+MenuView = view.extend
 
-    createMenu: ->
-      @menu.appendChild @_createImportMenu()
-      @menu.appendChild @_createFileSchemeMenu()
-      @menu.appendChild @_createColorSchemeMenu()
-      @menu.appendChild @_createOrderingMenu()
-      @menu.appendChild @_createExportMenu()
-      @menu.appendChild document.createElement("p")
+    initialize: (data) ->
+      @el.setAttribute "class", "biojs_msa_menubar"
+      @msa = data.msa
+
+    render: ->
+      @el.appendChild @_createImportMenu()
+      @el.appendChild @_createFilterMenu()
+      @el.appendChild @_createFileSchemeMenu()
+      @el.appendChild @_createColorSchemeMenu()
+      @el.appendChild @_createOrderingMenu()
+      @el.appendChild @_createExportMenu()
+      @el.appendChild document.createElement("p")
 
     deleteMenu: ->
       #BioJS.Utils.removeAllChilds(this.menu);
-      return "a"
+      consoel.log "not implemented"
 
     _createFileSchemeMenu: ->
       menuFile = new MenuBuilder("Settings")
@@ -91,6 +93,26 @@ module.exports =
 
       menuExport.buildDOM()
 
+    _createFilterMenu: ->
+      menuFilter = new MenuBuilder("Filter")
+      menuFilter.addNode "Hide by threshold",(e) =>
+        @msa.colorscheme.setScheme "zappo"
+        @msa.stage.redrawStage()
+
+      menuFilter.addNode "Hide by Scores", =>
+        @msa.colorscheme.setScheme "taylor"
+        @msa.stage.redrawStage()
+
+      menuFilter.addNode "Hide by identity", =>
+        @msa.colorscheme.setScheme "taylor"
+        @msa.stage.redrawStage()
+
+      menuFilter.addNode "Hide gaps", =>
+        @msa.colorscheme.setScheme "hydrophobicity"
+        @msa.stage.redrawStage()
+
+      menuFilter.buildDOM()
+
     _createColorSchemeMenu: ->
       menuColor = new MenuBuilder("Color scheme")
       menuColor.addNode "Zappo",(e) =>
@@ -148,16 +170,18 @@ module.exports =
         @msa.redraw()
 
       menuOrdering.addNode "Seq Desc", =>
-        $(@msa.container).velocity({ 
+        $(@msa.container).velocity({
             marginTop: 200
         }, 1000);
         @msa.ordering.setSort Ordering.orderSeq
         @msa.ordering.setReverse true
         @msa.redraw()
-        window.setTimeout -> 
-            $(@msa.container).velocity({ 
+        window.setTimeout ->
+            $(@msa.container).velocity({
                  marginTop: 0
             }, 500);
           , 1000
 
       menuOrdering.buildDOM()
+
+module.exports = MenuView

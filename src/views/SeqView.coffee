@@ -5,7 +5,8 @@ SeqView = view.extend
   initialize: (data) ->
     @seq = data.seq
     @g = data.g
-    @el.setAttribute "class", "biojs-msa-stage-level" + @g.zoomer.level
+    #@el.setAttribute "class", "biojs-msa-stage-level" + @g.zoomer.level
+    @el.setAttribute "class", "biojs-msa-seqblock"
 
   events: {
     "click": "open",
@@ -18,9 +19,11 @@ SeqView = view.extend
       span.rowPos = n
       span.innerHTML = @seq.seq[n]
       # color it nicely
-      #@g.colorscheme.trigger "residue:color", {target: span, seqId: @seq.id
-      #  ,rowPos: n}
+      @g.colorscheme.trigger "residue:color", {target: span, seqId: @seq.id
+        ,rowPos: n}
       @el.appendChild span
+
+    @g.colorscheme.trigger "row:color", {target: @el, seqId: @seq.id}
     @
 
   open: (evt) ->
