@@ -1,7 +1,7 @@
 MenuBuilder = require "./menubuilder"
 FastaExporter = require("biojs-io-fasta").writer
 saveAs = require "../../external/saver"
-Ordering = require "../ordering"
+Ordering = require "../g/ordering"
 
 view = require("../views/view")
 
@@ -116,16 +116,13 @@ MenuView = view.extend
     _createColorSchemeMenu: ->
       menuColor = new MenuBuilder("Color scheme")
       menuColor.addNode "Zappo",(e) =>
-        @msa.colorscheme.setScheme "zappo"
-        @msa.stage.redrawStage()
+        @msa.g.colorscheme.set "scheme","zappo"
 
       menuColor.addNode "Taylor", =>
-        @msa.colorscheme.setScheme "taylor"
-        @msa.stage.redrawStage()
+        @msa.g.colorscheme.set "scheme","taylor"
 
       menuColor.addNode "Hydrophobicity", =>
-        @msa.colorscheme.setScheme "hydrophobicity"
-        @msa.stage.redrawStage()
+        @msa.g.colorscheme.set "scheme","hydrophobicity"
 
       menuColor.buildDOM()
 
@@ -148,34 +145,36 @@ MenuView = view.extend
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
-        @msa.ordering.setSort Ordering.orderID
-        @msa.redrawContainer()
+        @msa.seqs.comparator = (seq) ->
+          seq.get "id"
+        @msa.seqs.sort()
 
       menuOrdering.addNode "ID Desc", =>
-        @msa.ordering.setSort Ordering.orderID
-        @msa.ordering.setReverse true
-        @msa.redraw()
+        @msa.seqs.comparator = (seq) ->
+          - seq.get "id"
+        @msa.seqs.sort()
 
       menuOrdering.addNode "Label", =>
-        @msa.ordering.setSort Ordering.orderName
-        @msa.redraw()
+        @msa.seqs.comparator = (seq) ->
+          seq.get "name"
+        @msa.seqs.sort()
 
       menuOrdering.addNode "Label Desc", =>
-        @msa.ordering.setSort Ordering.orderName
-        @msa.ordering.setReverse true
-        @msa.redraw()
+        @msa.seqs.comparator = (seq) ->
+          - seq.get "name"
+        @msa.seqs.sort()
 
       menuOrdering.addNode "Seq", =>
-        @msa.ordering.setSort Ordering.orderName
-        @msa.redraw()
+        @msa.seqs.comparator = (seq) ->
+          seq.get "seq"
+        @msa.seqs.sort()
 
       menuOrdering.addNode "Seq Desc", =>
         $(@msa.container).velocity({
             marginTop: 200
         }, 1000);
-        @msa.ordering.setSort Ordering.orderSeq
-        @msa.ordering.setReverse true
-        @msa.redraw()
+        @msa.seqs.comparator = (seq) ->
+          - seq.get "seq"
         window.setTimeout ->
             $(@msa.container).velocity({
                  marginTop: 0

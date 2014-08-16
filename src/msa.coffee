@@ -1,15 +1,14 @@
 Eventhandler = require "biojs-events"
 
-# sequence
-SeqMgr = require "./seqManager"
+# models
+SeqCollection = require "./model/SeqCollection"
 
-# working with seqs
-Colorator = require "./coloring/colorator"
-Ordering = require "./ordering"
-selection = require "./selection/index"
+# global
+Colorator = require "./g/colorator"
+selection = require "./g/selection/index"
 
 # utils
-Zoomer = require "./zoomer"
+Zoomer = require "./g/zoomer"
 Config = require "./config"
 
 view = require("./views/view")
@@ -33,7 +32,6 @@ MSAView = view.extend
 
     # program args
     data.conf = {} unless data.conf?
-    @seqs = data.seqs
 
     @el.setAttribute "class", "biojs_msa_div"
 
@@ -42,7 +40,6 @@ MSAView = view.extend
     # merge the config
     @g.config = Config data.conf
     @g.colorscheme = new Colorator this
-    @g.ordering = new Ordering()
     @g.selmanager = new selection.SelectionManager this
     @g.zoomer = new Zoomer(this)
 
@@ -52,7 +49,9 @@ MSAView = view.extend
     # seq reference - access is more convenient
     #@seqs = @seqmgr.seqs
 
-    @addView "stage",new Stage {seqs: @seqs, g: @g}
+    @seqs = new SeqCollection data.seqs
+
+    @addView "stage",new Stage {model: @seqs, g: @g}
 
     #if @config.allowRectSelect
     #@plugs["rect_select"] = new selection.RectangularSelect this
