@@ -1,5 +1,5 @@
 var opts = {};
-opts.seqs = biojs.vis.msa.utils.seqgen.getDummySequences(4,50);
+opts.seqs = biojs.vis.msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
 var msa = new biojs.vis.msa.msa(opts);
 

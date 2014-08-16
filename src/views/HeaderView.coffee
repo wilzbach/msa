@@ -16,9 +16,7 @@ HeaderView = view.extend
     #@renderSubviews()
     n = 0
 
-    nMax = @g.zoomer.len
-    if nMax is 0
-      nMax = @g.zoomer.getMaxLength()
+    nMax = @model.getMaxLength()
 
     nMax = 100
     stepSize = 1

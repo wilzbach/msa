@@ -20,10 +20,10 @@ LabelView = view.extend
     @el.style.fontSize = "#{@g.zoomer.labelFontsize}px"
 
     if @g.zoomer.isTextVisible()
-      @el.textContent = @seq.name
+      @el.textContent = @model.get "name"
     else
       @el.textContent = ""
-    @el.textContent = @seq.name
+    @el.textContent = @model.get "name"
 
     @
 

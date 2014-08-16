@@ -22,7 +22,7 @@ pluginator =
 
   # mix & shake
   mixin: (view) ->
-    exports = ["renderSubviews", "addView"]
+    exports = ["renderSubviews", "addView", "removeViews"]
     for el in exports
       view[el] = pluginator[el]
 
@@ -66,6 +66,13 @@ pluginator =
     @views[key] = view
     #plug.dom = document.createElement "div"
     #plug.trigger "draw", { target: dom}
+
+  # destroys all subviews
+  # TODO: check for memory leaks
+  removeViews: ->
+    Utils.removeAllChilds @el
+
+    @views = undefined
 
 #  # TODO: deprecated
 #  # redraws a special plugin
