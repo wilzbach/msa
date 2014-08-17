@@ -1,6 +1,7 @@
 view = require("./view")
 dom = require("../utils/dom")
 svg = require("./svg")
+_ = require "underscore"
 
 SeqView = view.extend
 
@@ -13,6 +14,7 @@ SeqView = view.extend
     @listenTo @model, "change:grey", @_build
     @listenTo @g.columns, "change:hidden", @_build
     @listenTo @model, "change:features", @_build
+    @listenTo @g.selcol, "add", @_build
     @manageEvents()
 
   manageEvents: ->
@@ -31,8 +33,10 @@ SeqView = view.extend
     hidden = @g.columns.get "hidden"
     textVisible = @g.zoomer.get "textVisible"
     features = @model.get "features"
+    selection = @_getSelection()
 
     @el.style.height = "15px"
+
 
     for n in [0..seq.length - 1] by 1
       if hidden.indexOf(n) < 0
@@ -51,13 +55,16 @@ SeqView = view.extend
           for f in starts
             span.appendChild @appendFeature f
 
+        if selection[n]?
+          span.innerHTML = "x"
+          span.style.color = "red"
+
         @_drawResidue span, seq[n],n
         @el.appendChild span
 
   render: ->
     @el.className = "biojs_msa_seqblock"
     @el.className += " biojs-msa-schemes-" + @g.colorscheme.get "scheme"
-
     @
 
   _onclick: (evt) ->
@@ -79,6 +86,24 @@ SeqView = view.extend
   _drawResidue: (span,residue,index) ->
     unless @model.get("grey").indexOf(index) >= 0
       span.className = "biojs-msa-aa-" + residue
+
+  # returns an array with the currently selected residues
+  # e.g. [0,3] = pos 0 and 3 are selected
+  _getSelection: ->
+    maxLen = @model.get("seq").length
+    selection = new Array maxLen
+    sels = @g.selcol.getSelForRow @model.get "id"
+    rows = _.find sels, (el) -> el.get("type") is "row"
+    if rows?
+      # full match
+      for n in [0..maxLen - 1] by 1
+        selection[n] = 1
+    else if sels.length > 0
+      for sel in sels
+        for n in [sel.get("xStart")..sel.get("xEnd")] by 1
+          selection[n] = 1
+
+    return selection
 
   # TODO: experimenting with different views
   appendFeature: (f) ->

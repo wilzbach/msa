@@ -6,7 +6,7 @@ SeqCollection = require "./model/SeqCollection"
 # global
 Colorator = require "./g/colorator"
 Columns = require "./g/columns"
-SelManager = require "./g/selection/selection_manager"
+SelCol = require "./g/selection/SelectionCol"
 
 # utils
 Zoomer = require "./g/zoomer"
@@ -36,14 +36,14 @@ MSAView = view.extend
 
     @el.setAttribute "class", "biojs_msa_div"
 
-    # shared globals
-    @g = {}
-    Eventhandler.mixin @g
+    # g is our global Mediator
+    @g = Eventhandler.mixin {}
+
     # merge the config
     @g.config = new Config data.conf
     @g.columns = new Columns()
     @g.colorscheme = new Colorator()
-    @g.selmanager = new SelManager {g:@g}
+    @g.selcol = new SelCol [],{g:@g}
     @g.zoomer = new Zoomer()
 
     @seqs = new SeqCollection data.seqs
