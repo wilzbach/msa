@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-- '0.11'
 - '0.10'
 before_deploy: gulp build
 deploy:
@@ -9,7 +8,7 @@ deploy:
   secret_access_key:
     secure: HJv41l4LZaLYxzvbYXhPfffZTY+sgY2JCwoWas4wSB1hBJKV3IvsbhAvRfrNnuGPFucBEqFmBmm5Qv4AWVoA1yYUOY/ejWJmOePQlE9J99/L8eqOpEZJ4wRSWEFDnhLKiGLCWgw5y/aF6ka+n7nyAYkpzX1DfTObuV0SjqKaGcY=
   bucket: biojs
-  upload-dir: msa
+  upload-dir: msa/latest/
   acl: !ruby/string:HighLine::String private
   skip_cleanup: true
   local-dir: build
