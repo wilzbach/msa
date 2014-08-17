@@ -1,4 +1,6 @@
 view = require("./view")
+dom = require("../utils/dom")
+svg = require("./svg")
 
 SeqView = view.extend
 
@@ -8,43 +10,87 @@ SeqView = view.extend
     @el.setAttribute "class", "biojs-msa-seqblock"
     @_build()
 
-  events: {
-    "click": "open",
-  }
+    @listenTo @model, "change:grey", @_build
+    @listenTo @g.columns, "change:hidden", @_build
+    @listenTo @model, "change:features", @_build
+    @manageEvents()
+
+  manageEvents: ->
+    events = {}
+    events.click = "_onclick"
+    if @g.config.get "registerMouseEvents"
+      events.mousein = "_onmousein"
+      events.mouseout = "_onmouseout"
+    @delegateEvents events
+    @listenTo @g.config, "change:registerMouseEvents", @manageEvents
 
   _build: ->
+    dom.removeAllChilds @el
+
     seq = @model.get("seq")
+    hidden = @g.columns.get "hidden"
+    textVisible = @g.zoomer.get "textVisible"
+    features = @model.get "features"
+
+    @el.style.height = "15px"
+
     for n in [0..seq.length - 1] by 1
-      span = document.createElement "span"
-      span.rowPos = n
-      span.textContent = seq[n]
-      @_drawResidue span, seq[n]
-      # color it nicely
-      #@g.colorscheme.trigger "residue:color", {target: span, seqId: @seq.id
-      #  ,rowPos: n}
-      @el.appendChild span
+      if hidden.indexOf(n) < 0
+        span = document.createElement "span"
+        span.rowPos = n
+        if textVisible
+          span.textContent = seq[n]
+        else
+          span.innerHTML = ""
+
+        starts = features.startOn n
+        if starts.length > 0
+          span.innerHTML = "."
+          #span.style.width= "10px"
+          #span.style.height = "15px"
+          for f in starts
+            span.appendChild @appendFeature f
+
+        @_drawResidue span, seq[n],n
+        @el.appendChild span
 
   render: ->
-    #@renderSubviews()
     @el.className = "biojs_msa_seqblock"
     @el.className += " biojs-msa-schemes-" + @g.colorscheme.get "scheme"
 
-
-    #@g.colorscheme.trigger "row:color", {target: @el, seqId: @seq.id}
     @
 
-  open: (evt) ->
-    console.log "opened", evt
-    #@g.trigger "residue:click", {seqId:seqId, rowPos: rowPos, evt:evt,
-      #target:evt.target}
+  _onclick: (evt) ->
+    #@model.set "selection", @model.get("selection").push(rowPos)
+    seqId = @model.get "id"
+    @g.trigger "residue:click", {seqId:seqId, rowPos: evt.target.rowPos, evt:evt}
+
+  _onmousein: (evt) ->
+    seqId = @model.get "id"
+    evt.seqId = seqId
+    @g.trigger "residue:mousein", {seqId:seqId, rowPos: evt.target.rowPos, evt:evt}
+
+  _onmouseout: (evt) ->
+    seqId = @model.get "id"
+    evt.seqId = seqId
+    @g.trigger "residue:mousein", {seqId:seqId, rowPos: evt.target.rowPos, evt:evt}
 
   # sets the properties of a single residue
-  _drawResidue: (span,residue) ->
-    span.className = "biojs-msa-aa-" + residue
+  _drawResidue: (span,residue,index) ->
+    unless @model.get("grey").indexOf(index) >= 0
+      span.className = "biojs-msa-aa-" + residue
 
-#    @msa.on "residue:click", (data) =>
-#      data.target.className = "biojs_msa_single_residue"
-#      residue = @getResidue data
-#      data.target.className += " biojs-msa-aa-" + residue + "-selected"
-#      data.target.className += " shadowed"
+  # TODO: experimenting with different views
+  appendFeature: (f) ->
+    width = (f.get("xEnd") - f.get("xStart")) * 15
+    s = svg.base(height: 20, width: width)
+    color = '#'+Math.floor(Math.random()*16777215).toString(16)
+    s.appendChild svg.rect({x:0,y:0,width:width,height:5,fill: color})
+    s.appendChild svg.rect({x:0,y:0,width:width,height:14,style:
+      "stroke:red;stroke-width:3;fill-opacity:0;"})
+    s.style.position = "absolute"
+    $(s).on "mouseover", (evt) =>
+      @g.trigger "feature",  f.get("text") + " hovered"
+    s
+
 module.exports = SeqView
