@@ -7,6 +7,7 @@ SeqCollection = require "./model/SeqCollection"
 Colorator = require "./g/colorator"
 Columns = require "./g/columns"
 SelCol = require "./g/selection/SelectionCol"
+Visibility = require "./g/visibility"
 
 # utils
 Zoomer = require "./g/zoomer"
@@ -30,8 +31,9 @@ MSAView = view.extend
 
   initialize: (data) ->
 
-    # program args
+    # check for default arrays
     data.conf = {} unless data.conf?
+    data.vis = {} unless data.vis?
     data.zoomer = {} unless data.zoomer?
 
     @el.setAttribute "class", "biojs_msa_div"
@@ -44,6 +46,7 @@ MSAView = view.extend
     @g.columns = new Columns()
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
+    @g.vis = new Visibility data.vis
     @g.zoomer = new Zoomer data.zoomer
 
     @seqs = new SeqCollection data.seqs

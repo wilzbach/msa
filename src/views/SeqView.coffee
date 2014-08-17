@@ -34,6 +34,7 @@ SeqView = view.extend
     textVisible = @g.zoomer.get "textVisible"
     features = @model.get "features"
     selection = @_getSelection()
+    cellWidth = @g.zoomer.get "columnWidth"
 
     @el.style.height = "15px"
 
@@ -50,7 +51,6 @@ SeqView = view.extend
         starts = features.startOn n
         if starts.length > 0
           span.innerHTML = "."
-          #span.style.width= "10px"
           #span.style.height = "15px"
           for f in starts
             span.appendChild @appendFeature f
@@ -60,6 +60,7 @@ SeqView = view.extend
           span.style.color = "red"
 
         @_drawResidue span, seq[n],n
+        span.style.width = cellWidth
         @el.appendChild span
 
   render: ->

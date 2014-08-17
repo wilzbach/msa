@@ -8,7 +8,6 @@ DrawView = view.extend
 
   initialize: (data) ->
     @g = data.g
-    @addView "header", new HeaderView {model: @model, g: @g}
 
     @draw()
     @listenTo @model,"sort", ->
@@ -17,12 +16,16 @@ DrawView = view.extend
 
     @listenTo @model,"add", ->
       console.log "seq add"
-      # this is very inefficient
-      #@draw()
-      #@render()
+
+    @listenTo @g.vis,"change:markers", ->
+      @draw()
+      @render()
 
   draw: ->
     @removeViews()
+
+    if @g.vis.get "markers"
+      @addView "header", new HeaderView {model: @model, g: @g}
 
     @model.each (seq,i) =>
       view = new RowView {model: seq, g: @g}

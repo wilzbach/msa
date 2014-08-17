@@ -7,9 +7,9 @@ var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "red"});
 var opts = {};
 opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
-opts.zoomer = { textVisible: false};
+//opts.zoomer = { textVisible: false};
 var m = new msa.msa(opts);
-m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
+//m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
 console.log(m.seqs);
 console.log(m.seqs.at(0));
 
