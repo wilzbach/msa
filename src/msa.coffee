@@ -32,6 +32,7 @@ MSAView = view.extend
 
     # program args
     data.conf = {} unless data.conf?
+    data.zoomer = {} unless data.zoomer?
 
     @el.setAttribute "class", "biojs_msa_div"
 
@@ -43,7 +44,7 @@ MSAView = view.extend
     @g.columns = new Columns()
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
-    @g.zoomer = new Zoomer()
+    @g.zoomer = new Zoomer data.zoomer
 
     @seqs = new SeqCollection data.seqs
 
