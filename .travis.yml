@@ -11,5 +11,8 @@ deploy:
   bucket: biojs
   upload-dir: msa
   acl: !ruby/string:HighLine::String private
+  skip_cleanup: true
+  local-dir: build
+  detect_encoding: true # allow compressed uploads
   on:
     repo: greenify/biojs-vis-msa
