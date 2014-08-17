@@ -34,13 +34,11 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 Yes you can either download the dev version from S3 or link to the minified CDN version.
 
-[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js)
+JS  | CSS
+------------- | -------------
+[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)  | [![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js) | [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
-CSS:
-
-[![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
 In case Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files).
