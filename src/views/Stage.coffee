@@ -17,8 +17,9 @@ DrawView = view.extend
 
     @listenTo @model,"add", ->
       console.log "seq add"
-      @draw()
-      @render()
+      # this is very inefficient
+      #@draw()
+      #@render()
 
   draw: ->
     @removeViews()
