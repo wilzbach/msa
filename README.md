@@ -25,21 +25,21 @@ The BioJS MSA Viewer written in CoffeeScript.
 [![NPM downloads](http://img.shields.io/npm/dm/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
 
 
-```
-<script src="https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js"></script>
-<link type="text/css" rel="stylesheet" href="https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css" />
+```html
+<script src=https://d3hiicay54k76t.cloudfront.net/biojs/msa/latest/biojs_vis_msa.min.js></script>
+<link type=text/css rel=stylesheet href=https://d3hiicay54k76t.cloudfront.net/biojs/msa/msa.min.css />
 ```
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
 
-Yes you can directly download from or link to Amazon S3.
+Yes you can either download the dev version from S3 or link to the minified CDN version.
 
-[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.min.js)
+[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/biojs/msa/latest/biojs_vis_msa.min.js)
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js)
 
 CSS:
 
-[![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css)
+[![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/biojs/msa/latest/msa.min.css)
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
