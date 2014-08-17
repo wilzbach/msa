@@ -52,7 +52,7 @@ Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 (in rebuild)
 
-Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) for a nice example.
+Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssdeck.com/labs/swxfsfhe) for a nice example.
 
 Documentation
 -------------
