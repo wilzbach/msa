@@ -1,5 +1,5 @@
-view = require("./view")
-pluginator = require("./pluginator")
+view = require("../bone/view")
+pluginator = require("../bone/pluginator")
 LabelView = require("./LabelView")
 SeqView = require("./SeqView")
 

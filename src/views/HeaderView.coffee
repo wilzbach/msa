@@ -1,4 +1,4 @@
-view = require("./view")
+view = require("../bone/view")
 
 HeaderView = view.extend
 
