@@ -45,7 +45,7 @@ SeqView = view.extend
         if textVisible
           span.textContent = seq[n]
         else
-          span.innerHTML = ""
+          span.innerHTML = "&nbsp;"
 
         starts = features.startOn n
         if starts.length > 0

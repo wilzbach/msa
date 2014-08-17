@@ -183,14 +183,14 @@ MenuView = view.extend
       menuImport = new MenuBuilder("Import")
       menuImport.addNode "FASTA",(e) =>
         url = prompt "URL (CORS enabled!)", "/test/dummy/samples/p53.clustalo.fasta"
-        FastaReader.read url, (seqs) ->
+        FastaReader.read url, (seqs) =>
           @msa.g.zoomer.set "textVisible", false
           @msa.seqs.set seqs
 
       menuImport.addNode "CLUSTAL", =>
         url = prompt "URL (CORS enabled!)",
         "/test/dummy/samples/p53.clustalo.clustal"
-        Clustal.read url, (seqs) ->
+        Clustal.read url, (seqs) =>
           @msa.g.zoomer.set "textVisible", false
           @msa.seqs.set seqs
 
