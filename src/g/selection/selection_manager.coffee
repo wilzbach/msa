@@ -1,10 +1,16 @@
 SelectionList = require "./selectionlist"
 selection = require "./"
-EventHandler = require "biojs-events"
 
-class SelectionManager
+Model = require("backbone").Model
+# holds the current user selection
+module.exports = SelectionManager = Model.extend
 
-  constructor: (@msa) ->
+  initialize: (data) ->
+    @g = data.g
+
+    #@.set "selection", []
+
+    return
 
     # residues
     @msa.on "residue:click", (data) =>
@@ -80,7 +86,3 @@ class SelectionManager
     else
       console.log "no involved seqs"
       return undefined
-
-# merge this class with the event class
-EventHandler.mixin SelectionManager::
-module.exports = SelectionManager

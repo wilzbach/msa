@@ -5,7 +5,8 @@ SeqCollection = require "./model/SeqCollection"
 
 # global
 Colorator = require "./g/colorator"
-selection = require "./g/selection/index"
+Columns = require "./g/columns"
+SelManager = require "./g/selection/selection_manager"
 
 # utils
 Zoomer = require "./g/zoomer"
@@ -37,23 +38,19 @@ MSAView = view.extend
 
     # shared globals
     @g = {}
+    Eventhandler.mixin @g
     # merge the config
-    @g.config = Config data.conf
-    @g.colorscheme = new Colorator this
-    @g.selmanager = new selection.SelectionManager this
-    @g.zoomer = new Zoomer(this)
-
-    @g.zoomer.setZoomLevel 10
-
-    #@seqmgr = new SeqMgr()
-    # seq reference - access is more convenient
-    #@seqs = @seqmgr.seqs
+    @g.config = new Config data.conf
+    @g.columns = new Columns()
+    @g.colorscheme = new Colorator()
+    @g.selmanager = new SelManager {g:@g}
+    @g.zoomer = new Zoomer()
 
     @seqs = new SeqCollection data.seqs
 
     @addView "stage",new Stage {model: @seqs, g: @g}
 
-    #if @config.allowRectSelect
+    #if @config.allowRectSelect - terribly broken
     #@plugs["rect_select"] = new selection.RectangularSelect this
 
   render: ->

@@ -1,7 +1,9 @@
 MenuBuilder = require "./menubuilder"
+Clustal = require "biojs-io-clustal"
+FastaReader = require("biojs-io-fasta").parse
 FastaExporter = require("biojs-io-fasta").writer
 saveAs = require "../../external/saver"
-Ordering = require "../g/ordering"
+_ = require "underscore"
 
 view = require("../views/view")
 
@@ -43,6 +45,9 @@ MenuView = view.extend
           @msa.config.visibleElements.labels = true
           #$(this).children().first().text "Hide Labels"
         @msa.redrawContainer()
+
+      menuFile.addNode "Toggle mouseover", =>
+        @msa.g.config.set "registerMouseEvents", !@msa.g.config.get "registerMouseEvents"
 
       #menuFile.addNode "Hide Menu", =>
       #@deleteMenu()
@@ -108,8 +113,15 @@ MenuView = view.extend
         @msa.stage.redrawStage()
 
       menuFilter.addNode "Hide gaps", =>
-        @msa.colorscheme.setScheme "hydrophobicity"
-        @msa.stage.redrawStage()
+
+      menuFilter.addNode "Hide %3", =>
+
+        hidden = []
+        for index in [0..@msa.seqs.getMaxLength()]
+          if index % 3
+            hidden.push index
+        @msa.g.columns.set "hidden", hidden
+
 
       menuFilter.buildDOM()
 
@@ -124,21 +136,47 @@ MenuView = view.extend
       menuColor.addNode "Hydrophobicity", =>
         @msa.g.colorscheme.set "scheme","hydrophobicity"
 
+      # greys all lowercase letters
+      menuColor.addNode "Grey", =>
+        @msa.seqs.each (seq) ->
+          residues = seq.get "seq"
+          grey = []
+          _.each residues, (el, index) ->
+            if el is el.toLowerCase()
+              grey.push index
+          seq.set "grey", grey
+
+      menuColor.addNode "Grey 10-20", =>
+        @msa.seqs.each (seq) ->
+          residues = seq.get "seq"
+          grey = []
+          for i in [10..20]
+            grey.push i
+          seq.set "grey", grey
+
+      menuColor.addNode "Reset grey", =>
+        @msa.seqs.each (seq) ->
+          seq.set "grey", []
+
       menuColor.buildDOM()
 
     _createImportMenu: ->
       menuImport = new MenuBuilder("Import")
       menuImport.addNode "FASTA",(e) =>
-        @msa.colorscheme.setScheme "zappo"
-        @msa.stage.redrawStage()
+        url = prompt "URL (CORS enabled!)", "/test/dummy/samples/p53.clustalo.fasta"
+        FastaReader.read url, (seqs) ->
+          @msa.g.zoomer.set "textVisible", false
+          @msa.seqs.set seqs
 
       menuImport.addNode "CLUSTAL", =>
-        @msa.colorscheme.setScheme "taylor"
-        @msa.stage.redrawStage()
+        url = prompt "URL (CORS enabled!)",
+        "/test/dummy/samples/p53.clustalo.clustal"
+        Clustal.read url, (seqs) ->
+          @msa.g.zoomer.set "textVisible", false
+          @msa.seqs.set seqs
 
       menuImport.addNode "more", =>
-        @msa.colorscheme.setScheme "hydrophobicity"
-        @msa.stage.redrawStage()
+        console.log "yeah it is open source ;-)"
 
       menuImport.buildDOM()
 
@@ -160,8 +198,8 @@ MenuView = view.extend
         @msa.seqs.sort()
 
       menuOrdering.addNode "Label Desc", =>
-        @msa.seqs.comparator = (seq) ->
-          - seq.get "name"
+        @msa.seqs.comparator = (a, b) ->
+          - a.get("name").localeCompare(b.get("name"))
         @msa.seqs.sort()
 
       menuOrdering.addNode "Seq", =>
@@ -170,16 +208,9 @@ MenuView = view.extend
         @msa.seqs.sort()
 
       menuOrdering.addNode "Seq Desc", =>
-        $(@msa.container).velocity({
-            marginTop: 200
-        }, 1000);
-        @msa.seqs.comparator = (seq) ->
-          - seq.get "seq"
-        window.setTimeout ->
-            $(@msa.container).velocity({
-                 marginTop: 0
-            }, 500);
-          , 1000
+        @msa.seqs.comparator = (a,b) ->
+          - a.get("seq").localeCompare(b.get("seq"))
+        @msa.seqs.sort()
 
       menuOrdering.buildDOM()
 

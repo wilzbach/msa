@@ -1,4 +1,5 @@
 Model = require("backbone").Model
+FeatureCol = require "./FeatureCol"
 
 module.exports = Sequence = Model.extend
 
@@ -6,3 +7,8 @@ module.exports = Sequence = Model.extend
     name: ""
     id: ""
     seq: ""
+
+  initialize: ->
+    # residues without color
+    @.set "grey", []
+    @.set "features", new FeatureCol()
