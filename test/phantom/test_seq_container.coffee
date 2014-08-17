@@ -1,12 +1,12 @@
 MSA = require "../../src/msa"
-Seq = require("biojs-model").seq
+Seq = require "../../src/model/Sequence"
 assert = require("chai").assert
 equal = assert.deepEqual
 
 suite "test dom stage"
 
 seqs = []
-stage = undefined
+msa = undefined
 
 beforeEach "setup sequences", ->
   seqs = []
@@ -17,7 +17,8 @@ beforeEach "setup sequences", ->
   seqs.push new Seq("TCCH", "bname", "uni4" )
 
   # simulate that they are added
-  msa = new MSA "msa", seqs,{}
+  msa = new MSA
+    seqs:seqs
 
 test "should draw a DOM container", ->
-  stage.drawSeqs
+  msa.render()

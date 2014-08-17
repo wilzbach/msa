@@ -12,7 +12,11 @@ DrawView = view.extend
 
     @draw()
     @listenTo @model,"sort", ->
-      console.log "sorted"
+      @draw()
+      @render()
+
+    @listenTo @model,"add", ->
+      console.log "seq add"
       @draw()
       @render()
 
