@@ -39,8 +39,8 @@ Yes you can directly download from or link to Amazon S3.
 
 CSS:
 
-[[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css)
-[Dev version](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
+[![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css)
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
 In case Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files).
