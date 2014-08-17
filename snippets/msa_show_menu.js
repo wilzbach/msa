@@ -1,19 +1,47 @@
+var Feature = msa.model.feature;
+var f1 = new Feature({xStart:2 ,xEnd: 20,text: "foo1", fillColor: "red"});
+var f2 = new Feature({xStart:21,xEnd: 40,text: "foo2", fillColor: "red"});
+var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "red"});
+
+
 var opts = {};
-opts.seqs = biojs.vis.msa.utils.seqgen.getDummySequences(10,100);
+opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
-var msa = new biojs.vis.msa.msa(opts);
+var m = new msa.msa(opts);
+m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
+console.log(m.seqs);
+console.log(m.seqs.at(0));
 
 // the menu is independent to the MSA container
 var menuOpts = {};
 menuOpts.el = document.getElementById("msa_menubar");
-menuOpts.msa = msa;
-var defMenu = new biojs.vis.msa.menu.defaultmenu(menuOpts);
+menuOpts.msa = m;
+var defMenu = new msa.menu.defaultmenu(menuOpts);
 //defMenu.createMenu();
 
-msa.addView("menu", defMenu);
+m.addView("menu", defMenu);
+
+//var regionSelect = new msa.rselect({model: m});
+//console.log($("body").get(0).appendChild(regionSelect.el));
+
+// ---------------------------------------------------
+
+m.onAll(function(eventName, data){
+  log(eventName,data);
+});
+
+m.g.onAll(function(eventName, data){
+  log(eventName,data);
+});
 
 var logger = document.getElementById("msa_menu_console");
-function log(text){
+function log(eventName,data){
+  if(data !== undefined){
+    console.log(data);
+    text = eventName  + " triggered with " + clean(data);
+  } else{
+    text = eventName  + " triggered";
+  }
   message = document.createElement("div");
   message.textContent = text;
   if(logger.childNodes.length > 0){
@@ -22,17 +50,23 @@ function log(text){
     logger.appendChild(message);
   }
   if(logger.childNodes.length > 10){
-    logger.removeChild(logger.lastChild)
+    logger.removeChild(logger.lastChild);
   }
 }
 
-msa.onAll(function(eventName, data){
-  console.log(eventName);
-  if(data !== undefined){
-    log(eventName  + " triggered with " + JSON.stringify(data));
-  } else{
-    log(eventName  + " triggered");
+// prevent circular refs
+function clean(obj){
+  var o = {};
+  if(typeof obj !== "object"){
+    return obj;
   }
-});
+  for(var key in obj){
+    if(typeof obj[key] !== 'object'){
+      o[key] = obj[key];
+    }
+  }
+  return JSON.stringify(o);
+}
 
-msa.render();
+
+m.render();

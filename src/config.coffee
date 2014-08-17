@@ -1,24 +1,19 @@
-Arrays = require "./utils/arrays"
+Model = require("backbone").Model
 
-# merges the default config
-# with the user config
-module.exports = (conf) ->
+# simple user config
+module.exports = Config = Model.extend
 
-  defaultConf = {
-    visibleElements: {
-      labels: true, seqs: true, menubar: true, ruler: true,
-      features: false,
-      allowRectSelect: false,
-      speed: false,
-    },
-    registerMoveOvers: false,
+  defaults:
+    registerMouseEvents: false,
     autofit: true,
-    keyevents: false,
-    prerender: false,
-  }
+    #keyevents: false,
 
-  if config?
-    Arrays.recursiveDictFiller defaultConf, config
-  else
-    config = defaultConf
-  return config
+
+#  defaultConf = {
+#    visibleElements: {
+#      labels: true, seqs: true, menubar: true, ruler: true,
+#      features: false,
+#      allowRectSelect: false,
+#      speed: false,
+#    },
+
