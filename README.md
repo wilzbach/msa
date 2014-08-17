@@ -17,27 +17,38 @@ The BioJS MSA Viewer written in CoffeeScript.
 ,8'         `         `8.`8888. `Y8888P ,88P'.8'       `8. `88888.
 ```
 
+[![Build Status](https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master)](https://travis-ci.org/greenify/biojs-vis-msa)
 [![Build Status](https://drone.io/github.com/greenify/biojs-vis-msa/status.png)](https://drone.io/github.com/greenify/biojs-vis-msa/latest)
 [![NPM version](http://img.shields.io/npm/v/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
 [![Dependencies](https://david-dm.org/greenify/biojs-vis-msa.png)](https://david-dm.org/greenify/biojs-vis-msa)
 [![Code Climate](https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/biojs-vis-msa)
 [![NPM downloads](http://img.shields.io/npm/dm/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
 
-### Step 1) Embed components
-
-Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 ```
-<script src="biojs.js"></script>
-<link type="text/css" rel="stylesheet" href="css/msa.css" />
+<script src="https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js"></script>
+<link type="text/css" rel="stylesheet" href="https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css" />
 ```
 
-The whole API is coming soon.
+![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
 
-You can __fetch prebuilt files__ [here](https://drone.io/github.com/greenify/biojs-vis-msa/files)
+Yes you can directly download from or link to Amazon S3.
+
+[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.min.js)
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js)
+
+CSS:
+
+[[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.min.css)
+[Dev version](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
+
+
+In case Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files).
 
 Demo
 -----
+
+Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 (in rebuild)
 
