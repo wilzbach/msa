@@ -18,7 +18,6 @@ The BioJS MSA Viewer written in CoffeeScript.
 ```
 
 [![Build Status](https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master)](https://travis-ci.org/greenify/biojs-vis-msa)
-[![Build Status](https://drone.io/github.com/greenify/biojs-vis-msa/status.png)](https://drone.io/github.com/greenify/biojs-vis-msa/latest)
 [![NPM version](http://img.shields.io/npm/v/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
 [![Dependencies](https://david-dm.org/greenify/biojs-vis-msa.png)](https://david-dm.org/greenify/biojs-vis-msa)
 [![Code Climate](https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/biojs-vis-msa)
@@ -66,7 +65,7 @@ Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssd
 ![color it](http://i.imgur.com/CIUP5lNl.jpg)
 
 
-Features
+####  Features
 * runs purely in the Browser
 * import files in format like FASTA, Clustal, ...
 * be interactive and receive [Events](https://github.com/greenify/biojs-vis-msa/wiki/Events)
