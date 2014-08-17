@@ -1,16 +1,16 @@
 module.exports.msa = require("./msa")
 
-# g
-module.exports.colorator = require("./g/colorator")
-
-# separate folders
-module.exports.algo = require("./algo")
-#module.exports.dom = require "./dom"
-module.exports.menu = require("./menu")
+# models
 module.exports.model = require("./model")
-#module.exports.stage = require("./stage")
-#module.exports.selection = require("./selection")
+
+# extra plugins, extensions
+module.exports.algo = require("./algo")
+module.exports.menu = require("./menu")
 module.exports.utils = require("./utils")
 
-module.exports.rselect = require "./RegionSelect"
+#module.exports.dom = require "./dom"
+#module.exports.stage = require("./stage")
+#module.exports.selection = require("./selection")
+
+#module.exports.rselect = require "./RegionSelect"
 

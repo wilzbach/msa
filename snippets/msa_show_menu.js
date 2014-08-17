@@ -25,6 +25,7 @@ m.addView("menu", defMenu);
 //console.log($("body").get(0).appendChild(regionSelect.el));
 
 // ---------------------------------------------------
+console.log("consensus", msa.algo.consensus(m));
 
 m.onAll(function(eventName, data){
   log(eventName,data);
@@ -32,6 +33,9 @@ m.onAll(function(eventName, data){
 
 m.g.onAll(function(eventName, data){
   log(eventName,data);
+});
+m.g.selcol.on("all",function(eventName,data){
+  log(eventName + " mod.", data.attributes);
 });
 
 var logger = document.getElementById("msa_menu_console");

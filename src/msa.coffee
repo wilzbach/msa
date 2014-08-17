@@ -29,7 +29,6 @@ MSAView = view.extend
   }
 
   initialize: (data) ->
-    console.log data
 
     # program args
     data.conf = {} unless data.conf?
