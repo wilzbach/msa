@@ -52,6 +52,34 @@ Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssdeck.com/labs/swxfsfhe) for a nice example.
 
+
+#### display an MSA
+
+![basic MSA](http://i.imgur.com/39rIcR1l.jpg)
+
+#### zoom in
+
+![zoom in](http://i.imgur.com/tw8AueLl.jpg)
+
+#### choose your favorite color
+
+![color it](http://i.imgur.com/CIUP5lNl.jpg)
+
+
+Features
+* runs purely in the Browser
+* import files in format like FASTA, Clustal, ...
+* be interactive and receive [Events](https://github.com/greenify/biojs-vis-msa/wiki/Events)
+* filter, sort, hide the sequences
+* display sequence [features](https://github.com/greenify/biojs-vis-easy_features/) 
+* extendable [Views](https://github.com/greenify/biojs-vis-msa/wiki/Views) for your integration
+* customizable viewport
+* simplicity as design rule
+* export to fASTA
+* generate the consenus seq
+* more to come ...
+
+
 Documentation
 -------------
 
