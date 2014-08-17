@@ -35,7 +35,7 @@ Yes you can either download the dev version from S3 or link to the minified CDN 
 
 JS  | CSS
 ------------- | -------------
-[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)  | [![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
+[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)  | [![Min version](http://img.shields.io/badge/prod-16kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js) | [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
