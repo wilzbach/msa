@@ -18,7 +18,6 @@ The BioJS MSA Viewer written in CoffeeScript.
 ```
 
 [![Build Status](https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master)](https://travis-ci.org/greenify/biojs-vis-msa)
-[![Build Status](https://drone.io/github.com/greenify/biojs-vis-msa/status.png)](https://drone.io/github.com/greenify/biojs-vis-msa/latest)
 [![NPM version](http://img.shields.io/npm/v/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
 [![Dependencies](https://david-dm.org/greenify/biojs-vis-msa.png)](https://david-dm.org/greenify/biojs-vis-msa)
 [![Code Climate](https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/biojs-vis-msa)
@@ -34,13 +33,11 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 Yes you can either download the dev version from S3 or link to the minified CDN version.
 
-[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js)
+JS  | CSS
+------------- | -------------
+[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)  | [![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js) | [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
-CSS:
-
-[![Min version](http://img.shields.io/badge/prod-18kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
 In case Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files).
@@ -52,7 +49,35 @@ Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
 
 (in rebuild)
 
-Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) for a nice example.
+Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssdeck.com/labs/swxfsfhe) for a nice example.
+
+
+#### display an MSA
+
+![basic MSA](http://i.imgur.com/39rIcR1l.jpg)
+
+#### zoom in
+
+![zoom in](http://i.imgur.com/tw8AueLl.jpg)
+
+#### choose your favorite color
+
+![color it](http://i.imgur.com/CIUP5lNl.jpg)
+
+
+####  Features
+* runs purely in the Browser
+* import files in format like FASTA, Clustal, ...
+* be interactive and receive [Events](https://github.com/greenify/biojs-vis-msa/wiki/Events)
+* filter, sort, hide the sequences
+* display sequence [features](https://github.com/greenify/biojs-vis-easy_features/) 
+* extendable [Views](https://github.com/greenify/biojs-vis-msa/wiki/Views) for your integration
+* customizable viewport
+* simplicity as design rule
+* export to fASTA
+* generate the consenus seq
+* more to come ...
+
 
 Documentation
 -------------
