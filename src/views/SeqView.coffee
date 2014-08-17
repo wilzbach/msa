@@ -1,6 +1,6 @@
-view = require("./view")
+view = require("../bone/view")
 dom = require("../utils/dom")
-svg = require("./svg")
+svg = require("../utils/svg")
 _ = require "underscore"
 
 SeqView = view.extend
