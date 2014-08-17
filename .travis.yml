@@ -1,5 +1,15 @@
 language: node_js
 node_js:
-  - "0.10"
-after_script:
-  - npm run coveralls
+- '0.11'
+- '0.10'
+before_deploy: gulp build
+deploy:
+  provider: s3
+  access_key_id: AKIAJLHUJ3RVJGNVAYIA
+  secret_access_key:
+    secure: HJv41l4LZaLYxzvbYXhPfffZTY+sgY2JCwoWas4wSB1hBJKV3IvsbhAvRfrNnuGPFucBEqFmBmm5Qv4AWVoA1yYUOY/ejWJmOePQlE9J99/L8eqOpEZJ4wRSWEFDnhLKiGLCWgw5y/aF6ka+n7nyAYkpzX1DfTObuV0SjqKaGcY=
+  bucket: biojs
+  upload-dir: msa
+  acl: !ruby/string:HighLine::String private
+  on:
+    repo: greenify/biojs-vis-msa
