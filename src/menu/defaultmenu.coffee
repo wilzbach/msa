@@ -8,7 +8,7 @@ Seq = require "../model/Sequence"
 saveAs = require "../../external/saver"
 _ = require "underscore"
 
-view = require("../views/view")
+view = require("../bone/view")
 
 MenuView = view.extend
 

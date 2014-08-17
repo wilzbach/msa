@@ -1,3 +1,7 @@
+// this is the extracted view model from backbone
+// note that we inject jbone as jquery replacment
+// (and underscore directly)
+//
 // Views are almost more convention than they are actual code.
 //  MVC pattern
 // Backbone.View

@@ -12,8 +12,8 @@ SelCol = require "./g/selection/SelectionCol"
 Zoomer = require "./g/zoomer"
 Config = require "./config"
 
-view = require("./views/view")
-pluginator = require("./views/pluginator")
+view = require("./bone/view")
+pluginator = require("./bone/pluginator")
 
 Stage = require "./views/Stage"
 
