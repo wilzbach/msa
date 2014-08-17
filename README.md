@@ -82,66 +82,107 @@ Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssd
 Documentation
 -------------
 
-online [Codo](http://coffeedoc.info/github/greenify/biojs-vis-msa/master/)
 [wiki](https://github.com/greenify/biojs-vis-msa/wiki/)
 
-offline 
+Please report bugs or feature request directly on github.
+
+Guidelines
+-----------
+
+* [KISS](http://en.wikipedia.org/wiki/KISS_principle) -> avoid komplexity
+* keep it modular
+* avoid boiler-plate code
+
+BTW the use of Coffeescript is optional.
+
+
+Step 1) Setting up
+-----------------
 
 ```bash
-gem install sass
 npm install
-npm gulp codo
 ```
 
-and open `build/codo`
+* At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
+support SASS 3.3. The setup will try to the Rubygem sass automaticall, alternatively run `gem install sass`.
+* You will the `npm` package manager (and node) for this. On most system there is a package, look [here](http://nodejs.org/download/)
+* This will also automatically validate your installation by running `gulp build`
+ - generating browser builds for the codebase
+ - compiling the SASS
+ - executing all unit tests 
 
-At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
-support SASS 3.3.
+Step 2) Unit Testing
+-------------------------
 
-### Step 2) Developing 
+### Running tests from the CLI
 
-Run `npm install` once to install all dependencies.
-
-```
-npm run watch
-```
-
-Have fun coding.
-
-### Step 3) Compiling for the browser
-
-```
-npm run build-browser
-```
-
-TODO:
-* all examples snippets are bundled into one file and statically added to the output HTML
-* static files (`css`, `samples`) + third party `libs` are copied to `build`
-* a Javascript API documentation is generated (coming soon)
-
-
-### Step 4) Unit Testing
 
 ```
 npm test
 ```
 
-Head over to `tests/index.html`. 
-Add all you unit tests as module to the index.html. You can write unit tests either in JavaScript or in CoffeeScript.
 
-If you want to run them in the CLI, you need to install NodeJS Package manager (e.g. `apt-get install npm`) and the module `grunt-cli` (`npm install -g grunt-cli`).
+If you install gulp globally (`npm install -g gulp`), you can run 
 
-Execute once `npm install` to download all other dependencies locally
-
-And now you can execute all unit tests
+Execute all unit tests
 ```
 gulp test
 ```
 
-If you wish to let it watch for file changes and rerun the test, use `grunt watch`
+If you wish to let it watch for file changes and rerun the test automatically, use `gulp watch`
 
-### Step 5) Styling
+### 2.2 Adding your test
+
+* test without DOM interaction, can go into `test/mocha`
+* test with DOM interaction (= need to be run by a browser) -> `test/phantom`
+
+Hints for phantom:
+
+* it takes way longer to run phantom tests (headless browser tests), than normal mocha tests
+* you need to add your phantom tests to `test/phantom/index.coffee`
+* there are sub directives
+ - `test-mocha` wil only execute mocha tests
+ - `test-phantom` will only execute phantom tests
+
+### 2.3 Debugging tests
+
+Open the `tests/index.html` with your browser and set breakpoints.
+Important: the coffeescript is not directly compiled in your browser, so in theory you need to compile everything to `all_tests.js`.
+However this is done automatically by `gulp test` or `gulp wacth`.
+
+
+Step 3) Developing
+------------------
+
+```
+npm run watch
+```
+
+This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
+
+Have fun coding.
+You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets.
+
+
+Compiling for the browser
+--------------------------------
+
+```
+gulp build
+```
+
+This is will regenerate the CSS and JS (+minification).
+However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
+
+
+### CSS & Styling
 ---------
 
-For a complete build you also need SASS. `ruby-sass` or `gem install sass`.
+For a complete build you also need SASS (>= 3.3), `gem install sass`.
+The auto setup will try to fix that, but this only works if you have `bundler` installed.
 
+To recompile the SASS, just run
+```
+gulp css
+```
+(this is included in `gulp build`, which was run on npm install)
