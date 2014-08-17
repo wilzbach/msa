@@ -21,7 +21,7 @@ LabelView = view.extend
   render: ->
     #@renderSubviews()
     @el.style.width = "#{@g.zoomer.get "labelOffset"}px"
-    @el.style.height = "#{@g.zoomer.get "columnHeight"}px"
+    @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
 
     if @g.zoomer.get "textVisible"

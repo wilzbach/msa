@@ -20,13 +20,17 @@
 	cursor: pointer;
 	text-align: center;
 	flex-grow: 1;
+	display: inline-block;
 }
 
 .biojs_msa_seqblock {
-	display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-	align-items: center;
+	/*
+	*display: -webkit-flex;
+    *display: flex;
+    *flex-direction: row;
+	*align-items: center;
+	*/
+	display: inline-block;
 	color: black;
 	white-space: nowrap;
 	vertical-align:middle;
