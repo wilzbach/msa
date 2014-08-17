@@ -10,10 +10,9 @@ module.exports = FeatureCol = Collection.extend
     @where({xStart: index})
 
   contains: (index) ->
-    b = false
-    @each (el) ->
-      b |= el.contains index
-    b
+    @reduce (el,memo) ->
+      memo || el.contains index
+    , false
 
   # gives the minimal needed number of rows
   # not a very efficient algorithm
@@ -28,4 +27,3 @@ module.exports = FeatureCol = Collection.extend
         rows[x]++
 
     _.max rows
-

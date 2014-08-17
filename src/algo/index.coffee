@@ -1,1 +1,1 @@
-module.exports.consensus = require "./consensus_calc"
+module.exports.consensus = require "./ConsensusCalc"

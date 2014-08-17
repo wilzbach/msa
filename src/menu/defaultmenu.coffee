@@ -2,6 +2,9 @@ MenuBuilder = require "./menubuilder"
 Clustal = require "biojs-io-clustal"
 FastaReader = require("biojs-io-fasta").parse
 FastaExporter = require("biojs-io-fasta").writer
+consenus = require "../algo/ConsensusCalc"
+Seq = require "../model/Sequence"
+
 saveAs = require "../../external/saver"
 _ = require "underscore"
 
@@ -19,6 +22,7 @@ MenuView = view.extend
       @el.appendChild @_createFileSchemeMenu()
       @el.appendChild @_createColorSchemeMenu()
       @el.appendChild @_createOrderingMenu()
+      @el.appendChild @_createExtraMenu()
       @el.appendChild @_createExportMenu()
       @el.appendChild document.createElement("p")
 
@@ -124,6 +128,21 @@ MenuView = view.extend
 
 
       menuFilter.buildDOM()
+
+    _createExtraMenu: ->
+      menu = new MenuBuilder("Extras")
+      menu.addNode "Add consensus seq", =>
+        con = consenus(@msa)
+        console.log con
+        seq = new Seq
+          seq: con
+          id: "0_ref"
+          name: "consenus"
+        @msa.seqs.add seq
+        @msa.seqs.comparator = (seq) ->
+          seq.get "id"
+        @msa.seqs.sort()
+      menu.buildDOM()
 
     _createColorSchemeMenu: ->
       menuColor = new MenuBuilder("Color scheme")

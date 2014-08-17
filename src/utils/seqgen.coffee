@@ -20,7 +20,7 @@ seqgen = module.exports =
 
     for i in [0..len - 1] by 1
       seqs.push new Sequence(seqgen._generateSequence(seqLen), "seq" + i,
-      i)
+      "r" + i)
     return seqs
 
   # TODO: not used -> removed ?
