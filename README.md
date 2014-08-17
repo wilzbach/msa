@@ -82,7 +82,7 @@ Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssd
 Documentation
 -------------
 
-[wiki](https://github.com/greenify/biojs-vis-msa/wiki/)
+See below and hear to the [wiki](https://github.com/greenify/biojs-vis-msa/wiki/).
 
 Please report bugs or feature request directly on github.
 
@@ -175,10 +175,10 @@ This is will regenerate the CSS and JS (+minification).
 However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
 
 
-### CSS & Styling
+CSS & Styling
 ---------
 
-For a complete build you also need SASS (>= 3.3), `gem install sass`.
+For a complete build you also need SASS (>= 3.3), `gem install sass`.  
 The auto setup will try to fix that, but this only works if you have `bundler` installed.
 
 To recompile the SASS, just run
