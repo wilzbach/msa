@@ -32,23 +32,12 @@ MenuView = view.extend
 
     _createFileSchemeMenu: ->
       menuFile = new MenuBuilder("Settings")
-      menuFile.addNode "Hide Marker", =>
-        if @msa.config.visibleElements.ruler is true
-          #$(this).children().first().text "Display Marker"
-          @msa.config.visibleElements.ruler = false
-        else
-          #$(this).children().first().text "Hide Marker"
-          @msa.config.visibleElements.ruler = true
-        @msa._draw()
-
-      menuFile.addNode "Hide Labels", =>
-        if @msa.config.visibleElements.labels is true
-          @msa.config.visibleElements.labels = false
-          #$(this).children().first().text "Display Labels"
-        else
-          @msa.config.visibleElements.labels = true
-          #$(this).children().first().text "Hide Labels"
-        @msa.redrawContainer()
+      menuFile.addNode "Toggle Marker", =>
+        @msa.g.vis.set "markers", ! @msa.g.vis.get "markers"
+      menuFile.addNode "Toggle Labels", =>
+        @msa.g.vis.set "labels", ! @msa.g.vis.get "labels"
+      menuFile.addNode "Toggle Sequences", =>
+        @msa.g.vis.set "sequences", ! @msa.g.vis.get "sequences"
 
       menuFile.addNode "Toggle mouseover", =>
         @msa.g.config.set "registerMouseEvents", !@msa.g.config.get "registerMouseEvents"
@@ -207,8 +196,8 @@ MenuView = view.extend
         @msa.seqs.sort()
 
       menuOrdering.addNode "ID Desc", =>
-        @msa.seqs.comparator = (seq) ->
-          - seq.get "id"
+        @msa.seqs.comparator = (a, b) ->
+          - a.get("id").localeCompare(b.get("id"))
         @msa.seqs.sort()
 
       menuOrdering.addNode "Label", =>

@@ -10,8 +10,6 @@ module.exports = SelectionManager = Collection.extend
   initialize: (data, opts) ->
     @g = opts.g
 
-    #@.set "selection", []
-
     @listenTo @g, "residue:click", (e) ->
       @add new sel.possel
         xStart: e.rowPos
@@ -24,28 +22,10 @@ module.exports = SelectionManager = Collection.extend
         xEnd: e.rowPos
         seqId: e.seqId
 
-    return
-      #selPos = new selection.PositionSelect(@msa, data.seqId, data.rowPos)
-      #@handleSel selPos, data.evt
-    @g.on "residue:mouseover", (data) ->
-      @msa.selmanager.changeSel new selection.PositionSelect(@msa, data.seqId,
-          evt.target.rowPos)
-    @g.on "residue:mouseout", (data) ->
-
-    # rows
-    # click is done by the label
-    @g.on "row:click", (data) ->
-    @g.on "row:mouseover", (data) ->
-    @g.on "row:mouseout", (data) ->
-
-    # column
-    # click is done by the marker
-    @g.on "column:click", (data) ->
-    @g.on "column:mouseover", (data) ->
-    @g.on "column:mouseout", (data) ->
-
-
-    #@msa.on "mouseout" =>
+    @listenTo @g, "column:click", (e) ->
+      @add new sel.columnsel
+        xStart: e.rowPos
+        xEnd: e.rowPos
 
   getSelForRow: (seqId) ->
     @filter (el) -> el.inRow seqId
