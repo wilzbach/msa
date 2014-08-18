@@ -1,5 +1,4 @@
 $normalOpacity: 0.3;
-$selectedOpacity: 1.0;
 $schemeName: zappo;
 
 $residues: (
@@ -30,12 +29,6 @@ X: #fff,
 Y: #ff9900,
 Z: #fff,
 Gap: #fff,
-);
-
-$residuesSelected: (
-A: black,
-M: black,
-Gap: black,
 );
 
 @import "select_builder"

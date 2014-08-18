@@ -6,14 +6,22 @@
 	.biojs-msa-aa-#{$key} {
 		background-color: rgba($value,$normalOpacity);
 	}
-	.biojs-msa-aa-#{$key}-selected {
-		@if map-has-key($residuesSelected,$key) {
-			$col: map-get($residuesSelected,$key);
-			background-color: rgba(red($col),green($col),blue($col),$selectedOpacity);
-			color: $value;
+
+}
+}
+
+// blank version (no background)
+.biojs-msa-schemes-#{$schemeName}-bl{
+@each $key,$value in $residues{
+	.biojs-msa-aa-#{$key} {
+		// white on white is definitely not visible
+		@if $value == #fff {
+			color: black;
 		} @else {
-			background-color: rgba($value,$selectedOpacity);
+			color: $value;
 		}
 	}
 }
 }
+
+
