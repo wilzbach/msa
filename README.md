@@ -31,7 +31,7 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
 
-Yes you can either download the dev version from S3 or link to the minified CDN version.
+Yes you can either link to the minified,gzipped CDN version or download the dev version from S3 .
 
 JS  | CSS
 ------------- | -------------
@@ -94,6 +94,7 @@ Guidelines
 * [KISS](http://en.wikipedia.org/wiki/KISS_principle) -> avoid komplexity
 * keep it modular
 * avoid boiler-plate code
+* trust the linter (for coffeescript there is a default config)
 
 BTW the use of Coffeescript is optional.
 
@@ -163,7 +164,13 @@ npm run watch
 This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
 
 Have fun coding.
-You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets.
+You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets. Without global installation, just hit 
+
+```
+npm run sniper
+```
+
+(then you can browse the snippets at [localhost:9090/snippets](http:localhost:9090/snippets)).
 
 
 Compiling for the browser
@@ -175,7 +182,7 @@ gulp build
 
 This is will regenerate the CSS and JS (+minification).
 However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
-
+(If you can't install gulp globally, hit `npm run preinstall`.)
 
 CSS & Styling
 ---------
