@@ -25,11 +25,15 @@ DrawView = view.extend
     @removeViews()
 
     if @g.vis.get "markers"
-      @addView "header", new HeaderView {model: @model, g: @g}
+      header = new HeaderView {model: @model, g: @g}
+      header.ordering = -10
+      @addView "header",header
 
-    @model.each (seq,i) =>
-      view = new RowView {model: seq, g: @g}
-      @addView "row #{i}", view
+    for i in [0.. @model.length - 1] by 1
+      console.log @model.at(i).get "name"
+      view = new RowView {model: @model.at(i), g: @g}
+      view.ordering = i
+      @addView "row_#{i}", view
 
   render: ->
     @renderSubviews()
