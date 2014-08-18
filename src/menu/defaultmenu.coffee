@@ -145,8 +145,7 @@ MenuView = view.extend
         @msa.g.colorscheme.set "scheme","hydrophobicity"
 
       menuColor.addNode "Toggle background", =>
-        @msa.g.colorscheme.set "colorBackground", !@msa.g.colorscheme.get
-        "colorBackground"
+        @msa.g.colorscheme.set "colorBackground", !@msa.g.colorscheme.get("colorBackground")
 
       # greys all lowercase letters
       menuColor.addNode "Grey", =>

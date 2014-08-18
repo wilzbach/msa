@@ -2,15 +2,16 @@ view = require("../bone/view")
 dom = require("../utils/dom")
 svg = require("../utils/svg")
 _ = require "underscore"
+jbone = require "jbone"
 
+# displays the residues
 SeqView = view.extend
 
   initialize: (data) ->
     @g = data.g
-    #@el.setAttribute "class", "biojs-msa-stage-level" + @g.zoomer.level
-    @el.setAttribute "class", "biojs-msa-seqblock"
     @_build()
 
+    # setup listeners
     @listenTo @model, "change:grey", @_build
     @listenTo @g.columns, "change:hidden", @_build
     @listenTo @model, "change:features", @_build
@@ -39,9 +40,6 @@ SeqView = view.extend
     selection = @_getSelection()
     cellWidth = @g.zoomer.get "columnWidth"
 
-    @el.style.height = "15px"
-
-
     for n in [0..seq.length - 1] by 1
       if hidden.indexOf(n) < 0
         span = document.createElement "span"
@@ -54,13 +52,14 @@ SeqView = view.extend
         starts = features.startOn n
         if starts.length > 0
           span.innerHTML = "."
-          #span.style.height = "15px"
           for f in starts
             span.appendChild @appendFeature f
 
-        if selection[n]?
-          span.innerHTML = "x"
-          span.style.color = "red"
+        # only if its a new selection
+        if selection[n]? and (n is 0 or !selection[n-1]? )
+          #span.innerHTML = "x"
+          span.appendChild @_renderSelection n,selection
+          #span.style.color = "red"
 
         @_drawResidue span, seq[n],n
         span.style.width = cellWidth
@@ -74,8 +73,8 @@ SeqView = view.extend
       @el.className += " biojs-msa-schemes-" + @g.colorscheme.get("scheme") +
       "-bl"
 
+  # TODO: remove this boilerplate code for events
   _onclick: (evt) ->
-    #@model.set "selection", @model.get("selection").push(rowPos)
     seqId = @model.get "id"
     @g.trigger "residue:click", {seqId:seqId, rowPos: evt.target.rowPos, evt:evt}
 
@@ -112,16 +111,32 @@ SeqView = view.extend
 
     return selection
 
+  _renderSelection: (n, selection) ->
+    selectionLength = 0
+    # TODO: this is very, very inefficient
+    for i in [n.. @model.get("seq").length - 1] by 1
+      if selection[i]?
+        selectionLength++
+      else
+        break
+
+    width = @g.zoomer.get("columnWidth") * selectionLength
+    s = svg.base(height: 20, width: width)
+    s.style.position = "absolute"
+    s.style.marginLeft = -12
+    s.appendChild svg.rect({x:0,y:1,width:width,height:14,style:
+      "stroke:red;stroke-width:2;fill-opacity:0;"})
+    s
+
   # TODO: experimenting with different views
+  # TODO: this is a very naive way of using SVG to display features
   appendFeature: (f) ->
     width = (f.get("xEnd") - f.get("xStart")) * 15
     s = svg.base(height: 20, width: width)
-    color = '#'+Math.floor(Math.random()*16777215).toString(16)
+    color = f.get "fillColor"
     s.appendChild svg.rect({x:0,y:0,width:width,height:5,fill: color})
-    s.appendChild svg.rect({x:0,y:0,width:width,height:14,style:
-      "stroke:red;stroke-width:3;fill-opacity:0;"})
     s.style.position = "absolute"
-    $(s).on "mouseover", (evt) =>
+    jbone(s).on "mouseover", (evt) =>
       @g.trigger "feature",  f.get("text") + " hovered"
     s
 
