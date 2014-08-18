@@ -21,6 +21,7 @@ var mkdirp = require('mkdirp');
 var path = require('path');
 var join = path.join;
 var concat = require('gulp-concat');
+var gzip = require('gulp-gzip');
 
 // watchify
 var watchify = require("watchify");
@@ -55,7 +56,7 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
-gulp.task('build', ['css','build-browser','build-browser-min', 'build-browser-all'],function () {
+gulp.task('build', ['css','build-browser','build-browser-min', 'build-gzip'],function () {
   return true;
 });
 
@@ -86,6 +87,12 @@ gulp.task('build-browser-all',['init'], function() {
   var fileName = outputFile + "_all.min.js";
   gulp.src(join(buildDir,fileName)).pipe(clean());
   return mBrowserify("./browser_all.js",fileName);
+});
+
+gulp.task('build-gzip', function() {
+  return gulp.src(buildDir+"/*.min.{js,css}")
+    .pipe(gzip({append: true}))
+    .pipe(gulp.dest(buildDir));
 });
 
 gulp.task('build-test', function() {

@@ -10,8 +10,8 @@ deploy:
   bucket: biojs
   upload-dir: msa/latest
   acl: public-read
+  detect_encoding: true # allow compressed uploads
   skip_cleanup: true
   local-dir: build
-  detect_encoding: true # allow compressed uploads
   on:
     repo: greenify/biojs-vis-msa
