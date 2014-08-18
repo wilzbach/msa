@@ -31,7 +31,7 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
 
-Yes you can either link to the minified,gzipped CDN version or download the dev version from S3 .
+Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
 
 JS  | CSS
 ------------- | -------------
