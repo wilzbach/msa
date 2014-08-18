@@ -25,8 +25,8 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 
 ```html
-<script src=//cdn.biojs-msa.org/msa/latest/biojs_vis_msa_all.min.js></script>
-<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/latest/msa/msa.min.css />
+<script src=//cdn.biojs-msa.org/msa/latest/biojs_vis_msa_all.min.js.gz></script>
+<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/latest/msa/msa.min.css.gz />
 ```
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
@@ -35,13 +35,14 @@ Yes you can either download the dev version from S3 or link to the minified CDN 
 
 JS  | CSS
 ------------- | -------------
-[![Min version](http://img.shields.io/badge/prod-80kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/biojs_vis_msa.min.js)  | [![Min version](http://img.shields.io/badge/prod-16kB-blue.svg)](https://d3hiicay54k76t.cloudfront.net/msa/latest/msa.min.css)
+[![Min version](http://img.shields.io/badge/prod-26kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/biojs_vis_msa.min.js.gz)  | [![Min version](http://img.shields.io/badge/prod-2kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/msa.min.css.gz)
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/biojs_vis_msa.js) | [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
 
 
 
-In case Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files).
-If you need a `https` CDN, just link directly to cloudfront (link above).
+In case
+ * Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
+* you need a uglified unzipped CDN version, just remove the `.gz` at the file name.
 
 Demo
 -----
