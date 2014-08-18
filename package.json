@@ -67,7 +67,7 @@
     "build-browser": "node_modules/gulp/bin/gulp.js build-browser",
     "build-browser-min": "node_modules/gulp/bin/gulp.js build",
     "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
-    "sniper": "node_modules/biojs-sniper/bin/sniper"
+    "sniper": "node_modules/biojs-sniper/bin/sniper ."
   },
   "license": "Apache 2"
 }
