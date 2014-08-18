@@ -11,6 +11,7 @@ HeaderView = view.extend
     @listenTo @g.zoomer,"change:labelWidth", @render
     @listenTo @g.vis,"change:labels", @render
     @listenTo @g.vis,"change:metacell", @render
+    @listenTo @g.columns, "change:hidden", @render
     @manageEvents()
 
   render: ->
@@ -34,8 +35,13 @@ HeaderView = view.extend
 
     nMax = @model.getMaxLength()
     stepSize = @g.zoomer.get("stepSize")
+    hidden = @g.columns.get "hidden"
+    console.log hidden
 
     while n < nMax
+      if hidden.indexOf(n) >= 0
+        n += stepSize
+        continue
       span = document.createElement "span"
       span.style.width = cellWidth * stepSize
       span.style.display = "inline-block"
