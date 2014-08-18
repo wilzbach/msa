@@ -42,7 +42,7 @@ JS  | CSS
 
 In case
 * Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
-* you need a uglified unzipped CDN version, just remove the `.gz` at the file name.
+* you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 
 Demo
 -----
@@ -182,7 +182,8 @@ gulp build
 
 This is will regenerate the CSS and JS (+minification).
 However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
-(If you can't install gulp globally, hit `npm run preinstall`.)
+(If you can't install gulp globally, hit `npm run preinstall`.).
+The minification is done by [Browserify](http://browserify.org/).
 
 CSS & Styling
 ---------
@@ -195,3 +196,20 @@ To recompile the SASS, just run
 gulp css
 ```
 (this is included in `gulp build`, which was run on npm install)
+
+Project structure
+------------------
+
+* `browser.js` main file for browserify - defines the global namespace in the browser
+* `coffeelint.json` liniting config for CoffeeScript (run it with `gulp lint`)
+* `css` SASS styles (the main one is called `msa.sass`
+* `external` external dependencies that are not available in npm (TODO: remove and replace with npm packages)
+* `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
+* `Gemfile` defines the dependency to ruby-sass (needed for the auto-install with bundler)
+* `index.js` npm CJS main file - allows to require example the folder (`../`) - convenient for tests
+* `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
+* `res-docs` external dependencies of the snippets (TODO: cleanup and maybe remove)
+* `snippets` short coding snippets that are run by [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
+* `sniper.toml` config file for [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
+* `src` the main source code
+* `test` unit tests that are run with either mocha or phantomjs (headless browser)
