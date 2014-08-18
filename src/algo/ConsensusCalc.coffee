@@ -7,13 +7,14 @@ module.exports = (msa) ->
   seqs = msa.seqs.map (el) -> el.get "seq"
   occs = new Array seqs.length
 
-  # count the
+  # count the occurences of the chars of a position
   _.each seqs, (el,i) ->
     _.each el, (char, pos) ->
       occs[pos] = {} unless occs[pos]?
       occs[pos][char] = 0 unless occs[pos][char]?
       occs[pos][char]++
 
+  # now pick the char with most occururences
   _.reduce occs, (memo,occ) ->
     keys = _.keys occ
     memo +=  _.max keys, (key) -> occ[key]
