@@ -30,7 +30,6 @@ DrawView = view.extend
       @addView "header",header
 
     for i in [0.. @model.length - 1] by 1
-      console.log @model.at(i).get "name"
       view = new RowView {model: @model.at(i), g: @g}
       view.ordering = i
       @addView "row_#{i}", view
