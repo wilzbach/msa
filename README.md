@@ -41,7 +41,7 @@ JS  | CSS
 
 
 In case
- * Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
+* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
 * you need a uglified unzipped CDN version, just remove the `.gz` at the file name.
 
 Demo
