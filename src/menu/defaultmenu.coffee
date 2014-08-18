@@ -211,7 +211,6 @@ MenuView = view.extend
 
       menuOrdering.addNode "Label Desc", =>
         @msa.seqs.comparator = (a, b) ->
-          #console.log(a.get("name"))
           - a.get("name").localeCompare(b.get("name"))
         @msa.seqs.sort()
 
