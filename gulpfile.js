@@ -32,7 +32,7 @@ var mochaSelenium = require('gulp-mocha-selenium');
 // for mocha
 require('coffee-script/register');
 
-var outputFile = "biojs_vis_msa";
+var outputFile = "msa";
 var buildDir = "build";
 var browserFile = "browser.js";
 
