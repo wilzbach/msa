@@ -61,11 +61,11 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test",
-    "prepublish": "npm test && gulp build && coffee --bare --compile --output lib/ src/",
+    "test": "node_modules/gulp/bin/gulp.js test",
+    "prepublish": "npm test && node_modules/gulp/bin/gulp.js build && coffee --bare --compile --output lib/ src/",
     "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/msa.js",
-    "build-browser": "gulp build-browser",
-    "build-browser-min": "gulp build",
+    "build-browser": "node_modules/gulp/bin/gulp.js build-browser",
+    "build-browser-min": "node_modules/gulp/bin/gulp.js build",
     "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
     "sniper": "node_modules/biojs-sniper/bin/sniper"
   },
