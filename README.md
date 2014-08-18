@@ -94,6 +94,7 @@ Guidelines
 * [KISS](http://en.wikipedia.org/wiki/KISS_principle) -> avoid komplexity
 * keep it modular
 * avoid boiler-plate code
+* avoid more than two args for public methods -> accepting a dictionary is more flexible
 * trust the linter (for coffeescript there is a default config)
 
 BTW the use of Coffeescript is optional.
