@@ -25,10 +25,16 @@ LabelView = view.extend
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
 
     if @g.zoomer.get "textVisible"
-      @el.textContent = @model.get "name"
+      id = document.createElement "span"
+      id.textContent = @model.get "id"
+      id.style.width = 30
+      id.style.display = "inline-block"
+      name = document.createElement "span"
+      name.textContent = @model.get("name").substring 0, 20
+      @el.appendChild id
+      @el.appendChild name
     else
       @el.textContent = ""
-    @el.textContent = @model.get("name").substring 0, 20
 
     @
 
