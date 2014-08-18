@@ -37,8 +37,10 @@ SeqView = view.extend
     hidden = @g.columns.get "hidden"
     textVisible = @g.zoomer.get "textVisible"
     features = @model.get "features"
-    selection = @_getSelection()
+    selection = @_getSelection @model
     cellWidth = @g.zoomer.get "columnWidth"
+    # get the status of the upper and lower row
+    [mPrevSel,mNextSel] = @_getPrevNextSelection()
 
     for n in [0..seq.length - 1] by 1
       if hidden.indexOf(n) < 0
@@ -56,10 +58,11 @@ SeqView = view.extend
             span.appendChild @appendFeature f
 
         # only if its a new selection
-        if selection[n]? and (n is 0 or !selection[n-1]? )
+        if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
           #span.innerHTML = "x"
-          span.appendChild @_renderSelection n,selection
+          span.appendChild @_renderSelection n,selection,mPrevSel,mNextSel
           #span.style.color = "red"
+          console.log "render"
 
         @_drawResidue span, seq[n],n
         span.style.width = cellWidth
@@ -72,6 +75,8 @@ SeqView = view.extend
     else
       @el.className += " biojs-msa-schemes-" + @g.colorscheme.get("scheme") +
       "-bl"
+
+    console.log @model
 
   # TODO: remove this boilerplate code for events
   _onclick: (evt) ->
@@ -93,39 +98,71 @@ SeqView = view.extend
     unless @model.get("grey").indexOf(index) >= 0
       span.className = "biojs-msa-aa-" + residue
 
+  # TODO: should I be moved to the selection manager?
   # returns an array with the currently selected residues
   # e.g. [0,3] = pos 0 and 3 are selected
-  _getSelection: ->
-    maxLen = @model.get("seq").length
-    selection = new Array maxLen
-    sels = @g.selcol.getSelForRow @model.get "id"
+  _getSelection: (model) ->
+    maxLen = model.get("seq").length
+    selection = []
+    sels = @g.selcol.getSelForRow model.get "id"
     rows = _.find sels, (el) -> el.get("type") is "row"
     if rows?
       # full match
       for n in [0..maxLen - 1] by 1
-        selection[n] = 1
+        selection.push n
     else if sels.length > 0
       for sel in sels
         for n in [sel.get("xStart")..sel.get("xEnd")] by 1
-          selection[n] = 1
+          selection.push n
 
     return selection
 
-  _renderSelection: (n, selection) ->
-    selectionLength = 0
+  _getPrevNextSelection: ->
+    # looks at the selection of the prev and next el
+    # TODO: this is very naive, as there might be gaps above or below
+    modelPrev = @model.collection.prev @model
+    modelNext = @model.collection.next @model
+    mPrevSel = @_getSelection modelPrev if modelPrev?
+    mNextSel = @_getSelection modelNext if modelNext?
+    [mPrevSel,mNextSel]
+
+  # displays the current user selection
+  # and checks the prev and next row for selection  -> no borders in a selection
+  _renderSelection: (n, selection, mPrevSel, mNextSel) ->
     # TODO: this is very, very inefficient
+    # get the length of this selection
+    selectionLength = 0
     for i in [n.. @model.get("seq").length - 1] by 1
-      if selection[i]?
+      noTopBorder = true if mPrevSel? and mPrevSel.indexOf(n) >= 0
+      noBottomBorder = true if mNextSel? and mNextSel.indexOf(n) >= 0
+
+      if selection.indexOf(i) >= 0
         selectionLength++
       else
         break
 
+    # TODO: ugly!
     width = @g.zoomer.get("columnWidth") * selectionLength
-    s = svg.base(height: 20, width: width)
+    cHeight = 16
+    s = svg.base height: 20, width: width
     s.style.position = "absolute"
     s.style.marginLeft = -12
-    s.appendChild svg.rect({x:0,y:1,width:width,height:14,style:
-      "stroke:red;stroke-width:2;fill-opacity:0;"})
+    y = 1
+    y = 3 if noTopBorder
+    unless noTopBorder or noBottomBorder
+      s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
+        "stroke:red;stroke-width:2;fill-opacity:0;"
+    else
+      s.appendChild svg.line x1:1,y1:1,x2:1,y2:cHeight,style:
+        "stroke:red;stroke-width:2;"
+      s.appendChild svg.line x1:width - 1,y1:1,x2:width - 1,y2:cHeight,style:
+        "stroke:red;stroke-width:2;"
+      unless noTopBorder
+        s.appendChild svg.line x1:0,y1:1,x2:width,y2:1,style:
+          "stroke:red;stroke-width:2;"
+      unless noBottomBorder
+        s.appendChild svg.line x1:0,y1:cHeight,x2:width,y2:cHeight,style:
+          "stroke:red;stroke-width:2;"
     s
 
   # TODO: experimenting with different views
@@ -134,7 +171,7 @@ SeqView = view.extend
     width = (f.get("xEnd") - f.get("xStart")) * 15
     s = svg.base(height: 20, width: width)
     color = f.get "fillColor"
-    s.appendChild svg.rect({x:0,y:0,width:width,height:5,fill: color})
+    s.appendChild svg.rect x:0,y:0,width:width,height:5,fill:color
     s.style.position = "absolute"
     jbone(s).on "mouseover", (evt) =>
       @g.trigger "feature",  f.get("text") + " hovered"
