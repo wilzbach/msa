@@ -9,9 +9,7 @@ opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
 //opts.zoomer = { textVisible: false};
 var m = new msa.msa(opts);
-//m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
-console.log(m.seqs);
-console.log(m.seqs.at(0));
+m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
 
 // the menu is independent to the MSA container
 var menuOpts = {};
@@ -26,7 +24,7 @@ m.addView("menu", defMenu);
 //console.log($("body").get(0).appendChild(regionSelect.el));
 
 // ---------------------------------------------------
-console.log("consensus", msa.algo.consensus(m));
+//console.log("consensus", msa.algo.consensus(m));
 
 m.onAll(function(eventName, data){
   log(eventName,data);

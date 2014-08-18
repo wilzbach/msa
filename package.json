@@ -63,10 +63,10 @@
   "scripts": {
     "test": "gulp test",
     "prepublish": "npm test && gulp build && coffee --bare --compile --output lib/ src/",
-    "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/biojs_vis_msa.js",
+    "watch": "mkdir -p build; watchify -v --debug -t coffeeify --extension='.coffee' browser.js -o build/msa.js",
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
-    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/biojs_vis_msa.js",
+    "build-browser-cli": "mkdir -p build; browserify -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
     "sniper": "node_modules/biojs-sniper/bin/sniper"
   },
   "license": "Apache 2"

@@ -15,6 +15,9 @@ SeqView = view.extend
     @listenTo @g.columns, "change:hidden", @_build
     @listenTo @model, "change:features", @_build
     @listenTo @g.selcol, "add", @_build
+    @listenTo @g.colorscheme,"change", ->
+      @_build()
+      @render()
     @manageEvents()
 
   manageEvents: ->
@@ -65,8 +68,11 @@ SeqView = view.extend
 
   render: ->
     @el.className = "biojs_msa_seqblock"
-    @el.className += " biojs-msa-schemes-" + @g.colorscheme.get "scheme"
-    @
+    if @g.colorscheme.get "colorBackground"
+      @el.className += " biojs-msa-schemes-" + @g.colorscheme.get "scheme"
+    else
+      @el.className += " biojs-msa-schemes-" + @g.colorscheme.get("scheme") +
+      "-bl"
 
   _onclick: (evt) ->
     #@model.set "selection", @model.get("selection").push(rowPos)
