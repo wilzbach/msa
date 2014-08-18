@@ -54,20 +54,24 @@ MenuView = view.extend
 
       menuExport.addNode "Export all", =>
         # limit at about 256k
-        access = (seq) -> seq.tSeq
-        text = FastaExporter.export @msa.seqs,access
+        text = FastaExporter.export @msa.seqs.toJSON()
         blob = new Blob([text], {type : 'text/plain'})
         saveAs blob, "all.fasta"
 
       menuExport.addNode "Export selection", =>
-        selection = @msa.selmanager.getInvolvedSeqs()
-        unless selection?
-          selection = @msa.seqs
+        selection = @msa.g.selcol.reduceToSeqIds()
+        if selection?
+          # filter those seqids
+          selection = @msa.seqs.filter (el) ->
+            _.contains selection, el.get "id"
+          for i in [0.. selection.length - 1] by 1
+            selection[i] = selection[i].toJSON()
+        else
+          selection = @msa.seqs.toJSON()
           console.log "no selection found"
-        access = (seq) -> seq.tSeq
-        text = FastaExporter.export selection,access
+        text = FastaExporter.export selection
         blob = new Blob([text], {type : 'text/plain'})
-        saveAs blob, "all.fasta"
+        saveAs blob, "selection.fasta"
 
       menuExport.addNode "Export image", =>
         console.log "trying to render"
