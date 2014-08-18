@@ -125,7 +125,7 @@ MenuView = view.extend
         console.log con
         seq = new Seq
           seq: con
-          id: "0_ref"
+          id: "0c"
           name: "consenus"
         @msa.seqs.add seq
         @msa.seqs.comparator = (seq) ->
@@ -211,6 +211,7 @@ MenuView = view.extend
 
       menuOrdering.addNode "Label Desc", =>
         @msa.seqs.comparator = (a, b) ->
+          #console.log(a.get("name"))
           - a.get("name").localeCompare(b.get("name"))
         @msa.seqs.sort()
 
