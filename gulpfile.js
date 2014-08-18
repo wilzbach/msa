@@ -89,7 +89,7 @@ gulp.task('build-browser-all',['init'], function() {
   return mBrowserify("./browser_all.js",fileName);
 });
 
-gulp.task('build-gzip', function() {
+gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() {
   return gulp.src(buildDir+"/*.min.{js,css}")
     .pipe(gzip({append: true}))
     .pipe(gulp.dest(buildDir));
