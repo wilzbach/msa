@@ -35,7 +35,6 @@ module.exports =
 
       menu.appendChild menuUl
 
-
       frag = document.createDocumentFragment()
       # diplay it
       displayedButton = document.createElement "a"
