@@ -91,7 +91,7 @@ gulp.task('build-browser-all',['init'], function() {
 
 gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() {
   return gulp.src(buildDir+"/*.min.{js,css}")
-    .pipe(gzip({append: true}))
+    .pipe(gzip({append: true, gzipOptions: { level: 9 }}))
     .pipe(gulp.dest(buildDir));
 });
 
