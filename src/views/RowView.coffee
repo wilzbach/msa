@@ -1,6 +1,7 @@
 view = require("../bone/view")
 pluginator = require("../bone/pluginator")
 LabelView = require("./LabelView")
+MetaView = require("./MetaView")
 SeqView = require("./SeqView")
 
 RowView = view.extend
@@ -10,14 +11,16 @@ RowView = view.extend
     @el.setAttribute "class", "biojs_msa_layer"
     @draw()
 
-    @listenTo @g.colorscheme,"change",@render
     @listenTo @g.vis,"change:labels", @drawR
     @listenTo @g.vis,"change:sequences", @drawR
+    @listenTo @g.vis,"change:metacell", @drawR
 
   draw: ->
     @removeViews()
     if @g.vis.get "labels"
       @addView "labels", new LabelView {model: @model, g:@g}
+    if @g.vis.get "metacell"
+      @addView "metacell", new MetaView {model: @model, g:@g}
     if @g.vis.get "sequences"
       @addView "seqs", new SeqView {model: @model, g:@g}
 

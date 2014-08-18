@@ -8,19 +8,23 @@ HeaderView = view.extend
   initialize: (data) ->
     @g = data.g
     @listenTo @g.zoomer,"change:stepSize", @render
-    @listenTo @g.zoomer,"change:labelOffset:", @render
+    @listenTo @g.zoomer,"change:labelWidth", @render
     @listenTo @g.vis,"change:labels", @render
+    @listenTo @g.vis,"change:metacell", @render
     @manageEvents()
 
   render: ->
     dom.removeAllChilds @el
-    if @g.vis.get "labels"
+    if @g.vis.get "labels"  or @g.vis.get "metacell"
       # padding el
       spacer = document.createElement "span"
       spacer.innerHTML = "&nbsp;"
       spacer.style.display = "block"
       spacer.style.float = "left"
-      spacer.style.width = @g.zoomer.get "labelOffset"
+      spacerWidth = 0
+      spacerWidth += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
+      spacerWidth += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
+      spacer.style.width = spacerWidth
       @el.appendChild spacer
 
     container = document.createElement "span"
@@ -29,7 +33,6 @@ HeaderView = view.extend
     cellWidth = @g.zoomer.get "columnWidth"
 
     nMax = @model.getMaxLength()
-    console.log "nmax", nMax
     stepSize = @g.zoomer.get("stepSize")
 
     while n < nMax

@@ -38,6 +38,8 @@ MenuView = view.extend
         @msa.g.vis.set "labels", ! @msa.g.vis.get "labels"
       menuFile.addNode "Toggle Sequences", =>
         @msa.g.vis.set "sequences", ! @msa.g.vis.get "sequences"
+      menuFile.addNode "Toggle Metacell", =>
+        @msa.g.vis.set "metacell", ! @msa.g.vis.get "metacell"
 
       menuFile.addNode "Toggle mouseover", =>
         @msa.g.config.set "registerMouseEvents", !@msa.g.config.get "registerMouseEvents"
@@ -94,16 +96,10 @@ MenuView = view.extend
     _createFilterMenu: ->
       menuFilter = new MenuBuilder("Filter")
       menuFilter.addNode "Hide by threshold",(e) =>
-        @msa.colorscheme.setScheme "zappo"
-        @msa.stage.redrawStage()
 
       menuFilter.addNode "Hide by Scores", =>
-        @msa.colorscheme.setScheme "taylor"
-        @msa.stage.redrawStage()
 
       menuFilter.addNode "Hide by identity", =>
-        @msa.colorscheme.setScheme "taylor"
-        @msa.stage.redrawStage()
 
       menuFilter.addNode "Hide gaps", =>
 
@@ -143,6 +139,10 @@ MenuView = view.extend
 
       menuColor.addNode "Hydrophobicity", =>
         @msa.g.colorscheme.set "scheme","hydrophobicity"
+
+      menuColor.addNode "Toggle background", =>
+        @msa.g.colorscheme.set "colorBackground", !@msa.g.colorscheme.get
+        "colorBackground"
 
       # greys all lowercase letters
       menuColor.addNode "Grey", =>

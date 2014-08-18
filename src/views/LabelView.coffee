@@ -20,7 +20,7 @@ LabelView = view.extend
 
   render: ->
     #@renderSubviews()
-    @el.style.width = "#{@g.zoomer.get "labelOffset"}px"
+    @el.style.width = "#{@g.zoomer.get "labelWidth"}px"
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
 
@@ -35,16 +35,13 @@ LabelView = view.extend
   _onclick: (evt) ->
     seqId = @model.get "id"
     @g.trigger "row:click", {seqId:seqId, evt:evt}
-    #@msa.selmanager.handleSel new selection.HorizontalSelection(@msa, id), evt
 
   _onmousein: (evt) ->
     seqId = @model.get "id"
     @g.trigger "row:mouseout", {seqId:seqId, evt:evt}
-    #@msa.selmanager.handleSel new selection.HorizontalSelection(@msa, id), evt
 
   _onmouseout: (evt) ->
     seqId = @model.get "id"
     @g.trigger "row:mouseout", {seqId:seqId, evt:evt}
-    #@msa.selmanager.handleSel new selection.HorizontalSelection(@msa, id), evt
 
 module.exports = LabelView
