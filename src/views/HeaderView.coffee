@@ -36,7 +36,6 @@ HeaderView = view.extend
     nMax = @model.getMaxLength()
     stepSize = @g.zoomer.get("stepSize")
     hidden = @g.columns.get "hidden"
-    console.log hidden
 
     while n < nMax
       if hidden.indexOf(n) >= 0
