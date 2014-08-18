@@ -26,7 +26,7 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 ```html
 <script src=//cdn.biojs-msa.org/msa/latest/biojs_vis_msa_all.min.js></script>
-<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/msa.min.css />
+<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/latest/msa/msa.min.css />
 ```
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
