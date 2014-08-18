@@ -43,6 +43,7 @@ module.exports = SelectionManager = Collection.extend
         console.log "column sels are excluded atm"
         return memo
     , []
+
   # assumes there is no overlapping selection
 #  getColForRow: (seqId) ->
 #    c = _.chain(@getSelForRow seqId)

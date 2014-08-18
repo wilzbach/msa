@@ -41,9 +41,9 @@ MSAView = view.extend
     # g is our global Mediator
     @g = Eventhandler.mixin {}
 
-    # merge the config
+    # populate it and init the models
     @g.config = new Config data.conf
-    @g.columns = new Columns()
+    @g.columns = new Columns() # for action on the columns like hiding
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
