@@ -49,6 +49,8 @@ var browserifyOptions =  {
 
 var outputFileSt = outputFile + ".js";
 var outputFilePath = join(buildDir,outputFileSt);
+var outputFileMinSt = outputFile + ".min.js";
+var outputFileMin = join(buildDir,outputFileMinSt);
 
 gulp.task('default', ['clean','test','lint','build', 'codo']);
 
@@ -77,9 +79,8 @@ gulp.task('build-browser',['init'], function() {
 
 // browserify min
 gulp.task('build-browser-min',['init'], function() {
-  var fileName = outputFile + ".min.js";
-  gulp.src(join(buildDir,fileName)).pipe(clean());
-  return mBrowserify(browserFile,fileName);
+  gulp.src(outputFileMin).pipe(clean());
+  return mBrowserify(browserFile,outputFileMinSt);
 });
  
 // browserify all (with the parsers)
@@ -90,8 +91,13 @@ gulp.task('build-browser-all',['init'], function() {
 });
 
 gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() {
-  return gulp.src(buildDir+"/*.min.{js,css}")
-    .pipe(gzip({append: true, gzipOptions: { level: 9 }}))
+  gulp.src(outputFileMin)
+    .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
+    .pipe(rename(outputFile + ".min.gz.js"))
+    .pipe(gulp.dest(buildDir));
+  return gulp.src(join(buildDir, "msa.min.css"))
+    .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
+    .pipe(rename("msa.min.gz.css"))
     .pipe(gulp.dest(buildDir));
 });
 
@@ -129,7 +135,7 @@ gulp.task('test-mocha-selenium', function () {
 });
 
 gulp.task('lint', function () {
-    gulp.src('./src/**/*.coffee')
+    return gulp.src('./src/**/*.coffee')
         .pipe(coffeelint("coffeelint.json"))
         .pipe(coffeelint.reporter());
 });
@@ -144,7 +150,7 @@ gulp.task('sass',['init'], function () {
     var opts = checkForSASS();
     opts.sourcemap = true;
 
-    gulp.src('./css/msa.scss')
+    return gulp.src('./css/msa.scss')
       .pipe(sass(opts))
       //.pipe(rename('msa.css'))
       .pipe(chmod(644))
@@ -153,11 +159,13 @@ gulp.task('sass',['init'], function () {
 
 gulp.task('css',['sass'], function () {
     if(checkForSASS() !== undefined){
-      gulp.src(join(buildDir,"msa.css"))
+      return gulp.src(join(buildDir,"msa.css"))
       .pipe(minifyCSS())
       .pipe(rename('msa.min.css'))
       .pipe(chmod(644))
       .pipe(gulp.dest(buildDir));
+    } else{
+    return false;
     }
 });
 
