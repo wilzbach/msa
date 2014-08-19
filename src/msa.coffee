@@ -1,27 +1,28 @@
-Eventhandler = require "biojs-events"
-
 # models
 SeqCollection = require "./model/SeqCollection"
 
-# global
+# globals
 Colorator = require "./g/colorator"
 Columns = require "./g/columns"
+Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
 Visibility = require "./g/visibility"
-
-# utils
 Zoomer = require "./g/zoomer"
-Config = require "./config"
 
+# MV from backbone
 view = require("./bone/view")
 pluginator = require("./bone/pluginator")
+Eventhandler = require "biojs-events"
 
+# MSA views
 Stage = require "./views/Stage"
 
-# opts consists ow
-# @param [String] el (id or reference to a DOM element)
-# @param [SeqArray] seqs Array of sequences for initlization
-# @param [Dict] conf user config (will overwrite the default config
+# opts is a dictionary consisting of
+# @param el [String] id or reference to a DOM element
+# @param seqs [SeqArray] Array of sequences for initlization
+# @param conf [Dict] user config
+# @param vis [Dict] config of visible views
+# @param zoomer [Dict] display settings like columnWidth
 MSAView = view.extend
 
   events: {
@@ -36,8 +37,6 @@ MSAView = view.extend
     data.vis = {} unless data.vis?
     data.zoomer = {} unless data.zoomer?
 
-    @el.setAttribute "class", "biojs_msa_div"
-
     # g is our global Mediator
     @g = Eventhandler.mixin {}
 
@@ -49,28 +48,16 @@ MSAView = view.extend
     @g.vis = new Visibility data.vis
     @g.zoomer = new Zoomer data.zoomer
 
+    # load seqs and add subviews
     @seqs = new SeqCollection data.seqs
-
     @addView "stage",new Stage {model: @seqs, g: @g}
 
-    #if @config.allowRectSelect - terribly broken
-    #@plugs["rect_select"] = new selection.RectangularSelect this
+    @el.setAttribute "class", "biojs_msa_div"
 
   render: ->
     @.trigger "hello"
     @renderSubviews()
     @
-
-  # adds one or multiple sequences
-  # @param tSeqs [[Sequences]] array of sequences you want to add
-  addSeqs: (tSeqs) ->
-    @zoomer.autofit tSeqs if @g.zoomer?
-    @seqmgr.addSeqs tSeqs
-    # TODO: do we want to draw the entire MSA not only the stage)
-    @_draw()
-
-  cleanup: ->
-    @g.selmanager.cleanup()
 
 # mix and shake
 pluginator.mixin MSAView::
