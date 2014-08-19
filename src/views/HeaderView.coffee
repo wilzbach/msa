@@ -20,7 +20,7 @@ HeaderView = view.extend
       # padding el
       spacer = document.createElement "span"
       spacer.innerHTML = "&nbsp;"
-      spacer.style.display = "block"
+      spacer.style.display = "inline-block"
       spacer.style.float = "left"
       spacerWidth = 0
       spacerWidth += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
