@@ -59,7 +59,7 @@ MenuView = view.extend
         saveAs blob, "all.fasta"
 
       menuExport.addNode "Export selection", =>
-        selection = @msa.g.selcol.reduceToSeqIds()
+        selection = @msa.g.selcol.pluck "seqId"
         if selection?
           # filter those seqids
           selection = @msa.seqs.filter (el) ->
@@ -194,8 +194,7 @@ MenuView = view.extend
     _createOrderingMenu: ->
       menuOrdering = new MenuBuilder("Ordering")
       menuOrdering.addNode "ID", =>
-        @msa.seqs.comparator = (seq) ->
-          seq.get "id"
+        @msa.seqs.comparator = "id"
         @msa.seqs.sort()
 
       menuOrdering.addNode "ID Desc", =>
@@ -204,8 +203,7 @@ MenuView = view.extend
         @msa.seqs.sort()
 
       menuOrdering.addNode "Label", =>
-        @msa.seqs.comparator = (seq) ->
-          seq.get "name"
+        @msa.seqs.comparator = "name"
         @msa.seqs.sort()
 
       menuOrdering.addNode "Label Desc", =>
@@ -214,8 +212,7 @@ MenuView = view.extend
         @msa.seqs.sort()
 
       menuOrdering.addNode "Seq", =>
-        @msa.seqs.comparator = (seq) ->
-          seq.get "seq"
+        @msa.seqs.comparator = "seq"
         @msa.seqs.sort()
 
       menuOrdering.addNode "Seq Desc", =>
