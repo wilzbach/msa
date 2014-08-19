@@ -33,18 +33,7 @@ module.exports = SelectionManager = Collection.extend
   getSelForColumns: (rowPos) ->
     @filter (el) -> el.inColumn seqId
 
-  reduceToSeqIds: ->
-    @reduce (memo,el) ->
-      if el.get("seqId")?
-        memo.push(el.get("seqId"))
-        return memo
-      else
-        # column selection
-        console.log "column sels are excluded atm"
-        return memo
-    , []
-
-  # assumes there is no overlapping selection
+# assumes there is no overlapping selection
 #  getColForRow: (seqId) ->
 #    c = _.chain(@getSelForRow seqId)
 #    rows = c.findWhere {type:"row"}
