@@ -19,6 +19,7 @@ MenuView = view.extend
     render: ->
       @el.appendChild @_createImportMenu()
       @el.appendChild @_createFilterMenu()
+      @el.appendChild @_createSelectionMenu()
       @el.appendChild @_createFileSchemeMenu()
       @el.appendChild @_createColorSchemeMenu()
       @el.appendChild @_createOrderingMenu()
@@ -142,6 +143,19 @@ MenuView = view.extend
         window.open "https://github.com/greenify/biojs-vis-msa/issues"
       menu.addNode "User manual", =>
         window.open "https://github.com/greenify/biojs-vis-msa/wiki"
+      menu.buildDOM()
+
+    _createSelectionMenu: ->
+      menu = new MenuBuilder("Selection")
+      menu.addNode "Find (not yet)", =>
+      menu.addNode "Select all", =>
+      menu.addNode "Invert (not yet)", =>
+      menu.addNode "Invert columns", =>
+        @msa.g.selcol.invertCol [0..@msa.seqs.getMaxLength()]
+      menu.addNode "Invert rows", =>
+        @msa.g.selcol.invertRow @msa.seqs.pluck "id"
+      menu.addNode "Reset", =>
+        @msa.g.selcol.reset()
       menu.buildDOM()
 
     _createColorSchemeMenu: ->
