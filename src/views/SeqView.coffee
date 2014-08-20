@@ -54,7 +54,7 @@ SeqView = view.extend
 
         starts = features.startOn n
         if starts.length > 0
-          span.innerHTML = "."
+          span.innerHTML = "&nbsp;"
           for f in starts
             span.appendChild @appendFeature f
 
