@@ -169,6 +169,9 @@ MenuView = view.extend
       menuColor.addNode "Hydrophobicity", =>
         @msa.g.colorscheme.set "scheme","hydrophobicity"
 
+      menuColor.addNode "No color", =>
+        @msa.g.colorscheme.set "scheme","foo"
+
       menuColor.addNode "Toggle background", =>
         @msa.g.colorscheme.set "colorBackground", !@msa.g.colorscheme.get("colorBackground")
 
