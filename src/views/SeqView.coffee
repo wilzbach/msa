@@ -16,6 +16,7 @@ SeqView = view.extend
     @listenTo @g.columns, "change:hidden", @_build
     @listenTo @model, "change:features", @_build
     @listenTo @g.selcol, "add", @_build
+    @listenTo @g.selcol, "reset", @_build
     @listenTo @g.colorscheme,"change", ->
       @_build()
       @render()
