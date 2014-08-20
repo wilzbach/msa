@@ -214,8 +214,8 @@ MenuView = view.extend
           @msa.g.zoomer.set "textVisible", false
           @msa.seqs.set seqs
 
-      menuImport.addNode "more", =>
-        console.log "yeah it is open source ;-)"
+      menuImport.addNode "add your own Parser", =>
+        window.open "https://github.com/biojs/biojs2"
 
       menuImport.buildDOM()
 
