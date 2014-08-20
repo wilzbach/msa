@@ -45,7 +45,7 @@ HeaderView = view.extend
       span = document.createElement "span"
       span.style.width = cellWidth * stepSize
       span.style.display = "inline-block"
-      span.textContent = n
+      span.textContent = (n + 1)
       span.rowPos = n
       #span.style.flexGrow = 1
 
