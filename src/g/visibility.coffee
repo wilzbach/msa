@@ -4,7 +4,10 @@ Model = require("backbone").Model
 module.exports = Visibility = Model.extend
 
   defaults:
-    labels: true
     sequences: true
     markers: true
     metacell: false
+
+
+    labels: true
+    labelName: false
