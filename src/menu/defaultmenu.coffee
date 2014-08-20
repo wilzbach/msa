@@ -24,6 +24,7 @@ MenuView = view.extend
       @el.appendChild @_createOrderingMenu()
       @el.appendChild @_createExtraMenu()
       @el.appendChild @_createExportMenu()
+      @el.appendChild @_createHelpMenu()
       @el.appendChild document.createElement("p")
 
     deleteMenu: ->
@@ -73,7 +74,7 @@ MenuView = view.extend
         blob = new Blob([text], {type : 'text/plain'})
         saveAs blob, "selection.fasta"
 
-      menuExport.addNode "Export image", =>
+      menuExport.addNode "Export image (broken)", =>
         console.log "trying to render"
         require ["html2canvas", "saveAs"], (HTML2canvas, saveAs) =>
           HTML2canvas @msa.container, {
@@ -131,6 +132,16 @@ MenuView = view.extend
         @msa.seqs.comparator = (seq) ->
           seq.get "id"
         @msa.seqs.sort()
+      menu.buildDOM()
+
+    _createHelpMenu: ->
+      menu = new MenuBuilder("Help")
+      menu.addNode "About the project", =>
+        window.open "https://github.com/greenify/biojs-vis-msa"
+      menu.addNode "Report issues", =>
+        window.open "https://github.com/greenify/biojs-vis-msa/issues"
+      menu.addNode "User manual", =>
+        window.open "https://github.com/greenify/biojs-vis-msa/wiki"
       menu.buildDOM()
 
     _createColorSchemeMenu: ->
