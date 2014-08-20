@@ -10,4 +10,4 @@ module.exports = Zoomer = Model.extend
     textVisible: true
     labelLength: 20
     labelFontsize: "10px"
-    stepSize: 2
+    stepSize: 1
