@@ -17,6 +17,7 @@ SeqView = view.extend
     @listenTo @model, "change:features", @_build
     @listenTo @g.selcol, "add", @_build
     @listenTo @g.selcol, "reset", @_build
+    @listenTo @g.zoomer, "change", @_build
     @listenTo @g.colorscheme,"change", ->
       @_build()
       @render()
@@ -54,7 +55,6 @@ SeqView = view.extend
 
         starts = features.startOn n
         if starts.length > 0
-          span.innerHTML = "&nbsp;"
           for f in starts
             span.appendChild @appendFeature f
 

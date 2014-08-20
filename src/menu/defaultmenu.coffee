@@ -33,14 +33,14 @@ MenuView = view.extend
       consoel.log "not implemented"
 
     _createFileSchemeMenu: ->
-      menuFile = new MenuBuilder("Settings")
+      menuFile = new MenuBuilder("Vis. elements")
       menuFile.addNode "Toggle Marker", =>
         @msa.g.vis.set "markers", ! @msa.g.vis.get "markers"
       menuFile.addNode "Toggle Labels", =>
         @msa.g.vis.set "labels", ! @msa.g.vis.get "labels"
       menuFile.addNode "Toggle Sequences", =>
         @msa.g.vis.set "sequences", ! @msa.g.vis.get "sequences"
-      menuFile.addNode "Toggle Metacell", =>
+      menuFile.addNode "Toggle meta info", =>
         @msa.g.vis.set "metacell", ! @msa.g.vis.get "metacell"
 
       menuFile.addNode "Toggle mouseover", =>
@@ -54,7 +54,7 @@ MenuView = view.extend
     _createExportMenu: ->
       menuExport = new MenuBuilder("Export")
 
-      menuExport.addNode "Export all", =>
+      menuExport.addNode "Export sequences", =>
         # limit at about 256k
         text = FastaExporter.export @msa.seqs.toJSON()
         blob = new Blob([text], {type : 'text/plain'})
@@ -117,7 +117,8 @@ MenuView = view.extend
             hidden.push index
         @msa.g.columns.set "hidden", hidden
 
-
+      menuFilter.addNode "Reset", =>
+        console.log "not working"
       menuFilter.buildDOM()
 
     _createExtraMenu: ->
@@ -133,6 +134,18 @@ MenuView = view.extend
         @msa.seqs.comparator = (seq) ->
           seq.get "id"
         @msa.seqs.sort()
+      menu.addNode "Increase font size", =>
+        @msa.g.zoomer.set "columnWidth", @msa.g.zoomer.get("columnWidth") + 2
+        @msa.g.zoomer.set "labelWidth", @msa.g.zoomer.get("columnWidth") + 5
+        @msa.g.zoomer.set "rowHeight", @msa.g.zoomer.get("rowHeight") + 2
+        @msa.g.zoomer.set "labelFontSize", @msa.g.zoomer.get("labelFontSize") + 2
+      menu.addNode "Decrease font size", =>
+        @msa.g.zoomer.set "columnWidth", @msa.g.zoomer.get("columnWidth") - 2
+        @msa.g.zoomer.set "rowHeight", @msa.g.zoomer.get("rowHeight") - 2
+        @msa.g.zoomer.set "labelFontSize", @msa.g.zoomer.get("labelFontSize") - 2
+        if @msa.g.zoomer.get("columnWidth") < 8
+          @msa.g.zoomer.set "textVisible", false
+
       menu.buildDOM()
 
     _createHelpMenu: ->
