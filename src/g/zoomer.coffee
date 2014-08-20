@@ -6,7 +6,7 @@ module.exports = Zoomer = Model.extend
     metaWidth: 20
     labelWidth: 100
 
-    rowHeight: 10
+    rowHeight: 14
     textVisible: true
     labelLength: 20
     labelFontsize: "10px"
