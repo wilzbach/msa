@@ -2,6 +2,7 @@ view = require("../bone/view")
 pluginator = require("../bone/pluginator")
 RowView = require "./RowView"
 HeaderView = require "./HeaderView"
+ConservationView = require "./ConservationView"
 
 # a neat collection view
 DrawView = view.extend
@@ -21,8 +22,17 @@ DrawView = view.extend
       @draw()
       @render()
 
+    @listenTo @g.vis,"change:conserv", ->
+      @draw()
+      @render()
+
   draw: ->
     @removeViews()
+
+    if @g.vis.get "conserv"
+      conserv = new ConservationView {model: @model, g: @g}
+      conserv.ordering = -20
+      @addView "conserv",conserv
 
     if @g.vis.get "markers"
       header = new HeaderView {model: @model, g: @g}
