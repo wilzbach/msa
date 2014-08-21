@@ -2,9 +2,9 @@ _ = require "underscore"
 
 # calculate the consensus seq
 # TODO: very naive way
-module.exports = (msa) ->
+module.exports = (seqs) ->
 
-  seqs = msa.seqs.map (el) -> el.get "seq"
+  seqs = seqs.map (el) -> el.get "seq"
   occs = new Array seqs.length
 
   # count the occurences of the chars of a position

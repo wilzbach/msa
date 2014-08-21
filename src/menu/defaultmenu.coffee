@@ -42,6 +42,8 @@ MenuView = view.extend
         @msa.g.vis.set "sequences", ! @msa.g.vis.get "sequences"
       menuFile.addNode "Toggle meta info", =>
         @msa.g.vis.set "metacell", ! @msa.g.vis.get "metacell"
+      menuFile.addNode "Toggle bars", =>
+        @msa.g.vis.set "conserv", ! @msa.g.vis.get "conserv"
 
       menuFile.addNode "Toggle mouseover", =>
         @msa.g.config.set "registerMouseEvents", !@msa.g.config.get "registerMouseEvents"
@@ -102,6 +104,9 @@ MenuView = view.extend
     _createFilterMenu: ->
       menuFilter = new MenuBuilder("Filter")
       menuFilter.addNode "Hide by threshold",(e) =>
+        maxLen = @msa.seqs.getMaxLength()
+        for i in [0.. maxLen - 1]
+          @msa.g.columns
 
       menuFilter.addNode "Hide by Scores", =>
 

@@ -60,10 +60,7 @@ SeqView = view.extend
 
         # only if its a new selection
         if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
-          #span.innerHTML = "x"
           span.appendChild @_renderSelection n,selection,mPrevSel,mNextSel
-          #span.style.color = "red"
-          console.log "render"
 
         @_drawResidue span, seq[n],n
         span.style.width = cellWidth
@@ -76,8 +73,6 @@ SeqView = view.extend
     else
       @el.className += " biojs-msa-schemes-" + @g.colorscheme.get("scheme") +
       "-bl"
-
-    console.log @model
 
   # TODO: remove this boilerplate code for events
   _onclick: (evt) ->
@@ -143,27 +138,26 @@ SeqView = view.extend
         break
 
     # TODO: ugly!
-    width = @g.zoomer.get("columnWidth") * selectionLength
-    cHeight = 16
+    width = (@g.zoomer.get("columnWidth") * selectionLength) + 1
+    cHeight = @g.zoomer.get("rowHeight")
     s = svg.base height: 20, width: width
     s.style.position = "absolute"
     s.style.marginLeft = -12
     y = 1
     y = 3 if noTopBorder
-    unless noTopBorder or noBottomBorder
-      s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
-        "stroke:red;stroke-width:2;fill-opacity:0;"
-    else
-      s.appendChild svg.line x1:1,y1:1,x2:1,y2:cHeight,style:
+   # unless noTopBorder or noBottomBorder
+   #   s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
+   #     "stroke:red;stroke-width:1;fill-opacity:0;"
+    s.appendChild svg.line x1:0,y1:0,x2:0,y2:cHeight,style:
         "stroke:red;stroke-width:2;"
-      s.appendChild svg.line x1:width - 1,y1:1,x2:width - 1,y2:cHeight,style:
+    s.appendChild svg.line x1:width,y1:0,x2:width,y2:cHeight,style:
         "stroke:red;stroke-width:2;"
-      unless noTopBorder
-        s.appendChild svg.line x1:0,y1:1,x2:width,y2:1,style:
-          "stroke:red;stroke-width:2;"
-      unless noBottomBorder
-        s.appendChild svg.line x1:0,y1:cHeight,x2:width,y2:cHeight,style:
-          "stroke:red;stroke-width:2;"
+    unless noTopBorder
+      s.appendChild svg.line x1:0,y1:1,x2:width,y2:1,style:
+          "stroke:red;stroke-width:1;"
+    unless noBottomBorder
+      s.appendChild svg.line x1:0,y1:cHeight,x2:width,y2:cHeight,style:
+          "stroke:red;stroke-width:1;"
     s
 
   # TODO: experimenting with different views
@@ -172,7 +166,8 @@ SeqView = view.extend
     width = (f.get("xEnd") - f.get("xStart")) * 15
     s = svg.base(height: 20, width: width)
     color = f.get "fillColor"
-    s.appendChild svg.rect x:0,y:0,width:width,height:5,fill:color
+    s.appendChild svg.rect x:0,y:0,width:width,height:5,style:
+      "fill: " + color + ";fill-opacity: 0.4"
     s.style.position = "absolute"
     jbone(s).on "mouseover", (evt) =>
       @g.trigger "feature",  f.get("text") + " hovered"

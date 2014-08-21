@@ -9,6 +9,7 @@ RowView = view.extend
   initialize: (data) ->
     @g = data.g
     @el.setAttribute "class", "biojs_msa_layer"
+    @el.style.height = @g.zoomer.get "rowHeight"
     @draw()
 
     @listenTo @g.vis,"change:labels", @drawR
