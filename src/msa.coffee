@@ -40,18 +40,19 @@ MSAView = view.extend
     # g is our global Mediator
     @g = Eventhandler.mixin {}
 
+    # load seqs and add subviews
+    @seqs = new SeqCollection data.seqs
+
     # populate it and init the models
     @g.config = new Config data.conf
     @g.columns = new Columns() # for action on the columns like hiding
+    @g.columns.calcConservation @seqs
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
     @g.zoomer = new Zoomer data.zoomer
 
-    # load seqs and add subviews
-    @seqs = new SeqCollection data.seqs
     @addView "stage",new Stage {model: @seqs, g: @g}
-
     @el.setAttribute "class", "biojs_msa_div"
 
   render: ->
