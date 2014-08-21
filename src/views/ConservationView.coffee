@@ -23,7 +23,6 @@ ConservationView = view.extend
     cellWidth = @g.zoomer.get "columnWidth"
     maxHeight = 20
     width = cellWidth * nMax
-    console.log width
     s = svg.base height: maxHeight, width: width
     s.style.display = "inline-block"
     s.style.position = "relative"
