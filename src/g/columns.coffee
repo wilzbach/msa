@@ -26,7 +26,6 @@ module.exports = Columns = Model.extend
         matches[pos] = matches[pos] + 1 || 1 if cons[pos] is char
 
     for i in [0 .. nMax - 1]
-      console.log matches[i] + ",", total[i]
       matches[i] = matches[i] / total[i]
 
     @.set "conserv", matches

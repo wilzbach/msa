@@ -104,15 +104,22 @@ MenuView = view.extend
     _createFilterMenu: ->
       menuFilter = new MenuBuilder("Filter")
       menuFilter.addNode "Hide by threshold",(e) =>
+        threshold = prompt "Enter threshold (in percent)", 20
+        threshold = threshold / 100
         maxLen = @msa.seqs.getMaxLength()
+        hidden = []
+        conserv = @msa.g.columns.get("conserv")
         for i in [0.. maxLen - 1]
-          @msa.g.columns
+          console.log conserv[i]
+          if conserv[i] < threshold
+            hidden.push i
+        @msa.g.columns.set "hidden", hidden
 
-      menuFilter.addNode "Hide by Scores", =>
+      menuFilter.addNode "Hide by Scores (not yet)", =>
 
-      menuFilter.addNode "Hide by identity", =>
+      menuFilter.addNode "Hide by identity (not yet)", =>
 
-      menuFilter.addNode "Hide gaps", =>
+      menuFilter.addNode "Hide gaps (not yet)", =>
 
       menuFilter.addNode "Hide %3", =>
 
