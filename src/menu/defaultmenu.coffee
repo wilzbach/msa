@@ -173,22 +173,20 @@ MenuView = view.extend
 
     _createSelectionMenu: ->
       menu = new MenuBuilder("Selection")
-      menu.addNode "Find (first hit)", =>
+      menu.addNode "Find all (supprts RegEx)", =>
         search = prompt "your search (regex support soon)", "D"
-        # only searches for the first hit
-        hit = false
+        # marks all hits
+        search = new RegExp search, "gi"
         selcol = @msa.g.selcol
+        newSeli = []
         @msa.seqs.each (seq) ->
-          return false if hit
-          index = seq.get("seq").indexOf(search)
-          if index >= 0
-            # hit
-            args = {xStart: index, xEnd: index + search.length - 1, seqId:
+          strSeq = seq.get("seq")
+          while match = search.exec strSeq
+            index = match.index
+            args = {xStart: index, xEnd: index + match[0].length - 1, seqId:
               seq.get("id")}
-            seli = [new sel.possel args ]
-            selcol.reset seli
-            hit = true
-            return
+            newSeli.push new sel.possel(args)
+        selcol.reset newSeli
 
       menu.addNode "Select all", =>
         seqs = @msa.seqs.pluck "id"
