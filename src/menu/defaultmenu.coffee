@@ -4,6 +4,7 @@ FastaReader = require("biojs-io-fasta").parse
 FastaExporter = require("biojs-io-fasta").writer
 consenus = require "../algo/ConsensusCalc"
 Seq = require "../model/Sequence"
+sel = require "../g/selection/Selection"
 
 saveAs = require "../../external/saver"
 _ = require "underscore"
@@ -172,9 +173,28 @@ MenuView = view.extend
 
     _createSelectionMenu: ->
       menu = new MenuBuilder("Selection")
-      menu.addNode "Find (not yet)", =>
+      menu.addNode "Find", =>
+        search = prompt "your search (regex support soon)", "D"
+        # only searches for the first hit
+        hit = false
+        selcol = @msa.g.selcol
+        @msa.seqs.each (seq) ->
+          return false if hit
+          console.log seq
+          #index = seq.get("seq").indexOf(search)
+          if index >= 0
+            # hit
+            #selcol.reset [sel.rowsel {xStart: index, xEnd: index +
+            #search.length}]
+            hit = true
+            return
+
       menu.addNode "Select all", =>
-      menu.addNode "Invert (not yet)", =>
+        seqs = @msa.seqs.pluck "id"
+        seli = []
+        for id in seqs
+          seli.push new sel.rowsel {seqId: id}
+        @msa.g.selcol.reset seli
       menu.addNode "Invert columns", =>
         @msa.g.selcol.invertCol [0..@msa.seqs.getMaxLength()]
       menu.addNode "Invert rows", =>
@@ -210,13 +230,24 @@ MenuView = view.extend
               grey.push index
           seq.set "grey", grey
 
-      menuColor.addNode "Grey 10-20", =>
-        @msa.seqs.each (seq) ->
-          residues = seq.get "seq"
-          grey = []
-          for i in [10..20]
+      menuColor.addNode "Grey by threshold", =>
+        threshold = prompt "Enter threshold (in percent)", 20
+        threshold = threshold / 100
+        maxLen = @msa.seqs.getMaxLength()
+        conserv = @msa.g.columns.get("conserv")
+        grey = []
+        for i in [0.. maxLen - 1]
+          console.log conserv[i]
+          if conserv[i] < threshold
             grey.push i
+        @msa.seqs.each (seq) ->
           seq.set "grey", grey
+
+      menuColor.addNode "Grey selection", =>
+        maxLen = @msa.seqs.getMaxLength()
+        @msa.seqs.each (seq) =>
+          blocks = @msa.g.selcol.getBlocksForRow(seq.get("id"),maxLen)
+          seq.set "grey", blocks
 
       menuColor.addNode "Reset grey", =>
         @msa.seqs.each (seq) ->
