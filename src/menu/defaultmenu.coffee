@@ -173,19 +173,20 @@ MenuView = view.extend
 
     _createSelectionMenu: ->
       menu = new MenuBuilder("Selection")
-      menu.addNode "Find", =>
+      menu.addNode "Find (first hit)", =>
         search = prompt "your search (regex support soon)", "D"
         # only searches for the first hit
         hit = false
         selcol = @msa.g.selcol
         @msa.seqs.each (seq) ->
           return false if hit
-          console.log seq
-          #index = seq.get("seq").indexOf(search)
+          index = seq.get("seq").indexOf(search)
           if index >= 0
             # hit
-            #selcol.reset [sel.rowsel {xStart: index, xEnd: index +
-            #search.length}]
+            args = {xStart: index, xEnd: index + search.length - 1, seqId:
+              seq.get("id")}
+            seli = [new sel.possel args ]
+            selcol.reset seli
             hit = true
             return
 
