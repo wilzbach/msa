@@ -25,14 +25,13 @@ ConservationView = view.extend
     width = cellWidth * nMax
     s = svg.base height: maxHeight, width: width
     s.style.display = "inline-block"
-    s.style.position = "relative"
     s.style.cursor = "pointer"
     # spacer / padding element
     if @g.vis.get "labels"  or @g.vis.get "metacell"
      paddingLeft = 0
      paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
      paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     s.style.paddingLeft = paddingLeft
+     s.style.marginLeft = paddingLeft
 
     stepSize = @g.zoomer.get "stepSize"
     hidden = @g.columns.get "hidden"

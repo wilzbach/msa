@@ -33,6 +33,18 @@ module.exports = SelectionManager = Collection.extend
   getSelForColumns: (rowPos) ->
     @filter (el) -> el.inColumn seqId
 
+  # @returns array of all selected residues for a row
+  getBlocksForRow: (seqId, maxLen) ->
+    selis = @filter (el) -> el.inRow seqId
+    blocks = []
+    for seli in selis
+      if seli.attributes.type is "row"
+        blocks = [0..maxLen]
+        break
+      else
+        blocks = blocks.concat [seli.attributes.xStart .. seli.attributes.xEnd]
+    blocks
+
   # inverts the current selection for columns
   # @param rows [Array] all available seqId
   invertRow: (rows) ->
