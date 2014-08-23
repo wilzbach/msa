@@ -190,8 +190,8 @@ MenuView = view.extend
 
     _createSelectionMenu: ->
       menu = new MenuBuilder("Selection")
-      menu.addNode "Find all (supprts RegEx)", =>
-        search = prompt "your search (regex support soon)", "D"
+      menu.addNode "Find all (supports RegEx)", =>
+        search = prompt "your search", "D"
         # marks all hits
         search = new RegExp search, "gi"
         selcol = @msa.g.selcol
@@ -273,8 +273,19 @@ MenuView = view.extend
 
     _createImportMenu: ->
       menuImport = new MenuBuilder("Import")
+      corsURL = (url) ->
+        console.log url
+        if url.indexOf('www') >= 0
+          url = url.replace "www\.", "www.corsproxy.com/"
+        else if url.indexOf('http://') >= 0
+          url = url.replace "://", "://www.corsproxy.com/"
+        else
+          url = "http://www.corsproxy.com/" + url
+        url
+
       menuImport.addNode "FASTA",(e) =>
-        url = prompt "URL (CORS enabled!)", "/test/dummy/samples/p53.clustalo.fasta"
+        url = prompt "URL", "/test/dummy/samples/p53.clustalo.fasta"
+        url = corsURL url
         FastaReader.read url, (seqs) =>
           # mass update on zoomer
           zoomer = @msa.g.zoomer.toJSON()
@@ -282,20 +293,24 @@ MenuView = view.extend
           zoomer.columnWidth = 4
           zoomer.labelWidth = 200
           zoomer.stepSize = 10
+          zoomer.boxRectHeight = 2
+          zoomer.boxRectWidth = 2
           @msa.seqs.reset []
           @msa.g.zoomer.set zoomer
           console.log seqs
           @msa.seqs.reset seqs
 
       menuImport.addNode "CLUSTAL", =>
-        url = prompt "URL (CORS enabled!)",
-        "/test/dummy/samples/p53.clustalo.clustal"
+        url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
+        url = corsURL url
         Clustal.read url, (seqs) =>
           zoomer = @msa.g.zoomer.toJSON()
           zoomer.textVisible = false
           zoomer.columnWidth = 4
           zoomer.stepSize = 10
           zoomer.labelWidth = 200
+          zoomer.boxRectHeight = 2
+          zoomer.boxRectWidth = 2
           @msa.seqs.reset []
           @msa.g.zoomer.set zoomer
           console.log seqs

@@ -75,6 +75,9 @@ SeqView = view.extend
 
     childs = @el.children
 
+    # avoid unnecessary loops
+    return if selection.length is 0
+
     for n in [0..seq.length - 1] by 1
       if childs[n]?
         if childs[n].children.length > 0
