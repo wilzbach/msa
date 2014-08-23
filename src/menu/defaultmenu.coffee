@@ -128,7 +128,7 @@ MenuView = view.extend
 
       menuFilter.addNode "Hide selection", =>
         hidden = @msa.g.selcol.getAllColumnBlocks @msa.seqs.getMaxLength()
-        console.log hidden
+        @msa.g.selcol.reset []
         @msa.g.columns.set "hidden", hidden
 
       menuFilter.addNode "Hide gaps (not yet)", =>
@@ -148,7 +148,7 @@ MenuView = view.extend
     _createExtraMenu: ->
       menu = new MenuBuilder("Extras")
       menu.addNode "Add consensus seq", =>
-        con = consenus(@msa)
+        con = consenus(@msa.seqs)
         console.log con
         seq = new Seq
           seq: con
@@ -280,18 +280,26 @@ MenuView = view.extend
           zoomer = @msa.g.zoomer.toJSON()
           zoomer.textVisible = false
           zoomer.columnWidth = 4
+          zoomer.labelWidth = 200
           zoomer.stepSize = 10
           @msa.seqs.reset []
           @msa.g.zoomer.set zoomer
           console.log seqs
-          @msa.seqs.set seqs
+          @msa.seqs.reset seqs
 
       menuImport.addNode "CLUSTAL", =>
         url = prompt "URL (CORS enabled!)",
         "/test/dummy/samples/p53.clustalo.clustal"
         Clustal.read url, (seqs) =>
-          @msa.g.zoomer.set "textVisible", false
-          @msa.seqs.set seqs
+          zoomer = @msa.g.zoomer.toJSON()
+          zoomer.textVisible = false
+          zoomer.columnWidth = 4
+          zoomer.stepSize = 10
+          zoomer.labelWidth = 200
+          @msa.seqs.reset []
+          @msa.g.zoomer.set zoomer
+          console.log seqs
+          @msa.seqs.reset seqs
 
       menuImport.addNode "add your own Parser", =>
         window.open "https://github.com/biojs/biojs2"
@@ -325,6 +333,15 @@ MenuView = view.extend
       menuOrdering.addNode "Seq Desc", =>
         @msa.seqs.comparator = (a,b) ->
           - a.get("seq").localeCompare(b.get("seq"))
+        @msa.seqs.sort()
+
+      menuOrdering.addNode "Identity", =>
+        @msa.seqs.comparator = "identity"
+        @msa.seqs.sort()
+
+      menuOrdering.addNode "Identity Desc", =>
+        @msa.seqs.comparator = (seq) ->
+          - seq.get "identity"
         @msa.seqs.sort()
 
       menuOrdering.buildDOM()

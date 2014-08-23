@@ -14,7 +14,7 @@ module.exports = (seqs) ->
       occs[pos][char] = 0 unless occs[pos][char]?
       occs[pos][char]++
 
-  # now pick the char with most occururences
+  # now pick the char with most occurences
   _.reduce occs, (memo,occ) ->
     keys = _.keys occ
     memo +=  _.max keys, (key) -> occ[key]

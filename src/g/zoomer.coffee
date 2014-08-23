@@ -3,7 +3,7 @@ module.exports = Zoomer = Model.extend
 
   defaults:
     columnWidth: 15
-    metaWidth: 20
+    metaWidth: 90
     labelWidth: 100
 
     rowHeight: 15
