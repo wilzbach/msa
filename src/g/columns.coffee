@@ -24,6 +24,7 @@ module.exports = Columns = Model.extend
     # calc derivation from consenus
     _.each seqs, (el,i) ->
       _.each el, (char, pos) ->
+        #if cons[pos] isnt "-" and matches[pos] isnt gap
         total[pos] = total[pos] + 1 || 1
         matches[pos] = matches[pos] + 1 || 1 if cons[pos] is char
     [matches, total, nMax]
