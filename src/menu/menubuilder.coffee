@@ -5,8 +5,10 @@ module.exports =
     constructor: (@name) ->
       @_nodes =  []
 
-    addNode: (label, callback) ->
-      @_nodes.push {label: label, callback: callback}
+    addNode: (label, callback, data) ->
+      console.log data
+      style = data.style if data?
+      @_nodes.push {label: label, callback: callback, style: style}
 
     buildDOM: ->
       @_buildM
@@ -29,6 +31,8 @@ module.exports =
         li = document.createElement "li"
 
         li.textContent = node.label
+        for key,style of node.style
+          li.style[key] = style
         li.addEventListener "click", node.callback
 
         menuUl.appendChild li
