@@ -25,7 +25,7 @@ module.exports = SelectionManager = Collection.extend
     @listenTo @g, "column:click", (e) ->
       @add new sel.columnsel
         xStart: e.rowPos
-        xEnd: e.rowPos
+        xEnd: e.rowPos + e.stepSize
 
   getSelForRow: (seqId) ->
     @filter (el) -> el.inRow seqId

@@ -6,7 +6,7 @@ _ = require "underscore"
 module.exports = Columns = Model.extend
 
   defaults:
-    scaling: "log"
+    scaling: "lin"
 
   initialize: ->
     # hidden columns
@@ -29,7 +29,9 @@ module.exports = Columns = Model.extend
     [matches, total, nMax]
 
   calcConservation: (seqs) ->
-    if @attributes.scaling is "log"
+    if @attributes.scaling is "exp"
+      return @calcConservationExp seqs
+    else if @attributes.scaling is "log"
       return @calcConservationLog seqs
     else if @attributes.scaling is "lin"
       return @calcConservationLin seqs
@@ -47,5 +49,12 @@ module.exports = Columns = Model.extend
     [matches,total, nMax] = @_calcConservationPre seqs
     for i in [0 .. nMax - 1]
       matches[i] = Math.log(matches[i] + 1) / Math.log(total[i] + 1)
+    @.set "conserv", matches
+    matches
+
+  calcConservationExp: (seqs) ->
+    [matches,total, nMax] = @_calcConservationPre seqs
+    for i in [0 .. nMax - 1]
+      matches[i] = Math.exp(matches[i] + 1) / Math.exp(total[i] + 1)
     @.set "conserv", matches
     matches
