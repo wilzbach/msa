@@ -1,5 +1,3 @@
-Utils = require "../utils/dom"
-
 # sorts the views after their given ordering
 # @returns sorted list of keys (of the plugins)
 sortViews = (views) ->
@@ -14,17 +12,19 @@ sortViews = (views) ->
         0
     return plugsSort
 
+view = require("../bone/view")
+
 # pluginator mixin
 # handles + order plugins
 # gives a view a hierarchical / nested layout
 # a view must have a `render` method
-pluginator =
+pluginator = view.extend
 
   # mix & shake
-  mixin: (view) ->
-    exports = ["renderSubviews", "addView", "removeViews"]
-    for el in exports
-      view[el] = pluginator[el]
+  #mixin: (view) ->
+  #  exports = ["renderSubviews", "addView", "removeViews", "removeView", "remove"]
+  #  for el in exports
+  #    view[el] = pluginator[el]
 
   # TODO: maybe use jQuery detach
   # you need to call this method as the global view
@@ -33,29 +33,37 @@ pluginator =
   # inserts them in one step
   renderSubviews: ->
 
-    Utils.removeAllChilds @el
-
+    # empty the old container
+    oldEl = @.el
+    el = document.createElement "div"
+    @setElement el
     frag = document.createDocumentFragment()
+
+    if oldEl.parentNode?
+      oldEl.parentNode.replaceChild @.el,oldEl
+
     # sort
-    viewsSorted = sortViews @views
+    views = @_views()
+    viewsSorted = sortViews views
+
     # render
     for key in viewsSorted
-      view = @views[key]
+      view = views[key]
       view.render()
-
-      node = view.el
-      if node
+      node = views[key].el
+      if node?
         frag.appendChild node
 
     # replace the current container with the new
-    @el.appendChild frag
+    el.appendChild frag
+    return el
 
   # adds a view
   # @param id [String] Id for later access
   # @param view [View] provides draw
   addView: (key,view) ->
     # init views (only once)
-    @views = {} unless @.views?
+    views = @_views()
 
     unless view?
       throw "Invalid plugin. "
@@ -63,29 +71,37 @@ pluginator =
     #plug = {}
     #plug.obj = view
     view.ordering = key unless view.ordering?
-    @views[key] = view
+    views[key] = view
     #plug.dom = document.createElement "div"
     #plug.trigger "draw", { target: dom}
 
   # destroys all subviews
   # TODO: check for memory leaks
   removeViews: ->
-    Utils.removeAllChilds @el
+    views = @_views()
+    for key,view of @.views
+      view.undelegateEvents()
+      view.unbind()
+      view.removeViews() if view.removeViews?
+      view.remove()
 
-    @views = undefined
+    @.views = {}
 
-#  # TODO: deprecated
-#  # redraws a special plugin
-#  # @param id [String] Id of the plugin
-#  redrawPlugin: (key) ->
-#    plug = @plugs[key]
-#    oldDOM = plug.dom
-#
-#    # new DOM
-#    plug.dom = document.createElement "div"
-#    plug.obj.trigger "draw", {target: plug.dom}
-#
-#    # better use container than parentNode
-#    oldDOM.parentNode.replaceChild plug.dom, oldDOM
+  # removes a single view
+  removeView: (key) ->
+    views = @_views()
+    views[key].remove()
+    delete views[key]
+
+  # Removes the view by emptying, releasing all content, and orphaning the container:
+  # The region is no longer usable after being removed.
+  remove: ->
+    @removeViews()
+    #args = Array.prototype.slice.call( arguments )
+    ViewPrototype.remove.apply @
+
+  _views : ->
+    @.views = {} unless @.views?
+    @.views
 
 module.exports = pluginator
