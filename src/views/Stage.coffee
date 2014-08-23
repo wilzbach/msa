@@ -1,6 +1,7 @@
 pluginator = require("../bone/pluginator")
 RowView = require "./RowView"
 HeaderView = require "./HeaderView"
+OverviewBox = require "./OverviewBox"
 ConservationView = require "./ConservationView"
 identityCalc = require "../algo/identityCalc"
 
@@ -35,6 +36,11 @@ DrawView = pluginator.extend
       consensus = @g.consensus.getConsensus @model
       identityCalc @model, consensus
       @isNotDirty = true
+
+    if @g.vis.get "overviewbox"
+      overviewbox = new OverviewBox {model: @model, g: @g}
+      overviewbox.ordering = -30
+      @addView "overviewbox",overviewbox
 
     if @g.vis.get "conserv"
       conserv = new ConservationView {model: @model, g: @g}

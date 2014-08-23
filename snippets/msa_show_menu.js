@@ -8,7 +8,7 @@ var opts = {};
 opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
 //opts.zoomer = { textVisible: false};
-opts.vis = {metacell: true};
+opts.vis = {metacell: true, overviewbox: true};
 var m = new msa.msa(opts);
 m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
 
@@ -41,7 +41,6 @@ m.g.selcol.on("all",function(eventName,data){
 var logger = document.getElementById("msa_menu_console");
 function log(eventName,data){
   if(data !== undefined){
-    console.log(data);
     text = eventName  + " triggered with " + clean(data);
   } else{
     text = eventName  + " triggered";

@@ -93,6 +93,11 @@ pluginator = view.extend
     views[key].remove()
     delete views[key]
 
+  # returns a view for the key
+  getView: (key) ->
+    views = @_views()
+    return views[key]
+
   # Removes the view by emptying, releasing all content, and orphaning the container:
   # The region is no longer usable after being removed.
   remove: ->

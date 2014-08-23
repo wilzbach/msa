@@ -8,6 +8,7 @@ module.exports = Visibility = Model.extend
     markers: true
     metacell: false
     conserv: true
+    overviewbox: false
 
 
     labels: true
