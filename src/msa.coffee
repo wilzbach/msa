@@ -10,7 +10,6 @@ Visibility = require "./g/visibility"
 Zoomer = require "./g/zoomer"
 
 # MV from backbone
-view = require("./bone/view")
 pluginator = require("./bone/pluginator")
 Eventhandler = require "biojs-events"
 
@@ -23,7 +22,7 @@ Stage = require "./views/Stage"
 # @param conf [Dict] user config
 # @param vis [Dict] config of visible views
 # @param zoomer [Dict] display settings like columnWidth
-MSAView = view.extend
+MSAView = pluginator.extend
 
   events: {
     # "mouseout": "cleanup"
@@ -59,6 +58,4 @@ MSAView = view.extend
     @renderSubviews()
     @
 
-# mix and shake
-pluginator.mixin MSAView::
 module.exports = MSAView

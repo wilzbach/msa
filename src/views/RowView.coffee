@@ -1,15 +1,12 @@
-view = require("../bone/view")
 pluginator = require("../bone/pluginator")
 LabelView = require("./LabelView")
 MetaView = require("./MetaView")
 SeqView = require("./SeqView")
 
-RowView = view.extend
+RowView = pluginator.extend
 
   initialize: (data) ->
     @g = data.g
-    @el.setAttribute "class", "biojs_msa_layer"
-    @el.style.height = @g.zoomer.get "rowHeight"
     @draw()
 
     @listenTo @g.vis,"change:labels", @drawR
@@ -31,6 +28,8 @@ RowView = view.extend
 
   render: ->
     @renderSubviews()
+    @el.setAttribute "class", "biojs_msa_layer"
+    @el.style.height = @g.zoomer.get "rowHeight"
     @
 
 #    # TODO: fix me
@@ -39,7 +38,4 @@ RowView = view.extend
 #      rowGroup.className = "biojs_msa_seqblock"
 #      rowGroup.className += " biojs-msa-schemes-" + @scheme
 
-
-# mix and shake
-pluginator.mixin RowView::
 module.exports = RowView
