@@ -25,13 +25,13 @@ module.exports = SelectionManager = Collection.extend
     @listenTo @g, "column:click", (e) ->
       @add new sel.columnsel
         xStart: e.rowPos
-        xEnd: e.rowPos + e.stepSize
+        xEnd: e.rowPos + e.stepSize - 1
 
   getSelForRow: (seqId) ->
     @filter (el) -> el.inRow seqId
 
   getSelForColumns: (rowPos) ->
-    @filter (el) -> el.inColumn seqId
+    @filter (el) -> el.inColumn rowPos
 
   # @returns array of all selected residues for a row
   getBlocksForRow: (seqId, maxLen) ->
@@ -44,6 +44,12 @@ module.exports = SelectionManager = Collection.extend
       else
         blocks = blocks.concat [seli.attributes.xStart .. seli.attributes.xEnd]
     blocks
+
+  getAllColumnBlocks: (maxLen) ->
+    blocks = []
+    for seli in (@filter (el) -> el.get('type') is "column")
+      blocks = blocks.concat [seli.attributes.xStart..seli.attributes.xEnd]
+    return blocks
 
   # inverts the current selection for columns
   # @param rows [Array] all available seqId
