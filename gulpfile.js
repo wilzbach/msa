@@ -104,8 +104,12 @@ gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() 
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
   gulp.src('./test/all_test.js').pipe(clean());
+  dBrowserifyOptions = {};
+  for( var key in browserifyOptions )
+     dBrowserifyOptions[ key ] = browserifyOptions[ key ];
+  dBrowserifyOptions["debug"] = true;
   return gulp.src(paths.testCoffee,  { read: false })
-    .pipe(browserify(browserifyOptions))
+    .pipe(browserify(dBrowserifyOptions))
     .on('error', gutil.log)
     .on('error', gutil.beep)
     .pipe(concat('all_test.js'))
