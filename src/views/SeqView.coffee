@@ -15,7 +15,9 @@ SeqView = view.extend
     @listenTo @model, "change:grey", @_build
     @listenTo @g.columns, "change:hidden", @_build
     @listenTo @model, "change:features", @_build
-    @listenTo @g.selcol, "add", @_build
+    @listenTo @g.selcol, "add", (sel, b) ->
+      if @g.selcol.getSelForRow(@model.get('id')).length isnt 0
+        @_appendSelection()
     @listenTo @g.selcol, "reset", @_build
     @listenTo @g.zoomer, "change", @_build
     @listenTo @g.colorscheme,"change", ->
@@ -33,18 +35,14 @@ SeqView = view.extend
     @listenTo @g.config, "change:registerMouseEvents", @manageEvents
 
   _build: ->
-    console.log @model.get "id"
     dom.removeAllChilds @el
 
     seq = @model.get("seq")
     hidden = @g.columns.get "hidden"
     textVisible = @g.zoomer.get "textVisible"
     features = @model.get "features"
-    selection = @_getSelection @model
     cellHeight = @g.zoomer.get "rowHeight"
     cellWidth = @g.zoomer.get "columnWidth"
-    # get the status of the upper and lower row
-    [mPrevSel,mNextSel] = @_getPrevNextSelection()
 
     for n in [0..seq.length - 1] by 1
       if hidden.indexOf(n) < 0
@@ -61,13 +59,31 @@ SeqView = view.extend
           for f in starts
             span.appendChild @appendFeature f
 
-        # only if its a new selection
-        if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
-          span.appendChild @_renderSelection n,selection,mPrevSel,mNextSel
 
         @_drawResidue span, seq[n],n
         span.style.width = cellWidth
+        span.style.position = "relative"
         @el.appendChild span
+
+    @_appendSelection()
+
+  _appendSelection: ->
+    seq = @model.get("seq")
+    selection = @_getSelection @model
+    # get the status of the upper and lower row
+    [mPrevSel,mNextSel] = @_getPrevNextSelection()
+
+    childs = @el.children
+
+    for n in [0..seq.length - 1] by 1
+      if childs[n].children.length > 0
+        # remove old selections
+        for child in childs[n].children
+          if child.type is "selection"
+            childs[n].removeChild child
+      # only if its a new selection
+      if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
+        childs[n].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
 
   render: ->
     @el.className = "biojs_msa_seqblock"
@@ -144,8 +160,10 @@ SeqView = view.extend
     width = (@g.zoomer.get("columnWidth") * selectionLength) + 1
     cHeight = @g.zoomer.get("rowHeight")
     s = svg.base height: 20, width: width
+    s.type = "selection"
     s.style.position = "absolute"
-    s.style.marginLeft = -12
+    s.style.left = 0
+    #s.style.marginLeft = -12
     y = 1
     y = 3 if noTopBorder
    # unless noTopBorder or noBottomBorder
@@ -156,8 +174,8 @@ SeqView = view.extend
     s.appendChild svg.line x1:width,y1:0,x2:width,y2:cHeight,style:
         "stroke:red;stroke-width:2;"
     unless noTopBorder
-      s.appendChild svg.line x1:0,y1:1,x2:width,y2:1,style:
-          "stroke:red;stroke-width:1;"
+      s.appendChild svg.line x1:0,y1:0,x2:width,y2:0,style:
+          "stroke:red;stroke-width:2;"
     unless noBottomBorder
       s.appendChild svg.line x1:0,y1:cHeight,x2:width,y2:cHeight,style:
           "stroke:red;stroke-width:1;"
