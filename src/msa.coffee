@@ -43,10 +43,9 @@ MSAView = view.extend
     # load seqs and add subviews
     @seqs = new SeqCollection data.seqs
 
-    # populate it and init the models
+    # populate it and init the global models
     @g.config = new Config data.conf
     @g.columns = new Columns() # for action on the columns like hiding
-    @g.columns.calcConservation @seqs
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
