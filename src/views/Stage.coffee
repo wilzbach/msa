@@ -18,11 +18,7 @@ DrawView = view.extend
     @listenTo @model,"add", ->
       console.log "seq add"
 
-    @listenTo @g.vis,"change:markers", ->
-      @draw()
-      @render()
-
-    @listenTo @g.vis,"change:conserv", ->
+    @listenTo @g.vis,"change:markers change:conserv", ->
       @draw()
       @render()
 
