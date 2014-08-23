@@ -1,17 +1,16 @@
-view = require("../bone/view")
 pluginator = require("../bone/pluginator")
 RowView = require "./RowView"
 HeaderView = require "./HeaderView"
 ConservationView = require "./ConservationView"
 
 # a neat collection view
-DrawView = view.extend
+DrawView = pluginator.extend
 
   initialize: (data) ->
     @g = data.g
 
     @draw()
-    @listenTo @model,"sort", ->
+    @listenTo @model,"sort reset", ->
       @draw()
       @render()
 
@@ -44,6 +43,4 @@ DrawView = view.extend
     @renderSubviews()
     @
 
-# mix and shake
-pluginator.mixin DrawView::
 module.exports = DrawView

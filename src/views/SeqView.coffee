@@ -33,6 +33,7 @@ SeqView = view.extend
     @listenTo @g.config, "change:registerMouseEvents", @manageEvents
 
   _build: ->
+    console.log @model.get "id"
     dom.removeAllChilds @el
 
     seq = @model.get("seq")
@@ -40,6 +41,7 @@ SeqView = view.extend
     textVisible = @g.zoomer.get "textVisible"
     features = @model.get "features"
     selection = @_getSelection @model
+    cellHeight = @g.zoomer.get "rowHeight"
     cellWidth = @g.zoomer.get "columnWidth"
     # get the status of the upper and lower row
     [mPrevSel,mNextSel] = @_getPrevNextSelection()
@@ -51,7 +53,8 @@ SeqView = view.extend
         if textVisible
           span.textContent = seq[n]
         else
-          span.innerHTML = "&nbsp;"
+          # setting the height is faster than dummy whitespace
+          span.style.height = cellHeight
 
         starts = features.startOn n
         if starts.length > 0
@@ -172,5 +175,8 @@ SeqView = view.extend
     jbone(s).on "mouseover", (evt) =>
       @g.trigger "feature",  f.get("text") + " hovered"
     s
+
+  removeViews: ->
+    console.log "seq removed"
 
 module.exports = SeqView
