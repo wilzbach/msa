@@ -2,6 +2,7 @@ pluginator = require("../bone/pluginator")
 RowView = require "./RowView"
 HeaderView = require "./HeaderView"
 ConservationView = require "./ConservationView"
+identityCalc = require "../algo/identityCalc"
 
 # a neat collection view
 DrawView = pluginator.extend
@@ -10,7 +11,12 @@ DrawView = pluginator.extend
     @g = data.g
 
     @draw()
-    @listenTo @model,"sort reset", ->
+    @listenTo @model,"reset", ->
+      @isNotDirty = false
+      @draw()
+      @render()
+
+    @listenTo @model,"sort", ->
       @draw()
       @render()
 
@@ -23,6 +29,12 @@ DrawView = pluginator.extend
 
   draw: ->
     @removeViews()
+
+    unless @isNotDirty
+      # only executed when new sequences are added or on start
+      consensus = @g.consensus.getConsensus @model
+      identityCalc @model, consensus
+      @isNotDirty = true
 
     if @g.vis.get "conserv"
       conserv = new ConservationView {model: @model, g: @g}
@@ -41,6 +53,7 @@ DrawView = pluginator.extend
 
   render: ->
     @renderSubviews()
+    @el.style.overflow = scroll
     @
 
 module.exports = DrawView

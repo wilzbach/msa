@@ -1,5 +1,6 @@
 view = require("../bone/view")
 MenuBuilder = require "../menu/menubuilder"
+_ = require 'underscore'
 
 module.exports = MetaView = view.extend
 
@@ -17,9 +18,28 @@ module.exports = MetaView = view.extend
     @el.style.display = "inline-block"
 
     width = @g.zoomer.get "metaWidth"
-    @el.style.width = width / 2
-    @el.style.paddingRight = width / 2
+    @el.style.width = width - 15
+    @el.style.paddingRight = 15
 
+    # adds gaps
+    seq = @model.get('seq')
+    gaps = _.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0
+    gaps = (gaps / seq.length).toFixed(1)
+
+    # append gap count
+    gapSpan = document.createElement 'span'
+    gapSpan.textContent = gaps
+    gapSpan.style.display = "inline-block"
+    gapSpan.style.width = 30
+    @el.appendChild gapSpan
+
+    # identity
+    ident = @model.get('identity')
+    identSpan = document.createElement 'span'
+    identSpan.textContent = ident.toFixed(2)
+    identSpan.style.display = "inline-block"
+    identSpan.style.width = 35
+    @el.appendChild identSpan
 
     # TODO: this menu builder is just an example how one could customize this
     # view
@@ -27,6 +47,7 @@ module.exports = MetaView = view.extend
     menu.addNode "Uniprot",(e) =>
       @g.colorscheme.set "scheme","zappo"
     @el.appendChild menu.buildDOM()
+    @el.width = 10
 
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.float = "left"

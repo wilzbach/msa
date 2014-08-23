@@ -3,6 +3,7 @@ SeqCollection = require "./model/SeqCollection"
 
 # globals
 Colorator = require "./g/colorator"
+Consensus = require "./g/consensus"
 Columns = require "./g/columns"
 Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
@@ -44,6 +45,7 @@ MSAView = pluginator.extend
 
     # populate it and init the global models
     @g.config = new Config data.conf
+    @g.consensus = new Consensus()
     @g.columns = new Columns() # for action on the columns like hiding
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
