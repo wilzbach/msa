@@ -165,6 +165,8 @@ MenuView = view.extend
         if @msa.g.zoomer.get("columnWidth") < 8
           @msa.g.zoomer.set "textVisible", false
 
+      menu.addNode "Bar chart exp scaling", =>
+        @msa.g.columns.set "scaling", "exp"
       menu.addNode "Bar chart linear scaling", =>
         @msa.g.columns.set "scaling", "lin"
       menu.addNode "Bar chart log scaling", =>
@@ -269,8 +271,13 @@ MenuView = view.extend
       menuImport.addNode "FASTA",(e) =>
         url = prompt "URL (CORS enabled!)", "/test/dummy/samples/p53.clustalo.fasta"
         FastaReader.read url, (seqs) =>
-          @msa.g.zoomer.set "textVisible", false
-          @msa.g.zoomer.set "columnWidth", 7
+          # mass update on zoomer
+          zoomer = @msa.g.zoomer.toJSON()
+          zoomer.textVisible = false
+          zoomer.columnWidth = 4
+          zoomer.stepSize = 10
+          @msa.seqs.reset []
+          @msa.g.zoomer.set zoomer
           @msa.seqs.set seqs
 
       menuImport.addNode "CLUSTAL", =>

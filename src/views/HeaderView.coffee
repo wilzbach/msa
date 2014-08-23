@@ -64,16 +64,16 @@ HeaderView = view.extend
   _onclick: (evt) ->
     rowPos = evt.target.rowPos
     stepSize = @g.zoomer.get("stepSize")
-    # simulate hidden columns
-    for i in [0..stepSize - 1] by 1
-      @g.trigger "column:click", {rowPos: rowPos + i, evt:evt}
+    @g.trigger "column:click", {rowPos: rowPos,stepSize: stepSize, evt:evt}
 
   _onmousein: (evt) ->
     rowPos = @g.zoomer.get "stepSize" * evt.rowPos
-    @g.trigger "column:mousein", {rowPos: rowPos, evt:evt}
+    stepSize = @g.zoomer.get("stepSize")
+    @g.trigger "column:mousein", {rowPos: rowPos,stepSize: stepSize, evt:evt}
 
   _onmouseout: (evt) ->
     rowPos = @g.zoomer.get "stepSize" * evt.rowPos
-    @g.trigger "column:mouseout", {rowPos: rowPos, evt:evt}
+    stepSize = @g.zoomer.get("stepSize")
+    @g.trigger "column:mouseout", {rowPos: rowPos,stepSize: stepSize, evt:evt}
 
 module.exports = HeaderView
