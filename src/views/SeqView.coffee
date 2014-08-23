@@ -76,14 +76,15 @@ SeqView = view.extend
     childs = @el.children
 
     for n in [0..seq.length - 1] by 1
-      if childs[n].children.length > 0
-        # remove old selections
-        for child in childs[n].children
-          if child.type is "selection"
-            childs[n].removeChild child
-      # only if its a new selection
-      if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
-        childs[n].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
+      if childs[n]?
+        if childs[n].children.length > 0
+          # remove old selections
+          for child in childs[n].children
+            if child.type is "selection"
+              childs[n].removeChild child
+        # only if its a new selection
+        if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
+          childs[n].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
 
   render: ->
     @el.className = "biojs_msa_seqblock"
