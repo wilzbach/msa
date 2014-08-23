@@ -6,6 +6,7 @@ module.exports = SeqManager = Collection.extend
 
   # gives the max length of all sequences
   getMaxLength: () ->
+    return 0 if @models.length is 0
     @max((seq) -> seq.get("seq").length).get("seq").length
 
   # gets the previous model
