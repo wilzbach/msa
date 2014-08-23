@@ -7,17 +7,17 @@ module.exports = Mouse =
     mouseY = e.offsetY
 
     unless mouseX?
-      mouseX = e.layerX
-      mouseY = e.layerY
+      target = e.target || e.srcElement
+      rect = target.getBoundingClientRect()
 
-    unless mouseX?
-      mouseX = e.pageX
-      mouseY = e.pageY
+      unless mouseX?
+        mouseX = e.clientX - rect.left
+        mouseY = e.clientY - rect.top
 
-    unless mouseX?
-      console.log e
-      console.log "no mouse event defined. your browser sucks"
-      return
+      unless mouseX?
+        console.log e
+        console.log "no mouse event defined. your browser sucks"
+        return
 
     # TODO: else
     return [mouseX,mouseY]

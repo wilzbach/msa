@@ -82,9 +82,11 @@ module.exports = OverviewBox = view.extend
     @ctx.fillStyle = "#ffff00"
     @ctx.globalAlpha = 0.5
     @ctx.fillRect @dragStart[0],@dragStart[1],@dragEnd[0] - @dragStart[0], @dragEnd[1] - @dragStart[1]
+
   # start the selection mode
   _onmousedown: (e) ->
-    @dragStart = mouse.getMouseCoords e
+    @dragStart = arr = mouse.getMouseCoords e
+    return @dragStart
 
   _endSelection: (dragEnd) ->
     # duplicate events
@@ -99,9 +101,6 @@ module.exports = OverviewBox = view.extend
     a[2] = Math.max @dragStart[0],dragEnd[0]
     a[3] = Math.max @dragStart[1],dragEnd[1]
 
-    console.log @dragStart
-    console.log @dragEnd
-    console.log a
     # round
     for i in [0..3]
       if i % 2 is 0 # x
@@ -114,11 +113,9 @@ module.exports = OverviewBox = view.extend
     a[3] = Math.min @model.length - 1, a[3]
 
     # select
-    console.log a
     selis = []
     for j in [a[1]..a[3]] by 1
       args = seqId: @model.at(j).get('id'), xStart: a[0], xEnd: a[2]
-      console.log args
       selis.push new selection.possel args
 
     # reset
