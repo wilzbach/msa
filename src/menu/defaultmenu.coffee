@@ -126,9 +126,14 @@ MenuView = view.extend
 
       menuFilter.addNode "Hide by identity (not yet)", =>
 
+      menuFilter.addNode "Hide selection", =>
+        hidden = @msa.g.selcol.getAllColumnBlocks @msa.seqs.getMaxLength()
+        console.log hidden
+        @msa.g.columns.set "hidden", hidden
+
       menuFilter.addNode "Hide gaps (not yet)", =>
 
-      menuFilter.addNode "Hide %3", =>
+      menuFilter.addNode "Hide one third (%3)", =>
 
         hidden = []
         for index in [0..@msa.seqs.getMaxLength()]
@@ -278,6 +283,7 @@ MenuView = view.extend
           zoomer.stepSize = 10
           @msa.seqs.reset []
           @msa.g.zoomer.set zoomer
+          console.log seqs
           @msa.seqs.set seqs
 
       menuImport.addNode "CLUSTAL", =>

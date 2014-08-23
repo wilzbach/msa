@@ -11,5 +11,5 @@ module.exports = Visibility = Model.extend
 
 
     labels: true
-    labelName: false
+    labelName: true
     labelId: true
