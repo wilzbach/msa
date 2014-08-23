@@ -43,7 +43,7 @@ module.exports = MetaView = view.extend
 
     # TODO: this menu builder is just an example how one could customize this
     # view
-    menu = new MenuBuilder(">")
+    menu = new MenuBuilder("↗")
     menu.addNode "Uniprot",(e) =>
       @g.colorscheme.set "scheme","zappo"
     @el.appendChild menu.buildDOM()
