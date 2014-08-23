@@ -46,7 +46,13 @@ MenuView = view.extend
       menuFile.addNode "Toggle bars", =>
         @msa.g.vis.set "conserv", ! @msa.g.vis.get "conserv"
 
-      menuFile.addNode "Toggle mouseover", =>
+      menuFile.addNode "Reset", =>
+        @msa.g.vis.set "labels", true
+        @msa.g.vis.set "sequences", true
+        @msa.g.vis.set "metacell", true
+        @msa.g.vis.set "conserv", true
+
+      menuFile.addNode "Toggle mouseover events", =>
         @msa.g.config.set "registerMouseEvents", !@msa.g.config.get "registerMouseEvents"
 
       #menuFile.addNode "Hide Menu", =>
@@ -159,6 +165,10 @@ MenuView = view.extend
         if @msa.g.zoomer.get("columnWidth") < 8
           @msa.g.zoomer.set "textVisible", false
 
+      menu.addNode "Bar chart linear scaling", =>
+        @msa.g.columns.set "scaling", "lin"
+      menu.addNode "Bar chart log scaling", =>
+        @msa.g.columns.set "scaling", "log"
       menu.buildDOM()
 
     _createHelpMenu: ->
@@ -260,6 +270,7 @@ MenuView = view.extend
         url = prompt "URL (CORS enabled!)", "/test/dummy/samples/p53.clustalo.fasta"
         FastaReader.read url, (seqs) =>
           @msa.g.zoomer.set "textVisible", false
+          @msa.g.zoomer.set "columnWidth", 7
           @msa.seqs.set seqs
 
       menuImport.addNode "CLUSTAL", =>

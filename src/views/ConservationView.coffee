@@ -8,15 +8,16 @@ ConservationView = view.extend
 
   initialize: (data) ->
     @g = data.g
-    @listenTo @g.zoomer,"change:stepSize", @render
-    @listenTo @g.zoomer,"change:labelWidth", @render
-    @listenTo @g.zoomer,"change:columnWidth", @render
-    @listenTo @g.vis,"change:labels", @render
-    @listenTo @g.vis,"change:metacell", @render
-    @listenTo @g.columns, "change:hidden", @render
+    @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth", @render
+    @listenTo @g.vis,"change:labels change:metacell", @render
+    @listenTo @g.columns, "change", @render
+    @listenTo @model, "reset",@render
     @manageEvents()
 
   render: ->
+    console.log "cerrr-"
+    @g.columns.calcConservation @model
+
     dom.removeAllChilds @el
 
     nMax = @model.getMaxLength()
@@ -43,7 +44,7 @@ ConservationView = view.extend
         continue
       width = cellWidth * stepSize
       height = maxHeight* @g.columns.get("conserv")[n]
-      rect =  svg.rect x:x,y: maxHeight - height,width:width - 4,height:height,style:
+      rect =  svg.rect x:x,y: maxHeight - height,width:width - cellWidth / 4,height:height,style:
         "stroke:red;stroke-width:1;"
       rect.rowPos = n
       s.appendChild rect
