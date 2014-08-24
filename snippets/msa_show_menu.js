@@ -9,6 +9,7 @@ opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
 opts.el = document.getElementById('msa_menu');
 //opts.zoomer = { textVisible: false};
 opts.vis = {metacell: true, overviewbox: true};
+opts.columns = {hidden: [1,2,3]};
 var m = new msa.msa(opts);
 m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
 

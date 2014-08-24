@@ -1,5 +1,7 @@
 view = require("../bone/view")
 dom = require("../utils/dom")
+svg = require("../utils/svg")
+jbone = require "jbone"
 
 HeaderView = view.extend
 
@@ -37,6 +39,7 @@ HeaderView = view.extend
 
     while n < nMax
       if hidden.indexOf(n) >= 0
+        @markerHidden(span,n, stepSize)
         n += stepSize
         continue
       span = document.createElement "span"
@@ -51,6 +54,41 @@ HeaderView = view.extend
 
     @el.appendChild container
     @
+
+  markerHidden: (span,n,stepSize) ->
+    hidden = @g.columns.get("hidden").slice 0
+
+    min = Math.max 0, n - stepSize
+    prevHidden = true
+    for j in  [min .. n] by 1
+      prevHidden &= hidden.indexOf(j) >= 0
+
+    # filter duplicates
+    return if prevHidden
+
+    nMax = @model.getMaxLength()
+
+    length = 0
+    index = -1
+    # accumlate multiple rows
+    for n in [n..nMax] by 1
+      index = hidden.indexOf(n) unless index >= 0# sets the first index
+      if hidden.indexOf(n) >= 0
+        length++
+      else
+        break
+
+    s = svg.base height: 10, width: 10
+    s.style.position = "absolute"
+    triangle = svg.polygon points: "0,0 5,5 10,0", style:
+      "fill:lime;stroke:purple;stroke-width:1"
+    jbone(triangle).on "click", (evt) =>
+      hidden.splice index, length
+      @g.columns.set "hidden", hidden
+
+    s.appendChild triangle
+    span.appendChild s
+    return s
 
   manageEvents: ->
     events = {}
