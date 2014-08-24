@@ -1,29 +1,59 @@
 view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 _ = require "underscore"
+dom = require "../../utils/dom"
 
 module.exports = ColorMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
+    @listenTo @g.colorscheme, "change", ->
+      @render()
 
   render: ->
     menuColor = new MenuBuilder("Color scheme")
-    menuColor.addNode "Zappo",(e) =>
-      @g.colorscheme.set "scheme","zappo"
 
-    menuColor.addNode "Taylor", =>
-      @g.colorscheme.set "scheme","taylor"
+    colorschemes = @getColorschemes()
+    for scheme in colorschemes
+      @addScheme menuColor, scheme
 
-    menuColor.addNode "Hydrophobicity", =>
-      @g.colorscheme.set "scheme","hydrophobicity"
+    text = "Background"
+    if @g.colorscheme.get("colorBackground")
+      text = "Hide " + text
+    else
+      text = "Show " + text
 
-    menuColor.addNode "No color", =>
-      @g.colorscheme.set "scheme","foo"
-
-    menuColor.addNode "Toggle background", =>
+    menuColor.addNode text, =>
       @g.colorscheme.set "colorBackground", !@g.colorscheme.get("colorBackground")
 
+    @grey menuColor
+
+    # TODO: make more efficient
+    dom.removeAllChilds @el
+    @el.appendChild menuColor.buildDOM()
+    @
+
+  addScheme: (menuColor,scheme) ->
+    style = {}
+    current = @g.colorscheme.get("scheme")
+    if current is scheme.id
+      style.backgroundColor = "#77ED80"
+
+    menuColor.addNode scheme.name, =>
+      @g.colorscheme.set "scheme", scheme.id
+    ,
+      style: style
+
+  getColorschemes: ->
+    schemes  = []
+    schemes.push name: "Zappo", id: "zappo"
+    schemes.push name: "Taylor", id: "taylor"
+    schemes.push name: "Hydrophobicity", id: "hydrophobicity"
+    schemes.push name: "No color", id: "foo"
+    schemes
+
+  grey: (menuColor) ->
     # greys all lowercase letters
     menuColor.addNode "Grey", =>
       @model.each (seq) ->
@@ -56,6 +86,3 @@ module.exports = ColorMenu = view.extend
     menuColor.addNode "Reset grey", =>
       @model.each (seq) ->
         seq.set "grey", []
-
-    @el = menuColor.buildDOM()
-    @
