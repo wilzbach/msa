@@ -6,7 +6,6 @@ module.exports =
       @_nodes =  []
 
     addNode: (label, callback, data) ->
-      console.log data
       style = data.style if data?
       @_nodes.push {label: label, callback: callback, style: style}
 

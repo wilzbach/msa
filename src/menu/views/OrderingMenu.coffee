@@ -10,7 +10,6 @@ module.exports = OrderingMenu = view.extend
 
   setOrder: (order) ->
     @order = order
-    console.log order
     @render()
 
   # TODO: make more generic
