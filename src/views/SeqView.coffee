@@ -97,7 +97,9 @@ SeqView = view.extend
             childs[k].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
 
   render: ->
+    @el.style.height = @g.zoomer.get "rowHeight"
     @el.className = "biojs_msa_seqblock"
+
     if @g.colorscheme.get "colorBackground"
       @el.className += " biojs-msa-schemes-" + @g.colorscheme.get "scheme"
     else

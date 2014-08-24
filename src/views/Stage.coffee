@@ -1,12 +1,11 @@
 pluginator = require("../bone/pluginator")
-RowView = require "./RowView"
-HeaderView = require "./HeaderView"
+AlignmentBody = require "./AlignmentBody"
+HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
-ConservationView = require "./ConservationView"
 identityCalc = require "../algo/identityCalc"
 
 # a neat collection view
-DrawView = pluginator.extend
+module.exports = pluginator.extend
 
   initialize: (data) ->
     @g = data.g
@@ -24,7 +23,7 @@ DrawView = pluginator.extend
     @listenTo @model,"add", ->
       console.log "seq add"
 
-    @listenTo @g.vis,"change:markers change:conserv", ->
+    @listenTo @g.vis,"change:sequences", ->
       @draw()
       @render()
 
@@ -42,24 +41,16 @@ DrawView = pluginator.extend
       overviewbox.ordering = -30
       @addView "overviewbox",overviewbox
 
-    if @g.vis.get "conserv"
-      conserv = new ConservationView {model: @model, g: @g}
-      conserv.ordering = -20
-      @addView "conserv",conserv
+    if true
+      headerblock = new HeaderBlock {model: @model, g: @g}
+      headerblock.ordering = -1
+      @addView "headerblock",headerblock
 
-    if @g.vis.get "markers"
-      header = new HeaderView {model: @model, g: @g}
-      header.ordering = -10
-      @addView "header",header
-
-    for i in [0.. @model.length - 1] by 1
-      view = new RowView {model: @model.at(i), g: @g}
-      view.ordering = i
-      @addView "row_#{i}", view
+    body = new AlignmentBody {model: @model, g: @g}
+    body.ordering = 0
+    @addView "body",body
 
   render: ->
     @renderSubviews()
-    @el.style.overflow = scroll
+    @el.className = "biojs_msa_stage"
     @
-
-module.exports = DrawView

@@ -1,4 +1,4 @@
-view = require("../bone/view")
+view = require("../../bone/view")
 
 LabelView = view.extend
 

@@ -5,6 +5,8 @@ module.exports = Zoomer = Model.extend
     columnWidth: 15
     metaWidth: 90
     labelWidth: 100
+    alignmentWidth: "auto"
+    alignmentHeight: "auto"
 
     rowHeight: 15
     textVisible: true
@@ -14,3 +16,6 @@ module.exports = Zoomer = Model.extend
 
     boxRectHeight: 5
     boxRectWidth: 5
+
+    _alignmentScrollLeft: 0
+
