@@ -12,7 +12,8 @@ module.exports = ImportMenu = view.extend
   render: ->
     menuImport = new MenuBuilder("Import")
     corsURL = (url) ->
-      console.log url
+      # do not filter on localhost
+      return url if document.URL.indexOf('localhost') >= 0 and url[0] is "/"
       if url.indexOf('www') >= 0
         url = url.replace "www\.", "www.corsproxy.com/"
       else if url.indexOf('http://') >= 0
@@ -36,7 +37,10 @@ module.exports = ImportMenu = view.extend
         @model.reset []
         @g.zoomer.set zoomer
         console.log seqs
+        console.log @g.columns
         @model.reset seqs
+        @g.columns.calcConservation @model
+        console.log @g.columns.get "conserv"
 
     menuImport.addNode "CLUSTAL", =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
@@ -53,6 +57,7 @@ module.exports = ImportMenu = view.extend
         @g.zoomer.set zoomer
         console.log seqs
         @model.reset seqs
+        @g.columns.calcConservation @model
 
     menuImport.addNode "add your own Parser", =>
       window.open "https://github.com/biojs/biojs2"
