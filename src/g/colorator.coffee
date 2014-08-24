@@ -8,3 +8,4 @@ module.exports = Colorator = Model.extend
   defaults:
     scheme: "taylor"
     colorBackground: true # otherwise only the text will be colored
+    showLowerCase: true
