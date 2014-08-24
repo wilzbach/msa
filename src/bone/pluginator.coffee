@@ -79,11 +79,11 @@ pluginator = view.extend
   # TODO: check for memory leaks
   removeViews: ->
     views = @_views()
-    for key,view of @.views
-      view.undelegateEvents()
-      view.unbind()
-      view.removeViews() if view.removeViews?
-      view.remove()
+    for key,el of @.views
+      el.undelegateEvents()
+      el.unbind()
+      el.removeViews() if el.removeViews?
+      el.remove()
 
     @.views = {}
 
@@ -102,8 +102,8 @@ pluginator = view.extend
   # The region is no longer usable after being removed.
   remove: ->
     @removeViews()
-    #args = Array.prototype.slice.call( arguments )
-    ViewPrototype.remove.apply @
+    view.remove.apply @
+    #ViewPrototype.remove.apply @
 
   _views : ->
     @.views = {} unless @.views?

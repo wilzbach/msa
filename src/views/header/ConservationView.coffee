@@ -1,6 +1,6 @@
-view = require("../bone/view")
-dom = require("../utils/dom")
-svg = require("../utils/svg")
+view = require("../../bone/view")
+dom = require("../../utils/dom")
+svg = require("../../utils/svg")
 
 ConservationView = view.extend
 
@@ -22,16 +22,10 @@ ConservationView = view.extend
     nMax = @model.getMaxLength()
     cellWidth = @g.zoomer.get "columnWidth"
     maxHeight = 20
-    width = cellWidth * nMax
+    width = cellWidth * (nMax - @g.columns.get('hidden').length)
     s = svg.base height: maxHeight, width: width
     s.style.display = "inline-block"
     s.style.cursor = "pointer"
-    # spacer / padding element
-    if @g.vis.get "labels"  or @g.vis.get "metacell"
-     paddingLeft = 0
-     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     s.style.marginLeft = paddingLeft
 
     stepSize = @g.zoomer.get "stepSize"
     hidden = @g.columns.get "hidden"
