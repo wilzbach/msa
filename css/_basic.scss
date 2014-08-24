@@ -9,18 +9,18 @@
 
 .biojs_msa_labels {
 	color:black;
-	display: block;
+	display: inline-block;
 	white-space: nowrap;
 	cursor: pointer;
 	vertical-align:top;
-	float:left;
 }
 
 .biojs_msa_seqblock span{
 	cursor: pointer;
 	text-align: center;
-	flex-grow: 1;
+	/*flex-grow: 1; */
 	display: inline-block;
+	height: inherit;
 }
 
 .biojs_msa_seqblock {
@@ -30,7 +30,6 @@
     *flex-direction: row;
 	*align-items: center;
 	*/
-	display: inline-block;
 	color: black;
 	white-space: nowrap;
 	vertical-align:middle;

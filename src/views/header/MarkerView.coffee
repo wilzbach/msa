@@ -1,6 +1,6 @@
-view = require("../bone/view")
-dom = require("../utils/dom")
-svg = require("../utils/svg")
+view = require("../../bone/view")
+dom = require("../../utils/dom")
+svg = require("../../utils/svg")
 jbone = require "jbone"
 
 HeaderView = view.extend
@@ -16,20 +16,8 @@ HeaderView = view.extend
 
   render: ->
     dom.removeAllChilds @el
-    if @g.vis.get "labels"  or @g.vis.get "metacell"
-      # padding el
-      spacer = document.createElement "span"
-      spacer.innerHTML = "&nbsp;"
-      spacer.style.display = "inline-block"
-      spacer.style.float = "left"
-      spacerWidth = 0
-      spacerWidth += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-      spacerWidth += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-      spacer.style.width = spacerWidth
-      @el.appendChild spacer
 
     container = document.createElement "span"
-    #container.style.display = "in"
     n = 0
     cellWidth = @g.zoomer.get "columnWidth"
 
@@ -47,9 +35,8 @@ HeaderView = view.extend
       span.style.display = "inline-block"
       span.textContent = (n + 1)
       span.rowPos = n
-      #span.style.flexGrow = 1
 
-      n +=stepSize
+      n += stepSize
       container.appendChild span
 
     @el.appendChild container
@@ -79,7 +66,7 @@ HeaderView = view.extend
         break
 
     s = svg.base height: 10, width: 10
-    s.style.position = "absolute"
+    s.style.position = "relative"
     triangle = svg.polygon points: "0,0 5,5 10,0", style:
       "fill:lime;stroke:purple;stroke-width:1"
     jbone(triangle).on "click", (evt) =>

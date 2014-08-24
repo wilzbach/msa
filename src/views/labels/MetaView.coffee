@@ -1,5 +1,5 @@
-view = require("../bone/view")
-MenuBuilder = require "../menu/menubuilder"
+view = require("../../bone/view")
+MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
 
 module.exports = MetaView = view.extend
@@ -30,7 +30,7 @@ module.exports = MetaView = view.extend
     gapSpan = document.createElement 'span'
     gapSpan.textContent = gaps
     gapSpan.style.display = "inline-block"
-    gapSpan.style.width = 30
+    gapSpan.style.width = 20
     @el.appendChild gapSpan
 
     # identity
@@ -38,7 +38,7 @@ module.exports = MetaView = view.extend
     identSpan = document.createElement 'span'
     identSpan.textContent = ident.toFixed(2)
     identSpan.style.display = "inline-block"
-    identSpan.style.width = 35
+    identSpan.style.width = 25
     @el.appendChild identSpan
 
     # TODO: this menu builder is just an example how one could customize this
@@ -50,7 +50,6 @@ module.exports = MetaView = view.extend
     @el.width = 10
 
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
-    @el.style.float = "left"
     @el.style.cursor = "pointer"
 
   _onclick: (evt) ->
