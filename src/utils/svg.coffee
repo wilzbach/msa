@@ -21,6 +21,11 @@ Line = (opts) ->
   line = document.createElementNS svgns, 'line'
   setAttr line,opts
 
+Polygon = (opts) ->
+  line = document.createElementNS svgns, 'polygon'
+  setAttr line,opts
+
 module.exports.rect = Rect
 module.exports.line = Line
+module.exports.polygon = Polygon
 module.exports.base = Base
