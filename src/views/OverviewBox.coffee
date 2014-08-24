@@ -2,6 +2,8 @@ view = require("../bone/view")
 mouse = require "../utils/mouse"
 selection = require "../g/selection/Selection"
 TaylorColors = require "./color/taylor"
+ZappoColors = require "./color/zappo"
+HydroColors = require "./color/hydrophobicity"
 
 module.exports = OverviewBox = view.extend
 
@@ -12,6 +14,12 @@ module.exports = OverviewBox = view.extend
     @g = data.g
     @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight", @render
     @listenTo @g.selcol, "add reset change", @render
+
+    # color
+    @_setColorScheme()
+    @listenTo @g.colorscheme, "change:scheme", ->
+      @_setColorScheme()
+      @render()
     @dragStart = []
 
   events:
@@ -36,7 +44,7 @@ module.exports = OverviewBox = view.extend
       seq = @model.at(i).get "seq"
       x = 0
       for j in [0.. seq.length - 1] by 1
-        color = TaylorColors[seq[j]]
+        color = @color[seq[j]]
         if color?
           @ctx.fillStyle = "#" + color
           @ctx.fillRect x,y,rectWidth,rectHeight
@@ -137,6 +145,18 @@ module.exports = OverviewBox = view.extend
   _onmouseout: (e) ->
     @_endSelection mouse.getMouseCoords e
 
+
+  _setColorScheme: ->
+    scheme = @g.colorscheme.get "scheme"
+
+    if scheme is "taylor"
+      @color = TaylorColors
+    else if scheme  is "zappo"
+      @color = ZappoColors
+    else if scheme is "hydrophobicity"
+      @color = HydroColors
+    else
+      console.log "warning. no color scheme found."
 
  # init the canvas
   _createCanvas: ->
