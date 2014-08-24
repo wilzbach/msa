@@ -47,7 +47,7 @@ module.exports = OverviewBox = view.extend
 
   _drawSelection: ->
     # hide during selection
-    return if @dragStart.length > 0
+    return if @dragStart.length > 0 and not @prolongSelection
 
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
@@ -86,6 +86,10 @@ module.exports = OverviewBox = view.extend
   # start the selection mode
   _onmousedown: (e) ->
     @dragStart = arr = mouse.getMouseCoords e
+    if e.ctrlKey or e.metaKey
+      @prolongSelection = true
+    else
+      @prolongSelection = false
     return @dragStart
 
   _endSelection: (dragEnd) ->
@@ -120,7 +124,11 @@ module.exports = OverviewBox = view.extend
 
     # reset
     @dragStart = []
-    @g.selcol.reset selis
+    # look for ctrl key
+    if @prolongSelection
+      @g.selcol.add selis
+    else
+      @g.selcol.reset selis
 
   # ends the selection mode
   _onmouseup: (e) ->
