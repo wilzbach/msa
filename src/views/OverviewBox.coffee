@@ -15,6 +15,7 @@ module.exports = OverviewBox = view.extend
     @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight", @render
     @listenTo @g.selcol, "add reset change", @render
     @listenTo @g.columns, "change:hidden", @render
+    @listenTo @g.colorscheme, "change:showLowerCase", @render
 
     # color
     @_setColorScheme()
@@ -41,13 +42,17 @@ module.exports = OverviewBox = view.extend
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
     hidden = @g.columns.get "hidden"
+    showLowerCase = @g.colorscheme.get "showLowerCase"
 
     y = 0
     for i in [0.. @model.length - 1] by 1
       seq = @model.at(i).get "seq"
       x = 0
       for j in [0.. seq.length - 1] by 1
-        color = @color[seq[j]]
+        c = seq[j]
+        # todo: optional uppercasing
+        c = c.toUpperCase() if showLowerCase
+        color = @color[c]
 
         if hidden.indexOf(j) >= 0
           @ctx.globalAlpha = 0.3

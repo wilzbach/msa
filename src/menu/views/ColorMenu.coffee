@@ -57,6 +57,7 @@ module.exports = ColorMenu = view.extend
   grey: (menuColor) ->
     # greys all lowercase letters
     menuColor.addNode "Grey", =>
+      @g.colorscheme.set "showLowerCase", false
       @model.each (seq) ->
         residues = seq.get "seq"
         grey = []
