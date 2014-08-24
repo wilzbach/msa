@@ -14,6 +14,7 @@ module.exports = OverviewBox = view.extend
     @g = data.g
     @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight", @render
     @listenTo @g.selcol, "add reset change", @render
+    @listenTo @g.columns, "change:hidden", @render
 
     # color
     @_setColorScheme()
@@ -39,12 +40,20 @@ module.exports = OverviewBox = view.extend
 
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
+    hidden = @g.columns.get "hidden"
+
     y = 0
     for i in [0.. @model.length - 1] by 1
       seq = @model.at(i).get "seq"
       x = 0
       for j in [0.. seq.length - 1] by 1
         color = @color[seq[j]]
+
+        if hidden.indexOf(j) >= 0
+          @ctx.globalAlpha = 0.3
+        else
+          @ctx.globalAlpha = 1 if @ctx.globalAlpha isnt 1
+
         if color?
           @ctx.fillStyle = "#" + color
           @ctx.fillRect x,y,rectWidth,rectHeight
