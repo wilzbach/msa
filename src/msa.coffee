@@ -33,6 +33,7 @@ MSAView = pluginator.extend
   initialize: (data) ->
 
     # check for default arrays
+    data.columns = {} unless data.columns?
     data.conf = {} unless data.conf?
     data.vis = {} unless data.vis?
     data.zoomer = {} unless data.zoomer?
@@ -46,7 +47,7 @@ MSAView = pluginator.extend
     # populate it and init the global models
     @g.config = new Config data.conf
     @g.consensus = new Consensus()
-    @g.columns = new Columns() # for action on the columns like hiding
+    @g.columns = new Columns data.columns  # for action on the columns like hiding
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis

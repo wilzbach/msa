@@ -43,6 +43,7 @@ SeqView = view.extend
     features = @model.get "features"
     cellHeight = @g.zoomer.get "rowHeight"
     cellWidth = @g.zoomer.get "columnWidth"
+    hiddenOffset = 0
 
     for n in [0..seq.length - 1] by 1
       if hidden.indexOf(n) < 0
@@ -70,6 +71,7 @@ SeqView = view.extend
   _appendSelection: ->
     seq = @model.get("seq")
     selection = @_getSelection @model
+    hidden = @g.columns.get "hidden"
     # get the status of the upper and lower row
     [mPrevSel,mNextSel] = @_getPrevNextSelection()
 
@@ -78,16 +80,21 @@ SeqView = view.extend
     # avoid unnecessary loops
     return if selection.length is 0
 
+    hiddenOffset = 0
     for n in [0..seq.length - 1] by 1
-      if childs[n]?
-        if childs[n].children.length > 0
-          # remove old selections
-          for child in childs[n].children
-            if child.type is "selection"
-              childs[n].removeChild child
-        # only if its a new selection
-        if selection.indexOf(n) >= 0 and (n is 0 or selection.indexOf(n - 1) < 0 )
-          childs[n].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
+      if hidden.indexOf(n) >= 0
+        hiddenOffset++
+      else
+        k = n - hiddenOffset
+        if childs[k]?
+          if childs[k].children.length > 0
+            # remove old selections
+            for child in childs[k].children
+              if child.type is "selection"
+                childs[k].removeChild child
+          # only if its a new selection
+          if selection.indexOf(n) >= 0 and (k is 0 or selection.indexOf(n - 1) < 0 )
+            childs[k].appendChild @_renderSelection n,selection,mPrevSel,mNextSel
 
   render: ->
     @el.className = "biojs_msa_seqblock"
@@ -167,12 +174,9 @@ SeqView = view.extend
     s.type = "selection"
     s.style.position = "absolute"
     s.style.left = 0
-    #s.style.marginLeft = -12
-    y = 1
-    y = 3 if noTopBorder
-   # unless noTopBorder or noBottomBorder
-   #   s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
-   #     "stroke:red;stroke-width:1;fill-opacity:0;"
+    # unless noTopBorder or noBottomBorder
+    #   s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
+    #     "stroke:red;stroke-width:1;fill-opacity:0;"
     s.appendChild svg.line x1:0,y1:0,x2:0,y2:cHeight,style:
         "stroke:red;stroke-width:2;"
     s.appendChild svg.line x1:width,y1:0,x2:width,y2:cHeight,style:
