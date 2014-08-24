@@ -36,11 +36,8 @@ module.exports = ImportMenu = view.extend
         zoomer.boxRectWidth = 2
         @model.reset []
         @g.zoomer.set zoomer
-        console.log seqs
-        console.log @g.columns
         @model.reset seqs
         @g.columns.calcConservation @model
-        console.log @g.columns.get "conserv"
 
     menuImport.addNode "CLUSTAL", =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
@@ -55,7 +52,6 @@ module.exports = ImportMenu = view.extend
         zoomer.boxRectWidth = 2
         @model.reset []
         @g.zoomer.set zoomer
-        console.log seqs
         @model.reset seqs
         @g.columns.calcConservation @model
 
