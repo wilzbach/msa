@@ -24,20 +24,18 @@ LabelView = view.extend
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
 
-    if @g.zoomer.get "textVisible"
-      if @.g.vis.get "labelId"
-        id = document.createElement "span"
-        id.textContent = @model.get "id"
-        id.style.width = 30
-        id.style.display = "inline-block"
-        @el.appendChild id
-      if @.g.vis.get "labelName"
-        name = document.createElement "span"
-        name.textContent = @model.get("name").substring 0, 20
-        @el.appendChild name
-    else
-      @el.textContent = ""
+    if @.g.vis.get "labelId"
+      id = document.createElement "span"
+      id.textContent = @model.get "id"
+      id.style.width = 30
+      id.style.display = "inline-block"
+      @el.appendChild id
+    if @.g.vis.get "labelName"
+      name = document.createElement "span"
+      name.textContent = @model.get("name").substring 0, 20
+      @el.appendChild name
 
+    @el.style.overflow = scroll
     @
 
   _onclick: (evt) ->

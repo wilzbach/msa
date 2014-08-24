@@ -121,8 +121,17 @@ SeqView = view.extend
 
   # sets the properties of a single residue
   _drawResidue: (span,residue,index) ->
-    unless @model.get("grey").indexOf(index) >= 0
-      span.className = "biojs-msa-aa-" + residue
+    if @g.colorscheme.get('scheme') is "pid"
+      cons = @g.columns.get('conserv')[index]
+      if cons > 0.80
+        span.style.backgroundColor = "#6464ff"
+      else if 0.60 < cons <= 0.80
+        span.style.backgroundColor = "#9da5ff"
+      else if 0.40 < cons <= 0.60
+        span.style.backgroundColor = "#cccccc"
+    else
+      unless @model.get("grey").indexOf(index) >= 0
+        span.className = "biojs-msa-aa-" + residue
 
   # TODO: should I be moved to the selection manager?
   # returns an array with the currently selected residues
