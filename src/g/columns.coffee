@@ -10,7 +10,7 @@ module.exports = Columns = Model.extend
 
   initialize: ->
     # hidden columns
-    @.set "hidden", []
+    @.set "hidden", [] unless @.get("hidden")?
 
   # calcs conservation
   _calcConservationPre: (seqs) ->
