@@ -25,7 +25,8 @@ module.exports = FilterMenu = view.extend
     menuFilter.addNode "Hide by identity (not yet)", =>
 
     menuFilter.addNode "Hide selection", =>
-      hidden = @g.selcol.getAllColumnBlocks @model.getMaxLength()
+      hiddenOld = @g.columns.get "hidden"
+      hidden = hiddenOld.concat @g.selcol.getAllColumnBlocks @model.getMaxLength()
       @g.selcol.reset []
       @g.columns.set "hidden", hidden
 
