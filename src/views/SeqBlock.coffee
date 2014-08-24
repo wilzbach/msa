@@ -28,6 +28,7 @@ module.exports = pluginator.extend
 
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
+    @el.style.overflowY = "hidden"
     @el.style.width = @g.zoomer.get "alignmentWidth"
     @
 

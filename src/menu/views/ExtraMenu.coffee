@@ -40,8 +40,9 @@ module.exports = ExtraMenu = view.extend
     menu.addNode "Bar chart log scaling", =>
       @g.columns.set "scaling", "log"
 
-    menu.addNode "Minimized mode", =>
+    menu.addNode "Minimized width", =>
       @g.zoomer.set "alignmentWidth", 600
+    menu.addNode "Minimized height", =>
       @g.zoomer.set "alignmentHeight", 120
 
     @el = menu.buildDOM()
