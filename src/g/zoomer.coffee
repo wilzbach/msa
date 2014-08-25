@@ -3,7 +3,7 @@ module.exports = Zoomer = Model.extend
 
   defaults:
     columnWidth: 15
-    metaWidth: 90
+    metaWidth: 100
     labelWidth: 100
     alignmentWidth: "auto"
     alignmentHeight: "auto"
@@ -19,3 +19,9 @@ module.exports = Zoomer = Model.extend
 
     _alignmentScrollLeft: 0
 
+  # @param n [int] maxLength of all seqs
+  getAlignmentWidth: (n) ->
+    if @get("alignmentWidth") is "auto"
+      @get("columnWidth") * n
+    else
+      @get "alignmentWidth"

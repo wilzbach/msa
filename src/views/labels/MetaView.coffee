@@ -18,8 +18,8 @@ module.exports = MetaView = view.extend
     @el.style.display = "inline-block"
 
     width = @g.zoomer.get "metaWidth"
-    @el.style.width = width - 15
-    @el.style.paddingRight = 15
+    @el.style.width = width - 5
+    @el.style.paddingRight = 5
 
     # adds gaps
     seq = @model.get('seq')
@@ -30,7 +30,7 @@ module.exports = MetaView = view.extend
     gapSpan = document.createElement 'span'
     gapSpan.textContent = gaps
     gapSpan.style.display = "inline-block"
-    gapSpan.style.width = 20
+    gapSpan.style.width = 35
     @el.appendChild gapSpan
 
     # identity
@@ -38,7 +38,7 @@ module.exports = MetaView = view.extend
     identSpan = document.createElement 'span'
     identSpan.textContent = ident.toFixed(2)
     identSpan.style.display = "inline-block"
-    identSpan.style.width = 25
+    identSpan.style.width = 40
     @el.appendChild identSpan
 
     # TODO: this menu builder is just an example how one could customize this
