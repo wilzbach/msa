@@ -1,11 +1,11 @@
 view = require("../../bone/view")
+dom = require "../../utils/dom"
 
 LabelView = view.extend
 
   initialize: (data) ->
     @seq = data.seq
     @g = data.g
-    @el.setAttribute "class", "biojs_msa_labels"
 
     @manageEvents()
 
@@ -19,10 +19,12 @@ LabelView = view.extend
     @listenTo @g.config, "change:registerMouseEvents", @manageEvents
 
   render: ->
-    #@renderSubviews()
+    dom.removeAllChilds @el
+
     @el.style.width = "#{@g.zoomer.get "labelWidth"}px"
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
+    @el.setAttribute "class", "biojs_msa_labels"
 
     if @.g.vis.get "labelId"
       id = document.createElement "span"
