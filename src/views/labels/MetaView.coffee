@@ -48,7 +48,7 @@ module.exports = MetaView = view.extend
     # view
     menu = new MenuBuilder("↗")
     menu.addNode "Uniprot",(e) =>
-      @g.colorscheme.set "scheme","zappo"
+      window.open "http://beta.uniprot.org/uniprot/Q7T2N8"
     @el.appendChild menu.buildDOM()
     @el.width = 10
 

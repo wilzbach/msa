@@ -86,5 +86,6 @@ module.exports = ColorMenu = view.extend
         seq.set "grey", blocks
 
     menuColor.addNode "Reset grey", =>
+      @g.colorscheme.set "showLowerCase", true
       @model.each (seq) ->
         seq.set "grey", []
