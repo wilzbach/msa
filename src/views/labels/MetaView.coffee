@@ -1,6 +1,7 @@
 view = require("../../bone/view")
 MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
+dom = require "../../utils/dom"
 
 module.exports = MetaView = view.extend
 
@@ -15,6 +16,8 @@ module.exports = MetaView = view.extend
     mouseout: "_onmouseout"
 
   render: ->
+    dom.removeAllChilds @el
+
     @el.style.display = "inline-block"
 
     width = @g.zoomer.get "metaWidth"
