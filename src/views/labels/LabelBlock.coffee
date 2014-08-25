@@ -8,7 +8,9 @@ module.exports = pluginator.extend
     @draw()
 
   draw: ->
+    @removeViews()
     for i in [0.. @model.length - 1] by 1
+      continue if @model.at(i).get('hidden')
       view = new LabelRowView {model: @model.at(i), g: @g}
       view.ordering = i
       @addView "row_#{i}", view
