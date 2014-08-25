@@ -28,10 +28,10 @@ module.exports = ImportMenu = view.extend
       FastaReader.read url, (seqs) =>
         # mass update on zoomer
         zoomer = @g.zoomer.toJSON()
-        zoomer.textVisible = false
-        zoomer.columnWidth = 4
-        zoomer.labelWidth = 200
-        zoomer.stepSize = 10
+        #zoomer.textVisible = false
+        #zoomer.columnWidth = 4
+        #zoomer.labelWidth = 200
+        zoomer.stepSize = 2
         zoomer.boxRectHeight = 2
         zoomer.boxRectWidth = 2
         @model.reset []
@@ -44,10 +44,10 @@ module.exports = ImportMenu = view.extend
       url = corsURL url
       Clustal.read url, (seqs) =>
         zoomer = @g.zoomer.toJSON()
-        zoomer.textVisible = false
-        zoomer.columnWidth = 4
-        zoomer.stepSize = 10
-        zoomer.labelWidth = 200
+        #zoomer.textVisible = false
+        #zoomer.columnWidth = 4
+        zoomer.stepSize = 2
+        #zoomer.labelWidth = 200
         zoomer.boxRectHeight = 2
         zoomer.boxRectWidth = 2
         @model.reset []

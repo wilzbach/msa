@@ -31,6 +31,8 @@ module.exports = pluginator.extend
     @_adjustWidth()
     @
 
+  # this is a expensive operation (reflow)
+  # use with caution
   _adjustScrollingLeft: ->
     @el.scrollLeft = @g.zoomer.get "_alignmentScrollLeft"
 

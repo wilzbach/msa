@@ -56,11 +56,12 @@ module.exports = pluginator.extend
 
   _onscroll: (e) ->
     fun = =>
+      # scrollLeft triggers a reflow of the whole area (even only get)
       @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
     if @model.length <= 10
       fun()
     else
-      @waitForPause 50, fun
+      time.bounce 800, fun
 
   _setSpacer: ->
     # spacer / padding element
