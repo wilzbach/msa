@@ -49,6 +49,13 @@ module.exports = FilterMenu = view.extend
         if el.get('identity') < threshold
           el.set('hidden', true)
 
+    menuFilter.addNode "Hide seqs by selection", =>
+      hidden = @g.selcol.where type: "row"
+      ids = _.map hidden, (el) -> el.get('seqId')
+      @model.each (el) ->
+        if ids.indexOf(el.get('id')) >= 0
+          el.set('hidden', true)
+
     menuFilter.addNode "Hide seqs by gaps", =>
       threshold = prompt "Enter threshold (in percent)", 40
       @model.each (el,i) ->
