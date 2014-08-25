@@ -1,0 +1,2 @@
+js = ["/external/jquery.dropdown.js", "http://d3js.org/d3.v3.min.js", "http://daviddao.de/biojs-vis-tree.min.js"]
+css = ["/external/jquery.dropdown.css"]
