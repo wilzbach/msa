@@ -2,6 +2,7 @@ MarkerView = require "./MarkerView.coffee"
 ConservationView = require "./ConservationView"
 identityCalc = require "../../algo/identityCalc"
 pluginator = require("../../bone/pluginator")
+time = require "../../utils/time"
 
 module.exports = pluginator.extend
 
@@ -54,8 +55,12 @@ module.exports = pluginator.extend
     @
 
   _onscroll: (e) ->
-    @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
-
+    fun = =>
+      @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
+    if @model.length <= 10
+      fun()
+    else
+      @waitForPause 50, fun
 
   _setSpacer: ->
     # spacer / padding element
