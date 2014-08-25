@@ -1,4 +1,6 @@
 # throttle time class with end trailing
+# good explanation of the difference between throttling and bouncing
+# http://drupalmotion.com/article/debounce-and-throttle-visual-explanation
 module.exports =
 
   # TODO: not used

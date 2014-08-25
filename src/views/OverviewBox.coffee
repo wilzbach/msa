@@ -75,22 +75,23 @@ module.exports = OverviewBox = view.extend
     rectHeight = @g.zoomer.get "boxRectHeight"
     maxHeight = rectHeight * @model.length
     @ctx.fillStyle = "#ffff00"
-    @ctx.globalAlpha = 0.5
+    @ctx.strokeStyle = "#000000"
+    @ctx.lineWidth = 2
+    @ctx.globalAlpha = 1
+
     for i in [0.. @g.selcol.length - 1] by 1
       sel = @g.selcol.at(i)
       if sel.get('type') is 'column'
-        @ctx.fillRect rectWidth * sel.get('xStart'),0,rectWidth *
+        @ctx.strokeRect rectWidth * sel.get('xStart'),0,rectWidth *
         (sel.get('xEnd') - sel.get('xStart') + 1),maxHeight
       else if sel.get('type') is 'row'
         seq = (@model.filter (el) -> el.get('id') is sel.get('seqId'))[0]
         pos = @model.indexOf(seq)
-        @ctx.fillRect 0,rectHeight * pos, rectWidth * seq.get('seq').length, rectHeight
+        @ctx.strokeRect 0,rectHeight * pos, rectWidth * seq.get('seq').length, rectHeight
       else if sel.get('type') is 'pos'
         seq = (@model.filter (el) -> el.get('id') is sel.get('seqId'))[0]
         pos = @model.indexOf(seq)
-        @ctx.fillRect rectWidth * sel.get('xStart'),rectHeight * pos, rectWidth * (sel.get('xEnd') - sel.get('xStart') + 1), rectHeight
-
-    @ctx.globalAlpha = 1
+        @ctx.strokeRect rectWidth * sel.get('xStart'),rectHeight * pos, rectWidth * (sel.get('xEnd') - sel.get('xStart') + 1), rectHeight
 
   _onclick: (evt) ->
     @g.trigger "meta:click", {seqId: @model.get "id", evt:evt}

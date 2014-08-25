@@ -27,6 +27,9 @@ module.exports = SelectionManager = Collection.extend
         xStart: e.rowPos
         xEnd: e.rowPos + e.stepSize - 1
 
+    @listenTo @, "add reset", (e) ->
+      @_reduceColumns()
+
   getSelForRow: (seqId) ->
     @filter (el) -> el.inRow seqId
 
@@ -101,3 +104,21 @@ module.exports = SelectionManager = Collection.extend
     else
       @reset [selection]
 
+  # experimental reduce method for columns
+  _reduceColumns: ->
+    @each (el, index, arr) ->
+      cols = _.filter arr, (el) -> el.get('type') is 'column'
+      xStart = el.get('xStart')
+      xEnd = el.get('xEnd')
+
+      lefts = _.filter cols, (el) -> el.get('xEnd') is (xStart - 1)
+      for left in lefts
+        left.set 'xEnd', xStart
+
+      rights = _.filter cols, (el) -> el.get('xStart') is (xEnd + 1)
+      for right in rights
+        right.set 'xStart', xEnd
+
+      if lefts.length > 0 or rights.length > 0
+        console.log "removed el"
+        el.collection.remove el
