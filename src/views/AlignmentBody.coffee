@@ -18,19 +18,24 @@ module.exports = pluginator.extend
       @addView "seqblock",seqblock
 
     @listenTo @g.zoomer, "change:alignmentHeight", @adjustHeight
+    @listenTo @g.columns, "change:hidden", @adjustHeight
 
   render: ->
     @renderSubviews()
     @el.className = "biojs_msa_albody"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "visible"
-    # TODO: fix the magic 5
-    @el.style.height = (@g.zoomer.get("rowHeight") * @model.length) + 5
-    @adjustHeight
+    @el.style.whiteSpace = "nowrap"
+    @adjustHeight()
     @
 
   adjustHeight: ->
-    @el.style.height = @g.zoomer.get "alignmentHeight"
+    if @g.zoomer.get("alignmentHeight") is "auto"
+      # TODO: fix the magic 5
+      @el.style.height = (@g.zoomer.get("rowHeight") * @model.length) + 5
+    else
+      @el.style.height = @g.zoomer.get "alignmentHeight"
+
     # TODO: 15 is the width of the scrollbar
     @el.style.width = @getWidth() + 15
 

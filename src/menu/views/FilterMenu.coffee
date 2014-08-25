@@ -41,6 +41,7 @@ module.exports = FilterMenu = view.extend
       @g.columns.set "hidden", hidden
 
     menuFilter.addNode "Reset", =>
-      console.log "not working"
+      @g.columns.set "hidden", []
+
     @el = menuFilter.buildDOM()
     @
