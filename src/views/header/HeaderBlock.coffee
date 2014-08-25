@@ -10,6 +10,7 @@ module.exports = pluginator.extend
     @listenTo @g.vis,"change:markers change:conserv", ->
       @draw()
       @render()
+    @listenTo @g.vis,"change", @_setSpacer
     @listenTo @g.zoomer,"change:alignmentWidth", ->
       @_adjustWidth()
 
@@ -45,9 +46,7 @@ module.exports = pluginator.extend
   render: ->
     @renderSubviews()
 
-    # spacer / padding element
-    if @g.vis.get "labels"  or @g.vis.get "metacell"
-     @el.style.marginLeft = @_getLabelWidth()
+    @_setSpacer()
 
     @el.className = "biojs_msa_header"
     @el.style.overflowX = "auto"
@@ -56,6 +55,11 @@ module.exports = pluginator.extend
 
   _onscroll: (e) ->
     @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
+
+
+  _setSpacer: ->
+    # spacer / padding element
+    @el.style.marginLeft = @_getLabelWidth()
 
   _getLabelWidth: ->
      paddingLeft = 0

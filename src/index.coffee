@@ -7,5 +7,6 @@ module.exports.model = require("./model")
 module.exports.algo = require("./algo")
 module.exports.menu = require("./menu")
 module.exports.utils = require("./utils")
+module.exports.selection = require("./g/selection/Selection")
 
 module.exports.version = "0.1.0"

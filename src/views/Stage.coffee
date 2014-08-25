@@ -11,7 +11,7 @@ module.exports = pluginator.extend
     @g = data.g
 
     @draw()
-    @listenTo @model,"reset", ->
+    @listenTo @model,"reset change:hidden", ->
       @isNotDirty = false
       @draw()
       @render()
