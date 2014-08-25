@@ -2,7 +2,7 @@ MarkerView = require "./MarkerView.coffee"
 ConservationView = require "./ConservationView"
 identityCalc = require "../../algo/identityCalc"
 pluginator = require("../../bone/pluginator")
-time = require "../../utils/time"
+_ = require 'underscore'
 
 module.exports = pluginator.extend
 
@@ -21,6 +21,10 @@ module.exports = pluginator.extend
       @render()
 
     @draw()
+    if @model.length <= 10
+      @_onscroll = @_sendScrollEvent
+    else
+      @_onscroll = _.debounce @_sendScrollEvent, 500
 
   events:
     "scroll": "_onscroll"
@@ -54,24 +58,19 @@ module.exports = pluginator.extend
     @_adjustWidth()
     @
 
-  _onscroll: (e) ->
-    fun = =>
-      # scrollLeft triggers a reflow of the whole area (even only get)
-      @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
-    if @model.length <= 10
-      fun()
-    else
-      time.bounce 800, fun
+  # scrollLeft triggers a reflow of the whole area (even only get)
+  _sendScrollEvent: ->
+    @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
 
   _setSpacer: ->
     # spacer / padding element
     @el.style.marginLeft = @_getLabelWidth()
 
   _getLabelWidth: ->
-     paddingLeft = 0
-     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     return paddingLeft
+    paddingLeft = 0
+    paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
+    paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
+    return paddingLeft
 
   _adjustWidth: ->
     @el.style.width = @g.zoomer.get "alignmentWidth"

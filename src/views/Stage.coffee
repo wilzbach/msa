@@ -3,6 +3,7 @@ AlignmentBody = require "./AlignmentBody"
 HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
 identityCalc = require "../algo/identityCalc"
+_ = require 'underscore'
 
 # a neat collection view
 module.exports = pluginator.extend
@@ -11,21 +12,18 @@ module.exports = pluginator.extend
     @g = data.g
 
     @draw()
-    @listenTo @model,"reset change:hidden", ->
+    @listenTo @model,"reset", ->
       @isNotDirty = false
-      @draw()
-      @render()
+      @rerender()
 
-    @listenTo @model,"sort", ->
-      @draw()
-      @render()
+    # debounce a bulk operation
+    @listenTo @model,"change:hidden", _.debounce @rerender, 10
 
+    @listenTo @model,"sort", @rerender
     @listenTo @model,"add", ->
       console.log "seq add"
 
-    @listenTo @g.vis,"change:sequences", ->
-      @draw()
-      @render()
+    @listenTo @g.vis,"change:sequences", @rerender
 
   draw: ->
     @removeViews()
@@ -54,3 +52,7 @@ module.exports = pluginator.extend
     @renderSubviews()
     @el.className = "biojs_msa_stage"
     @
+
+  rerender: ->
+    @draw()
+    @render()
