@@ -11,6 +11,10 @@ module.exports = pluginator.extend
       @draw()
       @render()
     @listenTo @g.zoomer,"change:alignmentWidth", ->
+      @_adjustWidth()
+
+    # TODO: duplicate rendering
+    @listenTo @g.columns, "change:hidden", ->
       @draw()
       @render()
 
@@ -43,15 +47,21 @@ module.exports = pluginator.extend
 
     # spacer / padding element
     if @g.vis.get "labels"  or @g.vis.get "metacell"
-     paddingLeft = 0
-     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     @el.style.marginLeft = paddingLeft
+     @el.style.marginLeft = @_getLabelWidth()
 
     @el.className = "biojs_msa_header"
     @el.style.overflowX = "auto"
-    @el.style.width = @g.zoomer.get "alignmentWidth"
+    @_adjustWidth()
     @
 
   _onscroll: (e) ->
     @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
+
+  _getLabelWidth: ->
+     paddingLeft = 0
+     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
+     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
+     return paddingLeft
+
+  _adjustWidth: ->
+    @el.style.width = @g.zoomer.get "alignmentWidth"

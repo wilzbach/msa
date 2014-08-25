@@ -11,7 +11,7 @@ HeaderView = view.extend
     @g = data.g
     @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth", @render
     @listenTo @g.vis,"change:labels change:metacell", @render
-    @listenTo @g.columns, "change:hidden", @render
+    #@listenTo @g.columns, "change:hidden", @render
     @manageEvents()
 
   render: ->
