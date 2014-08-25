@@ -12,13 +12,13 @@ sortViews = (views) ->
         0
     return plugsSort
 
-view = require("../bone/view")
+viewType = require("../bone/view")
 
 # pluginator mixin
 # handles + order plugins
 # gives a view a hierarchical / nested layout
 # a view must have a `render` method
-pluginator = view.extend
+pluginator = viewType.extend
 
   # mix & shake
   #mixin: (view) ->
@@ -79,7 +79,7 @@ pluginator = view.extend
   # TODO: check for memory leaks
   removeViews: ->
     views = @_views()
-    for key,el of @.views
+    for key,el of views
       el.undelegateEvents()
       el.unbind()
       el.removeViews() if el.removeViews?
@@ -102,8 +102,7 @@ pluginator = view.extend
   # The region is no longer usable after being removed.
   remove: ->
     @removeViews()
-    view.remove.apply @
-    #ViewPrototype.remove.apply @
+    viewType::remove.apply @
 
   _views : ->
     @.views = {} unless @.views?
