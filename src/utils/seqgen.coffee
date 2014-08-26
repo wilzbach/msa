@@ -22,13 +22,3 @@ seqgen = module.exports =
       seqs.push new Sequence(seqgen._generateSequence(seqLen), "seq" + i,
       "r" + i)
     return seqs
-
-  # TODO: not used -> removed ?
-  splitNChars: (txt, num) ->
-    result = []
-    i = 0
-
-    while i < txt.length
-      result.push txt.substr(i, num)
-      i += num
-    result

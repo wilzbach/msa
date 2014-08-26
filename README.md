@@ -93,6 +93,7 @@ Guidelines
 * avoid boiler-plate code
 * avoid more than two args for public methods -> accepting a dictionary is more flexible
 * trust the linter (for coffeescript there is a default config)
+* max. 200 lines per file (-> better organization)
 
 BTW the use of Coffeescript is optional.
 

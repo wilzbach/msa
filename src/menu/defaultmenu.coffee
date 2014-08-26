@@ -11,6 +11,7 @@ ExtraMenu = require "./views/ExtraMenu"
 ExportMenu = require "./views/ExportMenu"
 HelpMenu = require "./views/HelpMenu"
 
+# this very basic menu demonstrates calls to the MSA component
 module.exports = MenuView = pluginator.extend
 
   initialize: (data) ->
