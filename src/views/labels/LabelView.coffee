@@ -34,7 +34,7 @@ LabelView = view.extend
       @el.appendChild id
     if @.g.vis.get "labelName"
       name = document.createElement "span"
-      name.textContent = @model.get("name").substring 0, 20
+      name.textContent = @model.get("name")
       @el.appendChild name
 
     @el.style.overflow = scroll
