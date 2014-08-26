@@ -1,7 +1,7 @@
 sel = require "./Selection"
 _ = require "underscore"
-
 Collection = require("backbone").Collection
+
 # holds the current user selection
 module.exports = SelectionManager = Collection.extend
 
@@ -45,6 +45,8 @@ module.exports = SelectionManager = Collection.extend
         blocks = blocks.concat [seli.attributes.xStart .. seli.attributes.xEnd]
     blocks
 
+  # @returns array with all columns being selected
+  # example: 0-4... 12-14 selected -> [0,1,2,3,4,12,13,14]
   getAllColumnBlocks: (maxLen) ->
     blocks = []
     for seli in (@filter (el) -> el.get('type') is "column")
@@ -95,6 +97,8 @@ module.exports = SelectionManager = Collection.extend
     s.push new sel.columnsel(xStart:xStart, xEnd: inverted[inverted.length - 1]) if xStart isnt xEnd
     @reset s
 
+  # method to decide whether to start a new selection
+  # or append to the old one (depending whether CTRL was pressed)
   _handleE: (e, selection) ->
     if e.ctrlKey or e.metaKey
       @add selection

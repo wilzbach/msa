@@ -6,7 +6,7 @@ _ = require "underscore"
 module.exports = Columns = Model.extend
 
   defaults:
-    scaling: "lin"
+    scaling: "lin" # of the conservation chart e.g. "lin", "exp", "log"
 
   initialize: ->
     # hidden columns

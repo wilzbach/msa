@@ -16,7 +16,7 @@ module.exports = FeatureCol = Collection.extend
 
   # gives the minimal needed number of rows
   # not a very efficient algorithm
-  # (there is one in O(n)
+  # (there is one in O(n) )
   getMinRows: ->
 
     len = @max (el) -> el.get "xEnd"
