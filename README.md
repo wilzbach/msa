@@ -47,12 +47,9 @@ In case
 Demo
 -----
 
-Have a look at the [quick start examples](https://dev.biojs-msa.org/v1)
+[Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
 
-(in rebuild)
-
-Head to [Codepen](http://codepen.io/greenify/pen/ALFjq) or [CSSDeck](http://cssdeck.com/labs/swxfsfhe) for a nice example.
-
+A [JSBin](http://jsbin.com/yivex/2/edit) to start hacking.
 
 #### display an MSA
 
