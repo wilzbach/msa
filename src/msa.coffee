@@ -23,12 +23,7 @@ Stage = require "./views/Stage"
 # @param conf [Dict] user config
 # @param vis [Dict] config of visible views
 # @param zoomer [Dict] display settings like columnWidth
-MSAView = pluginator.extend
-
-  events: {
-    # "mouseout": "cleanup"
-    "dblclick": "cleanup"
-  }
+module.exports = pluginator.extend
 
   initialize: (data) ->
 
@@ -57,8 +52,5 @@ MSAView = pluginator.extend
     @el.setAttribute "class", "biojs_msa_div"
 
   render: ->
-    @.trigger "hello"
     @renderSubviews()
     @
-
-module.exports = MSAView
