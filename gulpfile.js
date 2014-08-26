@@ -83,13 +83,6 @@ gulp.task('build-browser-min',['init'], function() {
   return mBrowserify(browserFile,outputFileMinSt);
 });
  
-// browserify all (with the parsers)
-gulp.task('build-browser-all',['init'], function() {
-  var fileName = outputFile + "_all.min.js";
-  gulp.src(join(buildDir,fileName)).pipe(clean());
-  return mBrowserify("./browser_all.js",fileName);
-});
-
 gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() {
   gulp.src(outputFileMin)
     .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
