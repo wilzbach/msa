@@ -1,7 +1,3 @@
-.biojs_msa_div {
-	text-align:left;
-}
-
 .biojs_msa_stage {
 	cursor: default;
 	line-height: normal; 
@@ -18,36 +14,18 @@
 .biojs_msa_seqblock span{
 	cursor: pointer;
 	text-align: center;
-	/*flex-grow: 1; */
 	display: inline-block;
 	height: inherit;
 }
 
 .biojs_msa_seqblock {
-	/*
-	*display: -webkit-flex;
-    *display: flex;
-    *flex-direction: row;
-	*align-items: center;
-	*/
 	color: black;
 	white-space: nowrap;
 	vertical-align:middle;
 	font-family: monospace;
 }
 
-.shadowed{
-	box-shadow: 7px 7px 8px #818181;
-	-webkit-box-shadow: 7px 7px 8px #818181;
-	-moz-box-shadow: 7px 7px 8px #818181;
-}
-
 .biojs_msa_layer{
 	display: block;
 	white-space: nowrap;
-}
-
-.biojs-rectangular-select{
-    border: 1px dotted #000;
-    position: absolute;
 }
