@@ -49,7 +49,7 @@ Demo
 
 [Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
 
-A [JSBin](http://jsbin.com/yivex/1/edit) to start hacking.
+A [JSBin](http://jsbin.com/yivex/2/edit) to start hacking.
 
 #### display an MSA
 
