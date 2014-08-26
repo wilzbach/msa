@@ -10,7 +10,7 @@ module.exports = Visibility = Model.extend
     conserv: true
     overviewbox: false
 
-
+    # about the labels
     labels: true
     labelName: true
     labelId: true

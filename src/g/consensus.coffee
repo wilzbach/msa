@@ -1,8 +1,7 @@
 Model = require("backbone").Model
 consenusCalc = require "../algo/ConsensusCalc"
 
-# this is an example of how one could color the MSA
-# feel free to create your own color scheme
+# simply save the consenus sequences globally
 module.exports = Consenus = Model.extend
 
   defaults:

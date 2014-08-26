@@ -1,3 +1,7 @@
+# for each sequence
+# * counts the matches with the consensus seq
+# * excluding gaps
+# * identity = matchedChars / totalChars (excluding gaps)
 module.exports = identitiyCalc = (seqs, consensus) ->
   seqs.each (seqObj) ->
     seq = seqObj.get "seq"
