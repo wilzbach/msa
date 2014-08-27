@@ -7,5 +7,4 @@ module.exports = Colorator = Model.extend
   defaults:
     scheme: "taylor" # name of your color scheme (css suffix)
     colorBackground: true # otherwise only the text will be colored
-    showLowerCase: true # used to hide and show lowercase chars in the overview
-    box
+    showLowerCase: true # used to hide and show lowercase chars in the overviewbox
