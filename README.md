@@ -81,7 +81,7 @@ A [JSBin](http://jsbin.com/yivex/2/edit) to start hacking.
 Documentation
 -------------
 
-See below and hear to the [wiki](https://github.com/greenify/biojs-vis-msa/wiki/).
+See below and head to the [wiki](https://github.com/greenify/biojs-vis-msa/wiki/).
 
 Please report bugs or feature request directly on github.
 
