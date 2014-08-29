@@ -1,4 +1,4 @@
-MarkerView = require "./MarkerView.coffee"
+MarkerView = require "./MarkerView"
 ConservationView = require "./ConservationView"
 identityCalc = require "../../algo/identityCalc"
 pluginator = require("../../bone/pluginator")
