@@ -4,9 +4,9 @@ node_js:
 before_deploy: gulp build
 deploy:
   provider: s3
-  access_key_id: AKIAJLHUJ3RVJGNVAYIA
+  access_key_id: AKIAJ7SXC23CS2USONIA
   secret_access_key:
-    secure: HJv41l4LZaLYxzvbYXhPfffZTY+sgY2JCwoWas4wSB1hBJKV3IvsbhAvRfrNnuGPFucBEqFmBmm5Qv4AWVoA1yYUOY/ejWJmOePQlE9J99/L8eqOpEZJ4wRSWEFDnhLKiGLCWgw5y/aF6ka+n7nyAYkpzX1DfTObuV0SjqKaGcY=
+    secure: XWnP8xEA5cSCYZEBvYfLep0og1JsWWm/UsKkIQBI08tA4WJK79weoBMJ2WO6/qr1XqspPEIbkE1nZ30dWISUrG5YMCi3s916nhqCaj6MSiL2Z30ObyvUNKNzG4ahwQkTdz5fUi4yaheCB6mWMfpoVf1MVObdpNj7gTJDh0X++to=
   bucket: biojs
   upload-dir: msa/latest
   acl: public-read
