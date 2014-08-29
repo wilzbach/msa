@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -63,7 +63,7 @@
   "scripts": {
     "test": "node_modules/gulp/bin/gulp.js test",
     "prepublish": "npm test && node_modules/gulp/bin/gulp.js build && coffee --bare --compile --output lib/ src/",
-    "watch": "mkdir -p build; node_modules/watchify/bin/cmd.js -v --debug -t coffeeify --extension='.coffee' browser.js -o build/msa.js",
+    "watch": "mkdir -p build; node_modules/watchify/bin/cmd.js -v --debug -t coffeeify --extension='.coffee' browser.js -o build/msa.js; ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
     "build-browser": "node_modules/gulp/bin/gulp.js build-browser",
     "build-browser-min": "node_modules/gulp/bin/gulp.js build",
     "build-browser-cli": "mkdir -p build;  node_modules/browserify/bin/cmd.js -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
