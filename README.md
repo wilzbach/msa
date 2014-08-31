@@ -105,9 +105,12 @@ Step 1) Setting up
 npm install
 ```
 
-* At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
-support SASS 3.3. The setup will try to the Rubygem sass automaticall, alternatively run `gem install sass`.
-* You will the `npm` package manager (and node) for this. On most system there is a package, look [here](http://nodejs.org/download/)
+* __sass__: At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
+support SASS 3.3. The setup will try to install the Rubygem sass automatically, if it fails be prepared to run `gem install sass` (as root!). Please do not use the `ruby-sass` package on debian - it is outdated.
+* __npm__: You will need the `npm` package manager (and node) for this. On most distributions there is a package, look [here](http://nodejs.org/download/)
+
+__Infos__
+
 * This will also automatically validate your installation by running `gulp build`
  - generating browser builds for the codebase
  - compiling the SASS
