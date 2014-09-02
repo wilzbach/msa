@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/greenify/biojs-vis-msa.png?label=ready&title=Ready)](https://waffle.io/greenify/biojs-vis-msa)
 biojs-vis-msa
 ==========
 
