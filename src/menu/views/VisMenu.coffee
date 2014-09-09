@@ -24,7 +24,7 @@ module.exports = ImportMenu = view.extend
       @g.vis.set "conserv", true
 
     menuFile.addNode "Toggle mouseover events", =>
-      @g.config.set "registerMouseEvents", !@g.config.get "registerMouseEvents"
+      @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"
 
     # TODO: make more efficient
     dom.removeAllChilds @el
