@@ -47,10 +47,17 @@ module.exports = SelectionManager = Collection.extend
 
   # @returns array with all columns being selected
   # example: 0-4... 12-14 selected -> [0,1,2,3,4,12,13,14]
-  getAllColumnBlocks: (maxLen) ->
+  getAllColumnBlocks: (conf) ->
+    maxLen = conf.maxLen
+    withPos = conf.withPos
     blocks = []
-    for seli in (@filter (el) -> el.get('type') is "column")
+    if conf.withPos
+      filtered = (@filter (el) -> el.get('xStart')? )
+    else
+      filtered = (@filter (el) -> el.get('type') is "column")
+    for seli in filtered
       blocks = blocks.concat [seli.attributes.xStart..seli.attributes.xEnd]
+    blocks = _.uniq blocks
     return blocks
 
   # inverts the current selection for columns

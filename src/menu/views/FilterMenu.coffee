@@ -22,7 +22,7 @@ module.exports = FilterMenu = view.extend
 
     menuFilter.addNode "Hide columns by selection", =>
       hiddenOld = @g.columns.get "hidden"
-      hidden = hiddenOld.concat @g.selcol.getAllColumnBlocks @model.getMaxLength()
+      hidden = hiddenOld.concat @g.selcol.getAllColumnBlocks maxLen: @model.getMaxLength(), withPos: true
       @g.selcol.reset []
       @g.columns.set "hidden", hidden
 
