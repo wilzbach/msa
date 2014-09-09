@@ -11,15 +11,16 @@ module.exports = ImportMenu = view.extend
 
   render: ->
     menuImport = new MenuBuilder("Import")
-    corsURL = (url) ->
+    corsURL = (url) =>
       # do not filter on localhost
       return url if document.URL.indexOf('localhost') >= 0 and url[0] is "/"
-      if url.indexOf('www') >= 0
-        url = url.replace "www\.", "www.corsproxy.com/"
-      else if url.indexOf('http://') >= 0
-        url = url.replace "://", "://www.corsproxy.com/"
-      else
-        url = "http://www.corsproxy.com/" + url
+
+      # remove www + http
+      url = url.replace "www\.", ""
+      url = url.replace "http://", ""
+
+      # prepend proxy
+      url = @g.config.get('importProxy') + url
       url
 
     menuImport.addNode "FASTA",(e) =>

@@ -5,3 +5,4 @@ module.exports = Config = Model.extend
 
   defaults:
     registerMouseEvents: false,
+    importProxy: "http://www.corsproxy.com/"
