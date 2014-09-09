@@ -78,12 +78,14 @@ HeaderView = view.extend
 
   manageEvents: ->
     events = {}
-    events.click = "_onclick"
-    if @g.config.get "registerMouseEvents"
+    if @g.config.get "registerMouseClicks"
+      events.click = "_onclick"
+    if @g.config.get "registerMouseHover"
       events.mousein = "_onmousein"
       events.mouseout = "_onmouseout"
     @delegateEvents events
-    @listenTo @g.config, "change:registerMouseEvents", @manageEvents
+    @listenTo @g.config, "change:registerMouseHover", @manageEvents
+    @listenTo @g.config, "change:registerMouseClick", @manageEvents
 
   _onclick: (evt) ->
     rowPos = evt.target.rowPos

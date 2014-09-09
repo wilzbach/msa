@@ -4,5 +4,6 @@ Model = require("backbone").Model
 module.exports = Config = Model.extend
 
   defaults:
-    registerMouseEvents: false,
+    registerMouseHover: false,
+    registerMouseClicks: true,
     importProxy: "http://www.corsproxy.com/"
