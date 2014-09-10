@@ -24,6 +24,7 @@ module.exports = pluginator.extend
       console.log "seq add"
 
     @listenTo @g.vis,"change:sequences", @rerender
+    @listenTo @g.visorder,"change", @rerender
 
   draw: ->
     @removeViews()
@@ -36,16 +37,16 @@ module.exports = pluginator.extend
 
     if @g.vis.get "overviewbox"
       overviewbox = new OverviewBox {model: @model, g: @g}
-      overviewbox.ordering = -30
+      overviewbox.ordering = @g.visorder.get 'overviewBox'
       @addView "overviewbox",overviewbox
 
     if true
       headerblock = new HeaderBlock {model: @model, g: @g}
-      headerblock.ordering = -1
+      headerblock.ordering = @g.visorder.get 'headerBox'
       @addView "headerblock",headerblock
 
     body = new AlignmentBody {model: @model, g: @g}
-    body.ordering = 0
+    body.ordering = @g.visorder.get 'alignmentBody'
     @addView "body",body
 
   render: ->

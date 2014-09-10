@@ -8,6 +8,7 @@ Columns = require "./g/columns"
 Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
 Visibility = require "./g/visibility"
+VisOrdering = require "./g/visOrdering.coffee"
 Zoomer = require "./g/zoomer"
 
 # MV from backbone
@@ -31,6 +32,7 @@ module.exports = pluginator.extend
     data.columns = {} unless data.columns?
     data.conf = {} unless data.conf?
     data.vis = {} unless data.vis?
+    data.visorder = {} unless data.visorder ?
     data.zoomer = {} unless data.zoomer?
 
     # g is our global Mediator
@@ -46,6 +48,7 @@ module.exports = pluginator.extend
     @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
+    @g.visorder = new VisOrdering data.visorder
     @g.zoomer = new Zoomer data.zoomer
 
     @addView "stage",new Stage {model: @seqs, g: @g}
