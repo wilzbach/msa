@@ -145,7 +145,7 @@ gulp.task('codo', ['init'],function () {
 
 gulp.task('sass',['init'], function () {
     var opts = checkForSASS();
-    opts.sourcemap = true;
+    opts.sourcemap = false;
 
     return gulp.src('./css/msa.scss')
       .pipe(sass(opts))

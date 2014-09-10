@@ -168,12 +168,10 @@ SeqView = view.extend
   # displays the current user selection
   # and checks the prev and next row for selection  -> no borders in a selection
   _renderSelection: (n, selection, mPrevSel, mNextSel) ->
-    # TODO: this is very, very inefficient
+
     # get the length of this selection
     selectionLength = 0
     for i in [n.. @model.get("seq").length - 1] by 1
-      noTopBorder = true if mPrevSel? and mPrevSel.indexOf(n) >= 0
-      noBottomBorder = true if mNextSel? and mNextSel.indexOf(n) >= 0
 
       if selection.indexOf(i) >= 0
         selectionLength++
@@ -181,30 +179,40 @@ SeqView = view.extend
         break
 
     # TODO: ugly!
-    width = (@g.zoomer.get("columnWidth") * selectionLength) + 1
+    width = @g.zoomer.get("columnWidth")
+    totalWidth = (width * selectionLength) + 1
     cHeight = @g.zoomer.get("rowHeight")
-    s = svg.base height: 20, width: width
+    s = svg.base height: 20, width: totalWidth
     s.type = "selection"
     s.style.position = "absolute"
     s.style.left = 0
-    # unless noTopBorder or noBottomBorder
-    #   s.appendChild svg.rect x:0,y:1,width:width,height:cHeight,style:
-    #     "stroke:red;stroke-width:1;fill-opacity:0;"
-    s.appendChild svg.line x1:0,y1:0,x2:0,y2:cHeight,style:
-        "stroke:red;stroke-width:2;"
-    s.appendChild svg.line x1:width,y1:0,x2:width,y2:cHeight,style:
-        "stroke:red;stroke-width:2;"
-    unless noTopBorder
-      s.appendChild svg.line x1:0,y1:0,x2:width,y2:0,style:
-          "stroke:red;stroke-width:2;"
-    unless noBottomBorder
-      s.appendChild svg.line x1:0,y1:cHeight,x2:width,y2:cHeight,style:
-          "stroke:red;stroke-width:1;"
-    s
+    hidden = @g.columns.get('hidden')
 
-  # TODO: experimenting with different views
-  # TODO: this is a very naive way of using SVG to display features
+    # split up the selection into single cells
+    xPart = 0
+    for i in [0.. selectionLength - 1]
+      xPos = n + i
+      if hidden.indexOf(xPos) >= 0
+        continue
+      # upper line
+      unless mPrevSel? and mPrevSel.indexOf(xPos) >= 0
+        s.appendChild svg.line x1:xPart,y1:0,x2:xPart + width,y2:0,style:
+          "stroke:red;stroke-width:2;"
+      # lower line
+      unless mNextSel? and mNextSel.indexOf(xPos) >= 0
+        s.appendChild svg.line x1:xPart,y1:cHeight,x2:xPart + width,y2:cHeight,style:
+          "stroke:red;stroke-width:1;"
+      xPart += width
+
+    s.appendChild svg.line x1:0,y1:0,x2:0,y2:cHeight,style:
+      "stroke:red;stroke-width:2;"
+    s.appendChild svg.line x1:totalWidth,y1:0,x2:totalWidth,y2:cHeight,style:
+      "stroke:red;stroke-width:2;"
+    return s
+
   appendFeature: (f) ->
+    # TODO: experimenting with different views
+    # TODO: this is a very naive way of using SVG to display features
     width = (f.get("xEnd") - f.get("xStart")) * 15
     s = svg.base(height: 20, width: width + 2)
     color = f.get "fillColor"

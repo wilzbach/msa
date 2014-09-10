@@ -35,7 +35,7 @@ HeaderView = view.extend
       if (n + 1) % @g.zoomer.get('markerStepSize') is 0
         span.textContent = (n + 1)
       else
-        span.textContent = ""
+        span.textContent = "."
       span.rowPos = n
 
       n += stepSize
