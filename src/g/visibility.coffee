@@ -15,3 +15,4 @@ module.exports = Visibility = Model.extend
     labelName: true
     labelId: true
     labelPartition: false
+    labelCheckbox: false
