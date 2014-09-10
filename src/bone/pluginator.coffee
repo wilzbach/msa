@@ -1,17 +1,4 @@
-# sorts the views after their given ordering
-# @returns sorted list of keys (of the plugins)
-sortViews = (views) ->
-    # sort plugs
-    plugsSort = []
-    plugsSort.push key for key of views
-    plugsSort.sort (a,b) =>
-        nameA = views[a].ordering
-        nameB = views[b].ordering
-        return -1 if nameA < nameB
-        return 1  if nameA > nameB
-        0
-    return plugsSort
-
+_ = require('underscore')
 viewType = require("../bone/view")
 
 # pluginator mixin
@@ -39,18 +26,20 @@ pluginator = viewType.extend
     @setElement el
     frag = document.createDocumentFragment()
 
+    # check for old parents
     if oldEl.parentNode?
       oldEl.parentNode.replaceChild @.el,oldEl
 
     # sort
     views = @_views()
-    viewsSorted = sortViews views
+    viewsSorted = _.sortBy views, (el) -> el.ordering
+
+    console.log viewsSorted
 
     # render
-    for key in viewsSorted
-      view = views[key]
+    for view in viewsSorted
       view.render()
-      node = views[key].el
+      node = view.el
       if node?
         frag.appendChild node
 
