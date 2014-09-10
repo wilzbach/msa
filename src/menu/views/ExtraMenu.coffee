@@ -45,5 +45,8 @@ module.exports = ExtraMenu = view.extend
     menu.addNode "Minimized height", =>
       @g.zoomer.set "alignmentHeight", 120
 
+    menu.addNode "Shift left", =>
+      @g.zoomer.set "_alignmentScrollLeft", @g.zoomer.get("_alignmentScrollLeft") + 100
+
     @el = menu.buildDOM()
     @
