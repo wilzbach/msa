@@ -34,8 +34,6 @@ pluginator = viewType.extend
     views = @_views()
     viewsSorted = _.sortBy views, (el) -> el.ordering
 
-    console.log viewsSorted
-
     # render
     for view in viewsSorted
       view.render()
