@@ -4,6 +4,7 @@ selection = require "../g/selection/Selection"
 TaylorColors = require "./color/taylor"
 ZappoColors = require "./color/zappo"
 HydroColors = require "./color/hydrophobicity"
+jbone = require "jbone"
 
 module.exports = OverviewBox = view.extend
 
@@ -27,9 +28,6 @@ module.exports = OverviewBox = view.extend
   events:
     click: "_onclick"
     mousedown: "_onmousedown"
-    mouseup: "_onmouseup"
-    mouseout: "_onmouseout"
-    mousemove: "_onmousemove"
 
   render: ->
     @_createCanvas()
@@ -99,22 +97,50 @@ module.exports = OverviewBox = view.extend
     # duplicate events
     return if @dragStart.length is 0
 
-    @dragEnd = mouse.getMouseCoords e
+    @dragEnd = mouse.getMouseCoordsScreen e
     @render()
     @ctx.fillStyle = "#ffff00"
     @ctx.globalAlpha = 0.5
-    @ctx.fillRect @dragStart[0],@dragStart[1],@dragEnd[0] - @dragStart[0], @dragEnd[1] - @dragStart[1]
+
+    # relative to first click
+    @dragEnd = [@dragEnd[0] - @dragStartScreen[0], @dragEnd[1] - @dragStartScreen[1]]
+
+    x = [@dragStart[0], @dragEnd[0]]
+    y = [@dragStart[1], @dragEnd[1]]
+
+    # mirror the coordinates if needed
+    if @dragEnd[0] > @dragEnd[0]
+      x = [x[1], x[0]]
+    if @dragEnd[1] > @dragEnd[1]
+      y = [y[1], y[0]]
+    console.log @dragEnd
+    #console.log "x",x
+    #console.log "y",y
+    y[0] = Math.max y[0], 0
+    x[0] = Math.max x[0], 0
+    @ctx.fillRect x[0],y[0],x[1], y[1]
+    e.preventDefault()
+    e.stopPropagation()
+
 
   # start the selection mode
   _onmousedown: (e) ->
-    @dragStart = arr = mouse.getMouseCoords e
+    @dragStart = mouse.getMouseCoords e
+    @dragStartScreen = mouse.getMouseCoordsScreen e
     if e.ctrlKey or e.metaKey
       @prolongSelection = true
     else
       @prolongSelection = false
+    # enable global listeners
+    jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
+    jbone(document.body).on 'mouseup.overup', (e) => @_onmouseup(e)
     return @dragStart
 
   _endSelection: (dragEnd) ->
+    # remove listeners
+    jbone(document.body).off('.overmove')
+    jbone(document.body).off('.overup')
+
     # duplicate events
     return if @dragStart.length is 0
 
