@@ -9,7 +9,7 @@ HeaderView = view.extend
 
   initialize: (data) ->
     @g = data.g
-    @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth", @render
+    @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth change:markerStepSize", @render
     @listenTo @g.vis,"change:labels change:metacell", @render
     @manageEvents()
 
@@ -32,7 +32,10 @@ HeaderView = view.extend
       span = document.createElement "span"
       span.style.width = cellWidth * stepSize
       span.style.display = "inline-block"
-      span.textContent = (n + 1)
+      if (n + 1) % @g.zoomer.get('markerStepSize') is 0
+        span.textContent = (n + 1)
+      else
+        span.textContent = ""
       span.rowPos = n
 
       n += stepSize
