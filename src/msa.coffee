@@ -38,6 +38,9 @@ module.exports = pluginator.extend
     # g is our global Mediator
     @g = Eventhandler.mixin {}
 
+    if data.seqs is undefined or data.seqs.length is 0
+      console.log "warning. empty seqs."
+
     # load seqs and add subviews
     @seqs = new SeqCollection data.seqs
 
