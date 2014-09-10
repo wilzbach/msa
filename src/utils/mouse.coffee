@@ -1,6 +1,6 @@
 module.exports = Mouse =
 
-  # returns the mouse x & y coords
+  # returns the mouse x & y coords relative to the target
   getMouseCoords: (e) ->
     # center the view on double click
     mouseX = e.offsetX
@@ -20,4 +20,9 @@ module.exports = Mouse =
         return
 
     # TODO: else
+    return [mouseX,mouseY]
+
+  getMouseCoordsScreen: (e) ->
+    mouseX = e.screenX
+    mouseY = e.screenY
     return [mouseX,mouseY]
