@@ -140,9 +140,11 @@ module.exports = OverviewBox = view.extend
 
     # select
     selis = []
+    leftestIndex = origIndex = 100042
     for j in [a[1]..a[3]] by 1
       args = seqId: @model.at(j).get('id'), xStart: a[0], xEnd: a[2]
       selis.push new selection.possel args
+      leftestIndex = Math.min a[0], leftestIndex
 
     # reset
     @dragStart = []
@@ -151,6 +153,10 @@ module.exports = OverviewBox = view.extend
       @g.selcol.add selis
     else
       @g.selcol.reset selis
+
+    # safety check + update offset
+    leftestIndex = 0 if leftestIndex is origIndex
+    @g.zoomer.setLeftOffset leftestIndex
 
   # ends the selection mode
   _onmouseup: (e) ->
