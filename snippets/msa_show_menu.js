@@ -5,7 +5,7 @@ var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "green"});
 
 
 var opts = {};
-opts.seqs = msa.utils.seqgen.getDummySequences(10,100);
+opts.seqs = msa.utils.seqgen.getDummySequences(10,110);
 opts.el = document.getElementById('msa_menu');
 //opts.zoomer = { textVisible: false};
 opts.vis = {metacell: true, overviewbox: true};
