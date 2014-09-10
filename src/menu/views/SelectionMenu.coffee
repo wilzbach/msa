@@ -16,6 +16,7 @@ module.exports = SelectionMenu = view.extend
       search = new RegExp search, "gi"
       selcol = @g.selcol
       newSeli = []
+      leftestIndex = origIndex = 100042
       @model.each (seq) ->
         strSeq = seq.get("seq")
         while match = search.exec strSeq
@@ -23,7 +24,12 @@ module.exports = SelectionMenu = view.extend
           args = {xStart: index, xEnd: index + match[0].length - 1, seqId:
             seq.get("id")}
           newSeli.push new sel.possel(args)
+          leftestIndex = Math.min index, leftestIndex
       selcol.reset newSeli
+
+      # safety check + update offset
+      leftestIndex = 0 if leftestIndex is origIndex
+      @g.zoomer.setLeftOffset leftestIndex
 
     menu.addNode "Select all", =>
       seqs = @model.pluck "id"
