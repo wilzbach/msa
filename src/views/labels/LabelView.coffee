@@ -19,10 +19,10 @@ LabelView = view.extend
     @delegateEvents events
     @listenTo @g.config, "change:registerMouseHover", @manageEvents
     @listenTo @g.config, "change:registerMouseClick", @manageEvents
-    @listenTo @g.vis, "change:labelName", @manageEvents
-    @listenTo @g.vis, "change:labelId", @manageEvents
-    @listenTo @g.vis, "change:labelPartition", @manageEvents
-    @listenTo @g.vis, "change:labelCheckbox", @manageEvents
+    @listenTo @g.vis, "change:labelName", @render
+    @listenTo @g.vis, "change:labelId", @render
+    @listenTo @g.vis, "change:labelPartition", @render
+    @listenTo @g.vis, "change:labelCheckbox", @render
 
   render: ->
     dom.removeAllChilds @el
