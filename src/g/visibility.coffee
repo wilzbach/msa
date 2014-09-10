@@ -14,3 +14,4 @@ module.exports = Visibility = Model.extend
     labels: true
     labelName: true
     labelId: true
+    labelPartition: false

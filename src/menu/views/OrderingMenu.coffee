@@ -1,10 +1,12 @@
 view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 dom = require "../../utils/dom"
+_ = require('underscore')
 
 module.exports = OrderingMenu = view.extend
 
-  initialize: ->
+  initialize: (data) ->
+    @g = data.g
     @order = "ID"
     @el.style.display = "inline-block"
 
@@ -33,6 +35,7 @@ module.exports = OrderingMenu = view.extend
     if text is @order
       style.backgroundColor = "#77ED80"
     menuOrdering.addNode text, =>
+      m.precode() if m.precode?
       @model.comparator = m.comparator
       @model.sort()
       @setOrder m.text
@@ -61,5 +64,12 @@ module.exports = OrderingMenu = view.extend
 
     models.push text: "Identity Desc", comparator: (seq) ->
         - seq.get "identity"
+
+    models.push text: "Partition codes", comparator: "partition", precode: =>
+      # set partitions random
+      @g.vis.set('labelPartition', true)
+      @model.each (el) ->
+        el.set('partition', _.random(1,3))
+
 
     return models
