@@ -206,11 +206,14 @@ SeqView = view.extend
   # TODO: this is a very naive way of using SVG to display features
   appendFeature: (f) ->
     width = (f.get("xEnd") - f.get("xStart")) * 15
-    s = svg.base(height: 20, width: width)
+    s = svg.base(height: 20, width: width + 2)
     color = f.get "fillColor"
-    s.appendChild svg.rect x:0,y:0,width:width,height:5,style:
-      "fill: " + color + ";fill-opacity: 0.4"
+    cHeight = @g.zoomer.get("rowHeight")
+    s.style.marginTop = -1
+    s.appendChild svg.rect x:1,y:1,width:width,height:cHeight - 1,style:
+      "stroke: " + color + ";stroke-width: 2;fill-opacity: 0"
     s.style.position = "absolute"
+    s.style.left = 0
     jbone(s).on "mouseover", (evt) =>
       @g.trigger "feature",  f.get("text") + " hovered"
     s
