@@ -22,6 +22,9 @@ module.exports = ImportMenu = view.extend
       @g.vis.set "sequences", true
       @g.vis.set "metacell", true
       @g.vis.set "conserv", true
+      @g.vis.set "labelId", true
+      @g.vis.set "labelName", true
+      @g.vis.set "labelCheckbox", false
 
     menuFile.addNode "Toggle mouseover events", =>
       @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"
@@ -53,4 +56,7 @@ module.exports = ImportMenu = view.extend
     vis.push name: "Sequences", id: "sequences"
     vis.push name: "Meta info", id: "metacell"
     vis.push name: "conserv", id: "conserv"
+    vis.push name: "LabelName", id: "labelName"
+    vis.push name: "LabelId", id: "labelId"
+    vis.push name: "LabelCheckbox", id: "labelCheckbox"
     return vis
