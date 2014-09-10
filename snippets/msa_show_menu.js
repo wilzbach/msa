@@ -11,7 +11,7 @@ opts.el = document.getElementById('msa_menu');
 opts.vis = {metacell: true, overviewbox: true};
 opts.columns = {hidden: [1,2,3]};
 var m = new msa.msa(opts);
-m.seqs.at(0).set("features", new msa.model.featurecol([f1,f2,f3]));
+m.seqs.at(1).set("features", new msa.model.featurecol([f1,f2,f3]));
 
 // the menu is independent to the MSA container
 var menuOpts = {};
