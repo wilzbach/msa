@@ -14,6 +14,7 @@ module.exports = pluginator.extend
     @listenTo @g.vis,"change", @_setSpacer
     @listenTo @g.zoomer,"change:alignmentWidth", ->
       @_adjustWidth()
+    @listenTo @g.zoomer, "change:_alignmentScrollLeft", @_adjustScrollingLeft
 
     # TODO: duplicate rendering
     @listenTo @g.columns, "change:hidden", ->
@@ -56,11 +57,21 @@ module.exports = pluginator.extend
     @el.className = "biojs_msa_header"
     @el.style.overflowX = "auto"
     @_adjustWidth()
+    @_adjustScrollingLeft()
     @
 
   # scrollLeft triggers a reflow of the whole area (even only get)
   _sendScrollEvent: ->
-    @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft
+    @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft, {origin: "header"}
+
+  _adjustScrollingLeft: (model,value,options) ->
+    if (not options?.origin?) or options.origin isnt "header"
+      scrollLeft = @g.zoomer.get "_alignmentScrollLeft"
+      # ugly hack: one can only set the scrollLeft property when it is on the
+      # window
+      window.setTimeout =>
+        @el.scrollLeft = scrollLeft
+      , 50
 
   _setSpacer: ->
     # spacer / padding element
