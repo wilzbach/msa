@@ -22,6 +22,7 @@ LabelView = view.extend
     @listenTo @g.vis, "change:labelName", @manageEvents
     @listenTo @g.vis, "change:labelId", @manageEvents
     @listenTo @g.vis, "change:labelPartition", @manageEvents
+    @listenTo @g.vis, "change:labelCheckbox", @manageEvents
 
   render: ->
     dom.removeAllChilds @el
@@ -30,6 +31,13 @@ LabelView = view.extend
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
     @el.setAttribute "class", "biojs_msa_labels"
+
+    if @.g.vis.get "labelCheckbox"
+      checkBox = document.createElement "input"
+      checkBox.setAttribute "type", "checkbox"
+      checkBox.value = @model.get('id')
+      checkBox.name = "seq"
+      @el.appendChild checkBox
 
     if @.g.vis.get "labelId"
       id = document.createElement "span"
