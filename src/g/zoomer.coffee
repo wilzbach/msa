@@ -26,3 +26,7 @@ module.exports = Zoomer = Model.extend
       @get("columnWidth") * n
     else
       @get "alignmentWidth"
+
+  # @param n [int] number of residues to scroll to the right
+  setLeftOffset: (n) ->
+    @set "_alignmentScrollLeft", n * @get('columnWidth')

@@ -29,6 +29,11 @@ module.exports = pluginator.extend
     @el.style.overflowY = "hidden"
 
     @_adjustWidth()
+    # ugly hack: one can only set the scrollLeft property when it is on the
+    # window
+    window.setTimeout( () =>
+      @_adjustScrollingLeft()
+    , 50)
     @
 
   # this is a expensive operation (reflow)
