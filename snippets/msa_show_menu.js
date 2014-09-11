@@ -1,5 +1,5 @@
 var Feature = msa.model.feature;
-var f1 = new Feature({xStart:2 ,xEnd: 20,text: "foo1", fillColor: "red"});
+var f1 = new Feature({xStart:7 ,xEnd: 20,text: "foo1", fillColor: "red"});
 var f2 = new Feature({xStart:21,xEnd: 40,text: "foo2", fillColor: "blue"});
 var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "green"});
 

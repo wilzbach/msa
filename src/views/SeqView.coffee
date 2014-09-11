@@ -218,8 +218,8 @@ SeqView = view.extend
     color = f.get "fillColor"
     cHeight = @g.zoomer.get("rowHeight")
     s.style.marginTop = -1
-    s.appendChild svg.rect x:1,y:1,width:width,height:cHeight - 1,style:
-      "stroke: " + color + ";stroke-width: 2;fill-opacity: 0"
+    s.appendChild svg.rect x:1,y:1,width:width - 1,height:cHeight - 1,style:
+      "stroke: " + color + ";stroke-width: 3;fill-opacity: 0"
     s.style.position = "absolute"
     s.style.left = 0
     jbone(s).on "mouseover", (evt) =>

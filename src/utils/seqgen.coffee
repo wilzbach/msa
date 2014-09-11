@@ -18,7 +18,7 @@ seqgen = module.exports =
     len = BMath.getRandomInt 3,5 unless len?
     seqLen = BMath.getRandomInt 50,200 unless seqLen?
 
-    for i in [0..len - 1] by 1
+    for i in [1..len] by 1
       seqs.push new Sequence(seqgen._generateSequence(seqLen), "seq" + i,
       "r" + i)
     return seqs

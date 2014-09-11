@@ -113,12 +113,13 @@ module.exports = OverviewBox = view.extend
       x = [x[1], x[0]]
     if @dragEnd[1] > @dragEnd[1]
       y = [y[1], y[0]]
-    console.log @dragEnd
-    #console.log "x",x
-    #console.log "y",y
+
+    # lower limit
     y[0] = Math.max y[0], 0
     x[0] = Math.max x[0], 0
     @ctx.fillRect x[0],y[0],x[1], y[1]
+
+    # abort selection events of the browser
     e.preventDefault()
     e.stopPropagation()
 
