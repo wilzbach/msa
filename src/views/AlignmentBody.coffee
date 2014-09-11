@@ -1,5 +1,5 @@
 pluginator = require("../bone/pluginator")
-SeqBlock = require "./SeqBlock"
+SeqBlock = require "./CanvasSeqBlock"
 LabelBlock = require "./labels/LabelBlock"
 
 module.exports = pluginator.extend
@@ -23,8 +23,6 @@ module.exports = pluginator.extend
   render: ->
     @renderSubviews()
     @el.className = "biojs_msa_albody"
-    @el.style.overflowY = "auto"
-    @el.style.overflowX = "visible"
     @el.style.whiteSpace = "nowrap"
     @adjustHeight()
     @
