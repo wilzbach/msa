@@ -22,10 +22,7 @@ module.exports = pluginator.extend
       @render()
 
     @draw()
-    if @model.length <= 10
-      @_onscroll = @_sendScrollEvent
-    else
-      @_onscroll = _.debounce @_sendScrollEvent, 500
+    @_onscroll = @_sendScrollEvent
 
   events:
     "scroll": "_onscroll"
