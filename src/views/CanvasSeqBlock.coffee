@@ -139,6 +139,9 @@ module.exports = pluginator.extend
 
   render: ->
 
+    @_checkScrolling()
+
+
     @el.className = "biojs_msa_seq_st_block"
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
@@ -150,6 +153,21 @@ module.exports = pluginator.extend
     @draw()
 
     @
+
+  _checkScrolling: ->
+    rectWidth = @g.zoomer.get "columnWidth"
+    rectHeight = @g.zoomer.get "rowHeight"
+
+    maxTop = @model.length  * rectHeight - @g.zoomer.get('alignmentHeight')
+    maxLeft = @model.getMaxLength() * rectWidth - @g.zoomer.get('alignmentWidth')
+
+    if @g.zoomer.get('_alignmentScrollTop') > maxTop
+      console.log "warning: overscroll"
+      @g.zoomer.set '_alignmentScrollTop', maxTop
+
+    if @g.zoomer.get('_alignmentScrollLeft') > maxLeft
+      console.log "warning: overscroll"
+      @g.zoomer.set '_alignmentScrollLeft', maxLeft
 
   _getLabelWidth: ->
      paddingLeft = 0
