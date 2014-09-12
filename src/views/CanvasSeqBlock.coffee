@@ -3,6 +3,8 @@ pluginator = require("../bone/pluginator")
 TaylorColors = require "./color/taylor"
 ZappoColors = require "./color/zappo"
 HydroColors = require "./color/hydrophobicity"
+mouse = require "../utils/mouse"
+_ = require "underscore"
 
 module.exports = pluginator.extend
 
@@ -23,6 +25,21 @@ module.exports = pluginator.extend
 
     #@el.setAttribute 'width', 300
     #@el.style.width = 300
+
+    @manageEvents()
+
+  manageEvents: ->
+    events = {}
+    if @g.config.get "registerMouseClicks"
+      events.click = "_onclick"
+    if @g.config.get "registerMouseHover"
+      events.mousein = "_onmousein"
+      events.mouseout = "_onmouseout"
+    @delegateEvents events
+
+    # listen for changes
+    @listenTo @g.config, "change:registerMouseHover", @manageEvents
+    @listenTo @g.config, "change:registerMouseClick", @manageEvents
 
   draw: ->
     @removeViews()
@@ -50,9 +67,15 @@ module.exports = pluginator.extend
     @ctx.font="14px Courier New"
     #@ctx.font="14px Lucida Console"
 
-    x = 0
     x = - @g.zoomer.get "_alignmentScrollLeft"
-    for j in [0.. seq.length - 1] by 1
+    # skip unneeded blocks at the beginning
+    start = Math.max 0, - Math.ceil(x / rectWidth)
+    x = 0
+
+    selection = @_getSelection data.model
+    console.log selection
+
+    for j in [start.. seq.length - 1] by 1
       c = seq[j]
       c = c.toUpperCase()
       color = @color[c]
@@ -60,11 +83,32 @@ module.exports = pluginator.extend
         @ctx.fillStyle = "#" + color
         @ctx.fillRect x,y,rectWidth,rectHeight
         @ctx.strokeText c,x + 3,y + 12,rectWidth
+
+      # check for selection
+      if selection.indexOf(j) >= 0
+        @ctx.lineWidth = 2
+        @ctx.fillStyle = "red"
+        @ctx.strokeRect x,y,rectWidth,rectHeight
+        @ctx.lineWidth = 1
+
       x = x + rectWidth
 
       # out of viewport - stop
       if x > @el.width
         break
+
+  _onclick: (e) ->
+    coords = mouse.getMouseCoords e
+    rectWidth = @g.zoomer.get "columnWidth"
+    rectHeight = @g.zoomer.get "rowHeight"
+    coords[0] += Math.floor(@g.zoomer.get("_alignmentScrollLeft") / rectWidth) * rectWidth
+    coords[1] += Math.floor(@g.zoomer.get("_alignmentScrollTop") / rectHeight) * rectHeight
+    x = Math.floor(coords[0] / rectWidth )
+    y = Math.floor(coords[1] / rectHeight)
+    seqId = @model.at(y).get "id"
+    @g.trigger "residue:click", {seqId:seqId, rowPos: x, evt:e}
+    console.log x,y
+    @render()
 
   render: ->
 
@@ -84,6 +128,26 @@ module.exports = pluginator.extend
      paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
      paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
      return paddingLeft
+
+  # TODO: should I be moved to the selection manager?
+  # returns an array with the currently selected residues
+  # e.g. [0,3] = pos 0 and 3 are selected
+  _getSelection: (model) ->
+    maxLen = model.get("seq").length
+    selection = []
+    sels = @g.selcol.getSelForRow model.get "id"
+    rows = _.find sels, (el) -> el.get("type") is "row"
+    if rows?
+      # full match
+      for n in [0..maxLen - 1] by 1
+        selection.push n
+    else if sels.length > 0
+      for sel in sels
+        for n in [sel.get("xStart")..sel.get("xEnd")] by 1
+          selection.push n
+
+    return selection
+
 
   _adjustWidth: ->
     if @el.parentNode?
