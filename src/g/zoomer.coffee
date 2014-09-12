@@ -32,4 +32,12 @@ module.exports = Zoomer = Model.extend
 
   # @param n [int] number of residues to scroll to the right
   setLeftOffset: (n) ->
-    @set "_alignmentScrollLeft", n * @get('columnWidth')
+    val = (n - 1) * @get('columnWidth')
+    val = Math.max 0, val
+    @set "_alignmentScrollLeft", val
+
+  # @param n [int] row that should be on top
+  setTopOffset: (n) ->
+    val = (n - 1) * @get('rowHeight')
+    val = Math.max 0, val
+    @set "_alignmentScrollTop",val
