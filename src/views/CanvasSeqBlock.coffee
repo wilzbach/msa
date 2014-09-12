@@ -11,24 +11,23 @@ module.exports = pluginator.extend
   initialize: (data) ->
     @g = data.g
 
-    @listenTo @g.zoomer, "change:_alignmentScrollLeft", @_adjustScrollingLeft
+    @listenTo @g.zoomer, "change:_alignmentScrollLeft change:_alignmentScrollTop", @render
     @listenTo @g.columns,"change:hidden", @_adjustWidth
     @listenTo @g.zoomer,"change:alignmentWidth", @_adjustWidth
 
     @ctx = @el.getContext '2d'
 
     @color = TaylorColors
-    @el.setAttribute 'height', 150
-    @el.style.height =  150
+    @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
+    @el.style.height =  @g.zoomer.get "alignmentHeight"
 
     #@el.setAttribute 'width', 300
     #@el.style.width = 300
 
-
   draw: ->
     @removeViews()
 
-    y = 0
+    y = - @g.zoomer.get "_alignmentScrollTop"
 
     rectHeight = @g.zoomer.get "rowHeight"
     @ctx.globalAlpha = 1
@@ -49,6 +48,7 @@ module.exports = pluginator.extend
     rectHeight = @g.zoomer.get "rowHeight"
 
     @ctx.font="14px Courier New"
+    #@ctx.font="14px Lucida Console"
 
     x = 0
     x = - @g.zoomer.get "_alignmentScrollLeft"
@@ -59,7 +59,7 @@ module.exports = pluginator.extend
       if color?
         @ctx.fillStyle = "#" + color
         @ctx.fillRect x,y,rectWidth,rectHeight
-        @ctx.strokeText c,x + 3,y + 10,rectWidth
+        @ctx.strokeText c,x + 3,y + 12,rectWidth
       x = x + rectWidth
 
       # out of viewport - stop
@@ -77,17 +77,7 @@ module.exports = pluginator.extend
     @_adjustWidth()
     @draw()
 
-    # ugly hack: one can only set the scrollLeft property when it is on the
-    # window
-    window.setTimeout( () =>
-      @_adjustScrollingLeft()
-    , 50)
     @
-
-  # this is a expensive operation (reflow)
-  # use with caution
-  _adjustScrollingLeft: ->
-    @render()
 
   _getLabelWidth: ->
      paddingLeft = 0
