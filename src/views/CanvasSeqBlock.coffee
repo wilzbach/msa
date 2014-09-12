@@ -3,6 +3,7 @@ pluginator = require("../bone/pluginator")
 mouse = require "../utils/mouse"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
+FontCache = require "./CanvasFontCache"
 
 module.exports = pluginator.extend
 
@@ -25,6 +26,8 @@ module.exports = pluginator.extend
     #@el.setAttribute 'width', 300
     #@el.style.width = 300
 
+    @cache = new FontCache()
+
     @manageEvents()
 
   manageEvents: ->
@@ -43,11 +46,15 @@ module.exports = pluginator.extend
   draw: ->
     @removeViews()
 
-    y = - @g.zoomer.get "_alignmentScrollTop"
+    rectHeight = @g.zoomer.get "rowHeight"
+    start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
+    y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
+
+    console.log start,y
 
     rectHeight = @g.zoomer.get "rowHeight"
     @ctx.globalAlpha = 1
-    for i in [0.. @model.length - 1] by 1
+    for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
       @drawSeq {model: @model.at(i), y: y}
       y = y + rectHeight
@@ -55,9 +62,9 @@ module.exports = pluginator.extend
       if y > @el.height
         break
 
-    y = - @g.zoomer.get "_alignmentScrollTop"
+    y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
     # draw again - overlays
-    for i in [0.. @model.length - 1] by 1
+    for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
       @drawSeqExtended {model: @model.at(i), y: y}
       y = y + rectHeight
@@ -71,7 +78,6 @@ module.exports = pluginator.extend
     rectWidth = @g.zoomer.get "columnWidth"
     rectHeight = @g.zoomer.get "rowHeight"
 
-    @ctx.font="14px Courier New"
 
     # skip unneeded blocks at the beginning
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
@@ -84,7 +90,9 @@ module.exports = pluginator.extend
       if color?
         @ctx.fillStyle = color
         @ctx.fillRect x,y,rectWidth,rectHeight
-        @ctx.strokeText c,x + 3,y + 12,rectWidth
+        #@ctx.strokeText c,x + 3,y + 12,rectWidth
+        @ctx.drawImage @cache.getFontTile(letter:c, width:rectWidth, height:
+          rectHeight), x, y,rectWidth,rectHeight
 
       x = x + rectWidth
       # out of viewport - stop
