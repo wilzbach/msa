@@ -8,6 +8,10 @@ module.exports = Consenus = Model.extend
     consenus : ""
 
   getConsensus: (seqs) ->
+    # emergency cutoff
+    if seqs.length > 1000
+      return
+
     cons = consenusCalc(seqs)
     @.set "consenus", cons
     cons
