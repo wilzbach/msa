@@ -17,7 +17,7 @@ module.exports = OverviewBox = view.extend
     @listenTo @g.colorscheme, "change:showLowerCase", @render
 
     # color
-    @_setColorScheme()
+    @color = colorSelector.getColor @g
     @listenTo @g.colorscheme, "change:scheme", ->
       @color = colorSelector.getColor @g
       @render()
