@@ -1,7 +1,7 @@
 SeqView = require("./SeqView")
 pluginator = require("../bone/pluginator")
 mouse = require "../utils/mouse"
-colorSelector = require "./color/selector"
+colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
 
 module.exports = pluginator.extend
@@ -15,6 +15,7 @@ module.exports = pluginator.extend
     @listenTo @g.columns,"change:hidden", @_adjustWidth
     @listenTo @g.zoomer,"change:alignmentWidth", @_adjustWidth
     @listenTo @g.colorscheme, "change:scheme", @render
+    @listenTo @g.selcol, "reset add", @render
 
     @ctx = @el.getContext '2d'
 
