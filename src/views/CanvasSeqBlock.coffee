@@ -50,13 +50,12 @@ module.exports = pluginator.extend
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
 
-    console.log start,y
 
     rectHeight = @g.zoomer.get "rowHeight"
     @ctx.globalAlpha = 1
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      @drawSeq {model: @model.at(i), y: y}
+      @drawSeq model: @model.at(i), y: y
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
@@ -66,7 +65,7 @@ module.exports = pluginator.extend
     # draw again - overlays
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      @drawSeqExtended {model: @model.at(i), y: y}
+      @drawSeqExtended model: @model.at(i), y: y
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
@@ -90,7 +89,6 @@ module.exports = pluginator.extend
       if color?
         @ctx.fillStyle = color
         @ctx.fillRect x,y,rectWidth,rectHeight
-        #@ctx.strokeText c,x + 3,y + 12,rectWidth
         @ctx.drawImage @cache.getFontTile(letter:c, width:rectWidth, height:
           rectHeight), x, y,rectWidth,rectHeight
 
@@ -112,7 +110,7 @@ module.exports = pluginator.extend
     [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
     features = data.model.get "features"
 
-    yZero = Math.ceil(data.y / rectHeight) * rectHeight
+    yZero = data.y
 
     for j in [start.. seq.length - 1] by 1
       starts = features.startOn j
