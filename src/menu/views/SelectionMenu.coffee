@@ -10,7 +10,7 @@ module.exports = SelectionMenu = view.extend
 
   render: ->
     menu = new MenuBuilder("Selection")
-    menu.addNode "Find all (supports RegEx)", =>
+    menu.addNode "Find Motif (supports RegEx)", =>
       search = prompt "your search", "D"
       # marks all hits
       search = new RegExp search, "gi"
