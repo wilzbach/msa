@@ -15,11 +15,18 @@ module.exports = pluginator.extend
       view.ordering = i
       @addView "row_#{i}", view
 
+  events:
+    "scroll": "_sendScrollEvent"
+
+  _sendScrollEvent: ->
+    @g.zoomer.set "_alignmentScrollTop", @el.scrollTop, {origin: "label"}
+
   render: ->
     @renderSubviews()
     @el.className = "biojs_msa_labelblock"
     @el.style.display = "inline-block"
     @el.style.verticalAlign = "top"
+    @el.style.height =  @g.zoomer.get "alignmentHeight"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
     @

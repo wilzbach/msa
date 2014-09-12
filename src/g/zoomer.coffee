@@ -7,7 +7,7 @@ module.exports = Zoomer = Model.extend
     metaWidth: 100
     labelWidth: 100
     alignmentWidth: "auto"
-    alignmentHeight: "auto"
+    alignmentHeight: 200
 
     rowHeight: 15
     textVisible: true
@@ -19,7 +19,9 @@ module.exports = Zoomer = Model.extend
     boxRectHeight: 5
     boxRectWidth: 5
 
+    # internal props
     _alignmentScrollLeft: 0
+    _alignmentScrollTop: 0
 
   # @param n [int] maxLength of all seqs
   getAlignmentWidth: (n) ->
