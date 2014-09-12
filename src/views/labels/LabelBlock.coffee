@@ -6,6 +6,8 @@ module.exports = pluginator.extend
   initialize: (data) ->
     @g = data.g
     @draw()
+    @listenTo @g.zoomer, "change:_alignmentScrollTop", ->
+      @el.scrollTop =  @g.zoomer.get "_alignmentScrollTop"
 
   draw: ->
     @removeViews()

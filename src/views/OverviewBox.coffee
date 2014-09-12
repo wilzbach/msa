@@ -182,6 +182,7 @@ module.exports = OverviewBox = view.extend
     # safety check + update offset
     leftestIndex = 0 if leftestIndex is origIndex
     @g.zoomer.setLeftOffset leftestIndex
+    @g.zoomer.setTopOffset a[1]
 
   # ends the selection mode
   _onmouseup: (e) ->
