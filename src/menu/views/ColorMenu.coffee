@@ -49,7 +49,7 @@ module.exports = ColorMenu = view.extend
     schemes  = []
     schemes.push name: "Zappo", id: "zappo"
     schemes.push name: "Taylor", id: "taylor"
-    schemes.push name: "Hydrophobicity", id: "hydrophobicity"
+    schemes.push name: "Hydrophobicity", id: "hydro"
     schemes.push name: "Lesk", id: "lesk"
     schemes.push name: "Cinema", id: "cinema"
     schemes.push name: "MAE", id: "mae"
