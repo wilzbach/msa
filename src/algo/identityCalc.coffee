@@ -3,6 +3,10 @@
 # * excluding gaps
 # * identity = matchedChars / totalChars (excluding gaps)
 module.exports = identitiyCalc = (seqs, consensus) ->
+  # do nothing on invalid consensus
+  if consensus is undefined
+    console.warn "bug on consenus calc"
+    return
   seqs.each (seqObj) ->
     seq = seqObj.get "seq"
     matches = 0

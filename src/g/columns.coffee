@@ -14,6 +14,12 @@ module.exports = Columns = Model.extend
 
   # calcs conservation
   _calcConservationPre: (seqs) ->
+
+    # emergency cutoff
+    console.log seqs.length
+    if seqs.length > 1000
+      return
+
     # calc consensus
     cons = consenus(seqs)
     seqs = seqs.map (el) -> el.get "seq"
