@@ -25,18 +25,15 @@ module.exports = SelectionMenu = view.extend
             seq.get("id")}
           newSeli.push new sel.possel(args)
           leftestIndex = Math.min index, leftestIndex
+
+      if newSeli.length is 0
+        alert "no selection found"
       selcol.reset newSeli
 
       # safety check + update offset
       leftestIndex = 0 if leftestIndex is origIndex
       @g.zoomer.setLeftOffset leftestIndex
 
-    menu.addNode "Select all", =>
-      seqs = @model.pluck "id"
-      seli = []
-      for id in seqs
-        seli.push new sel.rowsel {seqId: id}
-      @g.selcol.reset seli
     menu.addNode "Invert columns", =>
       @g.selcol.invertCol [0..@model.getMaxLength()]
     menu.addNode "Invert rows", =>
