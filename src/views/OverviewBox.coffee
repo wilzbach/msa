@@ -1,7 +1,7 @@
 view = require("../bone/view")
 mouse = require "../utils/mouse"
 selection = require "../g/selection/Selection"
-colorSelector = require "./color/selector"
+colorSelector = require("biojs-vis-colorschemes").selector
 jbone = require "jbone"
 
 module.exports = OverviewBox = view.extend
