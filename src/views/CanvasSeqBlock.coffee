@@ -1,9 +1,7 @@
 SeqView = require("./SeqView")
 pluginator = require("../bone/pluginator")
-TaylorColors = require "./color/taylor"
-ZappoColors = require "./color/zappo"
-HydroColors = require "./color/hydrophobicity"
 mouse = require "../utils/mouse"
+colorSelector = require "./color/selector"
 _ = require "underscore"
 
 module.exports = pluginator.extend
@@ -16,10 +14,10 @@ module.exports = pluginator.extend
     @listenTo @g.zoomer, "change:_alignmentScrollLeft change:_alignmentScrollTop", @render
     @listenTo @g.columns,"change:hidden", @_adjustWidth
     @listenTo @g.zoomer,"change:alignmentWidth", @_adjustWidth
+    @listenTo @g.colorscheme, "change:scheme", @render
 
     @ctx = @el.getContext '2d'
 
-    @color = TaylorColors
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
     @el.style.height =  @g.zoomer.get "alignmentHeight"
 
@@ -73,14 +71,13 @@ module.exports = pluginator.extend
     x = 0
 
     selection = @_getSelection data.model
-    console.log selection
 
     for j in [start.. seq.length - 1] by 1
       c = seq[j]
       c = c.toUpperCase()
       color = @color[c]
       if color?
-        @ctx.fillStyle = "#" + color
+        @ctx.fillStyle = color
         @ctx.fillRect x,y,rectWidth,rectHeight
         @ctx.strokeText c,x + 3,y + 12,rectWidth
 
@@ -107,16 +104,16 @@ module.exports = pluginator.extend
     y = Math.floor(coords[1] / rectHeight)
     seqId = @model.at(y).get "id"
     @g.trigger "residue:click", {seqId:seqId, rowPos: x, evt:e}
-    console.log x,y
     @render()
 
   render: ->
-
 
     @el.className = "biojs_msa_seq_st_block"
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
     @el.style.overflowY = "hidden"
+
+    @color = colorSelector.getColor @g
 
     @_adjustWidth()
     @draw()
