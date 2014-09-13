@@ -30,10 +30,11 @@ module.exports = class CanvasFontCache
     canvas.width = width
     canvas.height = height
     @ctx = canvas.getContext '2d'
-    @ctx.font="14px Courier New"
+    @ctx.font="13px Droid Sans Mono"
     @ctx.textBaseline = 'middle'
     @ctx.textAlign="center"
 
+    #@ctx.strokeStyle = "#333"
     @ctx.strokeText letter,width / 2,height / 2,width
     # save
     #@cache[letter] = @ctx.getImageData 0,0,width,height

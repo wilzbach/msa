@@ -24,6 +24,7 @@ module.exports = pluginator.extend
       console.log "seq add"
 
     @listenTo @g.vis,"change:sequences", @rerender
+    @listenTo @g.vis,"change:overviewbox", @rerender
     @listenTo @g.visorder,"change", @rerender
 
   draw: ->

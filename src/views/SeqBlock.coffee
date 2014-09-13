@@ -40,24 +40,3 @@ module.exports = pluginator.extend
   # use with caution
   _adjustScrollingLeft: ->
     @el.scrollLeft = @g.zoomer.get "_alignmentScrollLeft"
-
-
-  _getLabelWidth: ->
-     paddingLeft = 0
-     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     return paddingLeft
-
-  _adjustWidth: ->
-    if @el.parentNode?
-      parentWidth = @el.parentNode.offsetWidth
-    else
-      parentWidth = document.body.clientWidth
-
-    # TODO: dirty hack
-    @maxWidth = parentWidth - @_getLabelWidth() - 35
-    @el.style.width = @g.zoomer.get "alignmentWidth"
-    calcWidth = @g.zoomer.getAlignmentWidth( @model.getMaxLength() - @g.columns.get('hidden').length)
-    if calcWidth > @maxWidth
-      @g.zoomer.set "alignmentWidth", @maxWidth
-    @el.style.width = Math.min calcWidth, @maxWidth
