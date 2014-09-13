@@ -52,11 +52,12 @@ module.exports = pluginator.extend
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
     @g.visorder = new VisOrdering data.visorder
-    @g.zoomer = new Zoomer data.zoomer
+    @g.zoomer = new Zoomer data.zoomer,{g:@g}
 
     @addView "stage",new Stage {model: @seqs, g: @g}
     @el.setAttribute "class", "biojs_msa_div"
 
   render: ->
     @renderSubviews()
+    @g.vis.set "loaded", true
     @

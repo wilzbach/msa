@@ -8,6 +8,8 @@ module.exports = pluginator.extend
 
   initialize: (data) ->
     @g = data.g
+    @blockEvents = false
+
     @listenTo @g.vis,"change:markers change:conserv", ->
       @draw()
       @render()
@@ -59,16 +61,21 @@ module.exports = pluginator.extend
 
   # scrollLeft triggers a reflow of the whole area (even only get)
   _sendScrollEvent: ->
-    @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft, {origin: "header"}
+    unless @blockEvents
+      @g.zoomer.set "_alignmentScrollLeft", @el.scrollLeft, {origin: "header"}
+    @blockEvents = false
 
   _adjustScrollingLeft: (model,value,options) ->
     if (not options?.origin?) or options.origin isnt "header"
       scrollLeft = @g.zoomer.get "_alignmentScrollLeft"
-      # ugly hack: one can only set the scrollLeft property when it is on the
-      # window
-      window.setTimeout =>
+      @blockEvents = true
+      if @g.vis.get('loaded')
         @el.scrollLeft = scrollLeft
-      , 50
+      else
+        # ugly hack: one can only set the scrollLeft property when it is on the window
+        window.setTimeout =>
+          @el.scrollLeft = scrollLeft
+        , 50
 
   _setSpacer: ->
     # spacer / padding element
