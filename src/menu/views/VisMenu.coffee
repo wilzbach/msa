@@ -55,6 +55,7 @@ module.exports = ImportMenu = view.extend
     vis.push name: "Labels", id: "labels"
     vis.push name: "Sequences", id: "sequences"
     vis.push name: "Meta info", id: "metacell"
+    vis.push name: "Overviewbox", id: "overviewbox"
     vis.push name: "conserv", id: "conserv"
     vis.push name: "LabelName", id: "labelName"
     vis.push name: "LabelId", id: "labelId"

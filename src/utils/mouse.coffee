@@ -23,6 +23,19 @@ module.exports = Mouse =
     return [mouseX,mouseY]
 
   getMouseCoordsScreen: (e) ->
-    mouseX = e.screenX
-    mouseY = e.screenY
+    mouseX = e.clientX
+    mouseY = e.clientY
+
+    unless mouseX?
+      mouseX = e.layerX
+      mouseY = e.layerY
+
+    unless mouseX?
+      mouseX = e.pageX
+      mouseY = e.pageY
+
+    unless mouseX?
+      mouseX = e.x
+      mouseY = e.y
+
     return [mouseX,mouseY]

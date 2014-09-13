@@ -3,6 +3,7 @@ pluginator = require("../bone/pluginator")
 mouse = require "../utils/mouse"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
+jbone = require "jbone"
 FontCache = require "./CanvasFontCache"
 
 module.exports = pluginator.extend
@@ -18,20 +19,21 @@ module.exports = pluginator.extend
     @listenTo @g.colorscheme, "change:scheme", @render
     @listenTo @g.selcol, "reset add", @render
 
+    # el props
+    @el.style.display = "inline-block"
+    @el.style.overflowX = "hidden"
+    @el.style.overflowY = "hidden"
+    @el.className = "biojs_msa_seq_st_block"
+
     @ctx = @el.getContext '2d'
-
-    @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
-    @el.style.height =  @g.zoomer.get "alignmentHeight"
-
-    #@el.setAttribute 'width', 300
-    #@el.style.width = 300
-
     @cache = new FontCache()
 
     @manageEvents()
 
   manageEvents: ->
     events = {}
+    events.mousedown = "_onmousedown"
+
     if @g.config.get "registerMouseClicks"
       events.click = "_onclick"
     if @g.config.get "registerMouseHover"
@@ -42,6 +44,50 @@ module.exports = pluginator.extend
     # listen for changes
     @listenTo @g.config, "change:registerMouseHover", @manageEvents
     @listenTo @g.config, "change:registerMouseClick", @manageEvents
+    @dragStart = []
+
+  _onmousemove: (e) ->
+    return if @dragStart.length is 0
+
+    dragEnd = mouse.getMouseCoordsScreen e
+    # relative to first click
+    relEnd = [dragEnd[0] - @dragStart[0], dragEnd[1] - @dragStart[1]]
+    # relative to initial scroll status
+    relDist = [@dragStartScroll[0] + relEnd[0], @dragStartScroll[1] + relEnd[1]]
+
+    # update scrollbar
+    scrollCorrected = @_checkScrolling( relDist)
+    @g.zoomer._checkScrolling scrollCorrected
+
+    # reset start if use scrolls out of bounds
+    for i in [0..1] by 1
+      if scrollCorrected[i] isnt relDist[i]
+        if scrollCorrected[i] is 0
+          # reset of left, top
+          @dragStart[i] = dragEnd[i]
+          @dragStartScroll[i] = 0
+        else
+          # recalibrate on right, bottom
+          @dragStart[i] = dragEnd[i] - scrollCorrected[i]
+
+    # abort selection events of the browser
+    e.preventDefault()
+    e.stopPropagation()
+
+  # start the dragging mode
+  _onmousedown: (e) ->
+    @dragStart = mouse.getMouseCoordsScreen e
+    @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
+    jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
+    jbone(document.body).on 'mouseup.overup', (e) => @_onmouseup(e)
+
+  # cleanup
+  _onmouseup: (e) ->
+    @dragStart = []
+
+    # remove all listeners
+    jbone(document.body).off('.overmove')
+    jbone(document.body).off('.overup')
 
   draw: ->
     @removeViews()
@@ -49,7 +95,6 @@ module.exports = pluginator.extend
     rectHeight = @g.zoomer.get "rowHeight"
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
-
 
     rectHeight = @g.zoomer.get "rowHeight"
     @ctx.globalAlpha = 1
@@ -139,41 +184,34 @@ module.exports = pluginator.extend
 
   render: ->
 
-    @_checkScrolling()
+    @g.zoomer._adjustWidth @el, @model
+    @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
+    @g.zoomer.get('_alignmentScrollTop')] ))
 
-
-    @el.className = "biojs_msa_seq_st_block"
-    @el.style.display = "inline-block"
-    @el.style.overflowX = "hidden"
-    @el.style.overflowY = "hidden"
+    @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
+    @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
 
     @color = colorSelector.getColor @g
 
-    @_adjustWidth()
     @draw()
-
     @
 
-  _checkScrolling: ->
-    rectWidth = @g.zoomer.get "columnWidth"
-    rectHeight = @g.zoomer.get "rowHeight"
+  # checks whether the scrolling coordinates are valid
+  # @returns: [xScroll,yScroll] valid coordinates
+  _checkScrolling: (scrollObj) ->
 
-    maxTop = @model.length  * rectHeight - @g.zoomer.get('alignmentHeight')
-    maxLeft = @model.getMaxLength() * rectWidth - @g.zoomer.get('alignmentWidth')
+    # 0: maxLeft, 1: maxTop
+    max = [@model.getMaxLength() * @g.zoomer.get("columnWidth") - @g.zoomer.get('alignmentWidth'),
+    @model.length  * @g.zoomer.get("rowHeight") - @g.zoomer.get('alignmentHeight')]
 
-    if @g.zoomer.get('_alignmentScrollTop') > maxTop
-      console.log "warning: overscroll"
-      @g.zoomer.set '_alignmentScrollTop', maxTop
+    for i in [0..1] by 1
+      if scrollObj[i] > max[i]
+        scrollObj[i] = max[i]
 
-    if @g.zoomer.get('_alignmentScrollLeft') > maxLeft
-      console.log "warning: overscroll"
-      @g.zoomer.set '_alignmentScrollLeft', maxLeft
+      if scrollObj[i] < 0
+        scrollObj[i] = 0
 
-  _getLabelWidth: ->
-     paddingLeft = 0
-     paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
-     return paddingLeft
+    return scrollObj
 
   # TODO: should I be moved to the selection manager?
   # returns an array with the currently selected residues
@@ -194,6 +232,7 @@ module.exports = pluginator.extend
 
     return selection
 
+  # draws features
   appendFeature: (data) ->
     f = data.f
     # TODO: this is a very naive way of using SVG to display features
@@ -206,19 +245,43 @@ module.exports = pluginator.extend
     beforeStyle = @ctx.strokeStyle
     @ctx.strokeStyle = f.get "fillColor"
 
-
     @ctx.strokeRect data.xZero, data.yZero, width,boxHeight
     @ctx.strokeStyle = beforeStyle
     @ctx.lineWidth = beforeWidth
 
-  # displays the current user selection
-  # and checks the prev and next row for selection  -> no borders in a selection
+
+  # loops over all selection and calls the render method
+  _appendSelection: (data) ->
+    seq = data.model.get("seq")
+    selection = @_getSelection data.model
+    hidden = @g.columns.get "hidden"
+    # get the status of the upper and lower row
+    [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
+
+    boxWidth = @g.zoomer.get("columnWidth")
+    boxHeight = @g.zoomer.get("rowHeight")
+
+    # avoid unnecessary loops
+    return if selection.length is 0
+
+    hiddenOffset = 0
+    for n in [0..seq.length - 1] by 1
+      if hidden.indexOf(n) >= 0
+        hiddenOffset++
+      else
+        k = n - hiddenOffset
+        # only if its a new selection
+        if selection.indexOf(n) >= 0 and (k is 0 or selection.indexOf(n - 1) < 0 )
+          @_renderSelection n:n,selection: selection,mPrevSel: mPrevSel,mNextSel:mNextSel, xZero: data.xZero, yZero: data.yZero, model: data.model
+
+  # draws a single user selection
   _renderSelection: (data) ->
 
     xZero = data.xZero
     yZero = data.yZero
     n = data.n
     selection = data.selection
+    # and checks the prev and next row for selection  -> no borders in a selection
     mPrevSel= data.mPrevSel
     mNextSel = data.mNextSel
 
@@ -275,54 +338,12 @@ module.exports = pluginator.extend
     @ctx.strokeStyle = beforeStyle
     @ctx.lineWidth = beforeWidth
 
-  _appendSelection: (data) ->
-    seq = data.model.get("seq")
-    selection = @_getSelection data.model
-    hidden = @g.columns.get "hidden"
-    # get the status of the upper and lower row
-    [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
-
-    boxWidth = @g.zoomer.get("columnWidth")
-    boxHeight = @g.zoomer.get("rowHeight")
-
-    # avoid unnecessary loops
-    return if selection.length is 0
-
-    hiddenOffset = 0
-    for n in [0..seq.length - 1] by 1
-      if hidden.indexOf(n) >= 0
-        hiddenOffset++
-      else
-        k = n - hiddenOffset
-        # only if its a new selection
-        if selection.indexOf(n) >= 0 and (k is 0 or selection.indexOf(n - 1) < 0 )
-          @_renderSelection n:n,selection: selection,mPrevSel: mPrevSel,mNextSel:mNextSel, xZero: data.xZero, yZero: data.yZero, model: data.model
-
-
-
-  _adjustWidth: ->
-    if @el.parentNode?
-      parentWidth = @el.parentNode.offsetWidth
-    else
-      parentWidth = document.body.clientWidth
-
-    # TODO: dirty hack
-    @maxWidth = parentWidth - @_getLabelWidth() - 35
-    @el.style.width = @g.zoomer.get "alignmentWidth"
-    calcWidth = @g.zoomer.getAlignmentWidth( @model.getMaxLength() - @g.columns.get('hidden').length)
-    if calcWidth > @maxWidth
-      @g.zoomer.set "alignmentWidth", @maxWidth
-    @el.style.width = Math.min calcWidth, @maxWidth
-    @el.setAttribute 'width', @el.style.width
-
+  # looks at the selection of the prev and next el
+  # TODO: this is very naive, as there might be gaps above or below
   _getPrevNextSelection: (model) ->
-    # looks at the selection of the prev and next el
-    # TODO: this is very naive, as there might be gaps above or below
 
     modelPrev = model.collection.prev model
     modelNext = model.collection.next model
     mPrevSel = @_getSelection modelPrev if modelPrev?
     mNextSel = @_getSelection modelNext if modelNext?
     [mPrevSel,mNextSel]
-
-
