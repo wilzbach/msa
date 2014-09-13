@@ -39,55 +39,14 @@ module.exports = pluginator.extend
     if @g.config.get "registerMouseHover"
       events.mousein = "_onmousein"
       events.mouseout = "_onmouseout"
+
+    events.mousewheel = "_onmousewheel"
     @delegateEvents events
 
     # listen for changes
     @listenTo @g.config, "change:registerMouseHover", @manageEvents
     @listenTo @g.config, "change:registerMouseClick", @manageEvents
     @dragStart = []
-
-  _onmousemove: (e) ->
-    return if @dragStart.length is 0
-
-    dragEnd = mouse.getMouseCoordsScreen e
-    # relative to first click
-    relEnd = [dragEnd[0] - @dragStart[0], dragEnd[1] - @dragStart[1]]
-    # relative to initial scroll status
-    relDist = [@dragStartScroll[0] + relEnd[0], @dragStartScroll[1] + relEnd[1]]
-
-    # update scrollbar
-    scrollCorrected = @_checkScrolling( relDist)
-    @g.zoomer._checkScrolling scrollCorrected
-
-    # reset start if use scrolls out of bounds
-    for i in [0..1] by 1
-      if scrollCorrected[i] isnt relDist[i]
-        if scrollCorrected[i] is 0
-          # reset of left, top
-          @dragStart[i] = dragEnd[i]
-          @dragStartScroll[i] = 0
-        else
-          # recalibrate on right, bottom
-          @dragStart[i] = dragEnd[i] - scrollCorrected[i]
-
-    # abort selection events of the browser
-    e.preventDefault()
-    e.stopPropagation()
-
-  # start the dragging mode
-  _onmousedown: (e) ->
-    @dragStart = mouse.getMouseCoordsScreen e
-    @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
-    jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
-    jbone(document.body).on 'mouseup.overup', (e) => @_onmouseup(e)
-
-  # cleanup
-  _onmouseup: (e) ->
-    @dragStart = []
-
-    # remove all listeners
-    jbone(document.body).off('.overmove')
-    jbone(document.body).off('.overup')
 
   draw: ->
     @removeViews()
@@ -133,7 +92,9 @@ module.exports = pluginator.extend
       color = @color[c]
       if color?
         @ctx.fillStyle = color
+        @ctx.globalAlpha = @g.colorator.get "opacity"
         @ctx.fillRect x,y,rectWidth,rectHeight
+        @ctx.globalAlpha = 1.0
         @ctx.drawImage @cache.getFontTile(letter:c, width:rectWidth, height:
           rectHeight), x, y,rectWidth,rectHeight
 
@@ -170,18 +131,6 @@ module.exports = pluginator.extend
 
     @_appendSelection model: data.model, xZero: xZero, yZero: yZero
 
-  _onclick: (e) ->
-    coords = mouse.getMouseCoords e
-    rectWidth = @g.zoomer.get "columnWidth"
-    rectHeight = @g.zoomer.get "rowHeight"
-    coords[0] += Math.floor(@g.zoomer.get("_alignmentScrollLeft") / rectWidth) * rectWidth
-    coords[1] += Math.floor(@g.zoomer.get("_alignmentScrollTop") / rectHeight) * rectHeight
-    x = Math.floor(coords[0] / rectWidth )
-    y = Math.floor(coords[1] / rectHeight)
-    seqId = @model.at(y).get "id"
-    @g.trigger "residue:click", {seqId:seqId, rowPos: x, evt:e}
-    @render()
-
   render: ->
 
     @g.zoomer._adjustWidth @el, @model
@@ -195,6 +144,78 @@ module.exports = pluginator.extend
 
     @draw()
     @
+
+  _onmousemove: (e) ->
+    return if @dragStart.length is 0
+
+    dragEnd = mouse.getMouseCoordsScreen e
+    # relative to first click
+    relEnd = [dragEnd[0] - @dragStart[0], dragEnd[1] - @dragStart[1]]
+    # relative to initial scroll status
+    relDist = [@dragStartScroll[0] + relEnd[0], @dragStartScroll[1] + relEnd[1]]
+
+    # update scrollbar
+    scrollCorrected = @_checkScrolling( relDist)
+    @g.zoomer._checkScrolling scrollCorrected
+
+    # reset start if use scrolls out of bounds
+    for i in [0..1] by 1
+      if scrollCorrected[i] isnt relDist[i]
+        if scrollCorrected[i] is 0
+          # reset of left, top
+          @dragStart[i] = dragEnd[i]
+          @dragStartScroll[i] = 0
+        else
+          # recalibrate on right, bottom
+          @dragStart[i] = dragEnd[i] - scrollCorrected[i]
+
+    # abort selection events of the browser
+    e.preventDefault()
+    e.stopPropagation()
+
+  # start the dragging mode
+  _onmousedown: (e) ->
+    @dragStart = mouse.getMouseCoordsScreen e
+    @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
+    jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
+    jbone(document.body).on 'mouseup.overup', => @_cleanup()
+    jbone(document.body).on 'mouseout.overout', => @_cleanup()
+
+  _cleanup: ->
+    @dragStart = []
+
+    # remove all listeners
+    jbone(document.body).off('.overmove')
+    jbone(document.body).off('.overup')
+    jbone(document.body).off('.overout')
+
+  # might be incompatible with some browsers
+  _onmousewheel: (e) ->
+    @g.zoomer.set '_alignmentScrollLeft', @g.zoomer.get('_alignmentScrollLeft') + e.deltaX
+    @g.zoomer.set '_alignmentScrollTop', @g.zoomer.get('_alignmentScrollTop') + e.deltaY
+
+  _onclick: (e) ->
+    @g.trigger "residue:click", @_getClickPos(e)
+    @render()
+
+  _onmousein: (e) ->
+    @g.trigger "residue:click", @_getClickPos(e)
+    @render()
+
+  _onmouseout: (e) ->
+    @g.trigger "residue:click", @_getClickPos(e)
+    @render()
+
+  _getClickPos: (e) ->
+    coords = mouse.getMouseCoords e
+    rectWidth = @g.zoomer.get "columnWidth"
+    rectHeight = @g.zoomer.get "rowHeight"
+    coords[0] += Math.floor(@g.zoomer.get("_alignmentScrollLeft") / rectWidth) * rectWidth
+    coords[1] += Math.floor(@g.zoomer.get("_alignmentScrollTop") / rectHeight) * rectHeight
+    x = Math.floor(coords[0] / rectWidth )
+    y = Math.floor(coords[1] / rectHeight)
+    seqId = @model.at(y).get "id"
+    return {seqId:seqId, rowPos: x, evt:e}
 
   # checks whether the scrolling coordinates are valid
   # @returns: [xScroll,yScroll] valid coordinates
