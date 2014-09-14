@@ -11,18 +11,8 @@
 	vertical-align:top;
 }
 
-.biojs_msa_seqblock span{
-	cursor: pointer;
-	text-align: center;
-	display: inline-block;
-	height: inherit;
-}
-
 .biojs_msa_seqblock {
-	color: black;
-	white-space: nowrap;
-	vertical-align:middle;
-	font-family: monospace;
+	cursor: move;
 }
 
 .biojs_msa_layer{
