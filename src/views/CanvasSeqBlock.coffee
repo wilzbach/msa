@@ -70,6 +70,7 @@ module.exports = pluginator.extend
   manageEvents: ->
     events = {}
     events.mousedown = "_onmousedown"
+    events.touchstart = "_ontouchstart"
 
     if @g.config.get "registerMouseClicks"
       events.click = "_onclick"
@@ -233,7 +234,14 @@ module.exports = pluginator.extend
 
     @throttledDraw()
 
-    # abort selection events of the browser
+    # abort selection events of the browser (mouse only)
+    if e.preventDefault?
+      e.preventDefault()
+      e.stopPropagation()
+
+  # converts touches into old mouse event
+  _ontouchmove: (e) ->
+    @_onmousemove e.changedTouches[0]
     e.preventDefault()
     e.stopPropagation()
 
@@ -245,6 +253,14 @@ module.exports = pluginator.extend
     jbone(document.body).on 'mouseup.overup', => @_cleanup()
     jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
 
+  # starts the touch mode
+  _ontouchstart: (e) ->
+    @dragStart = mouse.getMouseCoordsScreen e.changedTouches[0]
+    @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
+    jbone(document.body).on 'touchmove.overtmove', (e) => @_ontouchmove(e)
+    jbone(document.body).on 'touchend.overtend touchleave.overtleave
+    touchcancel.overtcanel', => @_touchCleanup()
+
   # checks whether mouse moved out of the window
   # -> terminate dragging
   _onmousewinout: (e) ->
@@ -254,11 +270,20 @@ module.exports = pluginator.extend
   # terminates dragging
   _cleanup: ->
     @dragStart = []
-
     # remove all listeners
     jbone(document.body).off('.overmove')
     jbone(document.body).off('.overup')
     jbone(document.body).off('.overout')
+
+  # terminates touching
+  _touchCleanup: ->
+    @dragStart = []
+    # remove all listeners
+    jbone(document.body).off('.overtmove')
+    jbone(document.body).off('.overtend')
+    jbone(document.body).off('.overtleave')
+    jbone(document.body).off('.overtcancel')
+
 
   # might be incompatible with some browsers
   _onmousewheel: (e) ->
