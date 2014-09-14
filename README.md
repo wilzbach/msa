@@ -29,8 +29,6 @@ The BioJS MSA Viewer written in CoffeeScript.
 <link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/0.1/msa.min.gz.css />
 ```
 
-![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
-
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
 
 JS  | CSS
@@ -48,9 +46,12 @@ In case
 Demo
 -----
 
+[![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/3/edit) 
+[![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/1/edit) 
+
+
 [Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
 
-A [JSBin](http://jsbin.com/yivex/2/edit) to start hacking.
 
 #### display an MSA
 
