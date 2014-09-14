@@ -200,7 +200,8 @@ module.exports = pluginator.extend
       if x > @el.width
         break
 
-    @_appendSelection model: data.model, xZero: xZero, yZero: yZero
+    @_appendSelection model: data.model, xZero: xZero, yZero: yZero, hidden:
+      data.hidden
 
   render: ->
 
