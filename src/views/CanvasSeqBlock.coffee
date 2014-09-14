@@ -108,11 +108,13 @@ module.exports = pluginator.extend
 
   drawSeqs: (callback) ->
     rectHeight = @g.zoomer.get "rowHeight"
+    hidden = @g.columns.get "hidden"
+
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      callback.call @, {model: @model.at(i), y: y}
+      callback.call @, {model: @model.at(i), y: y, hidden: hidden}
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
@@ -142,7 +144,10 @@ module.exports = pluginator.extend
 
       # local call is faster than apply
       # http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
-      callback @,res
+      if data.hidden.indexOf(j) < 0
+        callback @,res
+      else
+        continue
 
       # move to the right
       x = x + rectWidth
@@ -182,6 +187,10 @@ module.exports = pluginator.extend
 
     for j in [start.. seq.length - 1] by 1
       starts = features.startOn j
+
+      if data.hidden.indexOf(j) < 0
+        continue
+
       if starts.length > 0
         for f in starts
           @appendFeature f: f,xZero: x, yZero: yZero
@@ -326,6 +335,12 @@ module.exports = pluginator.extend
     coords[1] += @g.zoomer.get("_alignmentScrollTop")
     x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
     y = Math.floor(coords[1] / @g.zoomer.get("rowHeight"))
+
+    # add hidden columns
+    x += @g.columns.calcHiddenColumns x
+    # add hidden seqs
+    y += @model.calcHiddenSeqs y
+
     x = Math.max 0,x
     y = Math.max 0,y
     seqId = @model.at(y).get "id"
@@ -370,7 +385,7 @@ module.exports = pluginator.extend
   # draws features
   appendFeature: (data) ->
     f = data.f
-    # TODO: this is a very naive way of using SVG to display features
+    # TODO: this is a very naive way
     boxWidth = @g.zoomer.get("columnWidth")
     boxHeight = @g.zoomer.get("rowHeight")
     width = (f.get("xEnd") - f.get("xStart")) * boxWidth
@@ -389,7 +404,6 @@ module.exports = pluginator.extend
   _appendSelection: (data) ->
     seq = data.model.get("seq")
     selection = @_getSelection data.model
-    hidden = @g.columns.get "hidden"
     # get the status of the upper and lower row
     [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
 
@@ -401,13 +415,14 @@ module.exports = pluginator.extend
 
     hiddenOffset = 0
     for n in [0..seq.length - 1] by 1
-      if hidden.indexOf(n) >= 0
+      if data.hidden.indexOf(n) >= 0
+        console.log "hidden"
         hiddenOffset++
       else
         k = n - hiddenOffset
         # only if its a new selection
         if selection.indexOf(n) >= 0 and (k is 0 or selection.indexOf(n - 1) < 0 )
-          @_renderSelection n:n,selection: selection,mPrevSel: mPrevSel,mNextSel:mNextSel, xZero: data.xZero, yZero: data.yZero, model: data.model
+          @_renderSelection n:n,k:k,selection: selection,mPrevSel: mPrevSel,mNextSel:mNextSel, xZero: data.xZero, yZero: data.yZero, model: data.model
 
   # draws a single user selection
   _renderSelection: (data) ->
@@ -415,6 +430,7 @@ module.exports = pluginator.extend
     xZero = data.xZero
     yZero = data.yZero
     n = data.n
+    k = data.k
     selection = data.selection
     # and checks the prev and next row for selection  -> no borders in a selection
     mPrevSel= data.mPrevSel
@@ -423,7 +439,6 @@ module.exports = pluginator.extend
     # get the length of this selection
     selectionLength = 0
     for i in [n.. data.model.get("seq").length - 1] by 1
-
       if selection.indexOf(i) >= 0
         selectionLength++
       else
@@ -442,7 +457,7 @@ module.exports = pluginator.extend
     beforeStyle = @ctx.strokeStyle
     @ctx.strokeStyle = "#FF0000"
 
-    xZero += n * boxWidth
+    xZero += k * boxWidth
 
     # split up the selection into single cells
     xPart = 0

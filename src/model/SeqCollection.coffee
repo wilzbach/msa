@@ -39,3 +39,12 @@ module.exports = SeqManager = Collection.extend
     index = @indexOf(model) + 1
     index = 0 if index == @.length and endless
     @at(index)
+
+  # @returns n [int] number of hidden columns until n
+  calcHiddenSeqs: (n) ->
+    nNew = n
+    for i in [0..nNew]
+      if @at(i).get("hidden")
+        nNew++
+    nNew - n
+

@@ -12,6 +12,16 @@ module.exports = Columns = Model.extend
     # hidden columns
     @.set "hidden", [] unless @.get("hidden")?
 
+  # assumes hidden columns are sorted
+  # @returns n [int] number of hidden columns until n
+  calcHiddenColumns: (n) ->
+    hidden = @get "hidden"
+    newX = n
+    for i in hidden
+      if i <= newX
+        newX++
+    newX - n
+
   # calcs conservation
   _calcConservationPre: (seqs) ->
 
