@@ -22,8 +22,9 @@ var defMenu = new msa.menu.defaultmenu(menuOpts);
 
 m.addView("menu", defMenu);
 
-//var regionSelect = new msa.rselect({model: m});
-//console.log($("body").get(0).appendChild(regionSelect.el));
+
+var overviewbox = m.getView("stage").getView("overviewbox");
+overviewbox.el.style.paddingTop = "30px";
 
 // ---------------------------------------------------
 //console.log("consensus", msa.algo.consensus(m));
