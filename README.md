@@ -47,7 +47,7 @@ Demo
 -----
 
 [![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/3/edit) 
-[![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/1/edit) 
+[![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit) 
 
 
 [Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
