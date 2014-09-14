@@ -8,6 +8,7 @@ module.exports = ImportMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
 
   render: ->
     menuImport = new MenuBuilder("Import")
@@ -57,5 +58,5 @@ module.exports = ImportMenu = view.extend
     menuImport.addNode "add your own Parser", =>
       window.open "https://github.com/biojs/biojs2"
 
-    @el = menuImport.buildDOM()
+    @el.appendChild menuImport.buildDOM()
     @

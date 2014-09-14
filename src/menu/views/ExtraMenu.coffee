@@ -7,6 +7,7 @@ module.exports = ExtraMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
 
   render: ->
     menu = new MenuBuilder("Extras")
@@ -52,5 +53,5 @@ module.exports = ExtraMenu = view.extend
         return
       @g.zoomer.setLeftOffset(offset)
 
-    @el = menu.buildDOM()
+    @el.appendChild menu.buildDOM()
     @

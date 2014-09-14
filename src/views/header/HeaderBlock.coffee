@@ -75,7 +75,7 @@ module.exports = pluginator.extend
 
   _setSpacer: ->
     # spacer / padding element
-    @el.style.marginLeft = @_getLabelWidth()
+    @el.style.marginLeft = @_getLabelWidth() + "px"
 
   _getLabelWidth: ->
     paddingLeft = 0
@@ -84,4 +84,4 @@ module.exports = pluginator.extend
     return paddingLeft
 
   _adjustWidth: ->
-    @el.style.width = @g.zoomer.get "alignmentWidth"
+    @el.style.width = @g.zoomer.get("alignmentWidth") + "px"
