@@ -1,4 +1,3 @@
-SeqView = require("./SeqView")
 pluginator = require("../bone/pluginator")
 mouse = require "../utils/mouse"
 colorSelector = require("biojs-vis-colorschemes").selector
@@ -13,10 +12,13 @@ module.exports = pluginator.extend
   initialize: (data) ->
     @g = data.g
 
-    @listenTo @g.zoomer, "change:_alignmentScrollLeft change:_alignmentScrollTop", @render
-    @listenTo @g.columns,"change:hidden", @_adjustWidth
-    @listenTo @g.zoomer,"change:alignmentWidth", @_adjustWidth
-    @listenTo @g.colorscheme, "change:scheme", @render
+    @listenTo @g.zoomer, "change:_alignmentScrollLeft change:_alignmentScrollTop", (model,value, options) ->
+      if (not options?.origin?) or options.origin isnt "canvasseq"
+        @render()
+
+    @listenTo @g.columns,"change:hidden", @render
+    @listenTo @g.zoomer,"change:alignmentWidth", @render
+    @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
 
     # el props
@@ -28,7 +30,28 @@ module.exports = pluginator.extend
     @ctx = @el.getContext '2d'
     @cache = new FontCache()
 
+    # throttle the expensive draw function
+    @throttledDraw = _.throttle @throttledDraw, 30
+    @throttleTime = 0
+    @throttleCounts = 0
+
     @manageEvents()
+
+  # measures the time of a redraw and thus set the throttle limit
+  throttledDraw: ->
+    # +new is the fastest: http://jsperf.com/new-date-vs-date-now-vs-performance-now/6
+    start = +new Date()
+    @draw()
+    @throttleTime += +new Date() - start
+    @throttleCounts++
+
+    # remove itself after analysis
+    if @throttleCounts > 15
+      tTime = Math.ceil(@throttleTime / @throttleCounts)
+      tTime *=  1.2 # add safety time
+      console.log "avgDrawTime", tTime
+      tTime = Math.max 20, tTime # limit for ultra fast computers
+      @throttledDraw = _.throttle @draw, tTime
 
   manageEvents: ->
     events = {}
@@ -41,6 +64,7 @@ module.exports = pluginator.extend
       events.mouseout = "_onmouseout"
 
     events.mousewheel = "_onmousewheel"
+    events.DOMMouseScroll = "_onmousewheel"
     @delegateEvents events
 
     # listen for changes
@@ -49,59 +73,82 @@ module.exports = pluginator.extend
     @dragStart = []
 
   draw: ->
-    @removeViews()
 
+    # fastest way to clear the canvas
+    # http://jsperf.com/canvas-clear-speed/25
+    @el.width = @el.width
+
+    rectHeight = @g.zoomer.get "rowHeight"
+
+    # rects
+    @ctx.globalAlpha = @g.colorscheme.get "opacity"
+    @drawSeqs (data) -> @drawSeq(data, @_drawRect)
+    @ctx.globalAlpha = 1
+
+    # letters
+    @drawSeqs (data) -> @drawSeq(data, @_drawLetter)
+
+    # features, selection
+    @drawSeqs @drawSeqExtended
+
+  drawSeqs: (callback) ->
     rectHeight = @g.zoomer.get "rowHeight"
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
-
-    rectHeight = @g.zoomer.get "rowHeight"
-    @ctx.globalAlpha = 1
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      @drawSeq model: @model.at(i), y: y
+      callback.call @, {model: @model.at(i), y: y}
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
         break
 
-    y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
-    # draw again - overlays
-    for i in [start.. @model.length - 1] by 1
-      continue if @model.at(i).get('hidden')
-      @drawSeqExtended model: @model.at(i), y: y
-      y = y + rectHeight
-      # out of viewport - stop
-      if y > @el.height
-        break
-
-  drawSeq: (data) ->
+  # TODO: very expensive method
+  drawSeq: (data, callback) ->
     seq = data.model.get "seq"
     y = data.y
     rectWidth = @g.zoomer.get "columnWidth"
     rectHeight = @g.zoomer.get "rowHeight"
 
-
     # skip unneeded blocks at the beginning
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
     x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
 
+    res = {rectWidth: rectWidth, rectHeight: rectHeight, y: y}
+    elWidth = @el.width
+
     for j in [start.. seq.length - 1] by 1
       c = seq[j]
       c = c.toUpperCase()
-      color = @color[c]
-      if color?
-        @ctx.fillStyle = color
-        @ctx.globalAlpha = @g.colorator.get "opacity"
-        @ctx.fillRect x,y,rectWidth,rectHeight
-        @ctx.globalAlpha = 1.0
-        @ctx.drawImage @cache.getFontTile(letter:c, width:rectWidth, height:
-          rectHeight), x, y,rectWidth,rectHeight
 
+      # call the custom function
+      res.x = x
+      res.c = c
+
+      # local call is faster than apply
+      # http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
+      callback @,res
+
+      # move to the right
       x = x + rectWidth
+
       # out of viewport - stop
-      if x > @el.width
+      if x > elWidth
         break
+
+  _drawRect: (that, data) ->
+    color = that.color[data.c]
+    if color?
+      that.ctx.fillStyle = color
+      that.ctx.fillRect data.x,data.y,data.rectWidth,data.rectHeight
+
+  # REALLY expensive call on FF
+  # Performance:
+  # chrome: 2000ms drawLetter - 1000ms drawRect
+  # FF: 1700ms drawLetter - 300ms drawRect
+  _drawLetter: (that,data) ->
+    that.ctx.drawImage that.cache.getFontTile(data.c, data.rectWidth,
+      data.rectHeight), data.x, data.y,data.rectWidth,data.rectHeight
 
   drawSeqExtended: (data) ->
     seq = data.model.get "seq"
@@ -133,16 +180,17 @@ module.exports = pluginator.extend
 
   render: ->
 
-    @g.zoomer._adjustWidth @el, @model
-    @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
-    @g.zoomer.get('_alignmentScrollTop')] ))
-
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
     @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
 
+    @g.zoomer._adjustWidth @el, @model
+    @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
+    @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
+
+
     @color = colorSelector.getColor @g
 
-    @draw()
+    @throttledDraw()
     @
 
   _onmousemove: (e) ->
@@ -156,7 +204,7 @@ module.exports = pluginator.extend
 
     # update scrollbar
     scrollCorrected = @_checkScrolling( relDist)
-    @g.zoomer._checkScrolling scrollCorrected
+    @g.zoomer._checkScrolling scrollCorrected, {origin: "canvasseq"}
 
     # reset start if use scrolls out of bounds
     for i in [0..1] by 1
@@ -169,6 +217,8 @@ module.exports = pluginator.extend
           # recalibrate on right, bottom
           @dragStart[i] = dragEnd[i] - scrollCorrected[i]
 
+    @throttledDraw()
+
     # abort selection events of the browser
     e.preventDefault()
     e.stopPropagation()
@@ -179,8 +229,15 @@ module.exports = pluginator.extend
     @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
     jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
     jbone(document.body).on 'mouseup.overup', => @_cleanup()
-    jbone(document.body).on 'mouseout.overout', => @_cleanup()
+    jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
 
+  # checks whether mouse moved out of the window
+  # -> terminate dragging
+  _onmousewinout: (e) ->
+    if e.toElement is document.body.parentNode
+      @_cleanup()
+
+  # terminates dragging
   _cleanup: ->
     @dragStart = []
 
@@ -191,20 +248,21 @@ module.exports = pluginator.extend
 
   # might be incompatible with some browsers
   _onmousewheel: (e) ->
-    @g.zoomer.set '_alignmentScrollLeft', @g.zoomer.get('_alignmentScrollLeft') + e.deltaX
-    @g.zoomer.set '_alignmentScrollTop', @g.zoomer.get('_alignmentScrollTop') + e.deltaY
+    delta = mouse.getWheelDelta e
+    @g.zoomer.set '_alignmentScrollLeft', @g.zoomer.get('_alignmentScrollLeft') + delta[0]
+    @g.zoomer.set '_alignmentScrollTop', @g.zoomer.get('_alignmentScrollTop') + delta[1]
 
   _onclick: (e) ->
     @g.trigger "residue:click", @_getClickPos(e)
-    @render()
+    @throttledDraw()
 
   _onmousein: (e) ->
     @g.trigger "residue:click", @_getClickPos(e)
-    @render()
+    @throttledDraw()
 
   _onmouseout: (e) ->
     @g.trigger "residue:click", @_getClickPos(e)
-    @render()
+    @throttledDraw()
 
   _getClickPos: (e) ->
     coords = mouse.getMouseCoords e
@@ -214,6 +272,8 @@ module.exports = pluginator.extend
     coords[1] += Math.floor(@g.zoomer.get("_alignmentScrollTop") / rectHeight) * rectHeight
     x = Math.floor(coords[0] / rectWidth )
     y = Math.floor(coords[1] / rectHeight)
+    x = Math.max 0,x
+    y = Math.max 0,y
     seqId = @model.at(y).get "id"
     return {seqId:seqId, rowPos: x, evt:e}
 

@@ -5,7 +5,7 @@ module.exports = Zoomer = Model.extend
   constructor: (attributes,options) ->
     Model.apply @, arguments
     @g = options.g
-    console.log @
+    @
 
   defaults:
     columnWidth: 15
@@ -68,9 +68,9 @@ module.exports = Zoomer = Model.extend
     #el.style.width = Math.min calcWidth, maxWidth
 
   # updates both scroll properties (if needed)
-  _checkScrolling: (scrollObj) ->
+  _checkScrolling: (scrollObj, opts) ->
     xScroll = scrollObj[0]
     yScroll = scrollObj[1]
 
-    @set "_alignmentScrollLeft", xScroll
-    @set "_alignmentScrollTop", yScroll
+    @set "_alignmentScrollLeft", xScroll, opts
+    @set "_alignmentScrollTop", yScroll, opts

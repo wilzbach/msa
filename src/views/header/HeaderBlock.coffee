@@ -26,6 +26,8 @@ module.exports = pluginator.extend
     @draw()
     @_onscroll = @_sendScrollEvent
 
+    @g.vis.once 'change:loaded', @_adjustScrollingLeft, @
+
   events:
     "scroll": "_onscroll"
 
@@ -69,13 +71,7 @@ module.exports = pluginator.extend
     if (not options?.origin?) or options.origin isnt "header"
       scrollLeft = @g.zoomer.get "_alignmentScrollLeft"
       @blockEvents = true
-      if @g.vis.get('loaded')
-        @el.scrollLeft = scrollLeft
-      else
-        # ugly hack: one can only set the scrollLeft property when it is on the window
-        window.setTimeout =>
-          @el.scrollLeft = scrollLeft
-        , 50
+      @el.scrollLeft = scrollLeft
 
   _setSpacer: ->
     # spacer / padding element
