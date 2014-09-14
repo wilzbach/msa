@@ -22,6 +22,7 @@ module.exports = Mouse =
     # TODO: else
     return [mouseX,mouseY]
 
+  # relative to the screen
   getMouseCoordsScreen: (e) ->
     mouseX = e.clientX
     mouseY = e.clientY
@@ -39,3 +40,13 @@ module.exports = Mouse =
       mouseY = e.y
 
     return [mouseX,mouseY]
+
+  getWheelDelta: (e) ->
+    delta = [e.deltaX, e.deltaY]
+
+    # yeah, FF rocks :P
+    unless delta[0]?
+      dir = Math.floor (e.detail / 3)
+      delta = [0, e.mozMovementX * dir]
+
+    return delta

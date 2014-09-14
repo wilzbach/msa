@@ -8,3 +8,4 @@ module.exports = Colorator = Model.extend
     scheme: "taylor" # name of your color scheme (css suffix)
     colorBackground: true # otherwise only the text will be colored
     showLowerCase: true # used to hide and show lowercase chars in the overviewbox
+    opacity: 0.6 # opacity for the residues

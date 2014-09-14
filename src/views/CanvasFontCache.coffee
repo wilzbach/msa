@@ -8,34 +8,30 @@ module.exports = class CanvasFontCache
     @cacheHeight = 0
     @cacheWidth = 0
 
-  getFontTile: (data) ->
-    letter = data.letter
+  getFontTile: (letter, width, height) ->
     # validate cache
-    if data.width isnt @cacheWidth or data.height isnt @cacheHeight
-      @cacheHeight = data.height
-      @cacheWidth = data.width
+    if width isnt @cacheWidth or height isnt @cacheHeight
+      @cacheHeight = height
+      @cacheWidth = width
       @cache = {}
 
     if @cache[letter] is undefined
-      @createTile data
+      @createTile letter, width, height
 
     return @cache[letter]
 
-  createTile: (data) ->
-    letter = data.letter
-    width = data.width
-    height = data.height
+  createTile: (letter, width, height) ->
 
     canvas = @cache[letter] = document.createElement "canvas"
     canvas.width = width
     canvas.height = height
     @ctx = canvas.getContext '2d'
-    @ctx.font="13px Droid Sans Mono"
+    @ctx.font = "13px mono"
     @ctx.textBaseline = 'middle'
-    @ctx.textAlign="center"
+    @ctx.textAlign = "center"
 
     #@ctx.strokeStyle = "#333"
-    @ctx.strokeText letter,width / 2,height / 2,width
+    @ctx.fillText letter,width / 2,height / 2,width
     # save
     #@cache[letter] = @ctx.getImageData 0,0,width,height
 

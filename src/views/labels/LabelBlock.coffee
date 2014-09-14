@@ -6,8 +6,8 @@ module.exports = pluginator.extend
   initialize: (data) ->
     @g = data.g
     @draw()
-    @listenTo @g.zoomer, "change:_alignmentScrollTop", ->
-      @el.scrollTop =  @g.zoomer.get "_alignmentScrollTop"
+    @listenTo @g.zoomer, "change:_alignmentScrollTop", @_adjustScrollingTop
+    @g.vis.once 'change:loaded', @_adjustScrollingTop , @
 
   draw: ->
     @removeViews()
@@ -20,8 +20,13 @@ module.exports = pluginator.extend
   events:
     "scroll": "_sendScrollEvent"
 
+  # broadcast the scrolling event (by the scrollbar)
   _sendScrollEvent: ->
     @g.zoomer.set "_alignmentScrollTop", @el.scrollTop, {origin: "label"}
+
+  # sets the scrolling property (from another event e.g. dragging)
+  _adjustScrollingTop: ->
+    @el.scrollTop =  @g.zoomer.get "_alignmentScrollTop"
 
   render: ->
     @renderSubviews()

@@ -5,9 +5,19 @@ _ = require "underscore"
 module.exports = FeatureCol = Collection.extend
   model: Feature
 
+  constructor: ->
+
+    # invalidate cache
+    @on "all", ->
+      @startOnCache = null
+    , @
+    @startOnCache = null
+
   # returns all features starting on index
   startOn: (index) ->
-    @where({xStart: index})
+    if @startOnCache is null
+      @startOnCache = @where({xStart: index})
+    return @startOnCache
 
   contains: (index) ->
     @reduce (el,memo) ->
