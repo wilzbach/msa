@@ -52,6 +52,11 @@ module.exports =
       displayedButton.textContent = name
       displayedButton.className = "biojs_msa_menubar_alink"
 
+      # tiny style
+      #display.style.fontSize: 14px
+      #displayedButton.style.marginLeft: 5px
+      #displayedButton.style.padding: 3px 5px 3px 5px
+
       jbone(displayedButton).on "click", (e) =>
         @_showMenu e,menu,displayedButton
 
