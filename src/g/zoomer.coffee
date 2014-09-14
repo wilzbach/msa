@@ -21,6 +21,8 @@ module.exports = Zoomer = Model.extend
     stepSize: 1
     markerStepSize: 2
 
+    residueFont: "13px mono"
+
     boxRectHeight: 5
     boxRectWidth: 5
 
