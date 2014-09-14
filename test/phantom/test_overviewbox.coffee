@@ -17,6 +17,10 @@ reduceSeqs = (p) ->
     res.push seq.get "id"
   res
 
+_onmousedown = (e) ->
+  e.offsetX = e.pageX
+  e.offsetY = e.pageY
+  box._onmousedown e
 
 beforeEach "setup test array", ->
   seqs = []
@@ -46,55 +50,55 @@ beforeEach "setup test array", ->
 test "should trigger an selection event", ->
   triggered = false
   s.g.selcol.on "reset", (e) ->
-    offsetI = 2
+    pageI = 2
     equal e.length, 3
     for i in [0.. e.length - 1]
-      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: 3, seqId: "uni" + (i + offsetI)}
+      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: 3, seqId: "uni" + (i + pageI)}
     triggered = true
-  box._onmousedown {offsetX: 5, offsetY: 10}
-  box._onmouseup {offsetX: 16, offsetY: 20}
+  _onmousedown {pageX: 5, pageY: 10}
+  box._onmouseup {pageX: 16, pageY: 20}
   assert.isTrue triggered
 
 test "should trigger only one field", ->
   triggered = false
   s.g.selcol.on "reset", (e) ->
-    offsetI = 1
+    pageI = 1
     equal e.length, 1
     for i in [0.. e.length - 1]
-      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: 1, seqId: "uni" + (i + offsetI)}
+      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: 1, seqId: "uni" + (i + pageI)}
     triggered = true
-  box._onmousedown {offsetX: 6, offsetY: 9}
-  box._onmouseup {offsetX: 7, offsetY: 8}
+  _onmousedown {pageX: 6, pageY: 9}
+  box._onmouseup {pageX: 7, pageY: 8}
 
 test "edge case: left x", ->
   triggered = false
   s.g.selcol.on "reset", (e) ->
-    offsetI = 1
+    pageI = 1
     equal e.length, 2
     for i in [0.. e.length - 1]
-      equal e.at(i).toJSON(), {type: "pos", xStart: 0, xEnd: 1, seqId: "uni" + (i + offsetI)}
+      equal e.at(i).toJSON(), {type: "pos", xStart: 0, xEnd: 1, seqId: "uni" + (i + pageI)}
     triggered = true
-  box._onmousedown {offsetX: 6, offsetY: 9}
-  box._onmouseup {offsetX: -7, offsetY: 11}
+  _onmousedown {pageX: 6, pageY: 9}
+  box._onmouseup {pageX: -7, pageY: 11}
 
 test "edge case: x right", ->
   triggered = false
   s.g.selcol.on "reset", (e) ->
-    offsetI = 0
+    pageI = 0
     equal e.length, 2
     for i in [0.. e.length - 1]
-      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: s.seqs.getMaxLength(), seqId: "uni" + (i + offsetI)}
+      equal e.at(i).toJSON(), {type: "pos", xStart: 1, xEnd: s.seqs.getMaxLength() - 1, seqId: "uni" + (i + pageI)}
     triggered = true
-  box._onmousedown {offsetX: 6, offsetY: -9}
-  box._onmouseup {offsetX: 7000, offsetY: 8}
+  _onmousedown {pageX: 6, pageY: -9}
+  box._onmouseup {pageX: 7000, pageY: 8}
 
 test "edge case: y bottom", ->
   triggered = false
   s.g.selcol.on "reset", (e) ->
-    offsetI = 1
+    pageI = 1
     equal e.length, s.seqs.length - 1
     for i in [0.. e.length - 1]
-      equal e.at(i).toJSON(), {type: "pos", xStart: 0, xEnd: 1, seqId: "uni" + (i + offsetI)}
+      equal e.at(i).toJSON(), {type: "pos", xStart: 0, xEnd: 1, seqId: "uni" + (i + pageI)}
     triggered = true
-  box._onmousedown {offsetX: 6, offsetY: 9}
-  box._onmouseup {offsetX: -7, offsetY: 2000}
+  _onmousedown {pageX: 6, pageY: 9}
+  box._onmouseup {pageX: -7, pageY: 2000}
