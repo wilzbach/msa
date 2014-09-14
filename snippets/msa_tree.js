@@ -1,5 +1,5 @@
 var opts = {};
-opts.seqs = msa.utils.seqgen.getDummySequences(7,100);
+opts.seqs = msa.utils.seqgen.getDummySequences(15,100);
 opts.el = document.getElementById('msa_tree_menu');
 opts.vis = {metacell: true, overviewbox: true};
 //opts.columns = {hidden: [1,2,3]};
@@ -16,7 +16,7 @@ m.addView("menu", defMenu);
 // Tree
 var tnt_theme_tree_collapse_nodes = function() {
     var tree_theme = function(tree_vis, div) {
-        var newick = "(((((r0:9,r1:9)r2:34,r3:43)r4:52,r5:95)r6:215;"
+        var newick = "(((((r0:9,r1:9, r7:5, r8:55)r10: 44, r2:34,r3:43)r4:52,r5:95, (r13: 77, r14: 50, r11:44, r12:88) r15: 70;)r6:215"
         var data = biojs.vis.tree.parse_newick(newick);
         tree_vis
             .data(data)
@@ -44,6 +44,7 @@ var tnt_theme_tree_collapse_nodes = function() {
           for(var i=0;i < ids.length;i++){
             sel.push(new msa.selection.rowsel({seqId:ids[i]}));
             var seq = m.seqs.where({id:ids[i]})[0];
+            if(seq === undefined) continue
             if(toggled){
               seq.set('hidden', false);
             }else{
