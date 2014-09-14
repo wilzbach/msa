@@ -208,14 +208,27 @@ module.exports = pluginator.extend
     @throttledDraw()
     @
 
-  _onmousemove: (e) ->
+  _onmousemove: (e, reversed) ->
     return if @dragStart.length is 0
 
     dragEnd = mouse.getMouseCoordsScreen e
     # relative to first click
     relEnd = [dragEnd[0] - @dragStart[0], dragEnd[1] - @dragStart[1]]
     # relative to initial scroll status
-    relDist = [@dragStartScroll[0] + relEnd[0], @dragStartScroll[1] + relEnd[1]]
+
+    # scale events
+    scaleFactor = @g.zoomer.get "canvasEventScale"
+    if reversed
+      scaleFactor = 3
+    for i in [0..1] by 1
+      relEnd[i] = relEnd[i] * scaleFactor
+
+    # calculate new scrolling vals
+    relDist = [@dragStartScroll[0] - relEnd[0], @dragStartScroll[1] - relEnd[1]]
+
+    # round values
+    for i in [0..1] by 1
+      relDist[i] = Math.round relDist[i]
 
     # update scrollbar
     scrollCorrected = @_checkScrolling( relDist)
@@ -241,7 +254,7 @@ module.exports = pluginator.extend
 
   # converts touches into old mouse event
   _ontouchmove: (e) ->
-    @_onmousemove e.changedTouches[0]
+    @_onmousemove e.changedTouches[0], true
     e.preventDefault()
     e.stopPropagation()
 
@@ -259,7 +272,7 @@ module.exports = pluginator.extend
     @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
     jbone(document.body).on 'touchmove.overtmove', (e) => @_ontouchmove(e)
     jbone(document.body).on 'touchend.overtend touchleave.overtleave
-    touchcancel.overtcanel', => @_touchCleanup()
+    touchcancel.overtcanel', (e) => @_touchCleanup(e)
 
   # checks whether mouse moved out of the window
   # -> terminate dragging
@@ -276,14 +289,17 @@ module.exports = pluginator.extend
     jbone(document.body).off('.overout')
 
   # terminates touching
-  _touchCleanup: ->
+  _touchCleanup: (e) ->
+    if e.changedTouches.length > 0
+      # maybe we can send a final event
+      @_onmousemove e.changedTouches[0], true
+
     @dragStart = []
     # remove all listeners
     jbone(document.body).off('.overtmove')
     jbone(document.body).off('.overtend')
     jbone(document.body).off('.overtleave')
     jbone(document.body).off('.overtcancel')
-
 
   # might be incompatible with some browsers
   _onmousewheel: (e) ->
