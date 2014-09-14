@@ -6,6 +6,7 @@ module.exports = FilterMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
 
   render: ->
     menuFilter = new MenuBuilder("Filter")
@@ -71,5 +72,5 @@ module.exports = FilterMenu = view.extend
         if el.get('hidden')
           el.set('hidden', false)
 
-    @el = menuFilter.buildDOM()
+    @el.appendChild menuFilter.buildDOM()
     @

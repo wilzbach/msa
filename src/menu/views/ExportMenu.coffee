@@ -8,6 +8,7 @@ module.exports = ExportMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
 
   render: ->
     menuExport = new MenuBuilder("Export")
@@ -55,5 +56,5 @@ module.exports = ExportMenu = view.extend
         # on module loading error
         console.log "couldn't load HTML2canvas"
 
-    @el = menuExport.buildDOM()
+    @el.appendChild menuExport.buildDOM()
     @

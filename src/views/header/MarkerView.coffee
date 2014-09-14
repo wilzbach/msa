@@ -30,7 +30,7 @@ HeaderView = view.extend
         n += stepSize
         continue
       span = document.createElement "span"
-      span.style.width = cellWidth * stepSize
+      span.style.width = (cellWidth * stepSize) + "px"
       span.style.display = "inline-block"
       # TODO: this doesn't work for a larger stepSize
       if (n + 1) % @g.zoomer.get('markerStepSize') is 0

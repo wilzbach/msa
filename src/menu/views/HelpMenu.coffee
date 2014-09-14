@@ -11,5 +11,6 @@ module.exports = HelpMenu = view.extend
       window.open "https://github.com/greenify/biojs-vis-msa/issues"
     menu.addNode "User manual", =>
       window.open "https://github.com/greenify/biojs-vis-msa/wiki"
-    @el = menu.buildDOM()
+    @el.style.display = "inline-block"
+    @el.appendChild menu.buildDOM()
     @
