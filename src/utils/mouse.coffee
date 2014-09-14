@@ -2,17 +2,21 @@ module.exports = Mouse =
 
   # returns the mouse x & y coords relative to the target
   getMouseCoords: (e) ->
-    # center the view on double click
+
     mouseX = e.offsetX
     mouseY = e.offsetY
 
     unless mouseX?
-      target = e.target || e.srcElement
       rect = target.getBoundingClientRect()
+      target = e.target || e.srcElement
 
       unless mouseX?
         mouseX = e.clientX - rect.left
         mouseY = e.clientY - rect.top
+
+      unless mouseX?
+        mouseX = e.pageX - target.offsetLeft
+        mouseY = e.pageY - target.offsetTop
 
       unless mouseX?
         console.log e
@@ -24,16 +28,17 @@ module.exports = Mouse =
 
   # relative to the screen
   getMouseCoordsScreen: (e) ->
-    mouseX = e.clientX
-    mouseY = e.clientY
+    mouseX = e.pageX
+    mouseY = e.pageY
 
     unless mouseX?
       mouseX = e.layerX
       mouseY = e.layerY
 
+    # relative to the screen
     unless mouseX?
-      mouseX = e.pageX
-      mouseY = e.pageY
+      mouseX = e.clientX
+      mouseY = e.clientY
 
     unless mouseX?
       mouseX = e.x
