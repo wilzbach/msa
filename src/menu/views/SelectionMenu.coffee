@@ -7,6 +7,7 @@ module.exports = SelectionMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @el.style.display = "inline-block"
 
   render: ->
     menu = new MenuBuilder("Selection")
@@ -40,5 +41,5 @@ module.exports = SelectionMenu = view.extend
       @g.selcol.invertRow @model.pluck "id"
     menu.addNode "Reset", =>
       @g.selcol.reset()
-    @el = menu.buildDOM()
+    @el.appendChild menu.buildDOM()
     @

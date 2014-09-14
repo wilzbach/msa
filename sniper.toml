@@ -1,3 +1,3 @@
-js = [ "/node_modules/jquery/dist/jquery.min.js", "/build/msa.js" ]
+js = [ "/build/msa.js" ]
 css = ["/build/msa.css"]
 snippets = ["snippets"]
