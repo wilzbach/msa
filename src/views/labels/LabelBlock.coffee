@@ -36,4 +36,5 @@ module.exports = pluginator.extend
     @el.style.height =  @g.zoomer.get("alignmentHeight") + "px"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
+    @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}"
     @

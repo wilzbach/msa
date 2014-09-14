@@ -29,7 +29,6 @@ LabelView = view.extend
 
     @el.style.width = "#{@g.zoomer.get "labelWidth"}px"
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
-    @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}px"
     @el.setAttribute "class", "biojs_msa_labels"
 
     if @.g.vis.get "labelCheckbox"
