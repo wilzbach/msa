@@ -33,7 +33,7 @@ module.exports = pluginator.extend
     @el.className = "biojs_msa_labelblock"
     @el.style.display = "inline-block"
     @el.style.verticalAlign = "top"
-    @el.style.height =  @g.zoomer.get "alignmentHeight"
+    @el.style.height =  @g.zoomer.get("alignmentHeight") + "px"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
     @
