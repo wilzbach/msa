@@ -61,13 +61,12 @@ module.exports = Zoomer = Model.extend
     if el.parentNode?
       parentWidth = el.parentNode.offsetWidth
     else
-      parentWidth = document.body.clientWidth
+      parentWidth = document.body.clientWidth - 35
 
     # TODO: dirty hack
-    maxWidth = parentWidth - @getLabelWidth() - 35
+    maxWidth = parentWidth - @getLabelWidth()
     calcWidth = @g.zoomer.getAlignmentWidth( model.getMaxLength() - @g.columns.get('hidden').length)
-    if calcWidth > maxWidth
-      @set "alignmentWidth", maxWidth
+    @set "alignmentWidth", Math.min(maxWidth,calcWidth)
     #el.style.width = Math.min calcWidth, maxWidth
 
   # updates both scroll properties (if needed)
