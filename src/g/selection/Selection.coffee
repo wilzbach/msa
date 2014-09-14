@@ -17,6 +17,9 @@ RowSelection = Selection.extend
   inColumn: (rowPos) ->
     true
 
+  getLength: ->
+    1
+
 ColumnSelection = Selection.extend
   defaults: _.extend {}, Selection::.defaults,
     type: "column"
@@ -29,10 +32,15 @@ ColumnSelection = Selection.extend
   inColumn: (rowPos) ->
     xStart <= rowPos && rowPos <= xEnd
 
+  getLength: ->
+    xEnd - xStart
+
 # pos is a mixin of column and row
 # start with Row and only overwrite "inColumn" from Column
-PosSelection = RowSelection.extend _.extend {},
-_.pick(ColumnSelection,"inColumn"),
+PosSelection = RowSelection.extend _.extend {},_.pick(ColumnSelection,"inColumn"),
+  _.pick(ColumnSelection,"getLength")
+
+  # merge both defaults
   defaults: _.extend {}, ColumnSelection::.defaults, RowSelection::.defaults,
     type: "pos"
 
