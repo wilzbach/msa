@@ -31,9 +31,23 @@ module.exports = pluginator.extend
     @cache = new FontCache()
 
     # throttle the expensive draw function
-    @throttledDraw = _.throttle @throttledDraw, 30
     @throttleTime = 0
     @throttleCounts = 0
+    if document.documentElement.style.webkitAppearance?
+      # webkit browser - no throttling needed
+      @throttledDraw = ->
+        start = +new Date()
+        @draw()
+        @throttleTime += +new Date() - start
+        @throttleCounts++
+        if @throttleCounts > 15
+          tTime = Math.ceil(@throttleTime / @throttleCounts)
+          console.log "avgDrawTime/WebKit", tTime
+          # remove perf analyser
+          @throttledDraw = @draw
+    else
+      # slow browsers like Gecko
+      @throttledDraw = _.throttle @throttledDraw, 30
 
     @manageEvents()
 
@@ -48,8 +62,8 @@ module.exports = pluginator.extend
     # remove itself after analysis
     if @throttleCounts > 15
       tTime = Math.ceil(@throttleTime / @throttleCounts)
-      tTime *=  1.2 # add safety time
       console.log "avgDrawTime", tTime
+      tTime *=  1.2 # add safety time
       tTime = Math.max 20, tTime # limit for ultra fast computers
       @throttledDraw = _.throttle @draw, tTime
 
