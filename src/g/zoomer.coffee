@@ -17,7 +17,7 @@ module.exports = Zoomer = Model.extend
     rowHeight: 15
     textVisible: true
     labelIdLength: 30
-    labelFontsize: "10px"
+    labelFontsize: "13px"
     stepSize: 1
     markerStepSize: 2
 
