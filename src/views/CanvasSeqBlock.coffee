@@ -28,7 +28,7 @@ module.exports = pluginator.extend
     @el.className = "biojs_msa_seq_st_block"
 
     @ctx = @el.getContext '2d'
-    @cache = new FontCache()
+    @cache = new FontCache @g
 
     # throttle the expensive draw function
     @throttleTime = 0
