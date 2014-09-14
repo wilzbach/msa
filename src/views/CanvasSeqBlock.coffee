@@ -73,7 +73,7 @@ module.exports = pluginator.extend
     events.touchstart = "_ontouchstart"
 
     if @g.config.get "registerMouseClicks"
-      events.click = "_onclick"
+      events.dblclick = "_onclick"
     if @g.config.get "registerMouseHover"
       events.mousein = "_onmousein"
       events.mouseout = "_onmouseout"
@@ -198,12 +198,9 @@ module.exports = pluginator.extend
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
     @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
 
-    console.log @g.zoomer.get "alignmentWidth"
-
     @g.zoomer._adjustWidth @el, @model
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
-
 
     @color = colorSelector.getColor @g
 
@@ -267,6 +264,7 @@ module.exports = pluginator.extend
     jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
     jbone(document.body).on 'mouseup.overup', => @_cleanup()
     #jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
+    e.preventDefault()
 
   # starts the touch mode
   _ontouchstart: (e) ->
@@ -323,12 +321,10 @@ module.exports = pluginator.extend
 
   _getClickPos: (e) ->
     coords = mouse.getMouseCoords e
-    rectWidth = @g.zoomer.get "columnWidth"
-    rectHeight = @g.zoomer.get "rowHeight"
-    coords[0] += Math.floor(@g.zoomer.get("_alignmentScrollLeft") / rectWidth) * rectWidth
-    coords[1] += Math.floor(@g.zoomer.get("_alignmentScrollTop") / rectHeight) * rectHeight
-    x = Math.floor(coords[0] / rectWidth )
-    y = Math.floor(coords[1] / rectHeight)
+    coords[0] += @g.zoomer.get("_alignmentScrollLeft")
+    coords[1] += @g.zoomer.get("_alignmentScrollTop")
+    x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
+    y = Math.floor(coords[1] / @g.zoomer.get("rowHeight"))
     x = Math.max 0,x
     y = Math.max 0,y
     seqId = @model.at(y).get "id"
