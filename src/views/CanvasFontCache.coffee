@@ -2,12 +2,12 @@ Events = require("biojs-events")
 
 module.exports = class CanvasFontCache
 
-  constructor: ->
-    #Events.mixin @::
+  constructor: (@g) ->
     @cache = {}
     @cacheHeight = 0
     @cacheWidth = 0
 
+  # returns a cached canvas
   getFontTile: (letter, width, height) ->
     # validate cache
     if width isnt @cacheWidth or height isnt @cacheHeight
@@ -20,19 +20,16 @@ module.exports = class CanvasFontCache
 
     return @cache[letter]
 
+  # creates a canvas with a single letter
+  # (for the fast font cache)
   createTile: (letter, width, height) ->
 
     canvas = @cache[letter] = document.createElement "canvas"
     canvas.width = width
     canvas.height = height
     @ctx = canvas.getContext '2d'
-    @ctx.font = "13px mono"
+    @ctx.font = @g.zoomer.get "residueFont"
     @ctx.textBaseline = 'middle'
     @ctx.textAlign = "center"
 
-    #@ctx.strokeStyle = "#333"
     @ctx.fillText letter,width / 2,height / 2,width
-    # save
-    #@cache[letter] = @ctx.getImageData 0,0,width,height
-
-    #@ctx.clearRect 0,0,width, height
