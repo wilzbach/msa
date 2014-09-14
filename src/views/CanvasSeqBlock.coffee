@@ -306,6 +306,7 @@ module.exports = pluginator.extend
     delta = mouse.getWheelDelta e
     @g.zoomer.set '_alignmentScrollLeft', @g.zoomer.get('_alignmentScrollLeft') + delta[0]
     @g.zoomer.set '_alignmentScrollTop', @g.zoomer.get('_alignmentScrollTop') + delta[1]
+    e.preventDefault()
 
   _onclick: (e) ->
     @g.trigger "residue:click", @_getClickPos(e)
