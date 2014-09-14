@@ -25,8 +25,8 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 
 ```html
-<script src=//cdn.biojs-msa.org/msa/latest/msa.min.gz.js></script>
-<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/latest/msa.min.gz.css />
+<script src=//cdn.biojs-msa.org/msa/0.1/msa.min.gz.js></script>
+<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/0.1/msa.min.gz.css />
 ```
 
 ![Amazon S3](https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/AmazonWebservices_Logo.svg/500px-AmazonWebservices_Logo.svg.png)
@@ -43,6 +43,7 @@ JS  | CSS
 In case
 * Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
+* you want the latest version, replace the version number with `latest`.
 
 Demo
 -----
