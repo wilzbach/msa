@@ -12,9 +12,9 @@ module.exports = Zoomer = Model.extend
     metaWidth: 100
     labelWidth: 100
     alignmentWidth: "auto"
-    alignmentHeight: 200
+    alignmentHeight: 195
 
-    rowHeight: 16
+    rowHeight: 15
     textVisible: true
     labelLength: 20
     labelFontsize: "10px"
@@ -65,8 +65,11 @@ module.exports = Zoomer = Model.extend
 
     # TODO: dirty hack
     maxWidth = parentWidth - @getLabelWidth()
-    calcWidth = @g.zoomer.getAlignmentWidth( model.getMaxLength() - @g.columns.get('hidden').length)
-    @set "alignmentWidth", Math.min(maxWidth,calcWidth)
+    calcWidth = @getAlignmentWidth( model.getMaxLength() - @g.columns.get('hidden').length)
+    val = Math.min(maxWidth,calcWidth)
+    # round to a valid AA box
+    val = Math.floor( val / @get("columnWidth")) * @get("columnWidth")
+    @set "alignmentWidth", val
     #el.style.width = Math.min calcWidth, maxWidth
 
   # updates both scroll properties (if needed)
