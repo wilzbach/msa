@@ -47,6 +47,9 @@ module.exports = ExtraMenu = view.extend
 
     menu.addNode "Jump to a column", =>
       offset = prompt "Column", "20"
+      if offset < 0 or offset > @model.getMaxLength() or isNaN(offset)
+        alert "invalid column"
+        return
       @g.zoomer.setLeftOffset(offset)
 
     @el = menu.buildDOM()
