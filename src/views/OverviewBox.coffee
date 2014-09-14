@@ -71,7 +71,7 @@ module.exports = OverviewBox = view.extend
     rectHeight = @g.zoomer.get "boxRectHeight"
     maxHeight = rectHeight * @model.length
     @ctx.fillStyle = "#ffff00"
-    @ctx.globalAlpha = 0.5
+    @ctx.globalAlpha = 0.9
     for i in [0.. @g.selcol.length - 1] by 1
       sel = @g.selcol.at(i)
       if sel.get('type') is 'column'
@@ -95,37 +95,22 @@ module.exports = OverviewBox = view.extend
     # duplicate events
     return if @dragStart.length is 0
 
-    @dragEnd = mouse.getMouseCoordsScreen e
     @render()
     @ctx.fillStyle = "#ffff00"
-    @ctx.globalAlpha = 0.5
+    @ctx.globalAlpha = 0.9
 
-    # relative to first click
-    @dragEnd = [@dragEnd[0] - @dragStartScreen[0], @dragEnd[1] - @dragStartScreen[1]]
-
-    x = [@dragStart[0], @dragEnd[0]]
-    y = [@dragStart[1], @dragEnd[1]]
-
-    # mirror the coordinates if needed
-    if @dragEnd[0] > @dragEnd[0]
-      x = [x[1], x[0]]
-    if @dragEnd[1] > @dragEnd[1]
-      y = [y[1], y[0]]
-
-    # lower limit
-    y[0] = Math.max y[0], 0
-    x[0] = Math.max x[0], 0
-    @ctx.fillRect x[0],y[0],x[1], y[1]
+    rect = @_calcSelection( mouse.getMouseCoordsScreen e )
+    @ctx.fillRect rect[0][0],rect[1][0],rect[0][1] - rect[0][0], rect[1][1] - rect[1][0]
 
     # abort selection events of the browser
     e.preventDefault()
     e.stopPropagation()
 
-
   # start the selection mode
   _onmousedown: (e) ->
-    @dragStart = mouse.getMouseCoords e
-    @dragStartScreen = mouse.getMouseCoordsScreen e
+    @dragStart = mouse.getMouseCoordsScreen e
+    @dragStartRel = mouse.getMouseCoords e
+
     if e.ctrlKey or e.metaKey
       @prolongSelection = true
     else
@@ -135,6 +120,28 @@ module.exports = OverviewBox = view.extend
     jbone(document.body).on 'mouseup.overup', (e) => @_onmouseup(e)
     return @dragStart
 
+  # calculates the current selection
+  _calcSelection: (dragMove) ->
+    # relative to first click
+    dragRel = [dragMove[0] - @dragStart[0], dragMove[1] - @dragStart[1]]
+
+    # relative to target
+    for i in [0..1] by 1
+      dragRel[i] = @dragStartRel[i] + dragRel[i]
+
+    # 0:x, 1: y
+    rect = [[@dragStartRel[0], dragRel[0]], [@dragStartRel[1], dragRel[1]]]
+
+    # swap the coordinates if needed
+    for i in [0..1] by 1
+      if rect[i][1] < rect[i][0]
+        rect[i] = [rect[i][1], rect[i][0]]
+
+      # lower limit
+      rect[i][0] = Math.max rect[i][0], 0
+
+    return rect
+
   _endSelection: (dragEnd) ->
     # remove listeners
     jbone(document.body).off('.overmove')
@@ -143,33 +150,25 @@ module.exports = OverviewBox = view.extend
     # duplicate events
     return if @dragStart.length is 0
 
-    rectWidth = @g.zoomer.get "boxRectWidth"
-    rectHeight = @g.zoomer.get "boxRectHeight"
+    rect = @_calcSelection dragEnd
 
-    a = new Array 4
-    a[0] = Math.min @dragStart[0],dragEnd[0]
-    a[1] = Math.min @dragStart[1],dragEnd[1]
-    a[2] = Math.max @dragStart[0],dragEnd[0]
-    a[3] = Math.max @dragStart[1],dragEnd[1]
+    # x
+    for i in [0..1]
+      rect[0][i] = Math.floor( rect[0][i] / @g.zoomer.get("boxRectWidth"))
 
-    # round
-    for i in [0..3]
-      if i % 2 is 0 # x
-        a[i] = Math.floor( a[i] / rectWidth)
-      else # y
-        a[i] = Math.floor( a[i] / rectHeight)
-      if i <= 1 #dragStart
-        a[i] = Math.max 0, a[i]
-    a[2] = Math.min @model.getMaxLength(), a[2]
-    a[3] = Math.min @model.length - 1, a[3]
+    # y
+    for i in [0..1]
+      rect[1][i] = Math.floor( rect[1][i] / @g.zoomer.get("boxRectHeight") )
+
+    # upper limit
+    rect[0][1] = Math.min(@model.getMaxLength() - 1, rect[0][1])
+    rect[1][1] = Math.min(@model.length - 1, rect[1][1])
 
     # select
     selis = []
-    leftestIndex = origIndex = 100042
-    for j in [a[1]..a[3]] by 1
-      args = seqId: @model.at(j).get('id'), xStart: a[0], xEnd: a[2]
+    for j in [rect[1][0]..rect[1][1]] by 1
+      args = seqId: @model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]
       selis.push new selection.possel args
-      leftestIndex = Math.min a[0], leftestIndex
 
     # reset
     @dragStart = []
@@ -180,16 +179,15 @@ module.exports = OverviewBox = view.extend
       @g.selcol.reset selis
 
     # safety check + update offset
-    leftestIndex = 0 if leftestIndex is origIndex
-    @g.zoomer.setLeftOffset leftestIndex
-    @g.zoomer.setTopOffset a[1]
+    @g.zoomer.setLeftOffset rect[0][0]
+    @g.zoomer.setTopOffset rect[1][0]
 
   # ends the selection mode
   _onmouseup: (e) ->
-    @_endSelection mouse.getMouseCoords e
+    @_endSelection mouse.getMouseCoordsScreen e
 
   _onmouseout: (e) ->
-    @_endSelection mouse.getMouseCoords e
+    @_endSelection mouse.getMouseCoordsScreen e
 
  # init the canvas
   _createCanvas: ->

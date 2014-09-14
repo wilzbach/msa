@@ -24,7 +24,7 @@ m.addView("menu", defMenu);
 
 
 var overviewbox = m.getView("stage").getView("overviewbox");
-overviewbox.el.style.paddingTop = "30px";
+overviewbox.el.style.marginTop = "30px";
 
 // ---------------------------------------------------
 //console.log("consensus", msa.algo.consensus(m));
