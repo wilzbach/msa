@@ -198,6 +198,8 @@ module.exports = pluginator.extend
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
     @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
 
+    console.log @g.zoomer.get "alignmentWidth"
+
     @g.zoomer._adjustWidth @el, @model
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
@@ -264,7 +266,7 @@ module.exports = pluginator.extend
     @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
     jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
     jbone(document.body).on 'mouseup.overup', => @_cleanup()
-    jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
+    #jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
 
   # starts the touch mode
   _ontouchstart: (e) ->
