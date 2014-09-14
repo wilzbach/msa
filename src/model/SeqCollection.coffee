@@ -4,10 +4,25 @@ Collection = require("backbone").Collection
 module.exports = SeqManager = Collection.extend
   model: Sequence
 
+  constructor: ->
+
+    Collection.apply @, arguments
+
+    # invalidate cache
+    @on "all", ->
+      @lengthCache = null
+    , @
+    @lengthCache = null
+
+    @
+
   # gives the max length of all sequences
+  # (cached)
   getMaxLength: () ->
     return 0 if @models.length is 0
-    @max((seq) -> seq.get("seq").length).get("seq").length
+    if @lengthCache is null
+      @lengthCache = @max((seq) -> seq.get("seq").length).get("seq").length
+    return @lengthCache
 
   # gets the previous model
   # @param endless [boolean] for the first element
