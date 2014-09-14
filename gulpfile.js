@@ -16,7 +16,7 @@ var minifyCSS = require('gulp-minify-css');
 
 // path stuff
 var chmod = require('gulp-chmod');
-var clean = require('gulp-clean');
+var clean = require('gulp-rimraf');
 var mkdirp = require('mkdirp');
 var path = require('path');
 var join = path.join;
