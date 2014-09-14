@@ -53,6 +53,7 @@ module.exports = FilterMenu = view.extend
     menuFilter.addNode "Hide seqs by selection", =>
       hidden = @g.selcol.where type: "row"
       ids = _.map hidden, (el) -> el.get('seqId')
+      @g.selcol.reset []
       @model.each (el) ->
         if ids.indexOf(el.get('id')) >= 0
           el.set('hidden', true)

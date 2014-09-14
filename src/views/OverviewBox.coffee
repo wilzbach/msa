@@ -3,6 +3,7 @@ mouse = require "../utils/mouse"
 selection = require "../g/selection/Selection"
 colorSelector = require("biojs-vis-colorschemes").selector
 jbone = require "jbone"
+_ = require "underscore"
 
 module.exports = OverviewBox = view.extend
 
@@ -15,6 +16,7 @@ module.exports = OverviewBox = view.extend
     @listenTo @g.selcol, "add reset change", @render
     @listenTo @g.columns, "change:hidden", @render
     @listenTo @g.colorscheme, "change:showLowerCase", @render
+    @listenTo @model, "change", _.debounce @render, 5
 
     # color
     @color = colorSelector.getColor @g
@@ -40,10 +42,20 @@ module.exports = OverviewBox = view.extend
     hidden = @g.columns.get "hidden"
     showLowerCase = @g.colorscheme.get "showLowerCase"
 
-    y = 0
+    y = -rectHeight
     for i in [0.. @model.length - 1] by 1
       seq = @model.at(i).get "seq"
       x = 0
+      y = y + rectHeight
+
+
+      if @model.at(i).get "hidden"
+        # hidden seq
+        console.log @model.at(i).get "hidden"
+        @ctx.fillStyle = "grey"
+        @ctx.fillRect 0,y,seq.length * rectWidth,rectHeight
+        continue
+
       for j in [0.. seq.length - 1] by 1
         c = seq[j]
         # todo: optional uppercasing
@@ -51,15 +63,13 @@ module.exports = OverviewBox = view.extend
         color = @color[c]
 
         if hidden.indexOf(j) >= 0
-          @ctx.globalAlpha = 0.3
-        else
-          @ctx.globalAlpha = 1 if @ctx.globalAlpha isnt 1
+          color = "grey"
 
         if color?
-          @ctx.fillStyle =  color
+          @ctx.fillStyle = color
           @ctx.fillRect x,y,rectWidth,rectHeight
+
         x = x + rectWidth
-      y = y + rectHeight
 
     @_drawSelection()
 
