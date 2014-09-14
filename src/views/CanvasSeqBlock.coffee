@@ -25,7 +25,7 @@ module.exports = pluginator.extend
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
     @el.style.overflowY = "hidden"
-    @el.className = "biojs_msa_seq_st_block"
+    @el.className = "biojs_msa_seqblock"
 
     @ctx = @el.getContext '2d'
     @cache = new FontCache @g
