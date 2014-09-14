@@ -42,7 +42,7 @@ LabelView = view.extend
     if @.g.vis.get "labelId"
       id = document.createElement "span"
       id.textContent = @model.get "id"
-      id.style.width = 30
+      id.style.width = @g.zoomer.get "labelIdLength"
       id.style.display = "inline-block"
       @el.appendChild id
 

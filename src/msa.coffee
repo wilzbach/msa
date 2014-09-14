@@ -8,7 +8,7 @@ Columns = require "./g/columns"
 Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
 Visibility = require "./g/visibility"
-VisOrdering = require "./g/visOrdering.coffee"
+VisOrdering = require "./g/visOrdering"
 Zoomer = require "./g/zoomer"
 
 # MV from backbone
