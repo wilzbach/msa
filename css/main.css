@@ -252,9 +252,8 @@ a:focus {
     margin-left: 1px;
 }
 .navbar-default .navbar-nav > li > a {
-    padding: 30px 25px;
     font-size: 16px;
-    line-height: 18px;
+    line-height: 26px;
     color: #999;
 }
 .navbar-default .navbar-nav > li > a > i {

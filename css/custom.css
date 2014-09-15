@@ -1,6 +1,8 @@
 #title{
     margin-left: 5px;
     margin-right: 5px;
+    margin-top: -12px;
+    display: block;
     color: #999;
     font-family: 'Open Sans', sans-serif;
 }
