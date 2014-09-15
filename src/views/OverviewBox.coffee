@@ -43,7 +43,7 @@ module.exports = OverviewBox = view.extend
     showLowerCase = @g.colorscheme.get "showLowerCase"
 
     y = -rectHeight
-    for i in [0.. @model.length - 1] by 1
+    for i in [0.. @model.length - 1] by @g.zoomer.attributes.overviewAverageSeqs
       seq = @model.at(i).get "seq"
       x = 0
       y = y + rectHeight
@@ -79,10 +79,10 @@ module.exports = OverviewBox = view.extend
 
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
-    maxHeight = rectHeight * @model.length
+    maxHeight = Math.ceil( rectHeight / @g.zoomer.attributes.overviewAverageSeqs) * @model.length
     @ctx.fillStyle = "#ffff00"
     @ctx.globalAlpha = 0.9
-    for i in [0.. @g.selcol.length - 1] by 1
+    for i in [0.. @g.selcol.length - 1] by @g.zoomer.attributes.overviewAverageSeqs
       sel = @g.selcol.at(i)
       if sel.get('type') is 'column'
         @ctx.fillRect rectWidth * sel.get('xStart'),0,rectWidth *
@@ -165,14 +165,17 @@ module.exports = OverviewBox = view.extend
     # x
     for i in [0..1]
       rect[0][i] = Math.floor( rect[0][i] / @g.zoomer.get("boxRectWidth"))
+      rect[0][i] = rect[0][i] * @g.zoomer.attributes.overviewAverageSeqs
 
     # y
     for i in [0..1]
       rect[1][i] = Math.floor( rect[1][i] / @g.zoomer.get("boxRectHeight") )
+      rect[1][i] = rect[1][i] * @g.zoomer.attributes.overviewAverageSeqs
 
     # upper limit
     rect[0][1] = Math.min(@model.getMaxLength() - 1, rect[0][1])
     rect[1][1] = Math.min(@model.length - 1, rect[1][1])
+
 
     # select
     selis = []
@@ -204,7 +207,7 @@ module.exports = OverviewBox = view.extend
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
 
-    @el.height = @model.length * rectHeight
+    @el.height = Math.ceil(@model.length  / @g.zoomer.get("overviewAverageSeqs")) * rectHeight
     @el.width = @model.getMaxLength() * rectWidth
     @ctx = @el.getContext "2d"
     @el.style.overflow = "scroll"

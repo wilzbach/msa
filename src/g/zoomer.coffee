@@ -24,8 +24,9 @@ module.exports = Zoomer = Model.extend
     residueFont: "13px mono"
     canvasEventScale: 1
 
-    boxRectHeight: 5
-    boxRectWidth: 5
+    boxRectHeight: 5 # overview box
+    boxRectWidth: 5 # overview box
+    overviewAverageSeqs: 1
 
     # internal props
     _alignmentScrollLeft: 0
