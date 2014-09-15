@@ -10,8 +10,6 @@
   "author": "greenify",
   "dependencies": {
     "backbone": "^1.1.2",
-    "backbone-collection": "^1.0.6",
-    "backbone-model": "^1.0.6",
     "biojs-events": "0.0.4",
     "biojs-io-clustal": "0.0.6",
     "biojs-io-fasta": "0.0.8",
