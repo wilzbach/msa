@@ -188,7 +188,7 @@ module.exports = pluginator.extend
     for j in [start.. seq.length - 1] by 1
       starts = features.startOn j
 
-      if data.hidden.indexOf(j) < 0
+      if data.hidden.indexOf(j) >= 0
         continue
 
       if starts.length > 0
@@ -417,7 +417,6 @@ module.exports = pluginator.extend
     hiddenOffset = 0
     for n in [0..seq.length - 1] by 1
       if data.hidden.indexOf(n) >= 0
-        console.log "hidden"
         hiddenOffset++
       else
         k = n - hiddenOffset

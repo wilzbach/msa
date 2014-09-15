@@ -6,18 +6,18 @@ module.exports = FeatureCol = Collection.extend
   model: Feature
 
   constructor: ->
-
+    @startOnCache = []
     # invalidate cache
     @on "all", ->
-      @startOnCache = null
+      @startOnCache = []
     , @
-    @startOnCache = null
+    Collection.apply @, arguments
 
   # returns all features starting on index
   startOn: (index) ->
-    if @startOnCache is null
-      @startOnCache = @where({xStart: index})
-    return @startOnCache
+    unless @startOnCache[index]?
+      @startOnCache[index] = @where({xStart: index})
+    return @startOnCache[index]
 
   contains: (index) ->
     @reduce (el,memo) ->
