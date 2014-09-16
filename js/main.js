@@ -1,25 +1,63 @@
 jQuery(function($) {
 
-	$(function(){
-		$('#main-slider.carousel').carousel({
-			interval: 7000,
-			pause: false
-		});
-	});
+  $(function(){
+    $('#main-slider.carousel').carousel({
+      interval: 7000,
+      pause: false
+    });
+  });
 
 
-	//smooth scroll
-	$('.navbar-nav > li').click(function(event) {
-		event.preventDefault();
-		var target = $(this).find('>a').prop('hash');
-		$('html, body').animate({
-			scrollTop: $(target).offset().top
-		}, 500);
-	});
+  //smooth scroll
+  blockScroller = false;
+  $('.navbar-nav > li').click(function(event) {
+    event.preventDefault();
+    var target = $(this).find('>a').prop('hash');
+    var navbar = $("#navbar").height();
+    console.log("clicked", $(this)[0].childNodes[0].innerHTML);
+    $('html, body').animate({
+      scrollTop: $(target).offset().top - navbar + 1
+    }, 500);
+  });
 
-	//scrollspy
-	$('[data-spy="scroll"]').each(function () {
-		var $spy = $(this).scrollspy('refresh')
-	})
+  //scrollspy
+  $('body').scrollspy({
+    offset: $("#navbar").height()
+  });
 
+
+  //true: down, false: up
+  var selectNext = function(direction){
+    var sel = $('.navbar-nav').find(".active");
+    if( direction && sel.next().length > 0){
+      sel.next().trigger("click");
+      return true;
+    }
+    if( !direction && sel.prev().length > 0){
+      sel.prev().trigger("click");
+      return true;
+    }
+    console.log("end");
+    return false;
+  }
+
+  // pagging goes to the next selection
+  $(window).keydown(function(e) {
+    switch(e.keyCode){
+      // pagedown
+      case 34:
+        if(selectNext(true)){
+          e.stopPropagation();
+          e.preventDefault();
+        }
+        break;
+        // pageup
+      case 33:
+        if(selectNext(false)){
+          e.stopPropagation();
+          e.preventDefault();
+        }
+        break;
+    }
+  })
 });
