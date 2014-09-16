@@ -19,9 +19,9 @@ module.exports = OverviewBox = view.extend
     @listenTo @model, "change", _.debounce @render, 5
 
     # color
-    @color = colorSelector.getColor @g
+    @color = colorSelector.getColor @g.colorscheme.get("scheme")
     @listenTo @g.colorscheme, "change:scheme", ->
-      @color = colorSelector.getColor @g
+      @color = colorSelector.getColor @g.colorscheme.get("scheme")
       @render()
     @dragStart = []
 
