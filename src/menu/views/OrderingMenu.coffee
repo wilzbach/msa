@@ -1,9 +1,8 @@
-view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 dom = require "../../utils/dom"
 _ = require('underscore')
 
-module.exports = OrderingMenu = view.extend
+module.exports = OrderingMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
@@ -16,25 +15,25 @@ module.exports = OrderingMenu = view.extend
 
   # TODO: make more generic
   render: ->
-    menuOrdering = new MenuBuilder("Ordering")
+    @setName("Ordering")
 
     comps = @getComparators()
     for m in comps
-      @_addNode menuOrdering,m
+      @_addNode m
 
-    el = menuOrdering.buildDOM()
+    el = @buildDOM()
 
     # TODO: make more efficient
     dom.removeAllChilds @el
     @el.appendChild el
     @
 
-  _addNode: (menuOrdering, m) ->
+  _addNode: (m) ->
     text = m.text
     style = {}
     if text is @order
       style.backgroundColor = "#77ED80"
-    menuOrdering.addNode text, =>
+    @addNode text, =>
       m.precode() if m.precode?
       @model.comparator = m.comparator
       @model.sort()

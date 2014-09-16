@@ -37,4 +37,5 @@ module.exports = pluginator.extend
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}"
+    @el.style.lineHeight = "#{@g.zoomer.get "labelLineHeight"}"
     @

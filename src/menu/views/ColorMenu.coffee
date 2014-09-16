@@ -1,9 +1,8 @@
-view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 _ = require "underscore"
 dom = require "../../utils/dom"
 
-module.exports = ColorMenu = view.extend
+module.exports = ColorMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
@@ -12,7 +11,7 @@ module.exports = ColorMenu = view.extend
       @render()
 
   render: ->
-    menuColor = new MenuBuilder("Color scheme")
+    menuColor = @setName("Color scheme")
 
     colorschemes = @getColorschemes()
     for scheme in colorschemes
@@ -24,14 +23,14 @@ module.exports = ColorMenu = view.extend
     else
       text = "Show " + text
 
-    menuColor.addNode text, =>
+    @addNode text, =>
       @g.colorscheme.set "colorBackground", !@g.colorscheme.get("colorBackground")
 
     @grey menuColor
 
     # TODO: make more efficient
     dom.removeAllChilds @el
-    @el.appendChild menuColor.buildDOM()
+    @el.appendChild @buildDOM()
     @
 
   addScheme: (menuColor,scheme) ->
@@ -40,7 +39,7 @@ module.exports = ColorMenu = view.extend
     if current is scheme.id
       style.backgroundColor = "#77ED80"
 
-    menuColor.addNode scheme.name, =>
+    @addNode scheme.name, =>
       @g.colorscheme.set "scheme", scheme.id
     ,
       style: style
@@ -67,7 +66,7 @@ module.exports = ColorMenu = view.extend
 
   grey: (menuColor) ->
     # greys all lowercase letters
-    menuColor.addNode "Grey", =>
+    @addNode "Grey", =>
       @g.colorscheme.set "showLowerCase", false
       @model.each (seq) ->
         residues = seq.get "seq"
@@ -77,7 +76,7 @@ module.exports = ColorMenu = view.extend
             grey.push index
         seq.set "grey", grey
 
-    menuColor.addNode "Grey by threshold", =>
+    @addNode "Grey by threshold", =>
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
@@ -90,13 +89,13 @@ module.exports = ColorMenu = view.extend
       @model.each (seq) ->
         seq.set "grey", grey
 
-    menuColor.addNode "Grey selection", =>
+    @addNode "Grey selection", =>
       maxLen = @model.getMaxLength()
       @model.each (seq) =>
         blocks = @g.selcol.getBlocksForRow(seq.get("id"),maxLen)
         seq.set "grey", blocks
 
-    menuColor.addNode "Reset grey", =>
+    @addNode "Reset grey", =>
       @g.colorscheme.set "showLowerCase", true
       @model.each (seq) ->
         seq.set "grey", []

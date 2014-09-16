@@ -1,17 +1,16 @@
 MenuBuilder = require "../menubuilder"
 consenus = require "../../algo/ConsensusCalc"
 Seq = require "../../model/Sequence"
-view = require("../../bone/view")
 
-module.exports = ExtraMenu = view.extend
+module.exports = ExtraMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
     @el.style.display = "inline-block"
 
   render: ->
-    menu = new MenuBuilder("Extras")
-    menu.addNode "Add consensus seq", =>
+    @setName("Extras")
+    @addNode "Add consensus seq", =>
       con = consenus(@model)
       console.log con
       seq = new Seq
@@ -22,36 +21,36 @@ module.exports = ExtraMenu = view.extend
       @model.comparator = (seq) ->
         seq.get "id"
       @model.sort()
-    menu.addNode "Increase font size", =>
+    @addNode "Increase font size", =>
       @g.zoomer.set "columnWidth", @g.zoomer.get("columnWidth") + 2
       @g.zoomer.set "labelWidth", @g.zoomer.get("columnWidth") + 5
       @g.zoomer.set "rowHeight", @g.zoomer.get("rowHeight") + 2
       @g.zoomer.set "labelFontSize", @g.zoomer.get("labelFontSize") + 2
-    menu.addNode "Decrease font size", =>
+    @addNode "Decrease font size", =>
       @g.zoomer.set "columnWidth", @g.zoomer.get("columnWidth") - 2
       @g.zoomer.set "rowHeight", @g.zoomer.get("rowHeight") - 2
       @g.zoomer.set "labelFontSize", @g.zoomer.get("labelFontSize") - 2
       if @g.zoomer.get("columnWidth") < 8
         @g.zoomer.set "textVisible", false
 
-    menu.addNode "Bar chart exp scaling", =>
+    @addNode "Bar chart exp scaling", =>
       @g.columns.set "scaling", "exp"
-    menu.addNode "Bar chart linear scaling", =>
+    @addNode "Bar chart linear scaling", =>
       @g.columns.set "scaling", "lin"
-    menu.addNode "Bar chart log scaling", =>
+    @addNode "Bar chart log scaling", =>
       @g.columns.set "scaling", "log"
 
-    menu.addNode "Minimized width", =>
+    @addNode "Minimized width", =>
       @g.zoomer.set "alignmentWidth", 600
-    menu.addNode "Minimized height", =>
+    @addNode "Minimized height", =>
       @g.zoomer.set "alignmentHeight", 120
 
-    menu.addNode "Jump to a column", =>
+    @addNode "Jump to a column", =>
       offset = prompt "Column", "20"
       if offset < 0 or offset > @model.getMaxLength() or isNaN(offset)
         alert "invalid column"
         return
       @g.zoomer.setLeftOffset(offset)
 
-    @el.appendChild menu.buildDOM()
+    @el.appendChild @buildDOM()
     @

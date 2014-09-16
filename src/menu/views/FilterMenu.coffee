@@ -1,16 +1,15 @@
-view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 _ = require "underscore"
 
-module.exports = FilterMenu = view.extend
+module.exports = FilterMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
     @el.style.display = "inline-block"
 
   render: ->
-    menuFilter = new MenuBuilder("Filter")
-    menuFilter.addNode "Hide columns by threshold",(e) =>
+    @setName("Filter")
+    @addNode "Hide columns by threshold",(e) =>
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
@@ -21,13 +20,13 @@ module.exports = FilterMenu = view.extend
           hidden.push i
       @g.columns.set "hidden", hidden
 
-    menuFilter.addNode "Hide columns by selection", =>
+    @addNode "Hide columns by selection", =>
       hiddenOld = @g.columns.get "hidden"
       hidden = hiddenOld.concat @g.selcol.getAllColumnBlocks maxLen: @model.getMaxLength(), withPos: true
       @g.selcol.reset []
       @g.columns.set "hidden", hidden
 
-    menuFilter.addNode "Hide columns by gaps", =>
+    @addNode "Hide columns by gaps", =>
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
@@ -43,14 +42,14 @@ module.exports = FilterMenu = view.extend
           hidden.push i
       @g.columns.set "hidden", hidden
 
-    menuFilter.addNode "Hide seqs by identity", =>
+    @addNode "Hide seqs by identity", =>
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       @model.each (el) ->
         if el.get('identity') < threshold
           el.set('hidden', true)
 
-    menuFilter.addNode "Hide seqs by selection", =>
+    @addNode "Hide seqs by selection", =>
       hidden = @g.selcol.where type: "row"
       ids = _.map hidden, (el) -> el.get('seqId')
       @g.selcol.reset []
@@ -58,7 +57,7 @@ module.exports = FilterMenu = view.extend
         if ids.indexOf(el.get('id')) >= 0
           el.set('hidden', true)
 
-    menuFilter.addNode "Hide seqs by gaps", =>
+    @addNode "Hide seqs by gaps", =>
       threshold = prompt "Enter threshold (in percent)", 40
       @model.each (el,i) ->
         seq = el.get('seq')
@@ -67,11 +66,11 @@ module.exports = FilterMenu = view.extend
         if gaps >  threshold
           el.set('hidden', true)
 
-    menuFilter.addNode "Reset", =>
+    @addNode "Reset", =>
       @g.columns.set "hidden", []
       @model.each (el) ->
         if el.get('hidden')
           el.set('hidden', false)
 
-    @el.appendChild menuFilter.buildDOM()
+    @el.appendChild @buildDOM()
     @

@@ -25,7 +25,7 @@ module.exports = MenuView = pluginator.extend
     @addView  "60_ordering", new OrderingMenu model: @msa.seqs, g:@msa.g
     @addView  "70_extra", new ExtraMenu model: @msa.seqs, g:@msa.g
     @addView  "80_export", new ExportMenu model: @msa.seqs, g:@msa.g, msa:@msa
-    @addView  "90_help", new HelpMenu()
+    @addView  "90_help", new HelpMenu  g:@msa.g
 
   render: ->
     @renderSubviews()
