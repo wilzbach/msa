@@ -24,20 +24,33 @@ jQuery(function($) {
     offset: $("#navbar").height()
   });
 
+  var getNext = function(sel){
+    var next = sel.next();
+    if(next.css('display') === "none") return getNext(next);
+    return next;
+  };
+
+  var getPrev = function(sel){
+    var prev = sel.prev();
+    if(prev.css('display') === "none") return getPrev(prev);
+    return prev;
+  };
 
   //true: down, false: up
   var selectNext = function(direction){
     var sel = $('.navbar-nav').find(".active");
-    if( direction && sel.next().length > 0){
-      sel.next().trigger("click");
+    var next = getNext(sel);
+    var prev = getPrev(sel);
+    if( direction && next.length > 0){
+      next.trigger("click");
       return true;
     }
-    if( !direction && sel.prev().length > 0){
-      sel.prev().trigger("click");
+    if( !direction && prev.length > 0){
+      prev.trigger("click");
       return true;
     }
     return false;
-  }
+  };
 
   // pagging goes to the next selection
   $(window).keydown(function(e) {
