@@ -8,24 +8,39 @@ module.exports = Zoomer = Model.extend
     @
 
   defaults:
-    columnWidth: 15
-    metaWidth: 100
-    labelWidth: 100
+
+    # general
     alignmentWidth: "auto"
     alignmentHeight: 195
-
+    columnWidth: 15
     rowHeight: 15
+
+    # labels
+    labelWidth: 100
+    metaWidth: 100
     textVisible: true
     labelIdLength: 30
     labelFontsize: "13px"
+    labelLineHeight: "13px"
+
+    # marker
+    markerFontsize: "10px"
     stepSize: 1
     markerStepSize: 2
 
+    # canvas
     residueFont: "13px mono"
     canvasEventScale: 1
 
     boxRectHeight: 5
     boxRectWidth: 5
+
+    # menu
+    menuFontsize: "20px"
+    menuItemFontsize: "18px"
+    menuItemLineHeight: "18px"
+    menuMarginLeft: "5px"
+    menuPadding: "3px 5px 3px 5px"
 
     # internal props
     _alignmentScrollLeft: 0

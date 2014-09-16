@@ -9,12 +9,14 @@ HeaderView = view.extend
 
   initialize: (data) ->
     @g = data.g
-    @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth change:markerStepSize", @render
+    @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth change:markerStepSize change:markerFontsize", @render
     @listenTo @g.vis,"change:labels change:metacell", @render
     @manageEvents()
 
   render: ->
     dom.removeAllChilds @el
+
+    @el.style.fontSize = @g.zoomer.get "markerFontsize"
 
     container = document.createElement "span"
     n = 0
