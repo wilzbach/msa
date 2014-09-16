@@ -25,8 +25,8 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 
 ```html
-<script src=//cdn.biojs-msa.org/msa/0.1/msa.min.gz.js></script>
-<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/0.1/msa.min.gz.css />
+<script src=//cdn.biojs-msa.org/msa/0.2/msa.min.gz.js></script>
+<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/0.2/msa.min.gz.css />
 ```
 
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
