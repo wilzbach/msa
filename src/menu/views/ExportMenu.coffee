@@ -3,11 +3,13 @@ MenuBuilder = require "../menubuilder"
 saveAs = require "../../../external/saver"
 FastaExporter = require("biojs-io-fasta").writer
 _ = require "underscore"
+blobURL = require "../../../external/urltoblob"
 
 module.exports = ExportMenu = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @msa = data.msa
     @el.style.display = "inline-block"
 
   render: ->
@@ -34,27 +36,18 @@ module.exports = ExportMenu = view.extend
       blob = new Blob([text], {type : 'text/plain'})
       saveAs blob, "selection.fasta"
 
-    menuExport.addNode "Export image (broken)", =>
-      console.log "trying to render"
-      require ["html2canvas", "saveAs"], (HTML2canvas, saveAs) =>
-        HTML2canvas @msa.container, {
-          onrendered: (canvas) =>
-            #url = canvas.toDataURL()
-            # only for some browsers
-            #url = canvas.toDataURL("image/jpeg")
-            #url = url.replace( /// # cs heregexes
-            #/^data[:]image\/(png|jpg|jpeg)[;]/i
-            #///, "data:application/octet-stream;")
+    # TODO: use https://github.com/blueimp/JavaScript-Canvas-to-Blob/blob/master/js/canvas-to-blob.js
+    menuExport.addNode "Export image", =>
+      # TODO: this is very ugly
+      canvas = @msa.getView('stage').getView('body').getView('seqblock').el
+      if canvas?
+        url = canvas.toDataURL('image/png')
+        saveAs blobURL(url), "biojs-msa.png", "image/png"
 
-            canvas.toBlob( (blob) ->
-              saveAs blob, "biojs-msa.png"
-            , "image/png")
-
-            #win = window.open url, '_blank'
-        }
-      , ->
-        # on module loading error
-        console.log "couldn't load HTML2canvas"
+      # add octet-stream
+      #url = url.replace( /// # cs heregexes
+      #/^data[:]image\/(png|jpg|jpeg)[;]/i
+      #///, "data:application/octet-stream;")
 
     @el.appendChild menuExport.buildDOM()
     @
