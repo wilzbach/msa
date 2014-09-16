@@ -1,17 +1,15 @@
-view = require("../../bone/view")
-view = require("../../bone/view")
 Clustal = require "biojs-io-clustal"
 FastaReader = require("biojs-io-fasta").parse
 MenuBuilder = require "../menubuilder"
 
-module.exports = ImportMenu = view.extend
+module.exports = ImportMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
     @el.style.display = "inline-block"
 
   render: ->
-    menuImport = new MenuBuilder("Import")
+    @setName("Import")
     corsURL = (url) =>
       # do not filter on localhost
       return url if document.URL.indexOf('localhost') >= 0 and url[0] is "/"
@@ -24,7 +22,7 @@ module.exports = ImportMenu = view.extend
       url = @g.config.get('importProxy') + url
       url
 
-    menuImport.addNode "FASTA",(e) =>
+    @addNode "FASTA",(e) =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.fasta"
       url = corsURL url
       FastaReader.read url, (seqs) =>
@@ -40,7 +38,7 @@ module.exports = ImportMenu = view.extend
         @model.reset seqs
         @g.columns.calcConservation @model
 
-    menuImport.addNode "CLUSTAL", =>
+    @addNode "CLUSTAL", =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
       url = corsURL url
       Clustal.read url, (seqs) =>
@@ -55,8 +53,8 @@ module.exports = ImportMenu = view.extend
         @model.reset seqs
         @g.columns.calcConservation @model
 
-    menuImport.addNode "add your own Parser", =>
+    @addNode "add your own Parser", =>
       window.open "https://github.com/biojs/biojs2"
 
-    @el.appendChild menuImport.buildDOM()
+    @el.appendChild @buildDOM()
     @

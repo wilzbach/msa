@@ -1,8 +1,7 @@
-view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 dom = require "../../utils/dom"
 
-module.exports = ImportMenu = view.extend
+module.exports = ImportMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
@@ -10,14 +9,14 @@ module.exports = ImportMenu = view.extend
     @listenTo @g.vis, "change", @render
 
   render: ->
-    menuFile = new MenuBuilder("Vis. elements")
+    @setName("Vis. elements")
 
     visElements = @getVisElements()
     for visEl in visElements
-      @_addVisEl menuFile,visEl
+      @_addVisEl visEl
 
     # other
-    menuFile.addNode "Reset", =>
+    @addNode "Reset", =>
       @g.vis.set "labels", true
       @g.vis.set "sequences", true
       @g.vis.set "metacell", true
@@ -26,15 +25,15 @@ module.exports = ImportMenu = view.extend
       @g.vis.set "labelName", true
       @g.vis.set "labelCheckbox", false
 
-    menuFile.addNode "Toggle mouseover events", =>
+    @addNode "Toggle mouseover events", =>
       @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"
 
     # TODO: make more efficient
     dom.removeAllChilds @el
-    @el.appendChild menuFile.buildDOM()
+    @el.appendChild @buildDOM()
     @
 
-  _addVisEl: (menuFile,visEl) ->
+  _addVisEl: (visEl) ->
     style = {}
 
     if @g.vis.get visEl.id
@@ -44,7 +43,7 @@ module.exports = ImportMenu = view.extend
       pre = "Show "
       style.color = "green"
 
-    menuFile.addNode (pre + visEl.name), =>
+    @addNode (pre + visEl.name), =>
       @g.vis.set visEl.id, ! @g.vis.get visEl.id
     ,
       style: style

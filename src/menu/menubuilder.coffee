@@ -1,15 +1,15 @@
 BMath = require "../utils/bmath"
 jbone = require "jbone"
+view = require("../bone/view")
 
 #jbone.fn.addClass = (className) ->
 #  for i in [0.. @.length - 1] by 1
 #    @[i].classList.add className
 #  @
 
-module.exports =
-  class MenuBuilder
+module.exports = MenuBuilder = view.extend
 
-    constructor: (@name) ->
+    setName: (@name) ->
       @_nodes =  []
 
     addNode: (label, callback, data) ->
@@ -32,6 +32,7 @@ module.exports =
 
       menuUl = document.createElement "ul"
       menuUl.className = "dropdown-menu"
+      menuUl.style.fontSize = @g.zoomer.get "menuItemFontsize"
 
       # dropdown menu
       for node in nodes
@@ -41,6 +42,7 @@ module.exports =
         for key,style of node.style
           li.style[key] = style
         li.addEventListener "click", node.callback
+        li.style.lineHeight = @g.zoomer.get "menuItemLineHeight"
 
         menuUl.appendChild li
 
@@ -53,9 +55,9 @@ module.exports =
       displayedButton.className = "biojs_msa_menubar_alink"
 
       # tiny style
-      #display.style.fontSize: 14px
-      #displayedButton.style.marginLeft: 5px
-      #displayedButton.style.padding: 3px 5px 3px 5px
+      displayedButton.style.fontSize = @g.zoomer.get "menuFontsize"
+      displayedButton.style.marginLeft = @g.zoomer.get "menuMarginLeft"
+      displayedButton.style.padding = @g.zoomer.get "menuPadding"
 
       jbone(displayedButton).on "click", (e) =>
         @_showMenu e,menu,displayedButton

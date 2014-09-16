@@ -1,11 +1,10 @@
-view = require("../../bone/view")
 MenuBuilder = require "../menubuilder"
 saveAs = require "../../../external/saver"
 FastaExporter = require("biojs-io-fasta").writer
 _ = require "underscore"
 blobURL = require "../../../external/urltoblob"
 
-module.exports = ExportMenu = view.extend
+module.exports = ExportMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
@@ -13,15 +12,15 @@ module.exports = ExportMenu = view.extend
     @el.style.display = "inline-block"
 
   render: ->
-    menuExport = new MenuBuilder("Export")
+    @setName("Export")
 
-    menuExport.addNode "Export sequences", =>
+    @addNode "Export sequences", =>
       # limit at about 256k
       text = FastaExporter.export @model.toJSON()
       blob = new Blob([text], {type : 'text/plain'})
       saveAs blob, "all.fasta"
 
-    menuExport.addNode "Export selection", =>
+    @addNode "Export selection", =>
       selection = @g.selcol.pluck "seqId"
       if selection?
         # filter those seqids
@@ -37,7 +36,7 @@ module.exports = ExportMenu = view.extend
       saveAs blob, "selection.fasta"
 
     # TODO: use https://github.com/blueimp/JavaScript-Canvas-to-Blob/blob/master/js/canvas-to-blob.js
-    menuExport.addNode "Export image", =>
+    @addNode "Export image", =>
       # TODO: this is very ugly
       canvas = @msa.getView('stage').getView('body').getView('seqblock').el
       if canvas?
@@ -49,5 +48,5 @@ module.exports = ExportMenu = view.extend
       #/^data[:]image\/(png|jpg|jpeg)[;]/i
       #///, "data:application/octet-stream;")
 
-    @el.appendChild menuExport.buildDOM()
+    @el.appendChild @buildDOM()
     @

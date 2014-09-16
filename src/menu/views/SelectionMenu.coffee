@@ -1,17 +1,16 @@
-view = require("../../bone/view")
 sel = require "../../g/selection/Selection"
 
 MenuBuilder = require "../menubuilder"
 
-module.exports = SelectionMenu = view.extend
+module.exports = SelectionMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
     @el.style.display = "inline-block"
 
   render: ->
-    menu = new MenuBuilder("Selection")
-    menu.addNode "Find Motif (supports RegEx)", =>
+    @setName("Selection")
+    @addNode "Find Motif (supports RegEx)", =>
       search = prompt "your search", "D"
       # marks all hits
       search = new RegExp search, "gi"
@@ -35,11 +34,11 @@ module.exports = SelectionMenu = view.extend
       leftestIndex = 0 if leftestIndex is origIndex
       @g.zoomer.setLeftOffset leftestIndex
 
-    menu.addNode "Invert columns", =>
+    @addNode "Invert columns", =>
       @g.selcol.invertCol [0..@model.getMaxLength()]
-    menu.addNode "Invert rows", =>
+    @addNode "Invert rows", =>
       @g.selcol.invertRow @model.pluck "id"
-    menu.addNode "Reset", =>
+    @addNode "Reset", =>
       @g.selcol.reset()
-    @el.appendChild menu.buildDOM()
+    @el.appendChild @buildDOM()
     @
