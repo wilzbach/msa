@@ -201,11 +201,11 @@ a:focus {
     right: -10px;
 }
 .carousel.scale .active .row > div:nth-child(1) {
-    -webkit-animation: scaleUp 200ms linear 0 both;
-    -moz-animation: scaleUp 200ms linear 0 both;
-    -ms-animation: scaleUp 200ms linear 0 both;
-    -o-animation: scaleUp 200ms linear 0 both;
-    animation: scaleUp 200ms linear 0 both;
+    -webkit-animation: scaleUp 200ms linear 0ms both;
+    -moz-animation: scaleUp 200ms linear 0ms both;
+    -ms-animation: scaleUp 200ms linear 0ms both;
+    -o-animation: scaleUp 200ms linear 0ms both;
+    animation: scaleUp 200ms linear 0ms both;
 }
 .carousel.scale .active .row > div:nth-child(2) {
     -webkit-animation: scaleUp 200ms linear 100ms both;
