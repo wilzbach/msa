@@ -2,7 +2,7 @@ jQuery(function($) {
 
   $(function(){
     $('#main-slider.carousel').carousel({
-      interval: 7000,
+      interval: 9000,
       pause: false
     });
   });
@@ -14,7 +14,6 @@ jQuery(function($) {
     event.preventDefault();
     var target = $(this).find('>a').prop('hash');
     var navbar = $("#navbar").height();
-    console.log("clicked", $(this)[0].childNodes[0].innerHTML);
     $('html, body').animate({
       scrollTop: $(target).offset().top - navbar + 1
     }, 500);
@@ -37,7 +36,6 @@ jQuery(function($) {
       sel.prev().trigger("click");
       return true;
     }
-    console.log("end");
     return false;
   }
 
