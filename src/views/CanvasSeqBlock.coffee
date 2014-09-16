@@ -212,7 +212,7 @@ module.exports = pluginator.extend
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
 
-    @color = colorSelector.getColor @g
+    @color = colorSelector.getColor @g.colorscheme.get("scheme")
 
     @throttledDraw()
     @
