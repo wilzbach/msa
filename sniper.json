@@ -1,0 +1,5 @@
+{	
+	js: [ "/build/msa.js"],
+	css: ["/build/msa.css"],
+	snippets: ["snippets"]
+}
