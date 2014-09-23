@@ -7,3 +7,4 @@ module.exports = Config = Model.extend
     registerMouseHover: false,
     registerMouseClicks: true,
     importProxy: "http://www.corsproxy.com/"
+    eventBus: true

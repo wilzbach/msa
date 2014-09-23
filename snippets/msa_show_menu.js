@@ -21,6 +21,7 @@ var defMenu = new msa.menu.defaultmenu(menuOpts);
 //defMenu.createMenu();
 
 m.addView("menu", defMenu);
+m.render();
 
 
 var overviewbox = m.getView("stage").getView("overviewbox");
@@ -29,49 +30,39 @@ overviewbox.el.style.marginTop = "30px";
 // ---------------------------------------------------
 //console.log("consensus", msa.algo.consensus(m));
 
-m.onAll(function(eventName, data){
-  log(eventName,data);
-});
 
+// listen to all events on the global event bus
 m.g.onAll(function(eventName, data){
   log(eventName,data);
 });
-m.g.selcol.on("all",function(eventName,data){
-  log(eventName + " mod.", data.attributes);
-});
+
+// BEGIN: Simple event logging system
 
 var logger = document.getElementById("msa_menu_console");
 function log(eventName,data){
   if(data !== undefined){
-    text = eventName  + " triggered with " + clean(data);
-  } else{
-    text = eventName  + " triggered";
+    text = eventName  + " triggered with " + removeCircularRefs(data);
   }
   message = document.createElement("div");
   message.textContent = text;
+
+  // insert the div always at the top
   if(logger.childNodes.length > 0){
     logger.insertBefore(message,logger.firstChild);
   }else{
     logger.appendChild(message);
   }
+
+  // cleanup
   if(logger.childNodes.length > 10){
     logger.removeChild(logger.lastChild);
   }
 }
 
 // prevent circular refs
-function clean(obj){
-  var o = {};
-  if(typeof obj !== "object"){
-    return obj;
-  }
-  for(var key in obj){
-    if(typeof obj[key] !== 'object'){
-      o[key] = obj[key];
-    }
-  }
-  return JSON.stringify(o);
+function removeCircularRefs(obj){
+  return JSON.stringify(obj, function( key, value) {
+    if( key == 'parent') { return value.id;}
+    else {return value;}
+  })
 }
-
-
-m.render();
