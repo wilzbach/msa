@@ -20,7 +20,7 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
-    "biojs-sniper": "0.0.2",
+    "biojs-sniper": "0.0.3",
     "browserify": "^5.10.0",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
@@ -68,5 +68,10 @@
     "build-browser-cli": "mkdir -p build;  node_modules/browserify/bin/cmd.js -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
     "sniper": "node_modules/biojs-sniper/bin/sniper ."
   },
-  "license": "Apache 2"
+  "license": "Apache 2",
+  "sniper": {	
+	"js": [ "/build/msa.js"],
+	"css": ["/build/msa.css"],
+	"snippets": ["snippets"]
+	}
 }
