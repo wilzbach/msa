@@ -14,6 +14,7 @@ module.exports = MenuBuilder = view.extend
 
     addNode: (label, callback, data) ->
       style = data.style if data?
+      @_nodes = [] unless @_nodes?
       @_nodes.push {label: label, callback: callback, style: style}
 
     buildDOM: ->
@@ -32,7 +33,6 @@ module.exports = MenuBuilder = view.extend
 
       menuUl = document.createElement "ul"
       menuUl.className = "dropdown-menu"
-      menuUl.style.fontSize = @g.zoomer.get "menuItemFontsize"
 
       # dropdown menu
       for node in nodes
@@ -42,7 +42,8 @@ module.exports = MenuBuilder = view.extend
         for key,style of node.style
           li.style[key] = style
         li.addEventListener "click", node.callback
-        li.style.lineHeight = @g.zoomer.get "menuItemLineHeight"
+        if @g?
+          li.style.lineHeight = @g.zoomer.get "menuItemLineHeight"
 
         menuUl.appendChild li
 
@@ -55,9 +56,11 @@ module.exports = MenuBuilder = view.extend
       displayedButton.className = "biojs_msa_menubar_alink"
 
       # tiny style
-      displayedButton.style.fontSize = @g.zoomer.get "menuFontsize"
-      displayedButton.style.marginLeft = @g.zoomer.get "menuMarginLeft"
-      displayedButton.style.padding = @g.zoomer.get "menuPadding"
+      if @g?
+        menuUl.style.fontSize = @g.zoomer.get "menuItemFontsize"
+        displayedButton.style.fontSize = @g.zoomer.get "menuFontsize"
+        displayedButton.style.marginLeft = @g.zoomer.get "menuMarginLeft"
+        displayedButton.style.padding = @g.zoomer.get "menuPadding"
 
       jbone(displayedButton).on "click", (e) =>
         @_showMenu e,menu,displayedButton
