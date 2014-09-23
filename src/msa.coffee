@@ -57,6 +57,25 @@ module.exports = pluginator.extend
     @addView "stage",new Stage {model: @seqs, g: @g}
     @el.setAttribute "class", "biojs_msa_div"
 
+    if @g.config.get("eventBus") is true
+      @startEventBus()
+
+  startEventBus: ->
+    busObjs = ["config", "consensus", "columns", "colorscheme", "selcol"
+    ,"vis", "visorder", "zoomer"]
+    for key in busObjs
+      @_proxyToG key
+
+  _proxyToG: (key) ->
+    @listenTo @g[key], "all",(name,data, fun) ->
+      # backbone uses the second argument for the value -> swap
+      if isNaN(data) and not isNaN(fun)
+        data = fun
+      # suppress duplicate events
+      if name is "change"
+        return
+      @g.trigger(key + ":" + name,data)
+
   render: ->
     @renderSubviews()
     @g.vis.set "loaded", true
