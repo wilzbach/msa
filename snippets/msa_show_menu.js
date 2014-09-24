@@ -20,10 +20,10 @@ m.addView("menu", defMenu);
 // search in URL for fasta or clustal
 function getURLParameter(name) {return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null}
 
-if( getURLParameter('fasta') !== undefined ){
+if( getURLParameter('fasta') !== null ){
   var url = msa.utils.proxy.corsURL(getURLParameter('fasta'), m.g);
   biojs.io.fasta.parse.read(url, renderMSA);
-} else  if( getURLParameter('clustal') !== undefined ){
+} else  if( getURLParameter('clustal') !== null ){
   var url = msa.utils.proxy.corsURL(getURLParameter('clustal'), m.g);
   biojs.io.clustal(getURLParameter('clustal'), renderMSA)
 }else{
