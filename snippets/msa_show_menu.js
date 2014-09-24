@@ -1,3 +1,5 @@
+yourDiv.textContent = "loading";
+
 var opts = {};
 
 opts.el = document.getElementById('msa_menu');
