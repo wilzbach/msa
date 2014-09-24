@@ -20,7 +20,7 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
-    "biojs-sniper": "0.0.3",
+    "biojs-sniper": "0.0.4",
     "browserify": "^5.10.0",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
