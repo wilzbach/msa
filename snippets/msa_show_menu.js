@@ -14,8 +14,6 @@ var defMenu = new msa.menu.defaultmenu(menuOpts);
 
 m.addView("menu", defMenu);
 
-//var overviewbox = m.getView("stage").getView("overviewbox");
-//overviewbox.el.style.marginTop = "30px";
 
 // search in URL for fasta or clustal
 function getURLParameter(name) {return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null}
@@ -27,7 +25,7 @@ if( getURLParameter('fasta') !== null ){
   var url = msa.utils.proxy.corsURL(getURLParameter('clustal'), m.g);
   biojs.io.clustal(getURLParameter('clustal'), renderMSA)
 }else{
-  opts.seqs = msa.utils.seqgen.getDummySequences(18,110);
+  m.seqs.reset(msa.utils.seqgen.getDummySequences(18,110));
 
   // display features
   var Feature = msa.model.feature;
@@ -36,7 +34,11 @@ if( getURLParameter('fasta') !== null ){
   var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "green"});
   m.seqs.at(1).set("features", new msa.model.featurecol([f1,f2,f3]));
 
+  m.g.zoomer.set("alignmentWidth", "auto");
   m.render();
+  
+  var overviewbox = m.getView("stage").getView("overviewbox");
+  overviewbox.el.style.marginTop = "30px";
 }
 function renderMSA(seqs){
   // hide some UI elements for large alignments
