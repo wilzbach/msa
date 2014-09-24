@@ -67,14 +67,11 @@ module.exports = pluginator.extend
       @_proxyToG key
 
   _proxyToG: (key) ->
-    @listenTo @g[key], "all",(name,data, fun) ->
-      # backbone uses the second argument for the value -> swap
-      if isNaN(data) and not isNaN(fun)
-        data = fun
+    @listenTo @g[key], "all",(name,prev,now) ->
       # suppress duplicate events
-      if name is "change"
-        return
-      @g.trigger(key + ":" + name,data)
+      return if name is "change"
+      # backbone uses the second argument for the next value -> swap
+      @g.trigger(key + ":" + name,now)
 
   render: ->
     @renderSubviews()

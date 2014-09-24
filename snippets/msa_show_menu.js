@@ -1,35 +1,54 @@
-var Feature = msa.model.feature;
-var f1 = new Feature({xStart:7 ,xEnd: 20,text: "foo1", fillColor: "red"});
-var f2 = new Feature({xStart:21,xEnd: 40,text: "foo2", fillColor: "blue"});
-var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "green"});
-
-
 var opts = {};
-opts.seqs = msa.utils.seqgen.getDummySequences(18,110);
+
 opts.el = document.getElementById('msa_menu');
 //opts.zoomer = { textVisible: false};
 opts.vis = {metacell: true, overviewbox: true};
 opts.columns = {hidden: [1,2,3]};
 var m = new msa.msa(opts);
-m.seqs.at(1).set("features", new msa.model.featurecol([f1,f2,f3]));
 
 // the menu is independent to the MSA container
 var menuOpts = {};
 menuOpts.el = document.getElementById("msa_menubar");
 menuOpts.msa = m;
 var defMenu = new msa.menu.defaultmenu(menuOpts);
-//defMenu.createMenu();
 
 m.addView("menu", defMenu);
-m.render();
 
+//var overviewbox = m.getView("stage").getView("overviewbox");
+//overviewbox.el.style.marginTop = "30px";
 
-var overviewbox = m.getView("stage").getView("overviewbox");
-overviewbox.el.style.marginTop = "30px";
+// search in URL for fasta or clustal
+function getURLParameter(name) {return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null}
 
-// ---------------------------------------------------
-//console.log("consensus", msa.algo.consensus(m));
+if( getURLParameter('fasta') !== undefined ){
+  var url = msa.utils.proxy.corsURL(getURLParameter('fasta'), m.g);
+  biojs.io.fasta.parse.read(url, renderMSA);
+} else  if( getURLParameter('clustal') !== undefined ){
+  var url = msa.utils.proxy.corsURL(getURLParameter('clustal'), m.g);
+  biojs.io.clustal(getURLParameter('clustal'), renderMSA)
+}else{
+  opts.seqs = msa.utils.seqgen.getDummySequences(18,110);
 
+  // display features
+  var Feature = msa.model.feature;
+  var f1 = new Feature({xStart:7 ,xEnd: 20,text: "foo1", fillColor: "red"});
+  var f2 = new Feature({xStart:21,xEnd: 40,text: "foo2", fillColor: "blue"});
+  var f3 = new Feature({xStart:10,xEnd: 30,text: "foo3", fillColor: "green"});
+  m.seqs.at(1).set("features", new msa.model.featurecol([f1,f2,f3]));
+
+  m.render();
+}
+function renderMSA(seqs){
+  // hide some UI elements for large alignments
+  if(seqs.length > 1000){
+    m.g.vis.set("conserv", false);
+    m.g.vis.set("metacell", false);
+    m.g.vis.set("overviewbox", false);
+  }
+  m.seqs.reset(seqs);
+  m.g.zoomer.set("alignmentWidth", "auto");
+  m.render();
+}
 
 // listen to all events on the global event bus
 m.g.onAll(function(eventName, data){

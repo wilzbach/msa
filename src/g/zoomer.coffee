@@ -73,7 +73,7 @@ module.exports = Zoomer = Model.extend
      return paddingLeft
 
   _adjustWidth: (el, model) ->
-    if el.parentNode?
+    if el.parentNode? and el.parentNode.offsetWidth isnt 0
       parentWidth = el.parentNode.offsetWidth
     else
       parentWidth = document.body.clientWidth - 35
