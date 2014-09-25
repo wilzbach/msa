@@ -8,7 +8,6 @@ if (typeof biojs.vis === 'undefined') {
 window.msa = biojs.vis.msa = module.exports = require('./index');
 
 // TODO: how should this be bundled
-biojs.vis.easy_features = require("biojs-vis-easy_features");
 
 if (typeof biojs.io === 'undefined') {
   biojs.io = {};
