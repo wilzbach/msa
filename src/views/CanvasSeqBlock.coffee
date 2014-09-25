@@ -3,7 +3,7 @@ mouse = require "../utils/mouse"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
 jbone = require "jbone"
-FontCache = require "./CanvasFontCache"
+CharCache = require "./CanvasCharCache"
 
 module.exports = pluginator.extend
 
@@ -28,7 +28,7 @@ module.exports = pluginator.extend
     @el.className = "biojs_msa_seqblock"
 
     @ctx = @el.getContext '2d'
-    @cache = new FontCache @g
+    @cache = new CharCache @g
 
     # throttle the expensive draw function
     @throttleTime = 0
