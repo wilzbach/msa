@@ -1,3 +1,4 @@
+var msa = biojsVisMsa;
 yourDiv.textContent = "loading";
 
 var opts = {};

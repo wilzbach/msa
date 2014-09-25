@@ -1,3 +1,4 @@
+var msa = biojsVisMsa;
 var opts = {};
 opts.el = yourDiv;
 opts.vis = {metacell: true, overviewbox: true};
