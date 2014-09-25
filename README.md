@@ -201,20 +201,24 @@ gulp css
 ```
 (this is included in `gulp build`, which was run on npm install)
 
+Package list
+-----------
+
+↝ (Package list)[https://github.com/greenify/biojs-vis-msa/wiki/Package-list]
+
+
 Project structure
 ------------------
 
 * `browser.js` main file for browserify - defines the global namespace in the browser
 * `coffeelint.json` liniting config for CoffeeScript (run it with `gulp lint`)
 * `css` SASS styles (the main one is called `msa.sass`
-* `external` external dependencies that are not available in npm (TODO: remove and replace with npm packages)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
 * `Gemfile` defines the dependency to ruby-sass (needed for the auto-install with bundler)
 * `index.js` npm CJS main file - allows to require example the folder (`../`) - convenient for tests
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
-* `res-docs` external dependencies of the snippets (TODO: cleanup and maybe remove)
+* `res-docs` external dependencies of the snippets (e.g. solarized color schemes, TODO: cleanup - not used at the moment)
 * `snippets` short coding snippets that are run by [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
-* `sniper.toml` config file for [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
 * `src` the main source code
 * `test` unit tests that are run with either mocha or phantomjs (headless browser)
 
