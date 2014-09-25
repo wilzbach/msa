@@ -217,3 +217,8 @@ Project structure
 * `sniper.toml` config file for [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
 * `src` the main source code
 * `test` unit tests that are run with either mocha or phantomjs (headless browser)
+
+Want to learn more?
+-------------------
+
+continue at the [wiki](https://github.com/greenify/biojs-vis-msa/wiki).
