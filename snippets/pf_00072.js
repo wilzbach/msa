@@ -1,3 +1,4 @@
+var msa = biojsVisMsa;
 yourDiv.textContent = "loading. please wait."
 
 biojs.io.fasta.parse.read('http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp15.txt', function(seqs) {
