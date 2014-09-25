@@ -1,8 +1,8 @@
 MenuBuilder = require "../menubuilder"
-saveAs = require "../../../external/saver"
+saveAs = require "browser-saveas"
 FastaExporter = require("biojs-io-fasta").writer
 _ = require "underscore"
-blobURL = require "../../../external/urltoblob"
+blobURL = require "blueimp_canvastoblob"
 
 module.exports = ExportMenu = MenuBuilder.extend
 

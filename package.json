@@ -16,6 +16,8 @@
     "biojs-model": "^0.0.2",
     "biojs-vis-colorschemes": "^1.0.2",
     "biojs-vis-easy_features": "0.0.3",
+    "blueimp_canvastoblob": "^1.0.0",
+    "browser-saveas": "^1.0.0",
     "jbone": "^1.0.18",
     "underscore": "^1.6.0"
   },
@@ -56,7 +58,8 @@
     "watchify": "^1.0.2"
   },
   "keywords": [
-    "bio", "biojs"
+    "bio",
+    "biojs"
   ],
   "main": "lib/index.js",
   "scripts": {
@@ -70,20 +73,28 @@
   },
   "license": "Apache 2",
   "shields": {
-  	"build": {
-  	  "img": "https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master",
-  	  "href": "https://travis-ci.org/greenify/biojs-vis-msa"
-	},
-	"tests": {
-	  "img": "https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg",
-	  "href": "https://codeclimate.com/github/greenify/biojs-vis-msa"
-  	}
+    "build": {
+      "img": "https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master",
+      "href": "https://travis-ci.org/greenify/biojs-vis-msa"
+    },
+    "tests": {
+      "img": "https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg",
+      "href": "https://codeclimate.com/github/greenify/biojs-vis-msa"
+    }
   },
-  "sniper": {	
-	"js": [ "/build/msa.js"],
-	"css": ["/build/msa.css"],
-	"buildCSS": ["https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css"],
-	"snippets": ["snippets"],
-	"first": "msa_show_menu"
-	}
+  "sniper": {
+    "js": [
+      "/build/msa.js"
+    ],
+    "css": [
+      "/build/msa.css"
+    ],
+    "buildCSS": [
+      "https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css"
+    ],
+    "snippets": [
+      "snippets"
+    ],
+    "first": "msa_show_menu"
+  }
 }
