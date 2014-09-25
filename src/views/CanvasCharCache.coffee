@@ -1,6 +1,6 @@
 Events = require("biojs-events")
 
-module.exports = class CanvasFontCache
+module.exports = class CanvasCharCache
 
   constructor: (@g) ->
     @cache = {}
