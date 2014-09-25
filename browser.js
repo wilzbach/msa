@@ -16,3 +16,6 @@ if (typeof biojs.io === 'undefined') {
 // just bundle the two parsers
 window.biojs.io.fasta = require("biojs-io-fasta");
 window.biojs.io.clustal = require("biojs-io-clustal");
+
+// simulate standalone flag
+window.biojsVisMsa = window.msa;
