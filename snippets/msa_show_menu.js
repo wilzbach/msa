@@ -1,3 +1,5 @@
+var msa = biojsVisMsa;
+
 var opts = {};
 
 opts.el = document.getElementById('msa_menu');
