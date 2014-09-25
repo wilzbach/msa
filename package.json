@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -56,7 +56,7 @@
     "watchify": "^1.0.2"
   },
   "keywords": [
-    "bio"
+    "bio", "biojs"
   ],
   "main": "lib/index.js",
   "scripts": {
@@ -69,6 +69,16 @@
     "sniper": "node_modules/biojs-sniper/bin/sniper ."
   },
   "license": "Apache 2",
+  "shields": {
+  	"build": {
+  	  "img": "https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master",
+  	  "href": "https://travis-ci.org/greenify/biojs-vis-msa"
+	},
+	"tests": {
+	  "img": "https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg",
+	  "href": "https://codeclimate.com/github/greenify/biojs-vis-msa"
+  	}
+  },
   "sniper": {	
 	"js": [ "/build/msa.js"],
 	"css": ["/build/msa.css"],
