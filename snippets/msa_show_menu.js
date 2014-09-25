@@ -1,8 +1,8 @@
-yourDiv.textContent = "loading";
-
 var opts = {};
 
 opts.el = document.getElementById('msa_menu');
+opts.el.textContent = "loading";
+
 //opts.zoomer = { textVisible: false};
 opts.vis = {metacell: true, overviewbox: true};
 opts.columns = {hidden: [1,2,3]};
