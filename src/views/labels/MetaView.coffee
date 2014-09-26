@@ -1,7 +1,7 @@
 view = require("../../bone/view")
 MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
-dom = require "../../utils/dom"
+dom = require "dom-helper"
 
 module.exports = MetaView = view.extend
 

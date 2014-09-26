@@ -17,6 +17,7 @@
     "biojs-vis-colorschemes": "^1.0.2",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
+    "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
     "mouse-pos": "^1.0.2",
     "underscore": "^1.6.0"
