@@ -1,5 +1,5 @@
 MenuBuilder = require "../menubuilder"
-dom = require "../../utils/dom"
+dom = require "dom-helper"
 _ = require('underscore')
 
 module.exports = OrderingMenu = MenuBuilder.extend

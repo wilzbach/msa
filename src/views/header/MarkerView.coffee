@@ -1,5 +1,5 @@
 view = require("../../bone/view")
-dom = require("../../utils/dom")
+dom = require("dom-helper")
 svg = require("../../utils/svg")
 jbone = require "jbone"
 
