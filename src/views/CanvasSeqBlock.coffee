@@ -1,5 +1,5 @@
 pluginator = require("../bone/pluginator")
-mouse = require "../utils/mouse"
+mouse = require "mouse-pos"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
 jbone = require "jbone"
@@ -220,7 +220,7 @@ module.exports = pluginator.extend
   _onmousemove: (e, reversed) ->
     return if @dragStart.length is 0
 
-    dragEnd = mouse.getMouseCoordsScreen e
+    dragEnd = mouse.abs e
     # relative to first click
     relEnd = [dragEnd[0] - @dragStart[0], dragEnd[1] - @dragStart[1]]
     # relative to initial scroll status
@@ -269,7 +269,7 @@ module.exports = pluginator.extend
 
   # start the dragging mode
   _onmousedown: (e) ->
-    @dragStart = mouse.getMouseCoordsScreen e
+    @dragStart = mouse.abs e
     @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
     jbone(document.body).on 'mousemove.overmove', (e) => @_onmousemove(e)
     jbone(document.body).on 'mouseup.overup', => @_cleanup()
@@ -278,7 +278,7 @@ module.exports = pluginator.extend
 
   # starts the touch mode
   _ontouchstart: (e) ->
-    @dragStart = mouse.getMouseCoordsScreen e.changedTouches[0]
+    @dragStart = mouse.abs e.changedTouches[0]
     @dragStartScroll = [@g.zoomer.get('_alignmentScrollLeft'), @g.zoomer.get('_alignmentScrollTop')]
     jbone(document.body).on 'touchmove.overtmove', (e) => @_ontouchmove(e)
     jbone(document.body).on 'touchend.overtend touchleave.overtleave
@@ -313,7 +313,7 @@ module.exports = pluginator.extend
 
   # might be incompatible with some browsers
   _onmousewheel: (e) ->
-    delta = mouse.getWheelDelta e
+    delta = mouse.wheelDelta e
     @g.zoomer.set '_alignmentScrollLeft', @g.zoomer.get('_alignmentScrollLeft') + delta[0]
     @g.zoomer.set '_alignmentScrollTop', @g.zoomer.get('_alignmentScrollTop') + delta[1]
     e.preventDefault()
@@ -331,7 +331,7 @@ module.exports = pluginator.extend
     @throttledDraw()
 
   _getClickPos: (e) ->
-    coords = mouse.getMouseCoords e
+    coords = mouse.rel e
     coords[0] += @g.zoomer.get("_alignmentScrollLeft")
     coords[1] += @g.zoomer.get("_alignmentScrollTop")
     x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
