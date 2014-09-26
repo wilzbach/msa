@@ -1,5 +1,5 @@
 view = require("../bone/view")
-mouse = require "../utils/mouse"
+mouse = require "mouse-pos"
 selection = require "../g/selection/Selection"
 colorSelector = require("biojs-vis-colorschemes").selector
 jbone = require "jbone"
@@ -109,7 +109,7 @@ module.exports = OverviewBox = view.extend
     @ctx.fillStyle = "#ffff00"
     @ctx.globalAlpha = 0.9
 
-    rect = @_calcSelection( mouse.getMouseCoordsScreen e )
+    rect = @_calcSelection( mouse.abs e )
     @ctx.fillRect rect[0][0],rect[1][0],rect[0][1] - rect[0][0], rect[1][1] - rect[1][0]
 
     # abort selection events of the browser
@@ -118,8 +118,8 @@ module.exports = OverviewBox = view.extend
 
   # start the selection mode
   _onmousedown: (e) ->
-    @dragStart = mouse.getMouseCoordsScreen e
-    @dragStartRel = mouse.getMouseCoords e
+    @dragStart = mouse.abs e
+    @dragStartRel = mouse.rel e
 
     if e.ctrlKey or e.metaKey
       @prolongSelection = true
@@ -194,10 +194,10 @@ module.exports = OverviewBox = view.extend
 
   # ends the selection mode
   _onmouseup: (e) ->
-    @_endSelection mouse.getMouseCoordsScreen e
+    @_endSelection mouse.abs e
 
   _onmouseout: (e) ->
-    @_endSelection mouse.getMouseCoordsScreen e
+    @_endSelection mouse.abs e
 
  # init the canvas
   _createCanvas: ->
