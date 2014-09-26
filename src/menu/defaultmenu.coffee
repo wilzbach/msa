@@ -1,4 +1,4 @@
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 
 # menu views
 ImportMenu = require "./views/ImportMenu"
@@ -12,7 +12,7 @@ ExportMenu = require "./views/ExportMenu"
 HelpMenu = require "./views/HelpMenu"
 
 # this very basic menu demonstrates calls to the MSA component
-module.exports = MenuView = pluginator.extend
+module.exports = MenuView = boneView.extend
 
   initialize: (data) ->
     @msa = data.msa

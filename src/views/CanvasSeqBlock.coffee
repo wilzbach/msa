@@ -1,11 +1,11 @@
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 mouse = require "mouse-pos"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"
 jbone = require "jbone"
 CharCache = require "./CanvasCharCache"
 
-module.exports = pluginator.extend
+module.exports = boneView.extend
 
   tagName: "canvas"
 
