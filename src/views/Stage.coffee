@@ -1,4 +1,4 @@
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 AlignmentBody = require "./AlignmentBody"
 HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
@@ -6,7 +6,7 @@ identityCalc = require "../algo/identityCalc"
 _ = require 'underscore'
 
 # a neat collection view
-module.exports = pluginator.extend
+module.exports = boneView.extend
 
   initialize: (data) ->
     @g = data.g

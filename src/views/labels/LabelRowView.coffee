@@ -1,8 +1,8 @@
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 LabelView = require("./LabelView")
 MetaView = require("./MetaView")
 
-module.exports = pluginator.extend
+module.exports = boneView.extend
 
   initialize: (data) ->
     @g = data.g

@@ -12,7 +12,7 @@ VisOrdering = require "./g/visOrdering"
 Zoomer = require "./g/zoomer"
 
 # MV from backbone
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 Eventhandler = require "biojs-events"
 
 # MSA views
@@ -24,7 +24,7 @@ Stage = require "./views/Stage"
 # @param conf [Dict] user config
 # @param vis [Dict] config of visible views
 # @param zoomer [Dict] display settings like columnWidth
-module.exports = pluginator.extend
+module.exports = boneView.extend
 
   initialize: (data) ->
 
