@@ -1,6 +1,6 @@
 BMath = require "../utils/bmath"
 jbone = require "jbone"
-view = require("../bone/view")
+view = require("backbone-viewj")
 
 #jbone.fn.addClass = (className) ->
 #  for i in [0.. @.length - 1] by 1

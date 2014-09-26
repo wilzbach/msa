@@ -12,7 +12,7 @@ VisOrdering = require "./g/visOrdering"
 Zoomer = require "./g/zoomer"
 
 # MV from backbone
-pluginator = require("./bone/pluginator")
+pluginator = require("backbone-childs")
 Eventhandler = require "biojs-events"
 
 # MSA views

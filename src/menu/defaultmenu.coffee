@@ -1,4 +1,4 @@
-pluginator = require("../bone/pluginator")
+pluginator = require("backbone-childs")
 
 # menu views
 ImportMenu = require "./views/ImportMenu"

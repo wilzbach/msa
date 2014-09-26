@@ -10,8 +10,8 @@ module.exports.utils = require("./utils")
 
 # probably needed more often
 module.exports.selection = require("./g/selection/Selection")
-module.exports.view = require("./bone/view")
-module.exports.pluginator = require("./bone/pluginator")
+module.exports.view = require("backbone-viewj")
+module.exports.pluginator = require("backbone-childs")
 
 # convenience
 module.exports._ = require 'underscore'

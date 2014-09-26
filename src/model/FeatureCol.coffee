@@ -1,5 +1,5 @@
 Feature = require "./Feature"
-Collection = require("backbone").Collection
+Collection = require("backbone-collection").Collection
 _ = require "underscore"
 
 module.exports = FeatureCol = Collection.extend

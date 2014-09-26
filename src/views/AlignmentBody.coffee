@@ -1,4 +1,4 @@
-pluginator = require("../bone/pluginator")
+pluginator = require("backbone-childs")
 SeqBlock = require "./CanvasSeqBlock"
 LabelBlock = require "./labels/LabelBlock"
 

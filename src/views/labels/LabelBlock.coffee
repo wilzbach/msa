@@ -1,5 +1,5 @@
 LabelRowView = require "./LabelRowView"
-pluginator = require("../../bone/pluginator")
+pluginator = require("backbone-childs")
 
 module.exports = pluginator.extend
 

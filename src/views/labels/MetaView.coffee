@@ -1,4 +1,4 @@
-view = require("../../bone/view")
+view = require("backbone-viewj")
 MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
 dom = require "dom-helper"
