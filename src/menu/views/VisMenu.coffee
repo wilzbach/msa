@@ -1,5 +1,5 @@
 MenuBuilder = require "../menubuilder"
-dom = require "../../utils/dom"
+dom = require "dom-helper"
 
 module.exports = ImportMenu = MenuBuilder.extend
 

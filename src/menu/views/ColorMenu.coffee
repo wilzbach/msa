@@ -1,6 +1,6 @@
 MenuBuilder = require "../menubuilder"
 _ = require "underscore"
-dom = require "../../utils/dom"
+dom = require "dom-helper"
 
 module.exports = ColorMenu = MenuBuilder.extend
 
