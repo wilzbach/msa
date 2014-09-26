@@ -1,4 +1,4 @@
-Model = require("backbone").Model
+Model = require("backbone-model").Model
 
 # this is an example of how one could color the MSA
 # feel free to create your own color scheme in the /css/schemes folder

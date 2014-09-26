@@ -1,4 +1,4 @@
-view = require("../../bone/view")
+view = require("backbone-viewj")
 dom = require("dom-helper")
 svg = require("../../utils/svg")
 jbone = require "jbone"

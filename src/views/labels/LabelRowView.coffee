@@ -1,4 +1,4 @@
-pluginator = require("../../bone/pluginator")
+pluginator = require("backbone-childs")
 LabelView = require("./LabelView")
 MetaView = require("./MetaView")
 

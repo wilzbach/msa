@@ -1,5 +1,5 @@
 _ = require "underscore"
-Model = require("backbone").Model
+Model = require("backbone-model").Model
 
 # holds the current user selection
 Selection = Model.extend
