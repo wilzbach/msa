@@ -1,8 +1,8 @@
-pluginator = require("backbone-childs")
+boneView = require("backbone-childs")
 SeqBlock = require "./CanvasSeqBlock"
 LabelBlock = require "./labels/LabelBlock"
 
-module.exports = pluginator.extend
+module.exports = boneView.extend
 
   initialize: (data) ->
     @g = data.g
