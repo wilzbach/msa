@@ -1,4 +1,4 @@
-Model = require("backbone").Model
+Model = require("backbone-model").Model
 
 # simple user config
 module.exports = Config = Model.extend

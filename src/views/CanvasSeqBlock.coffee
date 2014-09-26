@@ -1,4 +1,4 @@
-pluginator = require("../bone/pluginator")
+pluginator = require("backbone-childs")
 mouse = require "mouse-pos"
 colorSelector = require("biojs-vis-colorschemes").selector
 _ = require "underscore"

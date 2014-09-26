@@ -1,4 +1,4 @@
-pluginator = require("../bone/pluginator")
+pluginator = require("backbone-childs")
 AlignmentBody = require "./AlignmentBody"
 HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
