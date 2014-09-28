@@ -18,3 +18,5 @@ window.biojs.io.clustal = require("biojs-io-clustal");
 
 // simulate standalone flag
 window.biojsVisMsa = window.msa;
+
+require('./build/msa.css');
