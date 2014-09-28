@@ -1,4 +1,5 @@
 yourDiv.textContent = "loading. please wait."
+var msa = require("biojs-vis-msa");
 
 biojs.io.clustal.read('http://www.corsproxy.com/rostlab.org/~goldberg/jalv_example.clustal', function(seqs) {
 var opts = {};
