@@ -26,17 +26,12 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 ```html
 <script src=//cdn.biojs-msa.org/msa/0.2/msa.min.gz.js></script>
-<link type=text/css rel=stylesheet href=//cdn.biojs-msa.org/msa/0.2/msa.min.gz.css />
 ```
 
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
 
-JS  | CSS
-------------- | -------------
-[![Min version](http://img.shields.io/badge/prod-26kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/msa.min.gz.js)  | [![Min version](http://img.shields.io/badge/prod-2kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/msa.min.gz.css)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) | [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css)
-
-
+[![Min version](http://img.shields.io/badge/prod-38kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/msa.min.gz.js)  
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) 
 
 In case
 * Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
@@ -51,7 +46,6 @@ Demo
 
 
 [Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
-
 
 #### display an MSA
 
