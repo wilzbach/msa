@@ -1,4 +1,5 @@
-var msa = biojsVisMsa;
+var msa = require("biojs-vis-msa");
+
 yourDiv.textContent = "loading";
 
 var opts = {};
