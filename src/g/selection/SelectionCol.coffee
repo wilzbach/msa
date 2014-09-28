@@ -1,6 +1,6 @@
 sel = require "./Selection"
 _ = require "underscore"
-Collection = require("backbone-collection").Collection
+Collection = require("backbone").Collection
 
 # holds the current user selection
 module.exports = SelectionManager = Collection.extend

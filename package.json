@@ -21,7 +21,6 @@
     "biojs-vis-colorschemes": "^1.0.2",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
-    "browserify": "^5.12.1",
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
     "mouse-pos": "^1.0.2",
@@ -29,6 +28,7 @@
   },
   "devDependencies": {
     "biojs-sniper": "0.0.4",
+    "browserify": "^5.12.1",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
     "coffee-script": "^1.7.1",
@@ -73,7 +73,7 @@
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
     "sniper": "biojs-sniper .",
-	"watch": "gulp watch"
+    "watch": "gulp watch"
   },
   "license": "Apache 2",
   "shields": {
