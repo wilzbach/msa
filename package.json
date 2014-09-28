@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "biojs-vis-colorschemes": "^1.0.2",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
+    "browserify": "^5.12.1",
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
     "mouse-pos": "^1.0.2",
@@ -28,15 +29,14 @@
   },
   "devDependencies": {
     "biojs-sniper": "0.0.4",
-    "browserify": "^5.10.0",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
     "coffee-script": "^1.7.1",
     "coffeeify": "^0.7.0",
     "coffeelint": "^1.5.5",
+    "cssify": "^0.6.0",
     "deepcopy": "^0.3.3",
     "gulp": "^3.8.7",
-    "gulp-browserify": "^0.5.0",
     "gulp-chmod": "^1.1.0",
     "gulp-coffeelint": "^0.3.3",
     "gulp-concat": "^2.3.4",
@@ -49,6 +49,7 @@
     "gulp-rimraf": "^0.1.0",
     "gulp-ruby-sass": "^0.7.1",
     "gulp-run": "^1.6.3",
+    "gulp-streamify": "0.0.5",
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.0",
     "gulp-watch": "^0.6.9",
@@ -58,6 +59,7 @@
     "phantomjs": "^1.9.7-15",
     "shelljs": "^0.3.0",
     "uglify-js": "~2.4.15",
+    "vinyl-source-stream": "^1.0.0",
     "watchify": "^1.0.2"
   },
   "keywords": [
@@ -66,13 +68,12 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "node_modules/gulp/bin/gulp.js test",
-    "prepublish": "npm test && node_modules/gulp/bin/gulp.js build && coffee --bare --compile --output lib/ src/",
-    "watch": "mkdir -p build; node_modules/watchify/bin/cmd.js -v --debug -t coffeeify --extension='.coffee' browser.js -o build/msa.js; ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
-    "build-browser": "node_modules/gulp/bin/gulp.js build-browser",
-    "build-browser-min": "node_modules/gulp/bin/gulp.js build",
-    "build-browser-cli": "mkdir -p build;  node_modules/browserify/bin/cmd.js -t coffeeify --extension='.coffee'  browser.js > build/msa.js",
-    "sniper": "node_modules/biojs-sniper/bin/sniper ."
+    "test": "gulp test",
+    "prepublish": "npm test && gulp build && rm -rf lib && coffee --bare --compile --output lib/ src/ && ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
+    "build-browser": "gulp build-browser",
+    "build-browser-min": "gulp build",
+    "sniper": "biojs-sniper .",
+	"watch": "gulp watch"
   },
   "license": "Apache 2",
   "shields": {
@@ -88,9 +89,6 @@
   "sniper": {
     "js": [
       "/build/msa.js"
-    ],
-    "css": [
-      "/build/msa.css"
     ],
     "buildCSS": [
       "https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css"
