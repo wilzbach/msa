@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var browserify = require('gulp-browserify');
 var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
@@ -9,6 +8,13 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 var coffeelint = require('gulp-coffeelint');
 require('shelljs/global');
+
+// browserify 
+var browserify = require('browserify');
+var coffeify = require("coffeeify");
+var watchify = require('watchify')
+var source = require('vinyl-source-stream'); // converts node streams into vinyl streams
+var streamify = require('gulp-streamify'); // converts streams into buffers (legacy support for old plugins)
 
 // css
 var sass = require('gulp-ruby-sass'); // gulp-sass is also available (faster, feature-less)
@@ -42,15 +48,11 @@ var paths = {
 };
 
 var browserifyOptions =  {
-  transform: ['coffeeify'],
   extensions: ['.coffee'],
-
+  hasExports: true
 };
 
-var outputFileSt = outputFile + ".js";
-var outputFilePath = join(buildDir,outputFileSt);
-var outputFileMinSt = outputFile + ".min.js";
-var outputFileMin = join(buildDir,outputFileMinSt);
+var packageConfig = require('./package.json');
 
 gulp.task('default', ['clean','test','lint','build', 'codo']);
 
@@ -64,48 +66,60 @@ gulp.task('build', ['css','build-browser','build-browser-min', 'build-gzip'],fun
 
 
 // browserify debug
-gulp.task('build-browser',['init'], function() {
-  gulp.src(outputFilePath).pipe(clean());
+gulp.task('build-browser',['init', 'css'], function() {
+  //gulp.src(outputFilePath).pipe(clean());
 
-  dBrowserifyOptions = {};
-  for( var key in browserifyOptions )
-     dBrowserifyOptions[ key ] = browserifyOptions[ key ];
+  var dBrowserifyOptions = deepcopy(browserifyOptions);
   dBrowserifyOptions["debug"] = true;
-  return gulp.src(browserFile)
-  .pipe(browserify(dBrowserifyOptions))
-  .pipe(rename(outputFileSt))
-  .pipe(gulp.dest(buildDir));
+
+  var b = browserify(dBrowserifyOptions);
+  makeBundle(b);
+  return b.bundle()
+    .pipe(source(outputFile + ".js"))
+    .pipe(chmod(644))
+    .pipe(gulp.dest(buildDir));
 });
 
 // browserify min
-gulp.task('build-browser-min',['init'], function() {
-  gulp.src(outputFileMin).pipe(clean());
-  return mBrowserify(browserFile,outputFileMinSt);
+gulp.task('build-browser-min',['init', 'css'], function() {
+  var b = browserify(browserifyOptions);
+  makeBundle(b);
+  return b.bundle()
+    .pipe(source(outputFile + ".min.js"))
+    .pipe(streamify(uglify()))
+    .pipe(chmod(644))
+    .pipe(gulp.dest(buildDir));
 });
  
-gulp.task('build-gzip', ['css','build-browser','build-browser-min'], function() {
-  gulp.src(outputFileMin)
-    .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
-    .pipe(rename(outputFile + ".min.gz.js"))
-    .pipe(gulp.dest(buildDir));
+gulp.task('build-gzip-js', ['build-browser','build-browser-min'], function() {
+   return gulp.src(join(buildDir, outputFile + ".min.js"))
+     .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
+     .pipe(rename(outputFile + ".min.gz.js"))
+     .pipe(gulp.dest(buildDir));
+});
+gulp.task('build-gzip-css', ['css'], function() {
   return gulp.src(join(buildDir, "msa.min.css"))
     .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
     .pipe(rename("msa.min.gz.css"))
     .pipe(gulp.dest(buildDir));
 });
 
+gulp.task('build-gzip', ['build-gzip-js', 'build-gzip-css']);
+
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
   gulp.src('./test/all_test.js').pipe(clean());
-  dBrowserifyOptions = {};
-  for( var key in browserifyOptions )
-     dBrowserifyOptions[ key ] = browserifyOptions[ key ];
+
+  var dBrowserifyOptions = deepcopy(browserifyOptions);
   dBrowserifyOptions["debug"] = true;
-  return gulp.src(paths.testCoffee,  { read: false })
-    .pipe(browserify(dBrowserifyOptions))
+
+  var b = browserify(dBrowserifyOptions);
+  b.transform(coffeify);
+  b.add('./test/phantom/index.coffee', {expose: packageConfig.name});
+  return b.bundle()
+    .pipe(source("all_test.js"))
     .on('error', gutil.log)
     .on('error', gutil.beep)
-    .pipe(concat('all_test.js'))
     .pipe(gulp.dest('test'));
 });
 
@@ -167,24 +181,48 @@ gulp.task('css',['sass'], function () {
 });
 
 gulp.task('watch', function() {
+  var util = require('gulp-util')
+
+  var opts = deepcopy(browserifyOptions);
+  opts.debug = true;
+  opts.cache = {};
+  opts.packageCache = {};
+
+  var b = browserify(opts);
+  makeBundle(b);
+
+  function rebundle(ids){
+    b.bundle()
+    .on("error", function(error) {
+      util.log(util.colors.red("Error: "), error);
+     })
+    .pipe(source(outputFile + ".js"))
+    .pipe(chmod(644))
+    .pipe(gulp.dest(buildDir));
+  }
+
+  var watcher = watchify(b);
+  watcher.on("update", rebundle)
+   .on("log", function(message) {
+      util.log("Refreshed:", message);
+  });
+  return rebundle();
+});
+
+function makeBundle(b){
+  b.transform(coffeify);
+  b.transform('cssify');
+  b.add('./browser', {expose: packageConfig.name});
+  b.require('biojs-io-fasta');
+  b.require('biojs-io-clustal');
+  return b;
+}
+
+gulp.task('watch-test', function() {
    // watch coffee files
    gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
      gulp.run('test');
    });
-});
-
-// watch coffee files
-gulp.task('watchify', function() {
-    var options = deepcopy(browserifyOptions);
-    options.output = "";
-    options.cache = {};
-    options.packageCache = {};
-    options.fullPaths = true;
-    //var b = browserify(options);
-    debugger;
-    var b = new browserify("browser.js",options);
-    console.log(b);
-    var w = watchify(b);
 });
 
 // be careful when using this task.
@@ -200,14 +238,6 @@ gulp.task('init', function() {
     if (err) console.error(err)
   });
 });
-
-function mBrowserify(browserFile,fileName){
-  return gulp.src(browserFile)
-  .pipe(browserify(browserifyOptions))
-  .pipe(uglify())
-  .pipe(rename(fileName))
-  .pipe(gulp.dest(buildDir));
-}
 
 // -----------------------------------------
 // SASS part
