@@ -213,8 +213,11 @@ function makeBundle(b){
   b.transform(coffeify);
   b.transform('cssify');
   b.add('./browser', {expose: packageConfig.name});
-  b.require('biojs-io-fasta');
-  b.require('biojs-io-clustal');
+  if(packageConfig.sniper !== undefined && packageConfig.sniper.exposed !== undefined){
+    for(var i=0; i<packageConfig.sniper.exposed.length; i++){
+      b.require(packageConfig.sniper.exposed[i]);
+    }
+  }
   return b;
 }
 
