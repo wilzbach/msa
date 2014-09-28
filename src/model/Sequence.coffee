@@ -1,4 +1,4 @@
-Model = require("backbone-model").Model
+Model = require("backbone").Model
 FeatureCol = require "./FeatureCol"
 
 module.exports = Sequence = Model.extend

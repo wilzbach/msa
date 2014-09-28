@@ -1,5 +1,5 @@
 Feature = require "./Feature"
-Model = require("backbone-model").Model
+Model = require("backbone").Model
 
 module.exports = Feature = Model.extend
 

@@ -1,4 +1,4 @@
-Model = require("backbone-model").Model
+Model = require("backbone").Model
 consenus = require "../algo/ConsensusCalc"
 _ = require "underscore"
 
