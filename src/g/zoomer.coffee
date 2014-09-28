@@ -1,4 +1,4 @@
-Model = require("backbone").Model
+Model = require("backbone-thin").Model
 # pixel properties for some components
 module.exports = Zoomer = Model.extend
 

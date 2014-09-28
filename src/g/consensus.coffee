@@ -1,4 +1,4 @@
-Model = require("backbone").Model
+Model = require("backbone-thin").Model
 consenusCalc = require "../algo/ConsensusCalc"
 
 # simply save the consenus sequences globally
