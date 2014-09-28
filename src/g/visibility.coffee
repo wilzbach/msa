@@ -1,4 +1,4 @@
-Model = require("backbone-model").Model
+Model = require("backbone").Model
 
 # visible areas
 module.exports = Visibility = Model.extend

@@ -1,5 +1,5 @@
 Sequence = require "./Sequence"
-Collection = require("backbone-collection").Collection
+Collection = require("backbone").Collection
 
 module.exports = SeqManager = Collection.extend
   model: Sequence
