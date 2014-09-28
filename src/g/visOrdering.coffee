@@ -1,4 +1,4 @@
-Model = require("backbone").Model
+Model = require("backbone-thin").Model
 
 # visible areas
 module.exports = Visibility = Model.extend
