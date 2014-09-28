@@ -10,8 +10,8 @@
   "author": "greenify",
   "dependencies": {
     "backbone-childs": "^1.0.2",
-    "backbone-thin": "^1.0.7",
-    "backbone-viewj": "^1.0.0",
+    "backbone-thin": "^1.0.8",
+    "backbone-viewj": "^1.0.1",
     "biojs-events": "0.0.4",
     "biojs-io-clustal": "0.0.6",
     "biojs-io-fasta": "0.0.8",
