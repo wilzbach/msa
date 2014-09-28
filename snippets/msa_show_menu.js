@@ -1,4 +1,4 @@
-var msa = biojsVisMsa;
+var msa = require("biojs-vis-msa");
 
 var opts = {};
 
@@ -24,10 +24,10 @@ function getURLParameter(name) {return decodeURIComponent((new RegExp('[?|&]' + 
 
 if( getURLParameter('fasta') !== null ){
   var url = msa.utils.proxy.corsURL(getURLParameter('fasta'), m.g);
-  biojs.io.fasta.parse.read(url, renderMSA);
+  require("biojs-io-fasta").parse.read(url, renderMSA);
 } else  if( getURLParameter('clustal') !== null ){
   var url = msa.utils.proxy.corsURL(getURLParameter('clustal'), m.g);
-  biojs.io.clustal(getURLParameter('clustal'), renderMSA)
+  require("biojs-io-clustal").read(getURLParameter('clustal'), renderMSA)
 }else{
   m.seqs.reset(msa.utils.seqgen.getDummySequences(18,110));
 
