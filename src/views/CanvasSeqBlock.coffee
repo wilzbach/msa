@@ -1,6 +1,6 @@
 boneView = require("backbone-childs")
 mouse = require "mouse-pos"
-colorSelector = require("biojs-vis-colorschemes").selector
+colorSelector = require("biojs-util-colorschemes").selector
 _ = require "underscore"
 jbone = require "jbone"
 CharCache = require "./CanvasCharCache"
