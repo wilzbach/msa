@@ -1,7 +1,7 @@
 view = require("backbone-viewj")
 mouse = require "mouse-pos"
 selection = require "../g/selection/Selection"
-colorSelector = require("biojs-vis-colorschemes").selector
+colorSelector = require("biojs-util-colorschemes").selector
 jbone = require "jbone"
 _ = require "underscore"
 
