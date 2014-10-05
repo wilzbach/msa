@@ -1,10 +1,5 @@
 var msa = require("biojs-vis-msa");
 
-if(parent !== undefined) {
-  console.log("operating in an iframe");
-  document.body.height = parent.document.body.height * 0.8;
-}
-
 var opts = {};
 
 opts.el = document.getElementById('msa_menu');
