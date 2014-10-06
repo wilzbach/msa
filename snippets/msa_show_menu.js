@@ -84,6 +84,8 @@ function log(eventName,data){
   }
 }
 
+//instance=m
+
 // prevent circular refs
 function removeCircularRefs(obj){
   return JSON.stringify(obj, function( key, value) {
