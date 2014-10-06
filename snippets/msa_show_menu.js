@@ -84,7 +84,7 @@ function log(eventName,data){
   }
 }
 
-//instance=m
+//instance=m.g
 
 // prevent circular refs
 function removeCircularRefs(obj){
