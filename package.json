@@ -13,8 +13,8 @@
     "backbone-thin": "^1.0.8",
     "backbone-viewj": "^1.0.1",
     "biojs-events": "0.0.4",
-    "biojs-io-clustal": "0.0.6",
-    "biojs-io-fasta": "0.0.8",
+    "biojs-io-clustal": "0.0.10",
+    "biojs-io-fasta": "0.0.13",
     "biojs-model": "^0.0.2",
     "biojs-util-colorschemes": "^1.0.2",
     "blueimp_canvastoblob": "^1.0.0",
@@ -22,6 +22,7 @@
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
     "mouse-pos": "^1.0.2",
+    "nets": "^1.0.0",
     "underscore": "^1.6.0"
   },
   "devDependencies": {
@@ -96,7 +97,8 @@
     ],
     "exposed": [
       "biojs-io-fasta",
-      "biojs-io-clustal"
+      "biojs-io-clustal",
+	  "nets"
     ],
     "first": "msa_show_menu",
     "instance": "m.g"
