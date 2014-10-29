@@ -1,7 +1,8 @@
 var msa = require("biojs-vis-msa");
 yourDiv.textContent = "loading. please wait."
+var fasta = require("biojs-io-fasta");
 
-biojs.io.fasta.parse.read('http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp15.txt', function(seqs) {
+fasta.parse.read('http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp15.txt', function(seqs) {
 var opts = {};
 opts.seqs = seqs;
 opts.el = yourDiv;
