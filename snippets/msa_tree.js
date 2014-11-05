@@ -17,7 +17,7 @@ m.addView("menu", defMenu);
 // Tree
 var tnt_theme_tree_collapse_nodes = function() {
     var tree_theme = function(tree_vis, div) {
-        var newick = "(((((r0:9,r1:9, r7:5, r8:55)r10: 44, r2:34,r3:43)r4:52,r5:95, (r13: 77, r14: 50, r11:44, r12:88) r15: 70;)r6:215"
+        var newick = "(((((r15:9,r1:9, r7:5, r8:55)r10: 44, r2:34,r3:43)r4:52,r5:95, (r13: 77, r14: 50, r11:44, r12:88) r15: 70;)r6:215"
         var data = biojs.vis.tree.parse_newick(newick);
         tree_vis
             .data(data)
@@ -30,22 +30,26 @@ var tnt_theme_tree_collapse_nodes = function() {
           var toggled = false;
 
           var childs = node.get_all_nodes();
-          if(childs.length == 1){
-            node.toggle();
-            childs = node.get_all_nodes();
-            toggled = true;
-          }
           var ids = [];
+
+          if(childs.length == 1){
+            ids.push(node.data().name);
+          }
+
           // reduce
           for(var i=1;i < childs.length;i++){
               ids.push(childs[i].data().name);
           }
+
           // convert to selection
           var sel = [];
           for(var i=0;i < ids.length;i++){
             sel.push(new msa.selection.rowsel({seqId:ids[i]}));
             var seq = m.seqs.where({id:ids[i]})[0];
             if(seq === undefined) continue
+
+            // do net toggle vis
+            continue
             if(toggled){
               seq.set('hidden', false);
             }else{
@@ -85,12 +89,13 @@ m.g.on("row:click", function(data){
 });
 
 // mini event system
+console.log(m)
 
-m.onAll(function(eventName, data){
+m.on("all",function(eventName, data){
   log(eventName,data);
 });
 
-m.g.onAll(function(eventName, data){
+m.g.on("all",function(eventName, data){
   log(eventName,data);
 });
 m.g.selcol.on("all",function(eventName,data){
