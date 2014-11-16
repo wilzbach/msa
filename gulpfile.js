@@ -17,7 +17,6 @@ var source = require('vinyl-source-stream'); // converts node streams into vinyl
 var streamify = require('gulp-streamify'); // converts streams into buffers (legacy support for old plugins)
 
 // css
-var sass = require('gulp-ruby-sass'); // gulp-sass is also available (faster, feature-less)
 var minifyCSS = require('gulp-minify-css');
 
 // path stuff
@@ -60,7 +59,7 @@ gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
-gulp.task('build', ['css','build-browser','build-browser-min', 'build-gzip'],function () {
+gulp.task('build', ['min-css','build-browser','build-browser-min', 'build-gzip'],function () {
   return true;
 });
 
@@ -97,7 +96,7 @@ gulp.task('build-gzip-js', ['build-browser','build-browser-min'], function() {
      .pipe(rename(outputFile + ".min.gz.js"))
      .pipe(gulp.dest(buildDir));
 });
-gulp.task('build-gzip-css', ['css'], function() {
+gulp.task('build-gzip-css', ['min-css'], function() {
   return gulp.src(join(buildDir, "msa.min.css"))
     .pipe(gzip({append: false, gzipOptions: { level: 9 }}))
     .pipe(rename("msa.min.gz.css"))
@@ -151,33 +150,19 @@ gulp.task('lint', function () {
         .pipe(coffeelint.reporter());
 });
 
-
-gulp.task('codo', ['init'],function () {
-  run('codo src -o build/doc ').exec(); 
-});
-
-
-gulp.task('sass',['init'], function () {
-    var opts = checkForSASS();
-    opts.sourcemap = false;
-
-    return gulp.src('./css/msa.scss')
-      .pipe(sass(opts))
-      //.pipe(rename('msa.css'))
+gulp.task('css',['init'], function () {
+    return gulp.src('./css/*.css')
+      .pipe(concat('msa.css'))
       .pipe(chmod(644))
       .pipe(gulp.dest(buildDir));
 });
 
-gulp.task('css',['sass'], function () {
-    if(checkForSASS() !== undefined){
-      return gulp.src(join(buildDir,"msa.css"))
-      .pipe(minifyCSS())
-      .pipe(rename('msa.min.css'))
-      .pipe(chmod(644))
-      .pipe(gulp.dest(buildDir));
-    } else{
-    return false;
-    }
+gulp.task('min-css',['css'], function () {
+   return gulp.src(join(buildDir,"msa.css"))
+   .pipe(minifyCSS())
+   .pipe(rename('msa.min.css'))
+   .pipe(chmod(644))
+   .pipe(gulp.dest(buildDir));
 });
 
 gulp.task('watch', function() {
@@ -241,37 +226,3 @@ gulp.task('init', function() {
     if (err) console.error(err)
   });
 });
-
-// -----------------------------------------
-// SASS part
-
-// check whether there is a way to run SASS
-function checkForSASS(){
-  if (exec('sass --help 2> /dev/null',{silent:true}).code !== 0) {
-    var checkBundle = checkBundleExec();
-    if( checkBundle !== undefined){
-      return checkBundle;
-    }else{
-      echo('Error: No SASS installed. Trying to fix. You will need bundler to proceed.');
-      installBundle();
-      return checkBundleExec();
-    }
-  }
-  return {};
-}
-
-function checkBundleExec(){
-    if (exec('bundle exec sass --help',{silent:true}).code === 0) {
-      return { bundleExec: true };
-    } else {
-      return undefined;
-    }
-}
-
-function installBundle(){
-    if(exec("bundle install --path .gems").code !== 0){
-      echo('Install ruby and bundle');
-      return false;
-    } 
-    return true;
-}
