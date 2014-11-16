@@ -9,7 +9,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     @listenTo @g.vis, "change", @render
 
   render: ->
-    @setName("Vis. elements")
+    @setName("Vis.elements")
 
     visElements = @getVisElements()
     for visEl in visElements
