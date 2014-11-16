@@ -25,9 +25,6 @@ module.exports = ImportMenu = MenuBuilder.extend
       @g.vis.set "labelName", true
       @g.vis.set "labelCheckbox", false
 
-    @addNode "Toggle mouseover events", =>
-      @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"
-
     # TODO: make more efficient
     dom.removeAllChilds @el
     @el.appendChild @buildDOM()
@@ -52,7 +49,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     vis = []
     vis.push name: "Markers", id: "markers"
     vis.push name: "Labels", id: "labels"
-    vis.push name: "Sequences", id: "sequences"
+    #vis.push name: "Sequences", id: "sequences"
     vis.push name: "Meta info", id: "metacell"
     vis.push name: "Overviewbox", id: "overviewbox"
     vis.push name: "conserv", id: "conserv"
