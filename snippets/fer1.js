@@ -1,28 +1,36 @@
-yourDiv.textContent = "loading. please wait."
 var msa = require("biojs-vis-msa");
 var clustal = require("biojs-io-clustal");
 
-clustal.read('http://www.corsproxy.com/rostlab.org/~goldberg/jalv_example.clustal', function(seqs) {
-var opts = {};
-opts.seqs = seqs;
-opts.el = yourDiv;
-opts.vis = {conserv: true, overviewbox: true}
-opts.zoomer = {boxRectHeight: 10, boxRectWidth: 10, labelWidth: 210,labelFontsize: "12px",labelIdLength: 30, alignmentHeight: 620, residueFont: "36px mono", labelFontsize: "22px", labelLineHeight: "42px", markerFontsize: "14px", columnWidth: 40, rowHeight: 40, menuFontsize: "28px", menuPadding: "5px 10px 5px 10px",menuMarginLeft: "10px", menuItemFontsize: "22px", menuItemLineHeight: "25px"}
-var m = new msa.msa(opts);
-m.el.style.marginTop = "10px";
+menuDiv = document.createElement('div');
+msaDiv = document.createElement('div');
+yourDiv.appendChild(menuDiv);
+yourDiv.appendChild(msaDiv);
 
-// the menu is independent to the MSA container
-var menuOpts = {};
-var menuDiv = document.createElement('div');
-document.body.appendChild(menuDiv);
-menuOpts.el = menuDiv;
-menuOpts.msa = m;
-var defMenu = new msa.menu.defaultmenu(menuOpts);
+// this is a way how you use a bundled file parser
+clustal.read("http://www.biojs-msa.org/data/example.clustal", function(seqs){
 
-m.addView("menu", defMenu);
+  var opts = {};
 
-m.render();
-defMenu.el.style.marginTop = "15px";
-defMenu.el.style.marginBottom = "25px";
+  // set your custom properties
+  // @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
+  opts.seqs = seqs; //msa.utils.seqgen.getDummySequences(1000,300);
+  opts.el = msaDiv;
+  opts.vis = {conserv: false, overviewbox: false};
+  opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "12px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
 
+  // init msa
+  var m = new msa.msa(opts);
+
+  // the menu is independent to the MSA container
+  var menuOpts = {};
+  menuOpts.el = document.getElementById('div');
+  menuOpts.msa = m;
+  var defMenu = new msa.menu.defaultmenu(menuOpts);
+  m.addView("menu", defMenu);
+
+  // call render at the end to display the whole MSA
+  m.render();
+
+  //defMenu.el.style.marginTop = "15px";
+  //defMenu.el.style.marginBottom = "25px";
 });
