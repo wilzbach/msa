@@ -7,7 +7,7 @@ yourDiv.appendChild(menuDiv);
 yourDiv.appendChild(msaDiv);
 
 // this is a way how you use a bundled file parser
-clustal.read("http://www.biojs-msa.org/data/example.clustal", function(seqs){
+clustal.read("./data/fer1.clustal", function(seqs){
 
   var opts = {};
 
@@ -16,7 +16,7 @@ clustal.read("http://www.biojs-msa.org/data/example.clustal", function(seqs){
   opts.seqs = seqs; //msa.utils.seqgen.getDummySequences(1000,300);
   opts.el = msaDiv;
   opts.vis = {conserv: false, overviewbox: false};
-  opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "12px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
+  opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "14px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
 
   // init msa
   var m = new msa.msa(opts);
@@ -30,6 +30,10 @@ clustal.read("http://www.biojs-msa.org/data/example.clustal", function(seqs){
 
   // call render at the end to display the whole MSA
   m.render();
+
+
+  // BioJS event system test
+  //instance=m.g
 
   //defMenu.el.style.marginTop = "15px";
   //defMenu.el.style.marginBottom = "25px";
