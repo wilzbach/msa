@@ -88,9 +88,7 @@
     "js": [
       "/build/msa.js"
     ],
-    "buildCSS": [
-      "https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.css"
-    ],
+    "css":  ["/css/msa.css"],
     "snippets": [
       "snippets"
     ],
