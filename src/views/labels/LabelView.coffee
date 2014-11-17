@@ -23,6 +23,8 @@ LabelView = view.extend
     @listenTo @g.vis, "change:labelId", @render
     @listenTo @g.vis, "change:labelPartition", @render
     @listenTo @g.vis, "change:labelCheckbox", @render
+    @listenTo @g.zoomer, "change:labelFontSize change:labelLineHeight
+    change:labelWidth change:rowHeight", @render
 
   render: ->
     dom.removeAllChilds @el
@@ -60,6 +62,7 @@ LabelView = view.extend
 
 
     @el.style.overflow = scroll
+    @el.style.fontSize = @g.zoomer.get "labelFontSize"
     @
 
   _onclick: (evt) ->

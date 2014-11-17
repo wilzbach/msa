@@ -5,14 +5,6 @@
 	line-height: normal; 
 }
 
-.biojs_msa_labels {
-	color:black;
-	display: inline-block;
-	white-space: nowrap;
-	cursor: pointer;
-	vertical-align:top;
-}
-
 .biojs_msa_seqblock {
 	cursor: move;
 }
@@ -20,6 +12,20 @@
 .biojs_msa_layer{
 	display: block;
 	white-space: nowrap;
+}
+
+.biojs_msa_labelrow {
+	/* table is a hack to center the labels vertically */
+	display: table;
+}
+
+.biojs_msa_labels {
+	color:black;
+	display: table-cell;
+	white-space: nowrap;
+	cursor: pointer;
+	vertical-align:middle;
+	margin:auto;
 }
 
 .biojs_msa_labelblock::-webkit-scrollbar, .biojs_msa_header::-webkit-scrollbar{
