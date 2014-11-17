@@ -1,3 +1,4 @@
+// browser globals
 if (typeof biojs === 'undefined') {
   biojs = {};
 }
@@ -12,12 +13,12 @@ window.msa = biojs.vis.msa = module.exports = require('./index');
 if (typeof biojs.io === 'undefined') {
   biojs.io = {};
 }
+
 // just bundle the two parsers
 window.biojs.io.fasta = require("biojs-io-fasta");
 window.biojs.io.clustal = require("biojs-io-clustal");
 window.biojs.xhr = require("nets");
 
-// simulate standalone flag
-window.biojsVisMsa = window.msa;
+module.exports = require("./src/index");
 
-require('./build/msa.css');
+require('./css/msa.css');
