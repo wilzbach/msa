@@ -83,7 +83,6 @@ module.exports = ColorMenu = MenuBuilder.extend
       conserv = @g.columns.get("conserv")
       grey = []
       for i in [0.. maxLen - 1]
-        console.log conserv[i]
         if conserv[i] < threshold
           grey.push i
       @model.each (seq) ->

@@ -75,7 +75,6 @@ module.exports = SelectionManager = Collection.extend
     s = []
     for el in inverted
       s.push new sel.rowsel(seqId:el)
-    console.log s
     @reset s
 
   # inverts the current selection for rows
@@ -93,7 +92,6 @@ module.exports = SelectionManager = Collection.extend
     # mass insert
     return if inverted.length == 0
     s = []
-    console.log inverted
     xStart = xEnd = inverted[0]
     for el in inverted
       if xEnd + 1 is el
