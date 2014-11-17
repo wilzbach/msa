@@ -62,7 +62,6 @@ module.exports = FilterMenu = MenuBuilder.extend
       @model.each (el,i) ->
         seq = el.get('seq')
         gaps = _.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0
-        console.log gaps
         if gaps >  threshold
           el.set('hidden', true)
 
