@@ -21,7 +21,7 @@ var minifyCSS = require('gulp-minify-css');
 
 // path stuff
 var chmod = require('gulp-chmod');
-var clean = require('gulp-rimraf');
+var del = require('del');
 var mkdirp = require('mkdirp');
 var path = require('path');
 var join = path.join;
@@ -39,7 +39,7 @@ require('coffee-script/register');
 
 var outputFile = "msa";
 var buildDir = "build";
-var browserFile = "browser.js";
+var browserFile = "./browser";
 
 var paths = {
   scripts: ['src/**/*.coffee'],
@@ -53,7 +53,7 @@ var browserifyOptions =  {
 
 var packageConfig = require('./package.json');
 
-gulp.task('default', ['clean','test','lint','build', 'codo']);
+gulp.task('default', ['clean','test','lint','build']);
 
 gulp.task('test', ['test-mocha','test-phantom'],function () {
   return true;
@@ -107,7 +107,7 @@ gulp.task('build-gzip', ['build-gzip-js', 'build-gzip-css']);
 
 gulp.task('build-test', function() {
   // compiles all coffee tests to one file for mocha
-  gulp.src('./test/all_test.js').pipe(clean());
+  del.sync('./test/all_test.js');
 
   var dBrowserifyOptions = deepcopy(browserifyOptions);
   dBrowserifyOptions["debug"] = true;
@@ -197,7 +197,7 @@ gulp.task('watch', function() {
 function makeBundle(b){
   b.transform(coffeify);
   b.transform('cssify');
-  b.add('./browser', {expose: packageConfig.name});
+  b.add(browserFile, {expose: packageConfig.name});
   if(packageConfig.sniper !== undefined && packageConfig.sniper.exposed !== undefined){
     for(var i=0; i<packageConfig.sniper.exposed.length; i++){
       b.require(packageConfig.sniper.exposed[i]);
@@ -216,7 +216,7 @@ gulp.task('watch-test', function() {
 // be careful when using this task.
 // will remove everything in build
 gulp.task('clean', function() {
-  gulp.src(buildDir).pipe(clean());
+  del.sync(buildDir);
   gulp.run('init');
 });
 
