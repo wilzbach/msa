@@ -12,7 +12,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
     @setName("Extras")
     @addNode "Add consensus seq", =>
       con = consenus(@model)
-      console.log con
       seq = new Seq
         seq: con
         id: "0c"

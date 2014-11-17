@@ -26,8 +26,8 @@ module.exports = Columns = Model.extend
   _calcConservationPre: (seqs) ->
 
     # emergency cutoff
-    console.log seqs.length
     if seqs.length > 1000
+      console.log "emergency consenus cutoff", seqs.length
       return
 
     # calc consensus
