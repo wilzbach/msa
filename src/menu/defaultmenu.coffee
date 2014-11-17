@@ -33,5 +33,5 @@ module.exports = MenuView = boneView.extend
   render: ->
     @renderSubviews()
     # other
-    @el.setAttribute "class", "biojs_msa_menubar"
+    @el.setAttribute "class", "smenubar"
     @el.appendChild document.createElement("p")

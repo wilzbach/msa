@@ -1,86 +1,23 @@
-BMath = require "../utils/bmath"
-jbone = require "jbone"
-view = require("backbone-viewj")
+builder = require "menu-builder"
 
-#jbone.fn.addClass = (className) ->
-#  for i in [0.. @.length - 1] by 1
-#    @[i].classList.add className
-#  @
-
-module.exports = MenuBuilder = view.extend
-
-    setName: (@name) ->
-      @_nodes =  []
-
-    addNode: (label, callback, data) ->
-      style = data.style if data?
-      @_nodes = [] unless @_nodes?
-      @_nodes.push {label: label, callback: callback, style: style}
+module.exports = MenuBuilder = builder.extend
 
     buildDOM: ->
-      @_buildM
-        nodes: @_nodes
-        name: @name
+      @.on "new:node", @buildNode
+      @.on "new:button", @buildButton
+      @.on "new:menu", @buildMenu
+      return builder::buildDOM.call @
 
-    _buildM: (data) ->
-      nodes = data.nodes
-      name = data.name
-
-      menu = document.createElement "div"
-      menu.className = "dropdown dropdown-tip"
-      menu.id = "adrop-" + BMath.uniqueId()
-      menu.style.display = "none"
-
-      menuUl = document.createElement "ul"
-      menuUl.className = "dropdown-menu"
-
-      # dropdown menu
-      for node in nodes
-        li = document.createElement "li"
-
-        li.textContent = node.label
-        for key,style of node.style
-          li.style[key] = style
-        li.addEventListener "click", node.callback
-        if @g?
-          li.style.lineHeight = @g.zoomer.get "menuItemLineHeight"
-
-        menuUl.appendChild li
-
-      menu.appendChild menuUl
-
-      frag = document.createDocumentFragment()
-      # diplay it
-      displayedButton = document.createElement "a"
-      displayedButton.textContent = name
-      displayedButton.className = "biojs_msa_menubar_alink"
-
-      # tiny style
+    buildNode: (li) ->
       if @g?
-        menuUl.style.fontSize = @g.zoomer.get "menuItemFontsize"
-        displayedButton.style.fontSize = @g.zoomer.get "menuFontsize"
-        displayedButton.style.marginLeft = @g.zoomer.get "menuMarginLeft"
-        displayedButton.style.padding = @g.zoomer.get "menuPadding"
+        li.style.lineHeight = @g.zoomer.get "menuItemLineHeight"
 
-      jbone(displayedButton).on "click", (e) =>
-        @_showMenu e,menu,displayedButton
+    buildButton: (btn) ->
+      if @g?
+        btn.style.fontSize = @g.zoomer.get "menuFontsize"
+        btn.style.marginLeft = @g.zoomer.get "menuMarginLeft"
+        btn.style.padding = @g.zoomer.get "menuPadding"
 
-        # wait until event is bubbled to the top
-        window.setTimeout ->
-          jbone(document.body).one "click", (e) ->
-            menu.style.display = "none"
-        , 5
-
-
-      frag.appendChild menu
-      frag.appendChild displayedButton
-      return  frag
-
-    _showMenu: (e, menu, target) ->
-      #jbone(menu).addClass "dropdown-open"
-      menu.style.display = "block"
-      menu.style.position = "absolute"
-
-      rect = target.getBoundingClientRect()
-      menu.style.left = rect.left + "px"
-      menu.style.top = (rect.top + target.offsetHeight) + "px"
+    buildMenu: (menu) ->
+      if @g?
+        menu.style.fontSize = @g.zoomer.get "menuItemFontsize"
