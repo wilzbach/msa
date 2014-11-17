@@ -98,18 +98,17 @@ Step 1) Setting up
 -----------------
 
 ```bash
+git clone https://github.com/greenify/biojs-vis-msa
+cd biojs-vis-msa
 npm install
 ```
 
-* __sass__: At the moment the pure [`node-sass`](https://www.npmjs.org/package/node-sass) does not
-support SASS 3.3. The setup will try to install the Rubygem sass automatically, if it fails be prepared to run `gem install sass` (as root!). Please do not use the `ruby-sass` package on debian - it is outdated.
-* __npm__: You will need the `npm` package manager (and node) for this. On most distributions there is a package, look [here](http://nodejs.org/download/)
+* __npm__: You will need the `npm` package manager (and node) for this. On most distributions there is a package, look [here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 __Infos__
 
 * This will also automatically validate your installation by running `gulp build`
  - generating browser builds for the codebase
- - compiling the SASS
  - executing all unit tests 
 
 Step 2) Unit Testing
@@ -178,22 +177,10 @@ Compiling for the browser
 gulp build
 ```
 
-This is will regenerate the CSS and JS (+minification).
+This is will regenerate the CSS and JS (+minimization).
 However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
 (If you can't install gulp globally, hit `npm run preinstall`.).
-The minification is done by [Browserify](http://browserify.org/).
-
-CSS & Styling
----------
-
-For a complete build you also need SASS (>= 3.3), `gem install sass`.  
-The auto setup will try to fix that, but this only works if you have `bundler` installed.
-
-To recompile the SASS, just run
-```
-gulp css
-```
-(this is included in `gulp build`, which was run on npm install)
+The minimization is done by [Browserify](http://browserify.org/).
 
 Package list
 -----------
@@ -205,13 +192,11 @@ Project structure
 ------------------
 
 * `browser.js` main file for browserify - defines the global namespace in the browser
-* `coffeelint.json` liniting config for CoffeeScript (run it with `gulp lint`)
-* `css` SASS styles (the main one is called `msa.sass`
+* `coffeelint.json` linting config for CoffeeScript (run it with `gulp lint`)
+* `css` css config folder (previously used for SASS)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
 * `Gemfile` defines the dependency to ruby-sass (needed for the auto-install with bundler)
-* `index.js` npm CJS main file - allows to require example the folder (`../`) - convenient for tests
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
-* `res-docs` external dependencies of the snippets (e.g. solarized color schemes, TODO: cleanup - not used at the moment)
 * `snippets` short coding snippets that are run by [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
 * `src` the main source code
 * `test` unit tests that are run with either mocha or phantomjs (headless browser)
@@ -219,4 +204,4 @@ Project structure
 Want to learn more?
 -------------------
 
-continue at the [wiki](https://github.com/greenify/biojs-vis-msa/wiki).
+Continue at the [wiki](https://github.com/greenify/biojs-vis-msa/wiki).
