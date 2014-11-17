@@ -22,14 +22,24 @@ module.exports = ExtraMenu = MenuBuilder.extend
         seq.get "id"
       @model.sort()
     @addNode "Increase font size", =>
-      @g.zoomer.set "columnWidth", @g.zoomer.get("columnWidth") + 2
-      @g.zoomer.set "labelWidth", @g.zoomer.get("columnWidth") + 5
-      @g.zoomer.set "rowHeight", @g.zoomer.get("rowHeight") + 2
-      @g.zoomer.set "labelFontSize", @g.zoomer.get("labelFontSize") + 2
+      columnWidth =  @g.zoomer.get("columnWidth")
+      nColumnWidth = columnWidth + 5
+      @g.zoomer.set "columnWidth",  nColumnWidth
+      #@g.zoomer.set "labelWidth", @g.zoomer.get "labelWidth" + 10
+      @g.zoomer.set "rowHeight", nColumnWidth
+      nFontSize = nColumnWidth * 0.7
+      @g.zoomer.set "residueFont", nFontSize
+      @g.zoomer.set "labelFontSize",  nFontSize
     @addNode "Decrease font size", =>
-      @g.zoomer.set "columnWidth", @g.zoomer.get("columnWidth") - 2
-      @g.zoomer.set "rowHeight", @g.zoomer.get("rowHeight") - 2
-      @g.zoomer.set "labelFontSize", @g.zoomer.get("labelFontSize") - 2
+      columnWidth =  @g.zoomer.get("columnWidth")
+      nColumnWidth = columnWidth - 2
+      @g.zoomer.set "columnWidth",  nColumnWidth
+      #@g.zoomer.set "labelWidth", @g.zoomer.get "labelWidth" + 10
+      @g.zoomer.set "rowHeight", nColumnWidth
+      nFontSize = nColumnWidth * 0.6
+      @g.zoomer.set "residueFont", nFontSize
+      @g.zoomer.set "labelFontSize",  nFontSize
+
       if @g.zoomer.get("columnWidth") < 8
         @g.zoomer.set "textVisible", false
 
