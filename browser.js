@@ -6,7 +6,7 @@ if (typeof biojs.vis === 'undefined') {
   biojs.vis = {};
 }
 // use two namespaces
-window.msa = biojs.vis.msa = module.exports = require('./index');
+window.msa = biojs.vis.msa = module.exports = require('./src/index');
 
 // TODO: how should this be bundled
 
