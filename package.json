@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -88,14 +88,13 @@
     "js": [
       "/build/msa.js"
     ],
-    "css":  ["/css/msa.css"],
     "snippets": [
       "snippets"
     ],
     "exposed": [
       "biojs-io-fasta",
       "biojs-io-clustal",
-	  "nets"
+      "nets"
     ],
     "first": "fer1",
     "instance": "m.g"
