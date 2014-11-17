@@ -68,7 +68,6 @@ module.exports = MenuBuilder = view.extend
         # wait until event is bubbled to the top
         window.setTimeout ->
           jbone(document.body).one "click", (e) ->
-            console.log "next click"
             menu.style.display = "none"
         , 5
 

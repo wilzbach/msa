@@ -10,6 +10,8 @@ module.exports = boneView.extend
 
     @listenTo @g.vis,"change:labels", @drawR
     @listenTo @g.vis,"change:metacell", @drawR
+    @listenTo @g.zoomer, "change:rowHeight", ->
+      @el.style.height = @g.zoomer.get "rowHeight"
 
   draw: ->
     @removeViews()

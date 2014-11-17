@@ -28,7 +28,8 @@ module.exports = class CanvasCharCache
     canvas.width = width
     canvas.height = height
     @ctx = canvas.getContext '2d'
-    @ctx.font = @g.zoomer.get "residueFont"
+    @ctx.font = @g.zoomer.get("residueFont") + "px mono"
+
     @ctx.textBaseline = 'middle'
     @ctx.textAlign = "center"
 
