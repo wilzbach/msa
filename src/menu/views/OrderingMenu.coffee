@@ -16,6 +16,7 @@ module.exports = OrderingMenu = MenuBuilder.extend
   # TODO: make more generic
   render: ->
     @setName("Ordering")
+    @removeAllNodes()
 
     comps = @getComparators()
     for m in comps
