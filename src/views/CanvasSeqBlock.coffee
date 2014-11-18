@@ -17,14 +17,9 @@ module.exports = boneView.extend
         @render()
 
     @listenTo @g.columns,"change:hidden", @render
-    @listenTo @g.zoomer,"change:alignmentWidth change:columnWidth change:rowHeight", @render
+    @listenTo @g.zoomer,"change:alignmentWidth", @render
     @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
-
-    # clear the char cache
-    @listenTo @g.zoomer, "change:residueFont", ->
-      @cache = new CharCache @g
-      @render()
 
     # el props
     @el.style.display = "inline-block"
