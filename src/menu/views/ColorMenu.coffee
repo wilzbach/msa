@@ -12,6 +12,7 @@ module.exports = ColorMenu = MenuBuilder.extend
 
   render: ->
     menuColor = @setName("Color scheme")
+    @removeAllNodes()
 
     colorschemes = @getColorschemes()
     for scheme in colorschemes

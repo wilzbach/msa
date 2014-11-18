@@ -9,6 +9,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     @listenTo @g.vis, "change", @render
 
   render: ->
+    @removeAllNodes()
     @setName("Vis.elements")
 
     visElements = @getVisElements()
