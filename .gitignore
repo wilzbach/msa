@@ -3,6 +3,7 @@ node_modules
 coverage
 tmp
 test/all_test.js
+test/perf/all.js
 .sass-cache
 build
 lib

@@ -33,6 +33,7 @@ var watchify = require("watchify");
 var deepcopy = require("deepcopy");
 
 var mochaSelenium = require('gulp-mocha-selenium');
+var phantomRunner = require('./test/perf/run');
 
 // for mocha
 require('coffee-script/register');
@@ -55,7 +56,11 @@ var packageConfig = require('./package.json');
 
 gulp.task('default', ['clean','test','lint','build']);
 
-gulp.task('test', ['test-mocha','test-phantom'],function () {
+gulp.task('test-fast', ['test-mocha','test-phantom'],function () {
+  return true;
+});
+
+gulp.task('test', ['test-fast','test-perf'],function () {
   return true;
 });
 
@@ -106,26 +111,23 @@ gulp.task('build-gzip-css', ['min-css'], function() {
 gulp.task('build-gzip', ['build-gzip-js', 'build-gzip-css']);
 
 gulp.task('build-test', function() {
-  // compiles all coffee tests to one file for mocha
-  del.sync('./test/all_test.js');
+  return buildTest('./test/phantom/index.coffee', './test/all_test.js');
+});
 
-  var dBrowserifyOptions = deepcopy(browserifyOptions);
-  dBrowserifyOptions["debug"] = true;
-
-  var b = browserify(dBrowserifyOptions);
-  b.transform(coffeify);
-  b.add('./test/phantom/index.coffee', {expose: packageConfig.name});
-  return b.bundle()
-    .pipe(source("all_test.js"))
-    .on('error', gutil.log)
-    .on('error', gutil.beep)
-    .pipe(gulp.dest('test'));
+gulp.task('build-perf', function() {
+  return buildTest('./test/perf/index.coffee', './test/perf/all.js');
 });
 
 gulp.task('test-phantom', ["build-test"], function () {
   return gulp
   .src('./test/index.html')
   .pipe(mochaPhantomJS());
+});
+
+gulp.task('test-perf', function () {
+  return gulp
+  .src('./test/perf/index.html')
+  .pipe(phantomRunner());
 });
 
 gulp.task('test-mocha', function () {
@@ -226,3 +228,24 @@ gulp.task('init', function() {
     if (err) console.error(err)
   });
 });
+
+
+function buildTest(name, dest){
+  // compiles all coffee tests to one file for mocha
+  del.sync(dest);
+
+  var destDir = path.dirname(dest);
+  var destBase = path.basename(dest);
+
+  var dBrowserifyOptions = deepcopy(browserifyOptions);
+  dBrowserifyOptions["debug"] = true;
+
+  var b = browserify(dBrowserifyOptions);
+  b.transform(coffeify);
+  b.add(name, {expose: packageConfig.name});
+  return b.bundle()
+    .on('error', gutil.log)
+    .on('error', gutil.beep)
+    .pipe(source(destBase))
+    .pipe(gulp.dest(destDir));
+}
