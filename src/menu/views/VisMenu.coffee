@@ -52,8 +52,8 @@ module.exports = ImportMenu = MenuBuilder.extend
     #vis.push name: "Sequences", id: "sequences"
     vis.push name: "Meta info", id: "metacell"
     vis.push name: "Overviewbox", id: "overviewbox"
-    vis.push name: "conserv", id: "conserv"
-    vis.push name: "LabelName", id: "labelName"
-    vis.push name: "LabelId", id: "labelId"
-    vis.push name: "LabelCheckbox", id: "labelCheckbox"
+    vis.push name: "Conserv", id: "conserv"
+    vis.push name: "Label name", id: "labelName"
+    vis.push name: "Label id", id: "labelId"
+    vis.push name: "Label checkbox", id: "labelCheckbox"
     return vis
