@@ -124,7 +124,7 @@ gulp.task('test-phantom', ["build-test"], function () {
   .pipe(mochaPhantomJS());
 });
 
-gulp.task('test-perf', function () {
+gulp.task('test-perf', ["build-perf"], function () {
   return gulp
   .src('./test/perf/index.html')
   .pipe(phantomRunner());
