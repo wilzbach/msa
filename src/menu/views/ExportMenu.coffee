@@ -14,6 +14,14 @@ module.exports = ExportMenu = MenuBuilder.extend
   render: ->
     @setName("Export")
 
+    @addNode "View in Jalview", =>
+      url = @g.config.get('url')
+      unless url?
+        alert "Sequence weren't imported via an URL"
+      else
+        jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
+        window.open jalviewUrl, '_blank'
+
     @addNode "Export sequences", =>
       # limit at about 256k
       text = FastaExporter.export @model.toJSON()
