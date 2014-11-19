@@ -3,7 +3,7 @@ ConservationView = require "./ConservationView"
 identityCalc = require "../../algo/identityCalc"
 boneView = require("backbone-childs")
 _ = require 'underscore'
-SeqLogoView = require "biojs-vis-seqlogo"
+SeqLogoView = require "biojs-vis-seqlogo/light"
 
 module.exports = boneView.extend
 
@@ -11,7 +11,7 @@ module.exports = boneView.extend
     @g = data.g
     @blockEvents = false
 
-    @listenTo @g.vis,"change:markers change:conserv", ->
+    @listenTo @g.vis,"change:markers change:conserv change:seqlogo", ->
       @draw()
       @render()
     @listenTo @g.vis,"change", @_setSpacer
@@ -25,12 +25,11 @@ module.exports = boneView.extend
       @render()
 
     @draw()
-    @_onscroll = @_sendScrollEvent
 
     @g.vis.once 'change:loaded', @_adjustScrollingLeft, @
 
   events:
-    "scroll": "_onscroll"
+    "scroll": "_sendScrollEvent"
 
   draw: ->
     @removeViews()
@@ -51,20 +50,18 @@ module.exports = boneView.extend
       marker.ordering = -10
       @addView "marker",marker
 
-    counts = []
-    for i in [0..100]
-      counts.push ["A:0.25", "C:0.25", "G:0.25","T:0.25"]
+    if @g.vis.get "seqlogo"
+      data =
+        alphabet: "aa"
+        heightArr: @g.columns.seqLogo(@model)
 
-    data =
-      alphabet: "aa"
-      height_arr: counts
-
-
-    colorSelector = require("biojs-util-colorschemes").selector
-    seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis: false
-    ,xaxis: false, height: 100, colors:colorSelector.getColor(@g.colorscheme.get("scheme"))}
-    seqlogo.ordering = -30
-    @addView "seqlogo",seqlogo
+      colorSelector = require("biojs-util-colorschemes").selector
+      seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis:false
+      ,scroller: false,xaxis: false, height: 100, column_width: @g.zoomer.get('columnWidth')
+      ,positionMarker: false, zoom: 1
+      , colors:colorSelector.getColor(@g.colorscheme.get("scheme"))}
+      seqlogo.ordering = -30
+      @addView "seqlogo",seqlogo
 
   render: ->
     @renderSubviews()
