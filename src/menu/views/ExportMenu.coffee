@@ -31,6 +31,7 @@ module.exports = ExportMenu = MenuBuilder.extend
 
         url = encodeURIComponent url
         jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
+        jalviewUrl += "&colour=" + @g.colorscheme.get "scheme"
         window.open jalviewUrl, '_blank'
 
     @addNode "Export sequences", =>
