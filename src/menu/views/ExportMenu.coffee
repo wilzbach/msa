@@ -19,6 +19,16 @@ module.exports = ExportMenu = MenuBuilder.extend
       unless url?
         alert "Sequence weren't imported via an URL"
       else
+        if url.charAt(0) is '.'
+          # relative urls
+          url = document.URL.substr(0,document.URL.lastIndexOf('/')) + "/" + url
+
+        # check whether this is a local url
+        if url.indexOf("http") < 0
+          # append host and hope for the best
+          host = "http://" + window.location.hostname
+          url = host + url
+
         url = encodeURIComponent url
         jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
         window.open jalviewUrl, '_blank'
