@@ -9,6 +9,7 @@ module.exports = Visibility = Model.extend
     metacell: false
     conserv: true
     overviewbox: false
+    seqlogo: false
 
     # about the labels
     labels: true

@@ -30,6 +30,11 @@ module.exports = boneView.extend
     @ctx = @el.getContext '2d'
     @cache = new CharCache @g
 
+    # clear the char cache
+    @listenTo @g.zoomer, "change:residueFont", ->
+      @cache = new CharCache @g
+      @render()
+
     # throttle the expensive draw function
     @throttleTime = 0
     @throttleCounts = 0

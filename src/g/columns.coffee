@@ -53,6 +53,23 @@ module.exports = Columns = Model.extend
     else if @attributes.scaling is "lin"
       return @calcConservationLin seqs
 
+  # counts the occurrences of an amino acid per column
+  # TODO: this approach might be a bit slow
+  seqLogo: (seqs) ->
+    columns = []
+    console.log seqs
+    for i in [0..seqs.getMaxLength()]
+      columns[i] = {}
+      seqs.each (el) ->
+        seq = el.get "seq"
+        seqChar = seq.charAt(i)
+        return if seqChar is "-"
+        unless columns[i][seqChar]?
+          columns[i][seqChar] = 0
+        columns[i][seqChar]++
+    @.set "seqlogo", columns
+    return columns
+
   # (percentage of chars of the consenus seq)
   calcConservationLin: (seqs) ->
     [matches,total, nMax] = @_calcConservationPre seqs
