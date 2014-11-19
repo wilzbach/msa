@@ -57,7 +57,6 @@ module.exports = Columns = Model.extend
   # TODO: this approach might be a bit slow
   seqLogo: (seqs) ->
     columns = []
-    console.log seqs
     for i in [0..seqs.getMaxLength()]
       columns[i] = {}
       seqs.each (el) ->
