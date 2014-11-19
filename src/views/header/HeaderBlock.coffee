@@ -3,7 +3,7 @@ ConservationView = require "./ConservationView"
 identityCalc = require "../../algo/identityCalc"
 boneView = require("backbone-childs")
 _ = require 'underscore'
-SeqLogoView = require "biojs-vis-seqlogo/light"
+SeqLogoWrapper = require "./SeqLogoWrapper"
 
 module.exports = boneView.extend
 
@@ -51,15 +51,7 @@ module.exports = boneView.extend
       @addView "marker",marker
 
     if @g.vis.get "seqlogo"
-      data =
-        alphabet: "aa"
-        heightArr: @g.columns.seqLogo(@model)
-
-      colorSelector = require("biojs-util-colorschemes").selector
-      seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis:false
-      ,scroller: false,xaxis: false, height: 100, column_width: @g.zoomer.get('columnWidth')
-      ,positionMarker: false, zoom: 1
-      , colors:colorSelector.getColor(@g.colorscheme.get("scheme"))}
+      seqlogo = new SeqLogoWrapper {model: @model, g: @g}
       seqlogo.ordering = -30
       @addView "seqlogo",seqlogo
 
