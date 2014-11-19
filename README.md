@@ -41,7 +41,7 @@ In case
 Use it
 ------
 
-[Full screen](http://biojs-msa.org/app.html) mode.
+[Full screen](http://biojs-msa.org/app) mode.
 
 Demo
 -----
