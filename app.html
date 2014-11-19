@@ -1,0 +1,44 @@
+<html>
+<head>
+	<meta name="description" content="Simple BioJS example" />
+
+	<!-- include MSA js + css -->
+	<script src="https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js"></script>
+
+</head>
+
+<body>
+
+	<div id="menuDiv"></div>
+	<div id="yourDiv">Loading ... </div>
+
+	<script>
+// this is a way how you use a bundled file parser
+biojs.io.clustal.read("http://www.corsproxy.com/rostlab.org/~goldberg/jalv_example.clustal", function(seqs){
+
+	var opts = {};
+
+	// set your custom properties
+	// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
+	opts.seqs = seqs; //msa.utils.seqgen.getDummySequences(1000,300);
+	opts.el = document.getElementById("yourDiv");
+	opts.vis = {conserv: false, overviewbox: false, seqlogo: true};
+	opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "12px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
+
+	// init msa
+	var m = new msa.msa(opts);
+
+	// the menu is independent to the MSA container
+	var menuOpts = {};
+	menuOpts.el = document.getElementById('div');
+	menuOpts.msa = m;
+	var defMenu = new msa.menu.defaultmenu(menuOpts);
+	m.addView("menu", defMenu);
+
+	// call render at the end to display the whole MSA
+	m.render();
+});
+	</script>
+
+</body>
+</html>
