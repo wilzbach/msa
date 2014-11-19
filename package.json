@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.2.15",
+  "version": "0.2.17",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -17,7 +17,7 @@
     "biojs-io-fasta": "0.0.13",
     "biojs-model": "^0.0.2",
     "biojs-util-colorschemes": "^1.0.2",
-    "biojs-vis-seqlogo": "0.0.6",
+    "biojs-vis-seqlogo": "0.0.7",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
     "dom-helper": "^1.0.0",
@@ -93,7 +93,9 @@
     "js": [
       "/build/msa.js"
     ],
-    "css": ["/css/msa.css"],
+    "css": [
+      "/css/msa.css"
+    ],
     "snippets": [
       "snippets"
     ],
