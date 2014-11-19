@@ -38,8 +38,15 @@ In case
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
+Use it
+------
+
+[Full screen](http://biojs-msa.org/app.html) mode.
+
 Demo
 -----
+
+These examples show how you could embed the MSA viewer into your page.
 
 [![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/4/edit?js,output) 
 [![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit?html,js,output) 
