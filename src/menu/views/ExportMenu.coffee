@@ -19,6 +19,7 @@ module.exports = ExportMenu = MenuBuilder.extend
       unless url?
         alert "Sequence weren't imported via an URL"
       else
+        url = encodeURIComponent url
         jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
         window.open jalviewUrl, '_blank'
 
