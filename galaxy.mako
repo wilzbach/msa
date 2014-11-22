@@ -24,6 +24,7 @@ xhr(url, function(err, response,text){
 	//opts.zoomer = { textVisible: false};
 	opts.vis = {overviewbox: true};
 	//opts.columns = {hidden: [1,2,3]};
+	opts.zoomer = {labelWidth: 200};
 	var m = new msa.msa(opts);
 	
 	// the menu is independent to the MSA container
