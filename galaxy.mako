@@ -5,13 +5,12 @@ galaxyDiv.appendChild(galaxyMain);
 
 var xhr = require("nets");
 xhr(url, function(err, response,text){
-	var data = JSON.parse(text).data;
 	
 	if(dataType == "galaxy.datatypes.sequence.Fasta"){
-		var seqs = require("biojs-io-fasta").parse.parse(data);
+		var seqs = require("biojs-io-fasta").parse.parse(response);
 	}else{
 		// it could be clustal
-		var seqs = require("biojs-io-clustal").parse(data); 
+		var seqs = require("biojs-io-clustal").parse(response); 
 	}
 	
 	var msa = require("biojs-vis-msa");
