@@ -14,6 +14,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     @addNode "FASTA",(e) =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.fasta"
       url = corsURL url, @g
+      @g.trigger "import:fasta:url", url
       FastaReader.read url, (seqs) =>
         # mass update on zoomer
         zoomer = @g.zoomer.toJSON()
@@ -30,6 +31,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     @addNode "CLUSTAL", =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
       url = corsURL url, @g
+      @g.trigger "import:clustal:url", url
       Clustal.read url, (seqs) =>
         zoomer = @g.zoomer.toJSON()
         #zoomer.textVisible = false
