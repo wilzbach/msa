@@ -67,11 +67,14 @@ module.exports = boneView.extend
       @_proxyToG key
 
   _proxyToG: (key) ->
-    @listenTo @g[key], "all",(name,prev,now) ->
+    @listenTo @g[key], "all",(name,prev,now,opts) ->
       # suppress duplicate events
       return if name is "change"
       # backbone uses the second argument for the next value -> swap
-      @g.trigger(key + ":" + name,now)
+      if opts?
+        @g.trigger(key + ":" + name,now,opts)
+      else
+        @g.trigger(key + ":" + name,now)
 
   render: ->
     @renderSubviews()
