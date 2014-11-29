@@ -56,15 +56,7 @@ These examples show how you could embed the MSA viewer into your page.
 
 #### display an MSA
 
-![basic MSA](http://i.imgur.com/39rIcR1l.jpg)
-
-#### zoom in
-
-![zoom in](http://i.imgur.com/tw8AueLl.jpg)
-
-#### choose your favorite color
-
-![color it](http://i.imgur.com/CIUP5lNl.jpg)
+![basic MSA](https://i.imgur.com/nQtfMmI.png)
 
 
 ####  Features
