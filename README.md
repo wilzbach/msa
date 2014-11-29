@@ -192,7 +192,7 @@ The minimization is done by [Browserify](http://browserify.org/).
 Package list
 -----------
 
-↝ (Package list)[https://github.com/greenify/biojs-vis-msa/wiki/Package-list]
+↝ [Package list](https://github.com/greenify/biojs-vis-msa/wiki/Package-list)
 
 
 Project structure
