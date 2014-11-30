@@ -56,6 +56,7 @@
     "gulp-chmod": "^1.1.0",
     "gulp-coffeelint": "^0.3.3",
     "gulp-concat": "^2.3.4",
+    "gulp-docco": "0.0.4",
     "gulp-gzip": "0.0.8",
     "gulp-minify-css": "^0.3.7",
     "gulp-mocha": "^0.5.2",
