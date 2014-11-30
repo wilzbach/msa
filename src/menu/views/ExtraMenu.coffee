@@ -1,5 +1,4 @@
 MenuBuilder = require "../menubuilder"
-consenus = require "../../algo/ConsensusCalc"
 Seq = require "../../model/Sequence"
 
 module.exports = ExtraMenu = MenuBuilder.extend
@@ -10,8 +9,9 @@ module.exports = ExtraMenu = MenuBuilder.extend
 
   render: ->
     @setName("Extras")
+    stats = @g.stats
     @addNode "Add consensus seq", =>
-      con = consenus(@model)
+      con = stats.consensus()
       seq = new Seq
         seq: con
         id: "0c"
