@@ -24,9 +24,13 @@ module.exports = view.extend
 
 
   draw: ->
+    arr = @g.stats.conservResidue()
+    arr = _.map arr, (el) ->
+      _.pick el, (e,k) ->
+        k isnt "-"
     data =
       alphabet: "aa"
-      heightArr: @g.columns.seqLogo(@model)
+      heightArr: arr
 
     colors = colorSelector.getColor(@g.colorscheme.get("scheme"))
     @seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis:false
