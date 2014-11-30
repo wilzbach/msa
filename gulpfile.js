@@ -9,6 +9,8 @@ var uglify = require('gulp-uglify');
 var coffeelint = require('gulp-coffeelint');
 require('shelljs/global');
 
+var docco = require("gulp-docco");
+
 // browserify 
 var browserify = require('browserify');
 var coffeify = require("coffeeify");
@@ -144,6 +146,12 @@ gulp.task('test-mocha-selenium', function () {
         .pipe(mochaSelenium({reporter: 'spec',
                     ui: "qunit",
                     compilers: "coffee:coffee-script/register"}));
+});
+
+gulp.task('doc', ["init"], function () {
+  return gulp.src("./src/**/*.coffee")
+    .pipe(docco())
+    .pipe(gulp.dest(join(buildDir, 'doc')))
 });
 
 gulp.task('lint', function () {
