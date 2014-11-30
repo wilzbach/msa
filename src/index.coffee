@@ -4,7 +4,6 @@ module.exports.msa = require("./msa")
 module.exports.model = require("./model")
 
 # extra plugins, extensions
-module.exports.algo = require("./algo")
 module.exports.menu = require("./menu")
 module.exports.utils = require("./utils")
 

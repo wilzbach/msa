@@ -2,7 +2,6 @@ boneView = require("backbone-childs")
 AlignmentBody = require "./AlignmentBody"
 HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
-identityCalc = require "../algo/identityCalc"
 _ = require 'underscore'
 
 # a neat collection view
@@ -32,8 +31,7 @@ module.exports = boneView.extend
 
     unless @isNotDirty
       # only executed when new sequences are added or on start
-      consensus = @g.consensus.getConsensus @model
-      identityCalc @model, consensus
+      @g.stats.resetSeqs @model.pluck("seq")
       @isNotDirty = true
 
     if @g.vis.get "overviewbox"

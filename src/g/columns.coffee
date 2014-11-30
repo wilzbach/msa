@@ -1,5 +1,4 @@
 Model = require("backbone-thin").Model
-consenus = require "../algo/ConsensusCalc"
 _ = require "underscore"
 
 # model for column properties (like their hidden state)
@@ -8,9 +7,10 @@ module.exports = Columns = Model.extend
   defaults:
     scaling: "lin" # of the conservation chart e.g. "lin", "exp", "log"
 
-  initialize: ->
+  initialize: (o,stat) ->
     # hidden columns
     @.set "hidden", [] unless @.get("hidden")?
+    @stats = stat
 
   # assumes hidden columns are sorted
   # @returns n [int] number of hidden columns until n
@@ -31,7 +31,7 @@ module.exports = Columns = Model.extend
       return
 
     # calc consensus
-    cons = consenus(seqs)
+    cons = @stats.consenus()
     seqs = seqs.map (el) -> el.get "seq"
     nMax = (_.max seqs, (el) -> el.length).length
 
@@ -55,19 +55,13 @@ module.exports = Columns = Model.extend
 
   # counts the occurrences of an amino acid per column
   # TODO: this approach might be a bit slow
-  seqLogo: (seqs) ->
-    columns = []
-    for i in [0..seqs.getMaxLength()]
-      columns[i] = {}
-      seqs.each (el) ->
-        seq = el.get "seq"
-        seqChar = seq.charAt(i)
-        return if seqChar is "-"
-        unless columns[i][seqChar]?
-          columns[i][seqChar] = 0
-        columns[i][seqChar]++
-    @.set "seqlogo", columns
-    return columns
+  seqLogo: () ->
+    arr = @stats.conservResidue()
+    arr= _.map arr, (el) ->
+      _.pick el, (e,k) ->
+        k isnt "-"
+    console.log arr
+    return arr
 
   # (percentage of chars of the consenus seq)
   calcConservationLin: (seqs) ->

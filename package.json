@@ -7,13 +7,17 @@
     "type": "git",
     "url": "git://github.com/greenify/biojs-vis-msa"
   },
-  "contributors":[
-    {"name":"Tatyana Goldberg",  
-    "email": "goldberg@rostlab.org",
-    "url": "http://rostlab.org/~goldberg/"},
-    {"name":"Guy Yachdav",  
-    "email": "yachdav@rostlab.org",
-    "url": "https://www.linkedin.com/in/gyachdav"}
+  "contributors": [
+    {
+      "name": "Tatyana Goldberg",
+      "email": "goldberg@rostlab.org",
+      "url": "http://rostlab.org/~goldberg/"
+    },
+    {
+      "name": "Guy Yachdav",
+      "email": "yachdav@rostlab.org",
+      "url": "https://www.linkedin.com/in/gyachdav"
+    }
   ],
   "author": "greenify",
   "dependencies": {
@@ -24,6 +28,7 @@
     "biojs-io-clustal": "0.0.10",
     "biojs-io-fasta": "0.0.13",
     "biojs-model": "^0.0.2",
+    "biojs-stat-seqs": "^0.1.0",
     "biojs-util-colorschemes": "^1.0.2",
     "biojs-vis-seqlogo": "0.0.7",
     "blueimp_canvastoblob": "^1.0.0",
@@ -116,6 +121,10 @@
     "first": "fer1"
   },
   "galaxy": {
-    "datatypes": ["sequence.Fasta", "sequences", "msa.clustal"]
+    "datatypes": [
+      "sequence.Fasta",
+      "sequences",
+      "msa.clustal"
+    ]
   }
 }
