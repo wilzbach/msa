@@ -8,3 +8,4 @@ module.exports = Config = Model.extend
     registerMouseClicks: true,
     importProxy: "https://cors-anywhere.herokuapp.com/"
     eventBus: true
+    alphabetSize: 20
