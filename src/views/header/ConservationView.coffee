@@ -15,7 +15,7 @@ ConservationView = view.extend
     @manageEvents()
 
   render: ->
-    @g.columns.calcConservation @model
+    conserv = @g.stats.scale(@g.stats.conservation())
 
     dom.removeAllChilds @el
 
@@ -40,7 +40,7 @@ ConservationView = view.extend
       width = cellWidth * stepSize
       avgHeight = 0
       for i in [0 .. stepSize - 1]
-        avgHeight += @g.columns.get("conserv")[n]
+        avgHeight += conserv[n]
       height = maxHeight *  (avgHeight / stepSize)
 
       rect =  svg.rect x:x,y: maxHeight - height,width:width - cellWidth / 4,height:height,style:
