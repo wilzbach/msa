@@ -1,6 +1,5 @@
 MarkerView = require "./MarkerView"
 ConservationView = require "./ConservationView"
-identityCalc = require "../../algo/identityCalc"
 boneView = require("backbone-childs")
 _ = require 'underscore'
 SeqLogoWrapper = require "./SeqLogoWrapper"
@@ -33,12 +32,6 @@ module.exports = boneView.extend
 
   draw: ->
     @removeViews()
-
-    unless @isNotDirty
-      # only executed when new sequences are added or on start
-      consensus = @g.consensus.getConsensus @model
-      identityCalc @model, consensus
-      @isNotDirty = true
 
     if @g.vis.get "conserv"
       conserv = new ConservationView {model: @model, g: @g}
