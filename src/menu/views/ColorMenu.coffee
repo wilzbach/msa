@@ -81,7 +81,8 @@ module.exports = ColorMenu = MenuBuilder.extend
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
-      conserv = @g.columns.get("conserv")
+      # TODO: cache
+      conserv = @g.stats.scale @g.stats.conservation()
       grey = []
       for i in [0.. maxLen - 1]
         if conserv[i] < threshold
