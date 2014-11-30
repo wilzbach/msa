@@ -26,7 +26,6 @@ module.exports = ImportMenu = MenuBuilder.extend
         @model.reset []
         @g.zoomer.set zoomer
         @model.reset seqs
-        @g.columns.calcConservation @model
 
     @addNode "CLUSTAL", =>
       url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
@@ -42,7 +41,6 @@ module.exports = ImportMenu = MenuBuilder.extend
         @model.reset []
         @g.zoomer.set zoomer
         @model.reset seqs
-        @g.columns.calcConservation @model
 
     @addNode "add your own Parser", =>
       window.open "https://github.com/biojs/biojs2"
