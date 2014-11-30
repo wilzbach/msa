@@ -31,7 +31,7 @@ module.exports = Columns = Model.extend
       return
 
     # calc consensus
-    cons = @stats.consenus()
+    cons = @stats.consensus()
     seqs = seqs.map (el) -> el.get "seq"
     nMax = (_.max seqs, (el) -> el.length).length
 

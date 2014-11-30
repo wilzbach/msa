@@ -56,7 +56,7 @@ module.exports = boneView.extend
 
     # stats
     @g.stats = new Stats(@seqs.pluck("seq"))
-    @g.stats.alphabetSize = 20
+    @g.stats.alphabetSize = @g.config.get "alphabetSize"
     @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
 
     @addView "stage",new Stage {model: @seqs, g: @g}
