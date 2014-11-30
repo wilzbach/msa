@@ -14,7 +14,8 @@ module.exports = FilterMenu = MenuBuilder.extend
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
       hidden = []
-      conserv = @g.columns.get("conserv")
+      # TODO: cache this value
+      conserv = @g.stats.scale(@g.stats.conservation())
       for i in [0.. maxLen - 1]
         if conserv[i] < threshold
           hidden.push i

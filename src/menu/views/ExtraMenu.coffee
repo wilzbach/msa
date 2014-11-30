@@ -42,13 +42,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
       if @g.zoomer.get("columnWidth") < 8
         @g.zoomer.set "textVisible", false
 
-    @addNode "Bar chart exp scaling", =>
-      @g.columns.set "scaling", "exp"
-    @addNode "Bar chart linear scaling", =>
-      @g.columns.set "scaling", "lin"
-    @addNode "Bar chart log scaling", =>
-      @g.columns.set "scaling", "log"
-
     @addNode "Minimized width", =>
       @g.zoomer.set "alignmentWidth", 600
     @addNode "Minimized height", =>
