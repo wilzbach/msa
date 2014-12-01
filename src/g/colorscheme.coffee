@@ -4,7 +4,7 @@ Model = require("backbone-thin").Model
 
 # this is an example of how one could color the MSA
 # feel free to create your own color scheme in the /css/schemes folder
-module.exports = Colorator = Model.extend
+module.exports = Colorscheme = Model.extend
 
   defaults:
     scheme: "taylor" # name of your color scheme
@@ -12,7 +12,7 @@ module.exports = Colorator = Model.extend
     showLowerCase: true # used to hide and show lowercase chars in the overviewbox
     opacity: 0.6 # opacity for the residues
 
-  initialize: (seqs, stat) ->
+  initialize: (data,seqs, stat) ->
     @colors = new Colors(
       seqs: seqs
       conservation: ->
@@ -24,14 +24,14 @@ module.exports = Colorator = Model.extend
         @getSelectedColorScheme().reset()
 
   # You can enter your own color scheme here
-  addStaticColorScheme: (dict, name) ->
-    @colors.addStaticColorScheme dict,name
+  addStaticScheme: (name, dict) ->
+    @colors.addStaticScheme name,dict
 
-  addDynColorScheme: (fun, name) ->
-    @colors.addStaticColorScheme fun,name
+  addDynScheme: (name, fun) ->
+    @colors.addDynScheme name,fun
 
-  getColorScheme: (name) ->
+  getScheme: (name) ->
     @colors.getScheme name
 
-  getSelectedColorScheme: ->
+  getSelectedScheme: ->
     @colors.getScheme @get("scheme")

@@ -31,6 +31,7 @@ module.exports = boneView.extend
   initialize: (data) ->
 
     # check for default arrays
+    data.colorscheme = {} unless data.colorscheme?
     data.columns = {} unless data.columns?
     data.conf = {} unless data.conf?
     data.vis = {} unless data.vis?
@@ -60,7 +61,7 @@ module.exports = boneView.extend
     @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
 
     # depending config
-    @g.colorscheme = new Colorator pureSeq, @g.stats
+    @g.colorscheme = new Colorator data.colorscheme, pureSeq, @g.stats
 
     @addView "stage",new Stage {model: @seqs, g: @g}
     @el.setAttribute "class", "biojs_msa_div"

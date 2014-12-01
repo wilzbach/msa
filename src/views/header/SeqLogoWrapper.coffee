@@ -8,7 +8,7 @@ module.exports = view.extend
     @g = data.g
     @listenTo @g.zoomer,"change:alignmentWidth", @render
     @listenTo @g.colorscheme, "change", ->
-      colors = @g.colorscheme.getSelectedColorScheme()
+      colors = @g.colorscheme.getSelectedScheme()
       @seqlogo.changeColors colors
       @render()
 
@@ -30,7 +30,7 @@ module.exports = view.extend
       alphabet: "aa"
       heightArr: arr
 
-    colors = @g.colorscheme.getSelectedColorScheme()
+    colors = @g.colorscheme.getSelectedScheme()
     # TODO: seqlogo might have problems with true dynamic schemes
     @seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis:false
         ,scroller: false,xaxis: false, height: 100, column_width: @g.zoomer.get('columnWidth')

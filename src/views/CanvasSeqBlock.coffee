@@ -200,7 +200,7 @@ module.exports = boneView.extend
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
 
-    @color = @g.colorscheme.getSelectedColorScheme()
+    @color = @g.colorscheme.getSelectedScheme()
 
     @throttledDraw()
     @

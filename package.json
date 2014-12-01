@@ -29,7 +29,7 @@
     "biojs-io-fasta": "0.0.13",
     "biojs-model": "^0.0.2",
     "biojs-stat-seqs": "^0.1.3",
-    "biojs-util-colorschemes": "^1.0.4",
+    "biojs-util-colorschemes": "^1.0.5",
     "biojs-vis-seqlogo": "0.0.9",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
