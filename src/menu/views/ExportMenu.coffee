@@ -3,6 +3,9 @@ saveAs = require "browser-saveas"
 FastaExporter = require("biojs-io-fasta").writer
 _ = require "underscore"
 blobURL = require "blueimp_canvastoblob"
+Upload = require "../../utils/upload"
+corsURL = require("../../utils/proxy").corsURL
+xhr = require "xhr"
 
 module.exports = ExportMenu = MenuBuilder.extend
 
@@ -30,15 +33,22 @@ module.exports = ExportMenu = MenuBuilder.extend
           url = host + url
 
         url = encodeURIComponent url
-        jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
-        jalviewUrl += "&colour=" + @g.colorscheme.get "scheme"
-        window.open jalviewUrl, '_blank'
+
+        if url.indexOf "localhost" or url is "dragimport"
+          publishWeb @, (link) =>
+            openJalview link, @g.colorscheme.get "scheme"
+        else
+          openJalview url, @g.colorscheme.get "scheme"
 
     @addNode "Export sequences", =>
       # limit at about 256k
       text = FastaExporter.export @model.toJSON()
       blob = new Blob([text], {type : 'text/plain'})
       saveAs blob, "all.fasta"
+
+    @addNode "Publish to the web", =>
+      publishWeb @, (link) ->
+        window.open link, '_blank'
 
     @addNode "Export selection", =>
       selection = @g.selcol.pluck "seqId"
@@ -70,3 +80,22 @@ module.exports = ExportMenu = MenuBuilder.extend
 
     @el.appendChild @buildDOM()
     @
+
+openJalview = (url, colorscheme) ->
+  jalviewUrl = "http://www.jalview.org/services/launchApp?open=" + url
+  jalviewUrl += "&colour=" + colorscheme
+  window.open jalviewUrl, '_blank'
+
+publishWeb = (that, cb) ->
+  text = FastaExporter.export that.model.toJSON()
+  text = encodeURIComponent text
+  url = corsURL "http://sprunge.us", that.g
+  xhr
+    method: "POST"
+    body: "sprunge=" + text
+    uri: url
+    headers:
+      "Content-Type": "application/x-www-form-urlencoded"
+  , (err,rep,body) ->
+    link = body.trim()
+    cb(link)
