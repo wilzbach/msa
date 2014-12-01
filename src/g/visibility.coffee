@@ -7,7 +7,7 @@ module.exports = Visibility = Model.extend
     sequences: true
     markers: true
     metacell: false
-    conserv: true
+    conserv: false
     overviewbox: false
     seqlogo: false
 
