@@ -25,7 +25,7 @@
     "backbone-thin": "^1.0.8",
     "backbone-viewj": "^1.0.1",
     "biojs-events": "0.0.4",
-    "biojs-io-clustal": "0.0.10",
+    "biojs-io-clustal": "0.0.11",
     "biojs-io-fasta": "0.0.13",
     "biojs-model": "^0.0.2",
     "biojs-stat-seqs": "^0.1.4",
