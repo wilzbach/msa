@@ -3,7 +3,6 @@ saveAs = require "browser-saveas"
 FastaExporter = require("biojs-io-fasta").writer
 _ = require "underscore"
 blobURL = require "blueimp_canvastoblob"
-Upload = require "../../utils/upload"
 corsURL = require("../../utils/proxy").corsURL
 xhr = require "xhr"
 
