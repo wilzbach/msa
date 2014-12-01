@@ -18,7 +18,8 @@ module.exports = boneView.extend
     if @g.vis.get "labels"
       @addView "labels", new LabelView {model: @model, g:@g}
     if @g.vis.get "metacell"
-      @addView "metacell", new MetaView {model: @model, g:@g}
+      meta = new MetaView {model: @model, g:@g}
+      @addView "metacell", meta
 
   drawR: ->
     @draw()

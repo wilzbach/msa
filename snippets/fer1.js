@@ -21,7 +21,7 @@ clustal.read(url, function(seqs){
   opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "14px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
 
   // init msa
-  var m = new msa.msa(opts);
+  var m = msa(opts);
 
   // the menu is independent to the MSA container
   var menuOpts = {};

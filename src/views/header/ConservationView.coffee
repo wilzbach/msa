@@ -11,7 +11,9 @@ ConservationView = view.extend
     @listenTo @g.zoomer,"change:stepSize change:labelWidth change:columnWidth", @render
     @listenTo @g.vis,"change:labels change:metacell", @render
     @listenTo @g.columns, "change:scaling", @render
-    @listenTo @model, "reset",@render
+    # we need to wait until stats gives us the ok
+    #@listenTo @model, "reset",@render
+    @listenTo @g.stats,"reset", @render
     @manageEvents()
 
   render: ->
