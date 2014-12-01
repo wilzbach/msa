@@ -93,6 +93,7 @@ module.exports = boneView.extend
       #attach event handlers here...
       reader.onload = (evt) =>
         seqs = FileHelper.parseText evt.target.result
+        @g.config.set "url", "dragimport"
         @seqs.reset seqs
       fileName = file.name
       reader.readAsText file
