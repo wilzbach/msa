@@ -11,7 +11,7 @@ module.exports = boneView.extend
     @listenTo @g.vis,"change:labels", @drawR
     @listenTo @g.vis,"change:metacell", @drawR
     @listenTo @g.zoomer, "change:rowHeight", ->
-      @el.style.height = @g.zoomer.get "rowHeight"
+      @el.style.height = @g.zoomer.get("rowHeight") + "px"
 
   draw: ->
     @removeViews()
@@ -29,5 +29,5 @@ module.exports = boneView.extend
     @renderSubviews()
 
     @el.setAttribute "class", "biojs_msa_labelrow"
-    @el.style.height = @g.zoomer.get "rowHeight"
+    @el.style.height = @g.zoomer.get("rowHeight") + "px"
     @
