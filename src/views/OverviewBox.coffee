@@ -1,7 +1,6 @@
 view = require("backbone-viewj")
 mouse = require "mouse-pos"
 selection = require "../g/selection/Selection"
-colorSelector = require("biojs-util-colorschemes").selector
 jbone = require "jbone"
 _ = require "underscore"
 
@@ -19,9 +18,9 @@ module.exports = OverviewBox = view.extend
     @listenTo @model, "change", _.debounce @render, 5
 
     # color
-    @color = colorSelector.getColor @g.colorscheme.get("scheme")
+    @color = @g.colorscheme.getSelectedColorScheme()
     @listenTo @g.colorscheme, "change:scheme", ->
-      @color = colorSelector.getColor @g.colorscheme.get("scheme")
+      @color = @g.colorscheme.getSelectedColorScheme()
       @render()
     @dragStart = []
 
