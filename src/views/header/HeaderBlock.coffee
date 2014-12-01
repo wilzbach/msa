@@ -3,6 +3,7 @@ ConservationView = require "./ConservationView"
 boneView = require("backbone-childs")
 _ = require 'underscore'
 SeqLogoWrapper = require "./SeqLogoWrapper"
+GapView = require "./GapView"
 
 module.exports = boneView.extend
 
@@ -10,7 +11,8 @@ module.exports = boneView.extend
     @g = data.g
     @blockEvents = false
 
-    @listenTo @g.vis,"change:markers change:conserv change:seqlogo", ->
+    @listenTo @g.vis,"change:markers change:conserv change:seqlogo
+    change:gapHeader", ->
       @draw()
       @render()
     @listenTo @g.vis,"change", @_setSpacer
@@ -47,6 +49,11 @@ module.exports = boneView.extend
       seqlogo = new SeqLogoWrapper {model: @model, g: @g}
       seqlogo.ordering = -30
       @addView "seqlogo",seqlogo
+
+    if @g.vis.get "gapHeader"
+      gapview = new GapView {model: @model, g: @g}
+      gapview.ordering = -25
+      @addView "gapview",gapview
 
   render: ->
     @renderSubviews()

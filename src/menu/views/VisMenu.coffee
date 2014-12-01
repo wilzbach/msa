@@ -26,6 +26,7 @@ module.exports = ImportMenu = MenuBuilder.extend
       @g.vis.set "labelName", true
       @g.vis.set "labelCheckbox", false
       @g.vis.set "seqlogo", false
+      @g.vis.set "gapHeader", false
 
     # TODO: make more efficient
     dom.removeAllChilds @el
@@ -56,6 +57,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     vis.push name: "Overviewbox", id: "overviewbox"
     vis.push name: "Conserv", id: "conserv"
     vis.push name: "Seq. logo", id: "seqlogo"
+    vis.push name: "Gap Header", id: "gapHeader"
     vis.push name: "Label name", id: "labelName"
     vis.push name: "Label id", id: "labelId"
     vis.push name: "Label checkbox", id: "labelCheckbox"
