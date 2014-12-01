@@ -23,7 +23,7 @@ module.exports = Exporter =
     window.open jalviewUrl, '_blank'
 
   publishWeb: (that, cb) ->
-    text = FastaExporter.export that.model.toJSON()
+    text = FastaExporter.export that.seqs.toJSON()
     text = encodeURIComponent text
     url = corsURL "http://sprunge.biojs.net", that.g
     xhr

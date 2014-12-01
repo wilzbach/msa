@@ -19,13 +19,13 @@ module.exports = ExportMenu = MenuBuilder.extend
         alert "Sequence weren't imported via an URL"
       else
         if url.indexOf "localhost" or url is "dragimport"
-          Exporter.publishWeb @, (link) =>
+          Exporter.publishWeb @msa, (link) =>
             Exporter.openInJalview link, @g.colorscheme.get "scheme"
         else
           Exporter.openInJalview url, @g.colorscheme.get "scheme"
 
     @addNode "Publish to the web", =>
-      Exporter.publishWeb @, (link) ->
+      Exporter.publishWeb @msa, (link) ->
         window.open link, '_blank'
 
     @addNode "Export sequences", =>
