@@ -30,7 +30,7 @@ LabelView = view.extend
     dom.removeAllChilds @el
 
     @el.style.width = "#{@g.zoomer.get "labelWidth"}px"
-    @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
+    #@el.style.height = "#{@g.zoomer.get "rowHeight"}px"
     @el.setAttribute "class", "biojs_msa_labels"
 
     if @.g.vis.get "labelCheckbox"
@@ -59,7 +59,6 @@ LabelView = view.extend
       name = document.createElement "span"
       name.textContent = @model.get("name")
       @el.appendChild name
-
 
     @el.style.overflow = scroll
     @el.style.fontSize = @g.zoomer.get "labelFontSize"
