@@ -72,6 +72,12 @@ These examples show how you could embed the MSA viewer into your page.
 * generate the consenus seq
 * more to come ...
 
+FAQ
+----
+
+Q: How can I define my own color scheme?
+
+↝ [http://workmen.biojs.net/jsbin/biojs-vis-msa/colorscheme](here)
 
 Documentation
 -------------
