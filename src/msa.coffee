@@ -2,7 +2,7 @@
 SeqCollection = require "./model/SeqCollection"
 
 # globals
-Colorator = require "./g/colorator"
+Colorator = require "./g/colorscheme"
 Columns = require "./g/columns"
 Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
@@ -48,16 +48,19 @@ module.exports = boneView.extend
 
     # populate it and init the global models
     @g.config = new Config data.conf
-    @g.colorscheme = new Colorator()
     @g.selcol = new SelCol [],{g:@g}
     @g.vis = new Visibility data.vis
     @g.visorder = new VisOrdering data.visorder
     @g.zoomer = new Zoomer data.zoomer,{g:@g}
 
     # stats
-    @g.stats = new Stats(@seqs.pluck("seq"))
+    pureSeq = @seqs.pluck("seq")
+    @g.stats = new Stats pureSeq
     @g.stats.alphabetSize = @g.config.get "alphabetSize"
     @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
+
+    # depending config
+    @g.colorscheme = new Colorator pureSeq, @g.stats
 
     @addView "stage",new Stage {model: @seqs, g: @g}
     @el.setAttribute "class", "biojs_msa_div"

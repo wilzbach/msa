@@ -1,6 +1,5 @@
 SeqLogoView = require "biojs-vis-seqlogo/light"
 view = require("backbone-viewj")
-colorSelector = require("biojs-util-colorschemes").selector
 
 # this is a bridge between the MSA and the seqlogo viewer
 module.exports = view.extend
@@ -10,7 +9,7 @@ module.exports = view.extend
     @listenTo @g.zoomer,"change:alignmentWidth", @render
     @listenTo @g.colorscheme, "change", ->
       console.log "color changed"
-      colors = colorSelector.getColor(@g.colorscheme.get("scheme"))
+      colors = @g.colorscheme.getSelectedColorScheme()
       @seqlogo.changeColors colors
       @render()
 
@@ -32,7 +31,8 @@ module.exports = view.extend
       alphabet: "aa"
       heightArr: arr
 
-    colors = colorSelector.getColor(@g.colorscheme.get("scheme"))
+    colors = @g.colorscheme.getSelectedColorScheme()
+    # TODO: seqlogo might have problems with true dynamic schemes
     @seqlogo = new SeqLogoView {model: @model, g: @g, data: data, yaxis:false
         ,scroller: false,xaxis: false, height: 100, column_width: @g.zoomer.get('columnWidth')
         ,positionMarker: false, zoom: 1, el: @el,colors: colors}
