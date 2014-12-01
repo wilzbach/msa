@@ -3,7 +3,7 @@ galaxyMain = document.createElement("div");
 galaxyDiv.appendChild(galaxyMenu);
 galaxyDiv.appendChild(galaxyMain);
 
-var xhr = require("nets");
+var xhr = require("xhr");
 xhr(jsonURL, function(err, response,text){
 	var data = JSON.parse(text).data;
 	

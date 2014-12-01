@@ -117,7 +117,7 @@
     "exposed": [
       "biojs-io-fasta",
       "biojs-io-clustal",
-      "nets"
+      "xhr"
     ],
     "first": "fer1"
   },
