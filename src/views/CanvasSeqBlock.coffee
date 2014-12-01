@@ -122,7 +122,7 @@ module.exports = boneView.extend
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      callback.call @, {model: @model.at(i), y: y, seqNr: i, hidden: hidden}
+      callback.call @, {model: @model.at(i), yPos: y, y: i, hidden: hidden}
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
@@ -131,7 +131,7 @@ module.exports = boneView.extend
   # TODO: very expensive method
   drawSeq: (data, callback) ->
     seq = data.model.get "seq"
-    y = data.y
+    y = data.yPos
     rectWidth = @g.zoomer.get "columnWidth"
     rectHeight = @g.zoomer.get "rowHeight"
 
@@ -139,7 +139,7 @@ module.exports = boneView.extend
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
     x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
 
-    res = {rectWidth: rectWidth, rectHeight: rectHeight, yPos: y, y: data.seqNr}
+    res = {rectWidth: rectWidth, rectHeight: rectHeight, yPos: y, y: data.y}
     elWidth = @el.width
 
     for j in [start.. seq.length - 1] by 1
@@ -183,7 +183,6 @@ module.exports = boneView.extend
       data.rectHeight), data.xPos, data.yPos,data.rectWidth,data.rectHeight
 
   drawSelection: (data) ->
-
     rectWidth = @g.zoomer.get "columnWidth"
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
     x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)

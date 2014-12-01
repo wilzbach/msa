@@ -34,7 +34,7 @@ clustal.read(url, function(seqs){
   m.render();
 
 
-  // BioJS event system test
+  // BioJS event system test (you can safely remove this in your app)
   //instance=m.g
 
   //defMenu.el.style.marginTop = "15px";
