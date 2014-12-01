@@ -10,6 +10,7 @@ module.exports = Visibility = Model.extend
     conserv: false
     overviewbox: false
     seqlogo: false
+    gapHeader: false
 
     # about the labels
     labels: true
