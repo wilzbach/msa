@@ -88,7 +88,7 @@ openJalview = (url, colorscheme) ->
 publishWeb = (that, cb) ->
   text = FastaExporter.export that.model.toJSON()
   text = encodeURIComponent text
-  url = corsURL "http://sprunge.us", that.g
+  url = corsURL "http://sprunge.biojs.net", that.g
   xhr
     method: "POST"
     body: "sprunge=" + text
