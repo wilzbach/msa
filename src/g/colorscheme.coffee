@@ -18,6 +18,7 @@ module.exports = Colorator = Model.extend
       conservation: ->
         stat.scale(stat.conservation())
     )
+    # the stats module sends an event every time it is refreshed
     stat.on "reset", =>
       if @getSelectedColorScheme().type is "dyn"
         @getSelectedColorScheme().reset()
