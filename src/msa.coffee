@@ -93,9 +93,9 @@ module.exports = boneView.extend
       #attach event handlers here...
       reader.onload = (evt) =>
         seqs = FileHelper.parseText evt.target.result
-        @g.config.set "url", "dragimport"
-        @trigger "dragImport"
         @seqs.reset seqs
+        @g.config.set "url", "dragimport"
+        @g.trigger "url:dragImport"
       fileName = file.name
       reader.readAsText file
       # reading more than one file doesnt make sense atm
