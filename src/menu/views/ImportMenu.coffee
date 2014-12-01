@@ -1,6 +1,6 @@
-Clustal = require "biojs-io-clustal"
-FastaReader = require("biojs-io-fasta").parse
+FileHelper = require "../../utils/file"
 MenuBuilder = require "../menubuilder"
+xhr = require "xhr"
 corsURL = require("../../utils/proxy").corsURL
 
 module.exports = ImportMenu = MenuBuilder.extend
@@ -11,11 +11,15 @@ module.exports = ImportMenu = MenuBuilder.extend
 
   render: ->
     @setName("Import")
-    @addNode "FASTA",(e) =>
-      url = prompt "URL", "/test/dummy/samples/p53.clustalo.fasta"
+    @addNode "URL",(e) =>
+      url = prompt "URL",
+      "http://rostlab.org/~goldberg/clustalw2-I20140818-215249-0556-53699878-pg.clustalw"
       url = corsURL url, @g
-      @g.trigger "import:fasta:url", url
-      FastaReader.read url, (seqs) =>
+      @g.trigger "import:url", url
+      xhr url, (err,resp,body) =>
+        if err
+          console.log err
+        seqs = FileHelper.parseText body
         # mass update on zoomer
         zoomer = @g.zoomer.toJSON()
         #zoomer.textVisible = false
@@ -27,23 +31,11 @@ module.exports = ImportMenu = MenuBuilder.extend
         @g.zoomer.set zoomer
         @model.reset seqs
 
-    @addNode "CLUSTAL", =>
-      url = prompt "URL", "/test/dummy/samples/p53.clustalo.clustal"
-      url = corsURL url, @g
-      @g.trigger "import:clustal:url", url
-      Clustal.read url, (seqs) =>
-        zoomer = @g.zoomer.toJSON()
-        #zoomer.textVisible = false
-        #zoomer.columnWidth = 4
-        zoomer.labelWidth = 200
-        zoomer.boxRectHeight = 2
-        zoomer.boxRectWidth = 2
-        @model.reset []
-        @g.zoomer.set zoomer
-        @model.reset seqs
+    @addNode "Drag & Drop", =>
+      alert "Yep. Just drag & drop your file"
 
     @addNode "add your own Parser", =>
-      window.open "https://github.com/biojs/biojs2"
+      window.open "https://github.com/biojs/biojs"
 
     @el.appendChild @buildDOM()
     @
