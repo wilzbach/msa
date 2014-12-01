@@ -8,7 +8,7 @@ opts.seqs = seqs;
 opts.el = yourDiv;
 opts.vis = {conserv: false, overviewbox: false}
 opts.zoomer = {boxRectHeight: 1, boxRectWidth: 1, labelWidth: 270,labelFontsize: "12px",labelIdLength: 50, alignmentHeight: window.innerHeight * 0.85}
-var m = new msa.msa(opts);
+var m = msa(opts);
 
 // the menu is independent to the MSA container
 var menuOpts = {};

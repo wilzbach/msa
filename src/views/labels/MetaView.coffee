@@ -37,7 +37,8 @@ module.exports = MetaView = view.extend
     @el.appendChild gapSpan
 
     # identity
-    ident = @model.get('identity')
+    # TODO: there must be a better way to pass the id
+    ident = @g.stats.identity()[@model.collection.indexOf(@model)]
     identSpan = document.createElement 'span'
     identSpan.textContent = ident.toFixed(2)
     identSpan.style.display = "inline-block"

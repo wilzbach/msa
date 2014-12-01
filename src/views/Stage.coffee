@@ -11,8 +11,9 @@ module.exports = boneView.extend
     @g = data.g
 
     @draw()
-    @listenTo @model,"reset", ->
-      @isNotDirty = false
+    #@listenTo @model,"reset", ->
+    # we need to wait until stats gives us the ok
+    @listenTo @g.stats,"reset", ->
       @rerender()
 
     # debounce a bulk operation
@@ -28,11 +29,6 @@ module.exports = boneView.extend
 
   draw: ->
     @removeViews()
-
-    unless @isNotDirty
-      # only executed when new sequences are added or on start
-      @g.stats.resetSeqs @model.pluck("seq")
-      @isNotDirty = true
 
     if @g.vis.get "overviewbox"
       overviewbox = new OverviewBox {model: @model, g: @g}

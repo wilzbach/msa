@@ -55,7 +55,7 @@ module.exports = boneView.extend
 
     # stats
     pureSeq = @seqs.pluck("seq")
-    @g.stats = new Stats pureSeq
+    @g.stats = new Stats @seqs
     @g.stats.alphabetSize = @g.config.get "alphabetSize"
     @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
 
