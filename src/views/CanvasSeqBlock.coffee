@@ -1,9 +1,9 @@
 boneView = require("backbone-childs")
 mouse = require "mouse-pos"
-colorSelector = require("biojs-util-colorschemes").selector
 _ = require "underscore"
 jbone = require "jbone"
 CharCache = require "./CanvasCharCache"
+SelectionClass = require "./CanvasSelection"
 
 module.exports = boneView.extend
 
@@ -34,6 +34,9 @@ module.exports = boneView.extend
     @listenTo @g.zoomer, "change:residueFont", ->
       @cache = new CharCache @g
       @render()
+
+    # init selection
+    @sel = new SelectionClass @g,@ctx
 
     # throttle the expensive draw function
     @throttleTime = 0
@@ -108,8 +111,8 @@ module.exports = boneView.extend
     # letters
     @drawSeqs (data) -> @drawSeq(data, @_drawLetter)
 
-    # features, selection
-    @drawSeqs @drawSeqExtended
+    # selection
+    @drawSeqs @drawSelection
 
   drawSeqs: (callback) ->
     rectHeight = @g.zoomer.get "rowHeight"
@@ -119,7 +122,7 @@ module.exports = boneView.extend
     y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
     for i in [start.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
-      callback.call @, {model: @model.at(i), y: y, hidden: hidden}
+      callback.call @, {model: @model.at(i), y: y, seqNr: i, hidden: hidden}
       y = y + rectHeight
       # out of viewport - stop
       if y > @el.height
@@ -136,7 +139,7 @@ module.exports = boneView.extend
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
     x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
 
-    res = {rectWidth: rectWidth, rectHeight: rectHeight, y: y}
+    res = {rectWidth: rectWidth, rectHeight: rectHeight, yPos: y, y: data.seqNr}
     elWidth = @el.width
 
     for j in [start.. seq.length - 1] by 1
@@ -144,8 +147,10 @@ module.exports = boneView.extend
       c = c.toUpperCase()
 
       # call the custom function
-      res.x = x
+      res.x = j
       res.c = c
+      res.xPos = x
+
 
       # local call is faster than apply
       # http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
@@ -162,10 +167,12 @@ module.exports = boneView.extend
         break
 
   _drawRect: (that, data) ->
-    color = that.color[data.c]
+    color = that.color.getColor data.c,
+      pos:data.x
+      y: data.y
     if color?
       that.ctx.fillStyle = color
-      that.ctx.fillRect data.x,data.y,data.rectWidth,data.rectHeight
+      that.ctx.fillRect data.xPos,data.yPos,data.rectWidth,data.rectHeight
 
   # REALLY expensive call on FF
   # Performance:
@@ -173,40 +180,17 @@ module.exports = boneView.extend
   # FF: 1700ms drawLetter - 300ms drawRect
   _drawLetter: (that,data) ->
     that.ctx.drawImage that.cache.getFontTile(data.c, data.rectWidth,
-      data.rectHeight), data.x, data.y,data.rectWidth,data.rectHeight
+      data.rectHeight), data.xPos, data.yPos,data.rectWidth,data.rectHeight
 
-  drawSeqExtended: (data) ->
-    seq = data.model.get "seq"
+  drawSelection: (data) ->
+
     rectWidth = @g.zoomer.get "columnWidth"
-    rectHeight = @g.zoomer.get "rowHeight"
-
     start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
     x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
+
     xZero = x - start * rectWidth
-
-    selection = @_getSelection data.model
-    [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
-    features = data.model.get "features"
-
-    yZero = data.y
-
-    for j in [start.. seq.length - 1] by 1
-      starts = features.startOn j
-
-      if data.hidden.indexOf(j) >= 0
-        continue
-
-      if starts.length > 0
-        for f in starts
-          @appendFeature f: f,xZero: x, yZero: yZero
-
-      x = x + rectWidth
-      # out of viewport - stop
-      if x > @el.width
-        break
-
-    @_appendSelection model: data.model, xZero: xZero, yZero: yZero, hidden:
-      data.hidden
+    yZero = data.yPos
+    @sel._appendSelection model: data.model, xZero: xZero, yZero: yZero, hidden: data.hidden
 
   render: ->
 
@@ -217,7 +201,7 @@ module.exports = boneView.extend
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
 
-    @color = colorSelector.getColor @g.colorscheme.get("scheme")
+    @color = @g.colorscheme.getSelectedColorScheme()
 
     @throttledDraw()
     @
@@ -369,136 +353,3 @@ module.exports = boneView.extend
 
     return scrollObj
 
-  # TODO: should I be moved to the selection manager?
-  # returns an array with the currently selected residues
-  # e.g. [0,3] = pos 0 and 3 are selected
-  _getSelection: (model) ->
-    maxLen = model.get("seq").length
-    selection = []
-    sels = @g.selcol.getSelForRow model.get "id"
-    rows = _.find sels, (el) -> el.get("type") is "row"
-    if rows?
-      # full match
-      for n in [0..maxLen - 1] by 1
-        selection.push n
-    else if sels.length > 0
-      for sel in sels
-        for n in [sel.get("xStart")..sel.get("xEnd")] by 1
-          selection.push n
-
-    return selection
-
-  # draws features
-  appendFeature: (data) ->
-    f = data.f
-    # TODO: this is a very naive way
-    boxWidth = @g.zoomer.get("columnWidth")
-    boxHeight = @g.zoomer.get("rowHeight")
-    width = (f.get("xEnd") - f.get("xStart")) * boxWidth
-
-    beforeWidth = @ctx.lineWidth
-    @ctx.lineWidth = 3
-    beforeStyle = @ctx.strokeStyle
-    @ctx.strokeStyle = f.get "fillColor"
-
-    @ctx.strokeRect data.xZero, data.yZero, width,boxHeight
-    @ctx.strokeStyle = beforeStyle
-    @ctx.lineWidth = beforeWidth
-
-
-  # loops over all selection and calls the render method
-  _appendSelection: (data) ->
-    seq = data.model.get("seq")
-    selection = @_getSelection data.model
-    # get the status of the upper and lower row
-    [mPrevSel,mNextSel] = @_getPrevNextSelection data.model
-
-    boxWidth = @g.zoomer.get("columnWidth")
-    boxHeight = @g.zoomer.get("rowHeight")
-
-    # avoid unnecessary loops
-    return if selection.length is 0
-
-    hiddenOffset = 0
-    for n in [0..seq.length - 1] by 1
-      if data.hidden.indexOf(n) >= 0
-        hiddenOffset++
-      else
-        k = n - hiddenOffset
-        # only if its a new selection
-        if selection.indexOf(n) >= 0 and (k is 0 or selection.indexOf(n - 1) < 0 )
-          @_renderSelection n:n,k:k,selection: selection,mPrevSel: mPrevSel,mNextSel:mNextSel, xZero: data.xZero, yZero: data.yZero, model: data.model
-
-  # draws a single user selection
-  _renderSelection: (data) ->
-
-    xZero = data.xZero
-    yZero = data.yZero
-    n = data.n
-    k = data.k
-    selection = data.selection
-    # and checks the prev and next row for selection  -> no borders in a selection
-    mPrevSel= data.mPrevSel
-    mNextSel = data.mNextSel
-
-    # get the length of this selection
-    selectionLength = 0
-    for i in [n.. data.model.get("seq").length - 1] by 1
-      if selection.indexOf(i) >= 0
-        selectionLength++
-      else
-        break
-
-    # TODO: ugly!
-    boxWidth = @g.zoomer.get("columnWidth")
-    boxHeight = @g.zoomer.get("rowHeight")
-    totalWidth = (boxWidth * selectionLength) + 1
-
-    hidden = @g.columns.get('hidden')
-
-    @ctx.beginPath()
-    beforeWidth = @ctx.lineWidth
-    @ctx.lineWidth = 3
-    beforeStyle = @ctx.strokeStyle
-    @ctx.strokeStyle = "#FF0000"
-
-    xZero += k * boxWidth
-
-    # split up the selection into single cells
-    xPart = 0
-    for i in [0.. selectionLength - 1]
-      xPos = n + i
-      if hidden.indexOf(xPos) >= 0
-        continue
-      # upper line
-      unless mPrevSel? and mPrevSel.indexOf(xPos) >= 0
-        @ctx.moveTo xZero + xPart, yZero
-        @ctx.lineTo xPart + boxWidth + xZero, yZero
-      # lower line
-      unless mNextSel? and mNextSel.indexOf(xPos) >= 0
-        @ctx.moveTo xPart + xZero, boxHeight + yZero
-        @ctx.lineTo xPart + boxWidth + xZero, boxHeight + yZero
-
-      xPart += boxWidth
-
-    # left
-    @ctx.moveTo xZero,yZero
-    @ctx.lineTo xZero, boxHeight + yZero
-
-    # right
-    @ctx.moveTo xZero + totalWidth,yZero
-    @ctx.lineTo xZero + totalWidth, boxHeight + yZero
-
-    @ctx.stroke()
-    @ctx.strokeStyle = beforeStyle
-    @ctx.lineWidth = beforeWidth
-
-  # looks at the selection of the prev and next el
-  # TODO: this is very naive, as there might be gaps above or below
-  _getPrevNextSelection: (model) ->
-
-    modelPrev = model.collection.prev model
-    modelNext = model.collection.next model
-    mPrevSel = @_getSelection modelPrev if modelPrev?
-    mNextSel = @_getSelection modelNext if modelNext?
-    [mPrevSel,mNextSel]
