@@ -8,7 +8,6 @@ module.exports = view.extend
     @g = data.g
     @listenTo @g.zoomer,"change:alignmentWidth", @render
     @listenTo @g.colorscheme, "change", ->
-      console.log "color changed"
       colors = @g.colorscheme.getSelectedColorScheme()
       @seqlogo.changeColors colors
       @render()
