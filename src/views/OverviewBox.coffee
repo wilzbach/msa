@@ -59,7 +59,7 @@ module.exports = OverviewBox = view.extend
         c = seq[j]
         # todo: optional uppercasing
         c = c.toUpperCase() if showLowerCase
-        color = @color[c]
+        color = @color.getColor c, {pos: j}
 
         if hidden.indexOf(j) >= 0
           color = "grey"

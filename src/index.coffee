@@ -1,4 +1,12 @@
-module.exports.msa = require("./msa")
+MSA = require("./msa")
+
+module.exports = ->
+  msa = (args) ->
+    MSA.apply @, args
+  msa:: = MSA::
+  new msa arguments
+
+module.exports.msa = MSA
 
 # models
 module.exports.model = require("./model")
@@ -16,4 +24,4 @@ module.exports.boneView = require("backbone-childs")
 module.exports._ = require 'underscore'
 module.exports.$ = require 'jbone'
 
-module.exports.version = "0.1.0"
+module.exports.version = "0.2.0"
