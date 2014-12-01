@@ -9,3 +9,4 @@ module.exports = Config = Model.extend
     importProxy: "https://cors-anywhere.herokuapp.com/"
     eventBus: true
     alphabetSize: 20
+    dropImport: false

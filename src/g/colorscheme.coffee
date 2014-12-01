@@ -19,9 +19,10 @@ module.exports = Colorscheme = Model.extend
         stat.scale(stat.conservation())
     )
     # the stats module sends an event every time it is refreshed
-    stat.on "reset", =>
-      if @getSelectedColorScheme().type is "dyn"
-        @getSelectedColorScheme().reset()
+    stat.on "reset", ->
+      if @getSelectedScheme().type is "dyn"
+        @getSelectedScheme().reset()
+    ,@
 
   # You can enter your own color scheme here
   addStaticScheme: (name, dict) ->

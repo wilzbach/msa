@@ -20,6 +20,9 @@ Stage = require "./views/Stage"
 # statistics
 Stats = require "biojs-stat-seqs"
 
+# utils
+FileHelper = require "./utils/file"
+
 # opts is a dictionary consisting of
 # @param el [String] id or reference to a DOM element
 # @param seqs [SeqArray] Array of sequences for initlization
@@ -68,6 +71,34 @@ module.exports = boneView.extend
 
     if @g.config.get("eventBus") is true
       @startEventBus()
+
+    if @g.config.get "dropImport"
+      events =
+        "dragover": @dragOver
+        "drop": @dropFile
+      @delegateEvents events
+
+  dragOver: (e) ->
+    # prevent the normal browser actions
+    e.preventDefault()
+    e.target.className = 'hover'
+    false
+
+  dropFile: (e) ->
+    e.preventDefault()
+    files = e.target.files || e.dataTransfer.files
+    for i in [0..files.length - 1] by 1
+      file = files[i]
+      reader = new FileReader()
+      #attach event handlers here...
+      reader.onload = (evt) =>
+        seqs = FileHelper.parseText evt.target.result
+        @seqs.reset seqs
+      fileName = file.name
+      reader.readAsText file
+      # reading more than one file doesnt make sense atm
+      break
+    return false
 
   startEventBus: ->
     busObjs = ["config", "columns", "colorscheme", "selcol" ,"vis", "visorder", "zoomer"]
