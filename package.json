@@ -37,8 +37,8 @@
     "jbone": "^1.0.18",
     "menu-builder": "0.0.5",
     "mouse-pos": "^1.0.2",
-    "nets": "^1.0.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "xhr": "^1.17.0"
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
