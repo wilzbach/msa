@@ -23,6 +23,7 @@ biojs.io.clustal.read("http://www.corsproxy.com/rostlab.org/~goldberg/jalv_examp
 	opts.seqs = seqs; //msa.utils.seqgen.getDummySequences(1000,300);
 	opts.el = document.getElementById("yourDiv");
 	opts.vis = {conserv: false, overviewbox: false, seqlogo: true};
+	opts.conf = {dropImprot: true};
 	opts.zoomer = {alignmentHeight: 225, labelWidth: 130,labelFontsize: "13px",labelIdLength: 20,   menuFontsize: "12px",menuMarginLeft: "3px", menuPadding: "3px 4px 3px 4px", menuItemFontsize: "14px", menuItemLineHeight: "14px"};
 
 	// init msa
