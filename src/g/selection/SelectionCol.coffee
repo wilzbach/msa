@@ -8,24 +8,25 @@ module.exports = SelectionManager = Collection.extend
   model: sel.sel
 
   initialize: (data, opts) ->
-    @g = opts.g
+    if opts?
+      @g = opts.g
 
-    @listenTo @g, "residue:click", (e) ->
-      @_handleE e.evt, new sel.possel
-        xStart: e.rowPos
-        xEnd: e.rowPos
-        seqId: e.seqId
+      @listenTo @g, "residue:click", (e) ->
+        @_handleE e.evt, new sel.possel
+          xStart: e.rowPos
+          xEnd: e.rowPos
+          seqId: e.seqId
 
-    @listenTo @g, "row:click", (e) ->
-      @_handleE e.evt, new sel.rowsel
-        xStart: e.rowPos
-        xEnd: e.rowPos
-        seqId: e.seqId
+      @listenTo @g, "row:click", (e) ->
+        @_handleE e.evt, new sel.rowsel
+          xStart: e.rowPos
+          xEnd: e.rowPos
+          seqId: e.seqId
 
-    @listenTo @g, "column:click", (e) ->
-      @_handleE e.evt, new sel.columnsel
-        xStart: e.rowPos
-        xEnd: e.rowPos + e.stepSize - 1
+      @listenTo @g, "column:click", (e) ->
+        @_handleE e.evt, new sel.columnsel
+          xStart: e.rowPos
+          xEnd: e.rowPos + e.stepSize - 1
 
     #@listenTo @, "add reset", (e) ->
       #@_reduceColumns()
@@ -35,6 +36,20 @@ module.exports = SelectionManager = Collection.extend
 
   getSelForColumns: (rowPos) ->
     @filter (el) -> el.inColumn rowPos
+
+  addJSON: (model) ->
+    @add @_fromJSON model
+
+  _fromJSON: (model) ->
+   switch model.type
+     when "column" then  new sel.columnsel model
+     when "row" then  new sel.rowsel model
+     when "pos" then  new sel.possel model
+
+  # allows normal JSON input
+  resetJSON: (arr) ->
+    arr = _.map arr, @_fromJSON
+    @reset arr
 
   # @returns array of all selected residues for a row
   getBlocksForRow: (seqId, maxLen) ->
