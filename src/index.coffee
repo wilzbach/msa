@@ -17,6 +17,7 @@ module.exports.utils = require("./utils")
 
 # probably needed more often
 module.exports.selection = require("./g/selection/Selection")
+module.exports.selcol = require("./g/selection/SelectionCol")
 module.exports.view = require("backbone-viewj")
 module.exports.boneView = require("backbone-childs")
 
