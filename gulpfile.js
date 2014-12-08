@@ -140,6 +140,14 @@ gulp.task('test-mocha', function () {
                     compilers: "coffee:coffee-script/register"}));
 });
 
+gulp.task('watch-mocha', function() {
+   // watch coffee files
+  gulp.run('test-mocha');
+   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
+     gulp.run('test-mocha');
+   });
+});
+
 // runs the mocha test in your browser
 gulp.task('test-mocha-selenium', function () {
     return gulp.src('./test/mocha/**/*.coffee', {read: false})
@@ -176,7 +184,7 @@ gulp.task('min-css',['css'], function () {
 });
 
 gulp.task('watch', function() {
-  var util = require('gulp-util')
+  var util = require('gulp-util');
 
   var opts = deepcopy(browserifyOptions);
   opts.debug = true;
@@ -186,7 +194,7 @@ gulp.task('watch', function() {
   var b = browserify(opts);
   makeBundle(b);
 
-  function rebundle(ids){
+  function rebundle(){
     b.bundle()
     .on("error", function(error) {
       util.log(util.colors.red("Error: "), error);
