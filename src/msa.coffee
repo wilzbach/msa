@@ -21,6 +21,7 @@ Stage = require "./views/Stage"
 Stats = require "biojs-stat-seqs"
 
 # utils
+$ = require("jbone")
 FileHelper = require "./utils/file"
 
 # opts is a dictionary consisting of
@@ -78,6 +79,10 @@ module.exports = boneView.extend
         "drop": @dropFile
       @delegateEvents events
 
+    $(window).on("resize", (e) ->
+      console.log "resize evt", e
+    )
+
   dragOver: (e) ->
     # prevent the normal browser actions
     e.preventDefault()
@@ -113,9 +118,9 @@ module.exports = boneView.extend
       return if name is "change"
       # backbone uses the second argument for the next value -> swap
       if opts?
-        @g.trigger(key + ":" + name,now,opts)
+        @g.trigger(key + ":" + name,now,prev,opts)
       else
-        @g.trigger(key + ":" + name,now)
+        @g.trigger(key + ":" + name,now,prev)
 
   render: ->
     @renderSubviews()
