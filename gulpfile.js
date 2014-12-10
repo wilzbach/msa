@@ -96,6 +96,23 @@ gulp.task('build-browser-min',['init', 'css'], function() {
     .pipe(chmod(644))
     .pipe(gulp.dest(buildDir));
 });
+
+/*
+gulp.task('build-browser-closure',['init', 'css'], function() {
+  var b = browserify(browserifyOptions);
+  makeBundle(b);
+  var closureCompiler = require('gulp-closure-compiler');
+  return b.bundle()
+    .pipe(source(outputFile + ".min.js"))
+    .pipe(streamify(uglify()))
+    .pipe(closureCompiler({
+      compilerPath: './node_modules/closurecompiler/compiler/compiler.jar',
+      fileName: 'build.js'
+    }))
+    .pipe(chmod(644))
+    .pipe(gulp.dest(buildDir));
+});
+*/
  
 gulp.task('build-gzip-js', ['build-browser','build-browser-min'], function() {
    return gulp.src(join(buildDir, outputFile + ".min.js"))
