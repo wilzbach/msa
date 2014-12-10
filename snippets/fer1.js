@@ -15,6 +15,11 @@ clustal.read(url, function(seqs){
   // set your custom properties
   // @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
   opts.seqs = seqs; //msa.utils.seqgen.getDummySequences(1000,300);
+
+  seqs[0].features = new msa.model.featurecol([new msa.model.feature({xStart: 10, xEnd: 20, text: "hi"}),
+  new msa.model.feature({xStart: 30, xEnd: 50, fillColor: "orange", text: "there"})]);
+  seqs[0].height = 2
+
   opts.el = msaDiv;
   opts.conf = {url: url, dropImport: true}; // we tell the MSA viewer from the URL source 
   opts.vis = {conserv: false, overviewbox: false, seqlogo:true};
