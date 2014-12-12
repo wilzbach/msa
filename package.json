@@ -1,7 +1,7 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.2.28",
+  "version": "0.2.30",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
@@ -83,7 +83,8 @@
   "keywords": [
     "bio",
     "biojs",
-    "galaxy-vis"
+    "galaxy-vis",
+    "msa", "alignment"
   ],
   "main": "lib/index.js",
   "scripts": {
@@ -104,6 +105,9 @@
       "img": "https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg",
       "href": "https://codeclimate.com/github/greenify/biojs-vis-msa"
     }
+  },
+  "biojs": {
+    "registryHeight": "400"
   },
   "sniper": {
     "js": [
