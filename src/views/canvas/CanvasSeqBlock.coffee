@@ -124,7 +124,8 @@ module.exports = boneView.extend
       data.model.attributes.features.each (feature) ->
         ctx.fillStyle = feature.attributes.fillColor || "red"
         len = feature.attributes.xEnd - feature.attributes.xStart
-        ctx.fillRect feature.attributes.xStart * rectWidth + data.xZero,data.yZero + rectHeight,rectWidth * len,rectHeight
+        y = (feature.attributes.row + 1) * rectHeight
+        ctx.fillRect feature.attributes.xStart * rectWidth + data.xZero,y + data.yZero,rectWidth * len,rectHeight
 
       # draw text
       ctx.fillStyle = "black"
@@ -134,8 +135,9 @@ module.exports = boneView.extend
 
       data.model.attributes.features.each (feature) ->
         len = feature.attributes.xEnd - feature.attributes.xStart
+        y = (feature.attributes.row + 1) * rectHeight
         ctx.fillText feature.attributes.text, data.xZero + feature.attributes.xStart *
-        rectWidth + (len / 2) * rectWidth, data.yZero + rectHeight * 1.5
+        rectWidth + (len / 2) * rectWidth, data.yZero + rectHeight * 0.5 + y
 
   render: ->
 
@@ -272,10 +274,11 @@ module.exports = boneView.extend
 
   _getClickPos: (e) ->
     coords = mouse.rel e
+
     coords[0] += @g.zoomer.get("_alignmentScrollLeft")
-    coords[1] += @g.zoomer.get("_alignmentScrollTop")
+    #coords[1] += @g.zoomer.get("_alignmentScrollTop")
     x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
-    y = Math.floor(coords[1] / @g.zoomer.get("rowHeight"))
+    y = Math.floor(@seqDrawer._getSeqForYClick(coords[1]))
 
     # add hidden columns
     x += @g.columns.calcHiddenColumns x
