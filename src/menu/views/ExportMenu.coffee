@@ -34,6 +34,9 @@ module.exports = ExportMenu = MenuBuilder.extend
     @addNode "Export selection", =>
       Exporter.saveSelection @msa, "selection.fasta"
 
+    @addNode "Export features", =>
+      Exporter.saveAnnots @msa, "features.gff3"
+
     @addNode "Export image", =>
       Exporter.saveAsImg @msa, "biojs-msa.png"
 
