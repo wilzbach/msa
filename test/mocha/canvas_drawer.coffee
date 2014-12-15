@@ -1,4 +1,4 @@
-CanvasDrawSeq = require "../../src/views/CanvasSeqDrawer"
+CanvasDrawSeq = require "../../src/views/canvas/CanvasSeqDrawer"
 Seq = require "../../src/model/Sequence"
 SeqCol = require "../../src/model/SeqCollection"
 Zoomer = require "../../src/g/zoomer"
