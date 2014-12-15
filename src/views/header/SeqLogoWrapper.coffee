@@ -23,7 +23,6 @@ module.exports = view.extend
 
   draw: ->
     arr = @g.stats.conservResidue {scaled: true}
-    console.log arr
     arr = _.map arr, (el) ->
       _.pick el, (e,k) ->
         k isnt "-"
