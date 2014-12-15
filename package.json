@@ -27,6 +27,7 @@
     "biojs-events": "0.0.4",
     "biojs-io-clustal": "0.0.11",
     "biojs-io-fasta": "0.0.14",
+    "biojs-io-gff": "^0.1.6",
     "biojs-model": "^0.0.2",
     "biojs-stat-seqs": "^0.1.6",
     "biojs-util-colorschemes": "^1.0.8",
@@ -117,6 +118,7 @@
     "exposed": [
       "biojs-io-fasta",
       "biojs-io-clustal",
+      "biojs-io-gff",
       "xhr"
     ],
     "first": "fer1"
