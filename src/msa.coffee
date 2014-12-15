@@ -45,9 +45,6 @@ module.exports = boneView.extend
     # g is our global Mediator
     @g = Eventhandler.mixin {}
 
-    if data.seqs is undefined or data.seqs.length is 0
-      console.log "warning. empty seqs."
-
     # load seqs and add subviews
     @seqs = new SeqCollection data.seqs
 
@@ -79,9 +76,9 @@ module.exports = boneView.extend
         "drop": @dropFile
       @delegateEvents events
 
-    $(window).on("resize", (e) ->
-      console.log "resize evt", e
-    )
+    #$(window).on("resize", (e) ->
+      #console.log "resize evt", e
+    #)
 
   dragOver: (e) ->
     # prevent the normal browser actions
@@ -123,6 +120,8 @@ module.exports = boneView.extend
         @g.trigger(key + ":" + name,now,prev)
 
   render: ->
+    if @seqs is undefined or @seqs.length is 0
+      console.log "warning. empty seqs."
     @renderSubviews()
     @g.vis.set "loaded", true
     @
