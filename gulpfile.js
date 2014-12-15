@@ -96,6 +96,23 @@ gulp.task('build-browser-min',['init', 'css'], function() {
     .pipe(chmod(644))
     .pipe(gulp.dest(buildDir));
 });
+
+/*
+gulp.task('build-browser-closure',['init', 'css'], function() {
+  var b = browserify(browserifyOptions);
+  makeBundle(b);
+  var closureCompiler = require('gulp-closure-compiler');
+  return b.bundle()
+    .pipe(source(outputFile + ".min.js"))
+    .pipe(streamify(uglify()))
+    .pipe(closureCompiler({
+      compilerPath: './node_modules/closurecompiler/compiler/compiler.jar',
+      fileName: 'build.js'
+    }))
+    .pipe(chmod(644))
+    .pipe(gulp.dest(buildDir));
+});
+*/
  
 gulp.task('build-gzip-js', ['build-browser','build-browser-min'], function() {
    return gulp.src(join(buildDir, outputFile + ".min.js"))
@@ -140,6 +157,14 @@ gulp.task('test-mocha', function () {
                     compilers: "coffee:coffee-script/register"}));
 });
 
+gulp.task('watch-mocha', function() {
+   // watch coffee files
+  gulp.run('test-mocha');
+   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
+     gulp.run('test-mocha');
+   });
+});
+
 // runs the mocha test in your browser
 gulp.task('test-mocha-selenium', function () {
     return gulp.src('./test/mocha/**/*.coffee', {read: false})
@@ -176,7 +201,7 @@ gulp.task('min-css',['css'], function () {
 });
 
 gulp.task('watch', function() {
-  var util = require('gulp-util')
+  var util = require('gulp-util');
 
   var opts = deepcopy(browserifyOptions);
   opts.debug = true;
@@ -186,7 +211,7 @@ gulp.task('watch', function() {
   var b = browserify(opts);
   makeBundle(b);
 
-  function rebundle(ids){
+  function rebundle(){
     b.bundle()
     .on("error", function(error) {
       util.log(util.colors.red("Error: "), error);

@@ -1,5 +1,5 @@
 boneView = require("backbone-childs")
-SeqBlock = require "./CanvasSeqBlock"
+SeqBlock = require "./canvas/CanvasSeqBlock"
 LabelBlock = require "./labels/LabelBlock"
 
 module.exports = boneView.extend

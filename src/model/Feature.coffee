@@ -15,6 +15,28 @@ module.exports = Feature = Model.extend
     borderColor: "black"
     borderOpacity: 0.5
     validate: true
+    row: 0
+
+  initialize: (obj) ->
+    if obj.start?
+      @set "xStart", obj.start
+    if obj.end?
+      @set "xEnd", obj.end
+    # name has a predefined meaning
+    if obj.attributes?
+      if obj.attributes.Name?
+        @set "text", obj.attributes.Name
+      if obj.attributes.Color?
+        @set "fillColor", obj.attributes.Color
+
+    if @attributes.xEnd < @attributes.xStart
+      console.warn "invalid feature range for", @attributes
+
+    if not _.isNumber(@attributes.xStart) or not _.isNumber(@attributes.xEnd)
+      console.warn "please provide numeric feature ranges", obj
+      # trying auto-casting
+      @set "xStart", parseInt(@attributes.xStart)
+      @set "xEnd", parseInt(@attributes.xEnd)
 
   validate: ->
     if isNaN @attributes.xStart or isNaN @attributes.xEnd
