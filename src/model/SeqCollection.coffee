@@ -53,7 +53,6 @@ module.exports = SeqManager = Collection.extend
   # you can add features independent to the current seqs as they may be added
   # later (lagging connection)
   addFeatures: (features) ->
-    console.log features
     if features.config?
       obj = features
       features = features.seqs
@@ -63,7 +62,7 @@ module.exports = SeqManager = Collection.extend
           _.each seq, (val) ->
             if colors[val.feature]?
               val.fillColor = colors[val.feature]
-    unless _.isEmpty @features
+    if _.isEmpty @features
       @features = features
     else
       _.each features, (val, key) =>
