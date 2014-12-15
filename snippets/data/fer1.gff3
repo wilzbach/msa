@@ -1,0 +1,5 @@
+##gff-version 3
+FER_CAPAN . gene	10 	15	.	.  .  Name=A feature;Color=blue
+FER_CAPAN . gene	30 	40	.	.  .  Name=B feature
+FER1_SOLLC . gene 	4	10	.	.	. Name=C feature;Color=blue
+FER1_SOLLC . gene 	5	15	.	.	. Name=D feature
