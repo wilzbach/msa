@@ -1,0 +1,6 @@
+gene	yellow
+domain	green
+Feature A3	FER1_MESCR	-1	40	45	gene 
+Feature B3	FER1_MESCR	-1	30	40	domain
+Feature C3	FER1_SPIOL	-1	14	20	domain
+Feature D3	FER1_SPIOL	-1	6	25	gene
