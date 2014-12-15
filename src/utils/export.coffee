@@ -1,8 +1,10 @@
 FastaExporter = require("biojs-io-fasta").writer
+GFF = require("biojs-io-gff")
 corsURL = require("./proxy").corsURL
 xhr = require "xhr"
 blobURL = require "blueimp_canvastoblob"
 saveAs = require "browser-saveas"
+_ = require "underscore"
 
 module.exports = Exporter =
 
@@ -55,6 +57,20 @@ module.exports = Exporter =
       selection = that.seqs.toJSON()
       console.warn "no selection found"
     text = FastaExporter.export selection
+    blob = new Blob([text], {type : 'text/plain'})
+    saveAs blob, name
+
+  saveAnnots: (that,name) ->
+    features = that.seqs.map (el) ->
+      features = el.get "features"
+      return if features.length is 0
+      seqname = el.get("name")
+      features.each (s) ->
+        s.set "seqname", seqname
+      return features.toJSON()
+    features = _.flatten _.compact features
+    console.log features
+    text = GFF.exportLines features
     blob = new Blob([text], {type : 'text/plain'})
     saveAs blob, name
 
