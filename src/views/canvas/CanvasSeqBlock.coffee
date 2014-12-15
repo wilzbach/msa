@@ -4,6 +4,8 @@ _ = require "underscore"
 jbone = require "jbone"
 CharCache = require "./CanvasCharCache"
 SelectionClass = require "./CanvasSelection"
+CanvasSeqDrawer = require "./CanvasSeqDrawer"
+CanvasCoordsCache = require "./CanvasCoordsCache"
 
 module.exports = boneView.extend
 
@@ -29,6 +31,7 @@ module.exports = boneView.extend
 
     @ctx = @el.getContext '2d'
     @cache = new CharCache @g
+    @coordsCache = new CanvasCoordsCache @g, @model
 
     # clear the char cache
     @listenTo @g.zoomer, "change:residueFont", ->
@@ -37,6 +40,8 @@ module.exports = boneView.extend
 
     # init selection
     @sel = new SelectionClass @g,@ctx
+
+    @_setColor()
 
     # throttle the expensive draw function
     @throttleTime = 0
@@ -95,101 +100,44 @@ module.exports = boneView.extend
     @listenTo @g.config, "change:registerMouseClick", @manageEvents
     @dragStart = []
 
-  draw: ->
+  _setColor: ->
+    @color = @g.colorscheme.getSelectedScheme()
 
+  draw: ->
     # fastest way to clear the canvas
     # http://jsperf.com/canvas-clear-speed/25
     @el.width = @el.width
 
-    rectHeight = @g.zoomer.get "rowHeight"
+    # draw all the stuff
+    if @seqDrawer?
+      # char based
+      @seqDrawer.drawLetters()
+      # row based
+      @seqDrawer.drawRows @sel._appendSelection, @sel
+      @seqDrawer.drawRows @drawFeatures, @
 
-    # rects
-    @ctx.globalAlpha = @g.colorscheme.get "opacity"
-    @drawSeqs (data) -> @drawSeq(data, @_drawRect)
-    @ctx.globalAlpha = 1
-
-    # letters
-    @drawSeqs (data) -> @drawSeq(data, @_drawLetter)
-
-    # selection
-    @drawSeqs @drawSelection
-
-  drawSeqs: (callback) ->
-    rectHeight = @g.zoomer.get "rowHeight"
-    hidden = @g.columns.get "hidden"
-
-    start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollTop') / rectHeight))
-    y = - Math.abs( - @g.zoomer.get('_alignmentScrollTop') % rectHeight)
-    for i in [start.. @model.length - 1] by 1
-      continue if @model.at(i).get('hidden')
-      callback.call @, {model: @model.at(i), yPos: y, y: i, hidden: hidden}
-      y = y + rectHeight
-      # out of viewport - stop
-      if y > @el.height
-        break
-
-  # TODO: very expensive method
-  drawSeq: (data, callback) ->
-    seq = data.model.get "seq"
-    y = data.yPos
+  drawFeatures: (data) ->
     rectWidth = @g.zoomer.get "columnWidth"
     rectHeight = @g.zoomer.get "rowHeight"
+    if data.model.attributes.height > 1
+      ctx = @ctx
+      data.model.attributes.features.each (feature) ->
+        ctx.fillStyle = feature.attributes.fillColor || "red"
+        len = feature.attributes.xEnd - feature.attributes.xStart
+        y = (feature.attributes.row + 1) * rectHeight
+        ctx.fillRect feature.attributes.xStart * rectWidth + data.xZero,y + data.yZero,rectWidth * len,rectHeight
 
-    # skip unneeded blocks at the beginning
-    start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
-    x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
+      # draw text
+      ctx.fillStyle = "black"
+      ctx.font = @g.zoomer.get("residueFont") + "px mono"
+      ctx.textBaseline = 'middle'
+      ctx.textAlign = "center"
 
-    res = {rectWidth: rectWidth, rectHeight: rectHeight, yPos: y, y: data.y}
-    elWidth = @el.width
-
-    for j in [start.. seq.length - 1] by 1
-      c = seq[j]
-      c = c.toUpperCase()
-
-      # call the custom function
-      res.x = j
-      res.c = c
-      res.xPos = x
-
-
-      # local call is faster than apply
-      # http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
-      if data.hidden.indexOf(j) < 0
-        callback @,res
-      else
-        continue
-
-      # move to the right
-      x = x + rectWidth
-
-      # out of viewport - stop
-      if x > elWidth
-        break
-
-  _drawRect: (that, data) ->
-    color = that.color.getColor data.c,
-      pos:data.x
-      y: data.y
-    if color?
-      that.ctx.fillStyle = color
-      that.ctx.fillRect data.xPos,data.yPos,data.rectWidth,data.rectHeight
-
-  # REALLY expensive call on FF
-  # Performance:
-  # chrome: 2000ms drawLetter - 1000ms drawRect
-  # FF: 1700ms drawLetter - 300ms drawRect
-  _drawLetter: (that,data) ->
-    that.ctx.drawImage that.cache.getFontTile(data.c, data.rectWidth,
-      data.rectHeight), data.xPos, data.yPos,data.rectWidth,data.rectHeight
-
-  drawSelection: (data) ->
-    rectWidth = @g.zoomer.get "columnWidth"
-    start = Math.max 0, Math.abs(Math.ceil( - @g.zoomer.get('_alignmentScrollLeft') / rectWidth))
-    x = - Math.abs( - @g.zoomer.get('_alignmentScrollLeft') % rectWidth)
-
-    xZero = x - start * rectWidth
-    yZero = data.yPos
-    @sel._appendSelection model: data.model, xZero: xZero, yZero: yZero, hidden: data.hidden
+      data.model.attributes.features.each (feature) ->
+        len = feature.attributes.xEnd - feature.attributes.xStart
+        y = (feature.attributes.row + 1) * rectHeight
+        ctx.fillText feature.attributes.text, data.xZero + feature.attributes.xStart *
+        rectWidth + (len / 2) * rectWidth, data.yZero + rectHeight * 0.5 + y
 
   render: ->
 
@@ -200,7 +148,13 @@ module.exports = boneView.extend
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
 
-    @color = @g.colorscheme.getSelectedScheme()
+    @_setColor()
+
+    @seqDrawer = new CanvasSeqDrawer @g,@ctx,@model,
+      width: @el.width,
+      height: @el.height
+      color: @color
+      cache: @cache
 
     @throttledDraw()
     @
@@ -320,10 +274,11 @@ module.exports = boneView.extend
 
   _getClickPos: (e) ->
     coords = mouse.rel e
+
     coords[0] += @g.zoomer.get("_alignmentScrollLeft")
-    coords[1] += @g.zoomer.get("_alignmentScrollTop")
+    #coords[1] += @g.zoomer.get("_alignmentScrollTop")
     x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
-    y = Math.floor(coords[1] / @g.zoomer.get("rowHeight"))
+    y = Math.floor(@seqDrawer._getSeqForYClick(coords[1]))
 
     # add hidden columns
     x += @g.columns.calcHiddenColumns x
@@ -340,8 +295,7 @@ module.exports = boneView.extend
   _checkScrolling: (scrollObj) ->
 
     # 0: maxLeft, 1: maxTop
-    max = [@model.getMaxLength() * @g.zoomer.get("columnWidth") - @g.zoomer.get('alignmentWidth'),
-    @model.length  * @g.zoomer.get("rowHeight") - @g.zoomer.get('alignmentHeight')]
+    max = [@coordsCache.maxScrollWidth, @coordsCache.maxScrollHeight]
 
     for i in [0..1] by 1
       if scrollObj[i] > max[i]
@@ -351,4 +305,3 @@ module.exports = boneView.extend
         scrollObj[i] = 0
 
     return scrollObj
-

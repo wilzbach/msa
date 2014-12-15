@@ -7,8 +7,10 @@ module.exports = Sequence = Model.extend
     name: ""
     id: ""
     seq: ""
+    height: 1
 
   initialize: ->
     # residues without color
     @.set "grey", []
-    @.set "features", new FeatureCol()
+    unless @.get("features")?
+      @.set "features", new FeatureCol()
