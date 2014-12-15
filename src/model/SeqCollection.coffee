@@ -66,7 +66,7 @@ module.exports = SeqManager = Collection.extend
       @features = features
     else
       _.each features, (val, key) =>
-        unless key in @features
+        unless @features.hasOwnProperty key
           @features[key] = val
         else
           @features[key] = _.union @features[key], val
