@@ -60,9 +60,8 @@ drawer =
     .attributes.height  * @rectHeight)
     [i - 1, -y]
 
-  # returns the clicked seq for a viewport
+  # returns [the clicked seq for a viewport, row number]
   _getSeqForYClick: (click) ->
-    console.log click
     [start, yDiff] = @getStartSeq()
     yRel = yDiff % @rectHeight
     clickedRows = (Math.max 0, Math.floor( (click - yRel ) / @rectHeight)) + 1
@@ -71,7 +70,8 @@ drawer =
     while counter < clickedRows and i < @model.length
       counter += @model.at(i).attributes.height
       i++
-    return i - 1
+    rowNumber = Math.max(0, Math.floor(click / @rectHeight) - counter + @model.at(i - 1).get("height"))
+    return [i - 1, rowNumber]
 
   # TODO: very expensive method
   drawSeq: (data, callback) ->

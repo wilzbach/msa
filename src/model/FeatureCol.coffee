@@ -24,6 +24,10 @@ module.exports = FeatureCol = Collection.extend
       memo || el.contains index
     , false
 
+  getFeatureOnRow: (row,x) ->
+    @filter (el) ->
+      el.get("row") is row and el.get("xStart") <= x and x <= el.get("xEnd")
+
   # tries to auto-fit the rows
   # not a very efficient algorithm
   assignRows: ->
