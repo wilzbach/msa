@@ -13,6 +13,9 @@ module.exports = FileHelper =
         return FastaReader
 
   guessFileFromText: (text) ->
+    unless text?
+      console.warn "invalid file format"
+      return [, "error"]
     if text.substring(0,7) is "CLUSTAL"
       reader = ClustalReader
       type = "seqs"

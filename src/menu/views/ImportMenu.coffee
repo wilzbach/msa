@@ -19,7 +19,9 @@ module.exports = ImportMenu = MenuBuilder.extend
       xhr url, (err,resp,body) =>
         if err
           console.log err
-        seqs = FileHelper.parseText body
+        [seqs, type] = FileHelper.parseText body
+        if type is "error"
+          return
         # mass update on zoomer
         zoomer = @g.zoomer.toJSON()
         #zoomer.textVisible = false

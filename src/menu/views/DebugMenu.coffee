@@ -14,6 +14,8 @@ module.exports = DebugMenu = MenuBuilder.extend
 
     @addNode "Toggle mouseover events", =>
       @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"
+      @g.onAll ->
+        console.log arguments
 
     @el.appendChild @buildDOM()
     @
