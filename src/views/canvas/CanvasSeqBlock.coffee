@@ -109,7 +109,7 @@ module.exports = boneView.extend
     @el.width = @el.width
 
     # draw all the stuff
-    if @seqDrawer?
+    if @seqDrawer?  and @model.length > 0
       # char based
       @seqDrawer.drawLetters()
       # row based
@@ -261,24 +261,39 @@ module.exports = boneView.extend
     e.preventDefault()
 
   _onclick: (e) ->
-    @g.trigger "residue:click", @_getClickPos(e)
+    res = @_getClickPos(e)
+    if res?
+      if res.feature?
+        @g.trigger "feature:click", res
+      else
+        @g.trigger "residue:click", res
     @throttledDraw()
 
   _onmousein: (e) ->
-    @g.trigger "residue:click", @_getClickPos(e)
+    res = @_getClickPos(e)
+    if res?
+      if res.feature?
+        @g.trigger "feature:mousein", res
+      else
+        @g.trigger "residue:mousein", res
     @throttledDraw()
 
   _onmouseout: (e) ->
-    @g.trigger "residue:click", @_getClickPos(e)
+    res = @_getClickPos(e)
+    if res?
+      if res.feature?
+        @g.trigger "feature:mouseout", res
+      else
+        @g.trigger "residue:mouseout", res
+
     @throttledDraw()
 
   _getClickPos: (e) ->
     coords = mouse.rel e
 
     coords[0] += @g.zoomer.get("_alignmentScrollLeft")
-    #coords[1] += @g.zoomer.get("_alignmentScrollTop")
     x = Math.floor(coords[0] / @g.zoomer.get("columnWidth") )
-    y = Math.floor(@seqDrawer._getSeqForYClick(coords[1]))
+    [y,rowNumber] = @seqDrawer._getSeqForYClick(coords[1])
 
     # add hidden columns
     x += @g.columns.calcHiddenColumns x
@@ -287,8 +302,19 @@ module.exports = boneView.extend
 
     x = Math.max 0,x
     y = Math.max 0,y
+
     seqId = @model.at(y).get "id"
-    return {seqId:seqId, rowPos: x, evt:e}
+
+    if rowNumber > 0
+      # click on a feature
+      features = @model.at(y).get("features").getFeatureOnRow(rowNumber - 1, x)
+      unless features.length is 0
+        feature = features[0]
+        console.log features[0].attributes
+        return {seqId:seqId, feature: feature, rowPos: x, evt:e}
+    else
+      # click on a seq
+      return {seqId:seqId, rowPos: x, evt:e}
 
   # checks whether the scrolling coordinates are valid
   # @returns: [xScroll,yScroll] valid coordinates
