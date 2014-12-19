@@ -7,18 +7,15 @@
     "type": "git",
     "url": "git://github.com/greenify/biojs-vis-msa"
   },
-  "contributors": [
-    {
-      "name": "Tatyana Goldberg",
-      "email": "goldberg@rostlab.org",
-      "url": "http://rostlab.org/~goldberg/"
-    },
-    {
-      "name": "Guy Yachdav",
-      "email": "yachdav@rostlab.org",
-      "url": "https://www.linkedin.com/in/gyachdav"
-    }
-  ],
+  "contributors": [{
+    "name": "Tatyana Goldberg",
+    "email": "goldberg@rostlab.org",
+    "url": "http://rostlab.org/~goldberg/"
+  }, {
+    "name": "Guy Yachdav",
+    "email": "yachdav@rostlab.org",
+    "url": "https://www.linkedin.com/in/gyachdav"
+  }],
   "author": "greenify",
   "dependencies": {
     "backbone-childs": "^1.0.3",
@@ -74,6 +71,7 @@
     "mocha-phantomjs": "^3.5.0",
     "phantom": "^0.7.0",
     "phantomjs": "^1.9.7-15",
+    "prunner": "^1.0.0",
     "shelljs": "^0.3.0",
     "sinon": "^1.12.1",
     "through2": "^0.6.3",
@@ -86,7 +84,8 @@
     "biojs",
     "galaxy-vis",
     "msa",
-    "alignment"
+    "alignment",
+    "sequence"
   ],
   "main": "lib/index.js",
   "scripts": {
@@ -95,19 +94,10 @@
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
     "sniper": "biojs-sniper .",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "w": "prunner 'npm run sniper' 'npm run watch'"
   },
   "license": "Apache 2",
-  "shields": {
-    "build": {
-      "img": "https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master",
-      "href": "https://travis-ci.org/greenify/biojs-vis-msa"
-    },
-    "tests": {
-      "img": "https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg",
-      "href": "https://codeclimate.com/github/greenify/biojs-vis-msa"
-    }
-  },
   "biojs": {
     "registryHeight": "400",
     "screenshot": "screenshot.png"
