@@ -18,7 +18,7 @@ module.exports = MenuView = boneView.extend
   initialize: (data) ->
     @msa = data.msa
 
-    @addView  "10_import", new ImportMenu model: @msa.seqs, g:@msa.g
+    @addView  "10_import", new ImportMenu model: @msa.seqs, g:@msa.g, msa: @msa
     @addView  "20_filter", new FilterMenu model: @msa.seqs, g:@msa.g
     @addView  "30_selection", new SelectionMenu model: @msa.seqs, g:@msa.g
     @addView  "40_vis", new VisMenu model: @msa.seqs, g:@msa.g
