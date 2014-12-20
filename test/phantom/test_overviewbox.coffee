@@ -45,7 +45,7 @@ beforeEach "setup test array", ->
     vis: vis
 
   s = msa
-  box = msa.getView('stage').getView('overviewbox')
+  box = msa.getView('stage').getView('overviewBox')
 
 test "should trigger an selection event", ->
   triggered = false
