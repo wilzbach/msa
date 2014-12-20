@@ -1,7 +1,7 @@
 MenuBuilder = require "../menubuilder"
 dom = require "dom-helper"
 
-module.exports = ImportMenu = MenuBuilder.extend
+module.exports = VisMenu = MenuBuilder.extend
 
   initialize: (data) ->
     @g = data.g
