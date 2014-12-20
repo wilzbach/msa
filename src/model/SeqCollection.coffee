@@ -13,6 +13,12 @@ module.exports = SeqManager = Collection.extend
       @lengthCache = null
       @_bindSeqsWithFeatures()
     , @
+
+    # use the first seq as reference as default
+    @on "reset", =>
+      @_autoSetRefSeq()
+    @_autoSetRefSeq()
+
     @lengthCache = null
 
     @features = {}
@@ -89,3 +95,16 @@ module.exports = SeqManager = Collection.extend
   # removes all features from the cache (not from the seqs)
   removeAllFeatures: ->
     delete @features
+
+  _autoSetRefSeq: ->
+    if @length > 0
+      @at(0).set "ref", true
+
+  # sets a sequence (e.g. BLAST start or consensus seq) as reference
+  setRef: (seq) ->
+    obj = @get seq
+    @each (s) ->
+      if obj.cid == s.cid
+        s.set "ref", true
+      else
+        s.set "ref", false

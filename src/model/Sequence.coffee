@@ -8,6 +8,7 @@ module.exports = Sequence = Model.extend
     id: ""
     seq: ""
     height: 1
+    ref: false # reference: the sequence used in BLAST or the consensus seq
 
   initialize: ->
     # residues without color

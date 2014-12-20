@@ -17,8 +17,9 @@ module.exports = ExtraMenu = MenuBuilder.extend
         id: "0c"
         name: "consenus"
       @model.add seq
+      @model.setRef seq
       @model.comparator = (seq) ->
-        seq.get "id"
+        not seq.get "ref"
       @model.sort()
     @addNode "Increase font size", =>
       columnWidth =  @g.zoomer.get("columnWidth")

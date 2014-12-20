@@ -48,7 +48,8 @@ module.exports = OrderingMenu = MenuBuilder.extend
     models.push text: "ID", comparator: "id"
 
     models.push text: "ID Desc", comparator: (a, b) ->
-        - a.get("id").localeCompare(b.get("id"))
+      # auto converts to string for localeCompare
+        - ("" + a.get("id")).localeCompare("" + b.get("id"), [], numeric: true )
 
     models.push text: "Label", comparator: "name"
 
@@ -64,6 +65,9 @@ module.exports = OrderingMenu = MenuBuilder.extend
 
     models.push text: "Identity Desc", comparator: (seq) ->
         - seq.get "identity"
+
+    models.push text: "Reference", comparator: (seq) ->
+        not seq.get "ref"
 
     models.push text: "Partition codes", comparator: "partition", precode: =>
       # set partitions random
