@@ -7,15 +7,18 @@
     "type": "git",
     "url": "git://github.com/greenify/biojs-vis-msa"
   },
-  "contributors": [{
-    "name": "Tatyana Goldberg",
-    "email": "goldberg@rostlab.org",
-    "url": "http://rostlab.org/~goldberg/"
-  }, {
-    "name": "Guy Yachdav",
-    "email": "yachdav@rostlab.org",
-    "url": "https://www.linkedin.com/in/gyachdav"
-  }],
+  "contributors": [
+    {
+      "name": "Tatyana Goldberg",
+      "email": "goldberg@rostlab.org",
+      "url": "http://rostlab.org/~goldberg/"
+    },
+    {
+      "name": "Guy Yachdav",
+      "email": "yachdav@rostlab.org",
+      "url": "https://www.linkedin.com/in/gyachdav"
+    }
+  ],
   "author": "greenify",
   "dependencies": {
     "backbone-childs": "^1.0.3",
@@ -33,6 +36,7 @@
     "browser-saveas": "^1.0.0",
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
+    "koala-js": "^1.0.1",
     "menu-builder": "0.0.5",
     "mouse-pos": "^1.0.2",
     "underscore": "^1.6.0",
