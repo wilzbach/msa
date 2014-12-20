@@ -1,8 +1,13 @@
 FastaReader = require("biojs-io-fasta").parse
 ClustalReader = require "biojs-io-clustal"
 GffReader = require "biojs-io-gff"
+_ = require "underscore"
 
-module.exports = FileHelper =
+module.exports = FileHelper = (msa) ->
+  @msa = msa
+  @
+
+funs =
   guessFileType: (name) ->
     name = name.split(".")
     fileName = name[name.length -1]
@@ -29,10 +34,35 @@ module.exports = FileHelper =
     [reader,type]
 
   parseText: (text) ->
-    [reader, type] = FileHelper.guessFileFromText text
+    [reader, type] = @guessFileFromText text
     if type is "seqs"
       seqs = reader.parse text
       return [seqs,type]
     else if type is "features"
       features = reader.parseSeqs text
       return [features,type]
+
+  importFiles: (files) ->
+    for i in [0..files.length - 1] by 1
+      file = files[i]
+      reader = new FileReader()
+      #attach event handlers here...
+      reader.onload = (evt) =>
+        @importFile evt.target.result
+      reader.readAsText file
+      # reading more than one file doesnt make sense atm
+      #break
+
+  importFile: (file) ->
+    [objs, type] = @parseText file
+    if type is "error"
+        return "error"
+    if type is "seqs"
+      @msa.seqs.reset objs
+      @msa.g.config.set "url", "userimport"
+      @msa.g.trigger "url:userImport"
+    else if type is "features"
+      @msa.seqs.addFeatures objs
+    fileName = file.name
+
+_.extend FileHelper::, funs
