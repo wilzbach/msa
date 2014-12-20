@@ -25,4 +25,11 @@ module.exports.boneView = require("backbone-childs")
 module.exports._ = require 'underscore'
 module.exports.$ = require 'jbone'
 
+# parser (are currently bundled - so we can also expose them)
+module.exports.io = {}
+module.exports.io.xhr = require 'xhr'
+module.exports.io.fasta = require 'biojs-io-fasta'
+module.exports.io.clustal = require 'biojs-io-clustal'
+module.exports.io.gff = require 'biojs-io-gff'
+
 module.exports.version = "0.2.0"
