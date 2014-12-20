@@ -2,6 +2,7 @@ boneView = require("backbone-childs")
 AlignmentBody = require "./AlignmentBody"
 HeaderBlock = require "./header/HeaderBlock"
 OverviewBox = require "./OverviewBox"
+Search = require "./Search"
 _ = require 'underscore'
 
 # a neat collection view
@@ -33,12 +34,17 @@ module.exports = boneView.extend
     if @g.vis.get "overviewbox"
       overviewbox = new OverviewBox {model: @model, g: @g}
       overviewbox.ordering = @g.visorder.get 'overviewBox'
-      @addView "overviewbox",overviewbox
+      @addView "overviewBox", overviewbox
 
     if true
       headerblock = new HeaderBlock {model: @model, g: @g}
       headerblock.ordering = @g.visorder.get 'headerBox'
-      @addView "headerblock",headerblock
+      @addView "headerBox", headerblock
+
+    if true
+      searchblock = new Search {model: @model, g: @g}
+      searchblock.ordering = @g.visorder.get 'searchBox'
+      @addView "searchbox", searchblock
 
     body = new AlignmentBody {model: @model, g: @g}
     body.ordering = @g.visorder.get 'alignmentBody'
@@ -47,6 +53,7 @@ module.exports = boneView.extend
   render: ->
     @renderSubviews()
     @el.className = "biojs_msa_stage"
+
     @
 
   rerender: ->

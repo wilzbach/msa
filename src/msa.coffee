@@ -6,6 +6,7 @@ Colorator = require "./g/colorscheme"
 Columns = require "./g/columns"
 Config = require "./g/config"
 SelCol = require "./g/selection/SelectionCol"
+User = require "./g/user"
 Visibility = require "./g/visibility"
 VisOrdering = require "./g/visOrdering"
 Zoomer = require "./g/zoomer"
@@ -51,6 +52,7 @@ module.exports = boneView.extend
     # populate it and init the global models
     @g.config = new Config data.conf
     @g.selcol = new SelCol [],{g:@g}
+    @g.user = new User()
     @g.vis = new Visibility data.vis
     @g.visorder = new VisOrdering data.visorder
     @g.zoomer = new Zoomer data.zoomer,{g:@g}
