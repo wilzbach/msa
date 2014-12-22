@@ -10,3 +10,4 @@ module.exports = Config = Model.extend
     eventBus: true
     alphabetSize: 20
     dropImport: false
+    debug: false
