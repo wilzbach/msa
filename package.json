@@ -37,14 +37,16 @@
     "browserify": "^7.0.3",
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
-    "koala-js": "^1.0.1",
+    "koala-js": "^1.0.2",
     "menu-builder": "0.0.5",
     "mouse-pos": "^1.0.2",
     "underscore": "^1.6.0",
+    "watchify": "^2.2.1",
     "xhr": "^1.17.0"
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
+    "biojs-io-newick": "^1.0.0",
     "biojs-sniper": "^0.1.1",
     "browserify": "^5.12.1",
     "chai": "^1.9.1",
@@ -74,12 +76,14 @@
     "mkdirp": "^0.5.0",
     "mocha": "^1.21.4",
     "mocha-phantomjs": "^3.5.0",
+    "msa-tnt": "^0.1.6",
     "phantom": "^0.7.0",
     "phantomjs": "^1.9.7-15",
     "prunner": "^1.0.0",
     "shelljs": "^0.3.0",
     "sinon": "^1.12.1",
     "through2": "^0.6.3",
+    "tnt.tree": "0.0.10",
     "uglify-js": "~2.4.15",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^1.0.2"
@@ -100,9 +104,16 @@
     "build-browser-min": "gulp build",
     "sniper": "biojs-sniper .",
     "watch": "gulp watch",
-    "w": "prunner 'npm run sniper' 'npm run watch'"
+    "w": "prunner 'npm run sniper' 'npm run watch'",
+    "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:biojs-vis-msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
   },
   "license": "Apache 2",
+  "browserify": {
+    "exclude": [
+      "biojs-io-newick",
+      "msa-tnt"
+    ]
+  },
   "biojs": {
     "registryHeight": "400",
     "screenshot": "screenshot.png"
