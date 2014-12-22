@@ -5,6 +5,7 @@ SeqCollection = require "./model/SeqCollection"
 Colorator = require "./g/colorscheme"
 Columns = require "./g/columns"
 Config = require "./g/config"
+Package = require "./g/package"
 SelCol = require "./g/selection/SelectionCol"
 User = require "./g/user"
 Visibility = require "./g/visibility"
@@ -51,11 +52,16 @@ module.exports = boneView.extend
 
     # populate it and init the global models
     @g.config = new Config data.conf
+    @g.package = new Package @g
     @g.selcol = new SelCol [],{g:@g}
     @g.user = new User()
     @g.vis = new Visibility data.vis
     @g.visorder = new VisOrdering data.visorder
     @g.zoomer = new Zoomer data.zoomer,{g:@g}
+
+    # debug mode
+    if window.location.hostname is "localhost"
+      @g.config.set "debug", true
 
     # stats
     pureSeq = @seqs.pluck("seq")

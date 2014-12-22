@@ -27,7 +27,7 @@ module.exports = MenuView = boneView.extend
     @addView  "70_extra", new ExtraMenu model: @msa.seqs, g:@msa.g
     @addView  "80_export", new ExportMenu model: @msa.seqs, g:@msa.g, msa:@msa
     @addView  "90_help", new HelpMenu  g:@msa.g
-    if window.location.hostname is "localhost"
+    if @msa.g.config.get("debug")
       @addView  "95_debug", new DebugMenu  g:@msa.g
 
   render: ->

@@ -1,5 +1,7 @@
 MenuBuilder = require "../menubuilder"
 Seq = require "../../model/Sequence"
+Loader = require "../../utils/loader"
+xhr = require "xhr"
 
 module.exports = ExtraMenu = MenuBuilder.extend
 
@@ -21,6 +23,44 @@ module.exports = ExtraMenu = MenuBuilder.extend
       @model.comparator = (seq) ->
         not seq.get "ref"
       @model.sort()
+
+    @addNode "Load TnT", =>
+      # this is a very experimental feature
+      # TODO: exclude msa & tnt in the adapter package
+      newickStr = ""
+
+      # we require a bunch of dependencies and then load in the tree
+      cbs = Loader.joinCb ->
+        newick = require "biojs-io-newick"
+        newickObj = newick.parse_newick newickStr
+        mt = require("msa-tnt")
+
+        sel = new mt.selections()
+        treeDiv = document.createElement "div"
+        document.body.appendChild treeDiv
+
+        nodes = mt.app
+          seqs: @model
+          tree: newickObj
+
+        console.log nodes
+
+        t = new mt.adapters.tree
+          model: nodes,
+          el: treeDiv,
+          sel: sel,
+
+      , 3, @
+
+      @g.package.loadPackage "msa-tnt", cbs(1)
+      # TODO: my local version is patched
+      @g.package.loadPackage "biojs-io-newick", cbs(1)
+
+      newickUrl = "/node_modules/msa-tnt/test/dummy/dummy_newick.newick"
+      xhr newickUrl, (err, req, body) ->
+        newickStr = body
+        cbs()
+
     @addNode "Increase font size", =>
       columnWidth =  @g.zoomer.get("columnWidth")
       nColumnWidth = columnWidth + 5
