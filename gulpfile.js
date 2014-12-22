@@ -176,7 +176,7 @@ gulp.task('test-mocha-selenium', function () {
 gulp.task('doc', ["init"], function () {
   return gulp.src("./src/**/*.coffee")
     .pipe(docco())
-    .pipe(gulp.dest(join(buildDir, 'doc')))
+    .pipe(gulp.dest(join(buildDir, 'doc')));
 });
 
 gulp.task('lint', function () {
@@ -233,6 +233,9 @@ function makeBundle(b){
   b.transform(coffeify);
   b.transform('cssify');
   b.add(browserFile, {expose: packageConfig.name});
+  packageConfig.browserify.exclude.forEach(function(e){
+    b.exclude(e);
+  });
   if(packageConfig.sniper !== undefined && packageConfig.sniper.exposed !== undefined){
     for(var i=0; i<packageConfig.sniper.exposed.length; i++){
       b.require(packageConfig.sniper.exposed[i]);
