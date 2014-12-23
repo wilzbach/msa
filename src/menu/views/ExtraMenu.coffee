@@ -8,10 +8,12 @@ module.exports = ExtraMenu = MenuBuilder.extend
   initialize: (data) ->
     @g = data.g
     @el.style.display = "inline-block"
+    @msa = data.msa
 
   render: ->
     @setName("Extras")
     stats = @g.stats
+    msa = @msa
     @addNode "Add consensus seq", =>
       con = stats.consensus()
       seq = new Seq
@@ -29,37 +31,41 @@ module.exports = ExtraMenu = MenuBuilder.extend
       # TODO: exclude msa & tnt in the adapter package
       newickStr = ""
 
-      # we require a bunch of dependencies and then load in the tree
       cbs = Loader.joinCb ->
-        newick = require "biojs-io-newick"
-        newickObj = newick.parse_newick newickStr
-        mt = require("msa-tnt")
+        msa.u.tree.showTree newickStr
+      , 2, @
 
-        sel = new mt.selections()
-        treeDiv = document.createElement "div"
-        document.body.appendChild treeDiv
-
-        nodes = mt.app
-          seqs: @model
-          tree: newickObj
-
-        console.log nodes
-
-        t = new mt.adapters.tree
-          model: nodes,
-          el: treeDiv,
-          sel: sel,
-
-      , 3, @
-
-      @g.package.loadPackage "msa-tnt", cbs(1)
-      # TODO: my local version is patched
-      @g.package.loadPackage "biojs-io-newick", cbs(1)
-
-      newickUrl = "/node_modules/msa-tnt/test/dummy/dummy_newick.newick"
+      @msa.u.tree.loadTree cbs
+      newickUrl = prompt "URL", "/node_modules/msa-tnt/test/dummy/dummy_newick.newick"
       xhr newickUrl, (err, req, body) ->
         newickStr = body
         cbs()
+
+    @addNode "Load TnT (gen)", ->
+      # this is a very experimental feature
+      # TODO: exclude msa & tnt in the adapter package
+      newickStr = ""
+
+      cbs = Loader.joinCb ->
+        msa.u.tree.showTree nwkData
+      , 2, @
+
+      msa.u.tree.loadTree cbs
+      # load fake tree
+      nwkData =
+        name: "root",
+        children: [
+          name: "c1",
+          branch_length: 4
+          children: msa.seqs.filter (f,i) ->  i % 2 is 0
+        ,
+          name: "c2",
+          children: msa.seqs.filter (f,i) ->  i % 2 is 1
+          branch_length: 4
+        ]
+      msa.seqs.each (s) ->
+        s.set "branch_length", 2
+      cbs()
 
     @addNode "Increase font size", =>
       columnWidth =  @g.zoomer.get("columnWidth")

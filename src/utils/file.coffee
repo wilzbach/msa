@@ -27,6 +27,8 @@ funs =
     else if text.substring(0,1) is ">"
       reader = FastaReader
       type = "seqs"
+    else if text.substring(0,1) is "("
+      type = "newick"
     else
       reader = GffReader
       type = "features"
@@ -41,17 +43,16 @@ funs =
     else if type is "features"
       features = reader.parseSeqs text
       return [features,type]
+    else
+      return [text,type]
 
   importFiles: (files) ->
     for i in [0..files.length - 1] by 1
       file = files[i]
       reader = new FileReader()
-      #attach event handlers here...
       reader.onload = (evt) =>
         @importFile evt.target.result
       reader.readAsText file
-      # reading more than one file doesnt make sense atm
-      #break
 
   importFile: (file) ->
     [objs, type] = @parseText file
@@ -63,6 +64,10 @@ funs =
       @msa.g.trigger "url:userImport"
     else if type is "features"
       @msa.seqs.addFeatures objs
+    else if type is "newick"
+      @msa.u.tree.loadTree =>
+        @msa.u.tree.showTree file
+
     fileName = file.name
 
 _.extend FileHelper::, funs
