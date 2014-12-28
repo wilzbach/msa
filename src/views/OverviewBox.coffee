@@ -11,7 +11,8 @@ module.exports = OverviewBox = view.extend
 
   initialize: (data) ->
     @g = data.g
-    @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight", @render
+    @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight
+    change:overviewboxPaddingTop", @render
     @listenTo @g.selcol, "add reset change", @render
     @listenTo @g.columns, "change:hidden", @render
     @listenTo @g.colorscheme, "change:showLowerCase", @render
@@ -31,6 +32,7 @@ module.exports = OverviewBox = view.extend
   render: ->
     @_createCanvas()
     @el.textContent = "overview"
+    @el.style.marginTop = @g.zoomer.get "overviewboxPaddingTop"
 
     # background bg for non-drawed area
     @ctx.fillStyle = "#999999"
