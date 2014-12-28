@@ -108,3 +108,6 @@ module.exports = SeqManager = Collection.extend
         s.set "ref", true
       else
         s.set "ref", false
+
+    #@g.config.set "hasRef", true
+    @trigger "change:reference", seq
