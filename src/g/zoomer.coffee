@@ -14,6 +14,7 @@ module.exports = Zoomer = Model.extend
     alignmentHeight: 195
     columnWidth: 15
     rowHeight: 15
+    autoResize: true # only for the width
 
     # labels
     labelWidth: 100
@@ -48,7 +49,7 @@ module.exports = Zoomer = Model.extend
 
   # @param n [int] maxLength of all seqs
   getAlignmentWidth: (n) ->
-    if @get("alignmentWidth") is "auto"
+    if @get("alignmentWidth") is "auto" or @get("autoResize")
       @get("columnWidth") * n
     else
       @get "alignmentWidth"
@@ -70,22 +71,42 @@ module.exports = Zoomer = Model.extend
      paddingLeft = 0
      paddingLeft += @get "labelWidth" if @g.vis.get "labels"
      paddingLeft += @get "metaWidth" if @g.vis.get "metacell"
+     paddingLeft += 15 # scroll bar
      return paddingLeft
 
-  _adjustWidth: (el, model) ->
-    if el.parentNode? and el.parentNode.offsetWidth isnt 0
-      parentWidth = el.parentNode.offsetWidth
+  _adjustWidth: ->
+    return unless @el isnt undefined and @model isnt undefined
+    if @el.parentNode? and @el.parentNode.offsetWidth isnt 0
+      parentWidth = @el.parentNode.offsetWidth
     else
       parentWidth = document.body.clientWidth - 35
 
     # TODO: dirty hack
     maxWidth = parentWidth - @getLabelWidth()
-    calcWidth = @getAlignmentWidth( model.getMaxLength() - @g.columns.get('hidden').length)
+    calcWidth = @getAlignmentWidth( @model.getMaxLength() - @g.columns.get('hidden').length)
     val = Math.min(maxWidth,calcWidth)
     # round to a valid AA box
     val = Math.floor( val / @get("columnWidth")) * @get("columnWidth")
+
     @set "alignmentWidth", val
-    #el.style.width = Math.min calcWidth, maxWidth
+
+  autoResize:  ->
+    if @get "autoResize"
+      @_adjustWidth @el, @model
+
+  # max is the maximal allowed height
+  autoHeight: (max) ->
+    # TODO!
+    # make seqlogo height configurable
+    val = @getMaxAlignmentHeight()
+    if max != undefined and max > 0
+      val = Math.min val, max
+
+    @set "alignmentHeight", val
+
+  setEl: (el, model) ->
+    @el = el
+    @model = model
 
   # updates both scroll properties (if needed)
   _checkScrolling: (scrollObj, opts) ->
@@ -94,3 +115,14 @@ module.exports = Zoomer = Model.extend
 
     @set "_alignmentScrollLeft", xScroll, opts
     @set "_alignmentScrollTop", yScroll, opts
+
+  getMaxAlignmentHeight: ->
+    height = 0
+    @model.each (seq) ->
+      height += seq.attributes.height || 1
+
+    return (height * @get("rowHeight"))
+
+  getMaxAlignmentWidth: ->
+    return @model.getMaxLength() * @get("columnWidth")
+

@@ -16,8 +16,7 @@ module.exports = boneView.extend
       @draw()
       @render()
     @listenTo @g.vis,"change", @_setSpacer
-    @listenTo @g.zoomer,"change:alignmentWidth", ->
-      @_adjustWidth()
+    @listenTo @g.zoomer,"change:alignmentWidth", @_setWidth
     @listenTo @g.zoomer, "change:_alignmentScrollLeft", @_adjustScrollingLeft
 
     # TODO: duplicate rendering
@@ -62,7 +61,7 @@ module.exports = boneView.extend
 
     @el.className = "biojs_msa_header"
     @el.style.overflowX = "auto"
-    @_adjustWidth()
+    @_setWidth()
     @_adjustScrollingLeft()
     @
 
@@ -88,5 +87,5 @@ module.exports = boneView.extend
     paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
     return paddingLeft
 
-  _adjustWidth: ->
+  _setWidth: ->
     @el.style.width = @g.zoomer.get("alignmentWidth") + "px"
