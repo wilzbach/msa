@@ -45,6 +45,7 @@ module.exports = OrderingMenu = MenuBuilder.extend
   getComparators: ->
     models = []
 
+
     models.push text: "ID", comparator: "id"
 
     models.push text: "ID Desc", comparator: (a, b) ->
@@ -61,10 +62,22 @@ module.exports = OrderingMenu = MenuBuilder.extend
     models.push text: "Seq Desc", comparator: (a,b) ->
         - a.get("seq").localeCompare(b.get("seq"))
 
-    models.push text: "Identity", comparator: "identity"
+    setIdent = =>
+      @ident = @g.stats.identity()
 
-    models.push text: "Identity Desc", comparator: (seq) ->
-        - seq.get "identity"
+    models.push text: "Identity", comparator: (a,b) =>
+      val = @ident[a.id] - @ident[b.id]
+      return 1 if val > 0
+      return -1 if val < 0
+      0
+    , precode: setIdent
+
+    models.push text: "Identity Desc", comparator: (a,b) =>
+      val = @ident[a.id] - @ident[b.id]
+      return -1 if val > 0
+      return 1 if val < 0
+      0
+    , precode: setIdent
 
     models.push text: "Reference", comparator: (seq) ->
         not seq.get "ref"

@@ -11,3 +11,4 @@ module.exports = Config = Model.extend
     alphabetSize: 20
     dropImport: false
     debug: false
+    hasReference: false
