@@ -32,6 +32,6 @@ module.exports = Package = Model.extend
     if @g.config.get("debug")
       url = @development[pkg]
     else
-      url = "http://wzrd.in/bundle/#{pkg}/latest"
+      url = "http://wzrd.in/bundle/#{pkg}@latest"
 
     url
