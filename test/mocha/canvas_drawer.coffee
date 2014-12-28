@@ -26,7 +26,7 @@ beforeEach "setup canvas", ->
  a.g = {}
  a.ctx = sinon.stub()
  columnWidth = rowHeight = 10
- a.g.zoomer = new Zoomer {rowHeight: rowHeight, columnWidth: columnWidth}, g: {}
+ a.g.zoomer = new Zoomer {rowHeight: rowHeight, columnWidth: columnWidth}, g:{}, model: a.model
  a.d = new CanvasDrawSeq a.g, a.ctx, a.model,
    width: 200
    height: 200
