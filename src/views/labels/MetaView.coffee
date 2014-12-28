@@ -2,6 +2,7 @@ view = require("backbone-viewj")
 MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
 dom = require "dom-helper"
+st = require "biojs-utils-seqtools"
 
 module.exports = MetaView = view.extend
 
@@ -21,8 +22,9 @@ module.exports = MetaView = view.extend
     @el.style.display = "inline-block"
 
     width = @g.zoomer.get "metaWidth"
-    @el.style.width = width - 5
+    @el.style.width = width - 10
     @el.style.paddingRight = 5
+    @el.style.paddingLeft = 5
 
     # adds gaps
     seq = @model.get('seq')
@@ -38,23 +40,33 @@ module.exports = MetaView = view.extend
 
     # identity
     # TODO: there must be a better way to pass the id
-    ident = @g.stats.identity()[@model.collection.indexOf(@model)]
+    ident = @g.stats.identity()[@model.id]
     identSpan = document.createElement 'span'
-    identSpan.textContent = ident.toFixed(2)
+
+    if @model.get "ref" and @g.config.get "hasRef"
+      identSpan.textContent = "ref."
+    else
+      identSpan.textContent = ident.toFixed(2)
+
     identSpan.style.display = "inline-block"
     identSpan.style.width = 40
     @el.appendChild identSpan
 
     # TODO: this menu builder is just an example how one could customize this
     # view
-    menu = new MenuBuilder("↗")
-    menu.addNode "Uniprot",(e) =>
-      window.open "http://beta.uniprot.org/uniprot/Q7T2N8"
-    @el.appendChild menu.buildDOM()
-    @el.width = 10
+    if @model.attributes.ids
+      menu = new MenuBuilder({name: "↗"})
+      links = st.buildLinks @model.attributes.ids
+      _.each links, (val, key) ->
+        menu.addNode key,(e) ->
+          window.open val
+
+      linkEl = menu.buildDOM()
+      linkEl.style.cursor = "pointer"
+      @el.appendChild linkEl
+
 
     @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
-    @el.style.cursor = "pointer"
 
   _onclick: (evt) ->
     @g.trigger "meta:click", {seqId: @model.get "id", evt:evt}

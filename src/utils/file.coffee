@@ -1,4 +1,4 @@
-FastaReader = require("biojs-io-fasta").parse
+FastaReader = require("biojs-io-fasta")
 ClustalReader = require "biojs-io-clustal"
 GffReader = require "biojs-io-gff"
 _ = require "underscore"
