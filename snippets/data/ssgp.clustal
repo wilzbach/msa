@@ -1,0 +1,288 @@
+CLUSTAL O(1.2.1) multiple sequence alignment
+
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    ------------------------MKTIYFLISLILIQSIKTLPVLEIASNSQP--QDVD
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  ------------------------MRTTCLFISLILIQGIKTLPILEIASNDQP--QNVD
+tr|Lake_Victoria_marburgvirus                                     ------------------------MRTTCFFISLILIQGIKTLPILEIASNDQP--QNVD
+tr|Marburg_marburgvirus                                           ------------------------MRTTCFFISLILIQGIKTLPILEIASNDQP--QNVD
+sp|Lake_Victoria_marburgvirus                                     ------------------------MKTTCLLISLILIQGVKTLPILEIASNIQP--QNVD
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  ------------------------MKTTCFLISLILIQGTKNLPILEIASNNQP--QNVD
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    ------------------------MKTTCLFISLILIQGIKTLPILEIASNNQP--QNVD
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      MVPTYPYSSLLDWR-PPPNTLPWILNLVVFYTIAWLPGGVSGIPLGLLGNNSITQTVVDN
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          -MEGLSLLQLPRDKFRKSSFFVWVI---------ILFQKAFSMPLGVVTNSTLEVTEIDQ
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             -MEGLSLLQLPRDKFRKSSFFVWVI---------ILFQKAFSMPLGVVTNSTLEVTEIDQ
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            -MGGLSLLQLPRDKFRKSSFFVWVI---------ILFQKAFSMPLGVVTNSTLEVTEIDQ
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 MGSGYQLLQLPRERFRKTSFLVWVI---------ILFQRAISMPLGIVTNSTLKATEIDQ
+sp|Reston_ebolavirus_(strain_Philippines-96)                      MGSGYQLLQLPRERFRKTSFLVWVI---------ILFQRAISMPLGIVTNSTLKATEIDQ
+sp|Reston_ebolavirus_(strain_Reston-89)                           MGSGYQLLQLPRERFRKTSFLVWVI---------ILFQRAISMPLGIVTNSTLKATEIDQ
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            MG-VTGILQLPRDRFKRTSFFLWVI---------ILFQRTFSIPLGVIHNSTLQVSDVDK
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           MG-VTGILQLPRDRFKRTSFFLWVI---------ILFQRTFSIPLGVIHNSTLQVSDVDK
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            MG-VTGILQLPRDRFKRTSFFLWVI---------ILFQRTFSIPLGVIHNSTLQVNDVDK
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             MG-VTGILQLPRDRFKRTSFFLWVI---------ILFQRTFSIPLGVIHNSTLQVSDVDK
+tr|Bundibugyo_ebolavirus                                          MV-TSGILQLPRERFRKTSFFVWVI---------ILFHKVFPIPLGVVHNNTLQVSDIDK
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 MG-ASGILQLPRERFRKTSFFVWVI---------ILFHKVFSIPLGVVHNNTLQVSDIDK
+                                                                                          :          *      :*:  : ..        .
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+tr|Lake_Victoria_marburgvirus                                     SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+tr|Marburg_marburgvirus                                           SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+sp|Lake_Victoria_marburgvirus                                     SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRAGVPPKNVEYTEGEEAKTCYN
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    SVCSGTLQKTEDVHLMGFTLSGQKVADSPLEASKRWAFRTGVPPKNVEYTEGEEAKTCYN
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      VVCKEHLATTDQLQAIGLGLEGLGEHADLPTATKRWGFRSDVIPKIVGYTAGEWVENCYN
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          LVCKDHLASTDQLKSVGLNLEGSGVSTDIPSATKRWGFRSGVPPQVVSYEAGEWAENCYN
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             LVCKDHLASTDQLKSVGLNLEGSGVSTDIPSATKRWGFRSGVPPQVVSYEAGEWAENCYN
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            LVCKDHLASTDQLKSVGLNLEGSGVSTDIPSATKRWGFRSGVPPKVVSYEAGEWAENCYN
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 LVCRDKLSSTSQLKSVGLNLEGNGIATDVPSATKRWGFRSGVPPKVVSYEAGEWAENCYN
+sp|Reston_ebolavirus_(strain_Philippines-96)                      LVCRDKLSSTSQLKSVGLNLEGNGIATDVPSATKRWGFRSGVPPKVVSYEAGEWAENCYN
+sp|Reston_ebolavirus_(strain_Reston-89)                           LVCRDKLSSTSQLKSVGLNLEGNGIATDVPSATKRWGFRSGVPPKVVSYEAGEWAENCYN
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            LVCRDKLSSTNQLRSVGLNLEGNGVATDVPSATKRWGFRSGVPPKVVNYEAGEWAENCYN
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           LVCRDKLSSTNQLRSVGLNLEGNGVATDVPSATKRWGFRSGVPPKVVNYEAGEWAENCYN
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            LVCRDKLSSTNQLRSVGLNLEGNGVATDVPSATKRWGFRSGVPPKVVNYEAGEWAENCYN
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             LVCRDKLSSTNQLRSVGLNLEGNGVATDVPSATKRWGFRSGVPPKVVNYEAGEWAENCYN
+tr|Bundibugyo_ebolavirus                                          LVCRDKLSSTSQLKSVGLNLEGNGVATDVPTATKRWGFRAGVPPKVVNYEAGEWAENCYN
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 FVCRDKLSSTSQLKSVGLNLEGNGVATDVPTATKRWGFRAGVPPKVVNYEAGEWAENCYN
+                                                                   **   * .*.::: :*: *.*     .   *:***.**: * *: * *  ** .:.***
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    ISVTDPSGKSLLLDPPSNIRDYPKCKTVHHIQGQNPHAQGIALHLWGAFFLYDRVASTTM
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  ISVTDPSGKSLLLDPPTNVRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+tr|Lake_Victoria_marburgvirus                                     ISVTDPSGKSLLLDPPTNVRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+tr|Marburg_marburgvirus                                           ISVTDPSGKSLLLDPPTNVRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+sp|Lake_Victoria_marburgvirus                                     ISVTDPSGKSLLLDPPTNIRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  ISVTDPSGKSLLLDPPTNIRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    ISVTDPSGKSLLLDPPTNIRDYPKCKTIHHIQGQNPHAQGIALHLWGAFFLYDRIASTTM
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      LEITKKDGHPCLPSPPTGLLGYPRCRYVHRAKGAGPCPGGNAFHKHGSFFLYHGMASTVI
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          LEIKKPDGSECLPPPPDGVRGFPRCRYVHKAQGTGPCPGDYAFHKDGAFFLYDRLASTVI
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             LEIKKPDGSECLPPPPDGVRGFPRCRYVHKAQGTGPCPGDYAFHKDGAFFLYDRLASTVI
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            LEIKKPDGSECLPPPPDGVRGFPRCRYVHKAQGTGPCPGDYAFHKDGAFFLYDRLASTVI
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 LEIKKSDGSECLPLPPDGVRGFPRCRYVHKVQGTGPCPGDLAFHKNGAFFLYDRLASTVI
+sp|Reston_ebolavirus_(strain_Philippines-96)                      LEIKKSDGSECLPLPPDGVRGFPRCRYVHKVQGTGPCPGDLAFHKNGAFFLYDRLASTVI
+sp|Reston_ebolavirus_(strain_Reston-89)                           LEIKKSDGSECLPLPPDGVRGFPRCRYVHKVQGTGPCPGDLAFHKNGAFFLYDRLASTVI
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            LEIKKPDGSECLPAAPDGIRGFPRCRYVHKVSGTGPCAGDFAFHKEGAFFLYDRLASTVI
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           LEIKKPDGSECLPAAPDGIRGFPRCRYVHKVSGTGPCAGDFAFHKEGAFFLYDRLASTVI
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            LEIKKPDGSECLPAAPDGIRGFPRCRYVHKVSGTGPCAGDFAFHKEGAFFLYDRLASTVI
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             LEIKKPDGSECLPAAPDGIRGFPRCRYVHKVSGTGPCAGDFAFHKEGAFFLYDRLASTVI
+tr|Bundibugyo_ebolavirus                                          LDIKKADGSECLPEAPEGVRGFPRCRYVHKVSGTGPCPEGYAFHKEGAFFLYDRLASTII
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 LAIKKVDGSECLPEAPEGVRDFPRCRYVHKVSGTGPCPGGLAFHKEGAFFLYDRLASTII
+                                                                  : :.. .*   *   *  :  :*:*: :*: .*  *     *:*  *:****. :*** :
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    YRGKVFTEGNIAAMIVNKTVHRMIFSRQGQGYRHMNLTS--TNKYWTSSNETQRNDTGCF
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  YRGKVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSSNGTQTNDTGCF
+tr|Lake_Victoria_marburgvirus                                     YRGKVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSSNGTQTNDTGCF
+tr|Marburg_marburgvirus                                           YRGKVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSSNGTQTNDTGCF
+sp|Lake_Victoria_marburgvirus                                     YRGKVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSSNGTQTNDTGCF
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  YRGKVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSSNGTQTNDTGCF
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    YRGRVFTEGNIAAMIVNKTVHKMIFSRQGQGYRHMNLTS--TNKYWTSNNGTQTNDTGCF
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      YHGVTFTEGTIAFLIVPKDAPRL-KAGLGTGFSHQAENQNPNNQFRTTTLDYDVM---SP
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          YRGVNFAEGVIAFLILAKPKETF-LQSPPIR-EAANYTENTSSYYATSYLEYEIE---NF
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             YRGVNFAEGVIAFLILAKPKETF-LQSPPIR-EAANYTENTSSYYATSYLEYEIE---NF
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            YRGVNFAEGVIAFLILAKPKETF-LQSPPIR-EAVNYTENTSSYYATSYLEYEIE---NF
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 YRGTTFTEGVVAFLILSEPKKHF-WKATPAH-EPVNTTDDSTSYYMTLTLSYEMS---NF
+sp|Reston_ebolavirus_(strain_Philippines-96)                      YRGTTFAEGVIAFLILSEPKKHF-WKATPAH-EPVNTTDDSTSYYMTLTLSYEMS---NF
+sp|Reston_ebolavirus_(strain_Reston-89)                           YRGTTFAEGVVAFLILSEPKKHF-WKATPAH-EPVNTTDDSTSYYMTLTLSYEMS---NF
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            YRGTTFAEGVVAFLILPQAKKDF-FSSHPLR-EPVNATEDPSSGYYSTTIRYQAT---GF
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           YRGTTFAEGVVAFLILPQAKKDF-FSSHPLR-EPVNATEDPSSGYYSTTIRYQAT---GF
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            YRGTTFAEGVVAFLILPQAKKDF-FSSHPLR-EPVNATEDPSSGYYSTTIRYQAT---GF
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             YRGTTFAEGVVAFLILPQAKKDF-FSSHPLR-EPVNATEDPSSGYYSTTIRYQAT---GF
+tr|Bundibugyo_ebolavirus                                          YRSTTFSEGVVAFLILPETKKDF-FQSPPLH-EPANMTTDPSSYYHTVTLNYVAD---NF
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 YRGTTFAEGVIAFLILPKARKDF-FQSPPLH-EPANMTTDPSSYYHTTTINYVVD---NF
+                                                                  *:.  *:** :* :*: :    :              .   .. : :             
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    GILQ-EYN-STNNQTC---PPSLKPPSLPTVTPSIHSTNTQIN-TAKS-GTMNPSSDDED
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  GTLH-EYN-STKNQTC---APSKTPPPPPTARPEIKPTSTPTD-ATRL-NTTNPNSDDED
+tr|Lake_Victoria_marburgvirus                                     GTLQ-EYN-STKNQTC---APSKTPPPPPTARPEIKPTSTPTD-ATRL-NTTNPNSDDED
+tr|Marburg_marburgvirus                                           GTLQ-EYN-STKNQTC---TPSKTPPSPPTAHPEIKPTSTPTD-ATRL-NTTNPNSDDED
+sp|Lake_Victoria_marburgvirus                                     GTLQ-EYN-STKNQTC---APSKKPLPLPTAHPEVKLTSTSTD-ATKL-NTTDPNSDDED
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  GALQ-EYN-STKNQTC---APSKIPPPLPTARPEIKLTSTPTD-ATKL-NTTDPSSDDED
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    GALQ-EYN-STKNQTC---APSKIPSPLPTARPEIKPTSTPTD-ATTL-NTTDPNNDDED
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      WMDNATFFFRAREDTSMLIQTRYPPANLELVQERLANLTGDQADPSKMEEIVAEVLT---
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          GAQHSTTLFKINNNTFVLLDRPHTPQFLFQLNDTIQLHQQLSNTTGKLIWTLDANIN---
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             GAQHSTTLFKINNNTFVLLDRPHTPQFLFQLNDTIQLHQQLSNTTGKLIWTLDANIN---
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            GAQHSTTLFKIDNNTFVRLDRPHTPQFLFQLNDTIHLHQQLSNTTGRLIWTLDANIN---
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 GGKESNTLFKVDNHTYVQLDRPHTPQFLVQLNETLRRNNRLSNSTGRLTWTLDPKIE---
+sp|Reston_ebolavirus_(strain_Philippines-96)                      GGEESNTLFKVDNHTYVQLDRPHTPQFLVQLNETLRRNNRLSNSTGRLTWTVDPKIE---
+sp|Reston_ebolavirus_(strain_Reston-89)                           GGNESNTLFKVDNHTYVQLDRPHTPQFLVQLNETLRRNNRLSNSTGRLTWTLDPKIE---
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            GTNETEYLFEVDNLTYVQLESRFTPQFLLQLNETIYTSGKRSNTTGKLIWKVNPEID---
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           GTNETEYLFEVDNLTYVQLESRFTPQFLLQLNETIYTSGKRSNTTGKLIWKVNPEID---
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            GTNETEYLFEVDNLTYVQLESRFTPQFLLQLNETIYTSGKRSNTTGKLIWKVNPEID---
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             GTNETEYLFEVDNLTYVQLESRFTPQFLLQLNETRYTSGKRSNTTGKLIWKVNPEID---
+tr|Bundibugyo_ebolavirus                                          GTNMTNFLFQVDHLTYVQLEPRFTPQFLVQLNETIYTNGRRSNTTGTLIWKVNPTVD---
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 GTNTTEFLFQVDHLTYVQLEARFTPQFLVLLNETIYSDNRRSNTTGKLIWKINPTVD---
+                                                                              . *         *                                   
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    LMISGSGSGEQGPHTTLNVVTEQKQSSTILSTPSLHPSTSQHEQNSTNPSRHAVTEHNGT
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  LTTSGSGSGEQELYTTSDAVTKQGLSSTMPPTPSPQPGTPQQGGNNTNHSQDATTELDNT
+tr|Lake_Victoria_marburgvirus                                     LTTSGSGSGEQEPYTTSDAVTKQGLSSTMPPTPSPQPGTPQQGGNNTNHSQDAATELDNT
+tr|Marburg_marburgvirus                                           LTTSGSGSGEQEPDTTSDAVTKQGLSSTMPPTPSPQPGTPQQGGNNTNHSQDAATELDNT
+sp|Lake_Victoria_marburgvirus                                     LTTSGSGSGEQEPYTTSDAATKQGLSSTMPPTPSPQPSTPQQGGNNTNHSQGVVTEPGKT
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  LATSGSGSGEREPHTTSDAVTKQGLSSTMPPTPSPQPSTPQQGGNNTNHSQDAVTELDKN
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    LITSGSGSGEQEPYTTSDAVTKQGLSSTMPPTPSPQPSTPQQEGNNTDHSQGTVTEPNKT
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      -----LELGDWSGWTTKK----TAVQTIRLRNPSPASGSTKDK-----TGQKPMTDHQE-
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          -----ADIGEWAFWENKK----IS-PN---------------------------------
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             -----ADIGEWAFWENKK----IS-PN---------------------------------
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            -----ADIGEWAFWENKK----KS-LR---------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 -----PDVGEWAFWETKK----TF-PN---------------------------------
+sp|Reston_ebolavirus_(strain_Philippines-96)                      -----PDVGEWAFWETKK----KLFPT---------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           -----PDVGEWAFWETKK----KLFPT---------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            -----TTIGEWAFWETKK----KP-H----------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           -----TTIGEWAFWETKK----KP-H----------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            -----TTIGEWAFWETKK----TS-LE---------------------------------
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             -----TTIGEWAFWETKK----TS-LE---------------------------------
+tr|Bundibugyo_ebolavirus                                          -----TGVGEWAFWENKK----LH-KN---------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 -----TSMGEWAFWENKK----TS-QK---------------------------------
+                                                                          *:     . .                                          
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    DPTTQPATLLNNTNTTPTYNTLKYNLSTPSPPTRNITNNDTQRELAESEQTNAQLNTTLD
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  NTTAQPPTPSHNTTTISTNNTSKHNLSTLSAPPQNTTNPNTQSMATENEKTSAPPKATLP
+tr|Lake_Victoria_marburgvirus                                     NTTAQLPTPSHNTTTISTNNTSKHNLSTLSEPPQNTTNPNTQSMATENEKTSAPPKTTLP
+tr|Marburg_marburgvirus                                           NTTAQPPTPSHNTTTISTNNTSKNNLSTLSELPQNTTNPNTQSMATENEKTSASPKTTLP
+sp|Lake_Victoria_marburgvirus                                     NTTAQPSMPPHNTTTISTNNTSKHNLSTPSVPIQNATNYNTQSTAPENEQTSAPSKTTLL
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  NTTAQPSMPPHNTTTISTNNTSKHNFSTLSAPLQNTTNDNTQSTITENEQTSAPSITTLP
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    NTTAQPSMPPHNTTAISTNNTSKNNFSTLSVSLQNTTNYDTQSTATENEQTSAPSKTTLP
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      -FILQP-----------HSAVGQPCLWNILRTPGRNPA--------------RRHRRETP
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          ------------------NYVEKSCLSKLYRSTRQKTM--------------MRHRRELQ
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             ------------------NYVEKSCLSKLYRSTRQKTM--------------MRHRRELQ
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------TTTWRRAVFRSFIAQRD--------------------RRR--
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 ------------------NFMEKTCISKFYQPTPTTPQ--------------IRARRELS
+sp|Reston_ebolavirus_(strain_Philippines-96)                      ------------------TSWRKLAF-----PNSINPH--------------QQ----LL
+sp|Reston_ebolavirus_(strain_Reston-89)                           ------------------TSWRKLAF-----PNSINPH--------------QQ----LL
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            ------------------KFAVKSCLSQLYQTEPKTSV--------------VRVRRELL
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             ------------------KFAVKSCLSQLYQTEPKTSV--------------VRVRRELL
+tr|Bundibugyo_ebolavirus                                          ------------------PFK---------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 ------------------PFQVKSCLSYLYQKPRTRSL--------------TRQRRSLL
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    PTENPTTAQDTNSTTNIIMTTSDITSKHPTNSSPDSSPTTRPPIYFRKK---------RS
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  PTENPTTEKSTNNTKSPTTMEPNTTNGHFTSPSSTPNSTTQHLIYFRRK---------RS
+tr|Lake_Victoria_marburgvirus                                     PIESPTTEKSTNNTKSPTTMEPNTTNGHFTSPSSTPNSTTQHLIYFRRK---------RS
+tr|Marburg_marburgvirus                                           PTESPTTEKSTNNTKSPTTMEPNTTNGHFTSPSSTPNSTTQHLIYFRRK---------RS
+sp|Lake_Victoria_marburgvirus                                     PTENPTTAKSTNSTKSPTTTVPNTTNKYSTSPSPTPNSTAQHLVYFRRK---------RN
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  PTGNPTTAKSTSSKKGPATTAPNTTNEHFTSPPPTPSSTAQHLVYFRRK---------RS
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    PTGNLTTAKSTNNTKGPTTTAPNMTNGHLTSPSPTPNPTTQHLVYFRKK---------RS
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      PTMSITAAPGSG-Y--------------------KPYIQAIPLVKFRCHWEGLRHVCRRY
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          REESPTGPPG-S-I--------------------RTWFQRIPLGWFHCTYQKGKQHCRLR
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             REESPTGPPG-S-I--------------------RTWFQRIPLGWFHCTYQKGKQHCRLR
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 KEKLATTHPP-T-T--------------------PSWFQRIPLQWFQCSLQDGQRKCRPK
+sp|Reston_ebolavirus_(strain_Philippines-96)                      RSEPGGNCPR-K-N----------------------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           RSEPGGNCPR-K-N----------------------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            PTQGPTQQLK-T-T--------------------KSWLQKIPLQWFKCTVKEGKLQCRI-
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             PTQGPTQQLK-T-T--------------------KSWLQKIPLQWFKCTVKEGKLQCRI-
+tr|Bundibugyo_ebolavirus                                          ------------------------------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 PSPPTTTQAK-T-T--------------------KNWFQRIPLQWFRCKTSRERTQCQPQ
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    IFWKEGDIFPFLDGLINTEIDFDPIPNTETIFDESPSFNTSTNEEQHTPPNISLTFSYFP
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASTEEDQHASSNISLTLSYLP
+tr|Lake_Victoria_marburgvirus                                     ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASAEEDQHASSNISLTLSYLP
+tr|Marburg_marburgvirus                                           ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASAEEDQHASSNISLTLSYLP
+sp|Lake_Victoria_marburgvirus                                     ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASAEEDQHASPNISLTLSYFP
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASAEEDQHASPNISLTLSYFP
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    ILWREGDMFPFLDGLINAPIDFDPVPNTKTIFDESSSSGASAEEDQHASPNISLTLSYFP
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      PSWVQ-------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          IRQKVEE-----------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             IRQKVEE-----------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 V-----------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Philippines-96)                      ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             ------------------------------------------------------------
+tr|Bundibugyo_ebolavirus                                          ------------------------------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 ------------------------------------------------------------
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    DKNGDTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  HTSGNTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+tr|Lake_Victoria_marburgvirus                                     HTSENTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+tr|Marburg_marburgvirus                                           HTSENTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+sp|Lake_Victoria_marburgvirus                                     KVNENTAHSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  NINENTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAVLIKNQNNLV
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    NINENTAYSGENENDCDAELRIWSVQEDDLAAGLSWIPFFGPGIEGLYTAGLIKNQNNLV
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Philippines-96)                      ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             ------------------------------------------------------------
+tr|Bundibugyo_ebolavirus                                          ------------------------------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 ------------------------------------------------------------
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+tr|Lake_Victoria_marburgvirus                                     CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+tr|Marburg_marburgvirus                                           CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+sp|Lake_Victoria_marburgvirus                                     CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLARWGGTCKVLGPDCCIGIEDL
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    CRLRRLANQTAKSLELLLRVTTEERTFSLINRHAIDFLLTRWGGTCKVLGPDCCIGIEDL
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Philippines-96)                      ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             ------------------------------------------------------------
+tr|Bundibugyo_ebolavirus                                          ------------------------------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 ------------------------------------------------------------
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    SKNISEQIDKIRKDEQKEETGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  SRNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+tr|Lake_Victoria_marburgvirus                                     SRNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+tr|Marburg_marburgvirus                                           SRNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+sp|Lake_Victoria_marburgvirus                                     SRNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  SKNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    SRNISEQIDQIKKDEQKEGTGWGLGGKWWTSDWGVLTNLGILLLLSIAVLIALSCICRIF
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             ------------------------------------------------------------
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Philippines-96)                      ------------------------------------------------------------
+sp|Reston_ebolavirus_(strain_Reston-89)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            ------------------------------------------------------------
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             ------------------------------------------------------------
+tr|Bundibugyo_ebolavirus                                          ------------------------------------------------------------
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 ------------------------------------------------------------
+                                                                                                                              
+
+tr|Lake_Victoria_marburgvirus_(strain_Ravn-87)                    TKYIG
+sp|Lake_Victoria_marburgvirus_(strain_Ozolin-75)                  TKYIG
+tr|Lake_Victoria_marburgvirus                                     TKYIG
+tr|Marburg_marburgvirus                                           TKYIG
+sp|Lake_Victoria_marburgvirus                                     TKYIG
+sp|Lake_Victoria_marburgvirus_(strain_Musoke-80)                  TKYIG
+sp|Lake_Victoria_marburgvirus_(strain_Popp-67)                    TKYIG
+tr|Lloviu_cuevavirus_(isolate_Bat/Spain/Asturias-Bat86/2003)      -----
+sp|Sudan_ebolavirus_(strain_Boniface-76)                          -----
+sp|Sudan_ebolavirus_(strain_Maleo-79)                             -----
+sp|Sudan_ebolavirus_(strain_Uganda-00)                            -----
+sp|Reston_ebolavirus_(strain_Siena/Philippine-92)                 -----
+sp|Reston_ebolavirus_(strain_Philippines-96)                      -----
+sp|Reston_ebolavirus_(strain_Reston-89)                           -----
+sp|Zaire_ebolavirus_(strain_Kikwit-95)                            -----
+sp|Zaire_ebolavirus_(strain_Mayinga-76)                           -----
+sp|Zaire_ebolavirus_(strain_Eckron-76)                            -----
+sp|Zaire_ebolavirus_(strain_Gabon-94)                             -----
+tr|Bundibugyo_ebolavirus                                          -----
+sp|Tai_Forest_ebolavirus_(strain_Cote_dIvoire-94)                 -----
+                                                                       

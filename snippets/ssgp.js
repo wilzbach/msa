@@ -5,12 +5,13 @@ var clustal = require("biojs-io-clustal");
 // set your custom properties
 // @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
 
+// you can use any DOM element instead of those divs
 var menuDiv = document.createElement('div');
 var msaDiv = document.createElement('div');
 yourDiv.appendChild(menuDiv);
 yourDiv.appendChild(msaDiv);
 
-var url = "./data/fer1.clustal";
+var url = "./data/tete";
 clustal.read(url, function(seqs) {
   var opts = {
     el: msaDiv
@@ -18,7 +19,7 @@ clustal.read(url, function(seqs) {
 
   opts.conf = {
     url: url, // we tell the MSA viewer about the URL source 
-    dropImport: true // allow to import sequences via drag & drop
+    dropImport: true
   };
   opts.vis = {
     conserv: false,
@@ -27,6 +28,7 @@ clustal.read(url, function(seqs) {
   };
   opts.zoomer = {
     alignmentHeight: 225,
+    autoResize: true,
     labelWidth: 130,
     labelFontsize: "13px",
     labelIdLength: 20,
@@ -53,5 +55,4 @@ clustal.read(url, function(seqs) {
 
   // BioJS event system test (you can safely remove this in your app)
   //instance=m.g
-
 });
