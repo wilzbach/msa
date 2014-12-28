@@ -3,6 +3,7 @@ Model = require("backbone-thin").Model
 module.exports = Zoomer = Model.extend
 
   constructor: (attributes,options) ->
+    @calcDefaults options.model
     Model.apply @, arguments
     @g = options.g
     @
@@ -48,6 +49,12 @@ module.exports = Zoomer = Model.extend
     # internal props
     _alignmentScrollLeft: 0
     _alignmentScrollTop: 0
+
+  # sets some defaults, depending on the model
+  calcDefaults: (model) ->
+    maxLen = model.getMaxLength()
+    if maxLen < 200 and model.length < 30
+      @defaults.boxRectWidth = @defaults.boxRectHeight = 5
 
   # @param n [int] maxLength of all seqs
   getAlignmentWidth: (n) ->
