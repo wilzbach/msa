@@ -58,7 +58,7 @@ module.exports = boneView.extend
     @g.user = new User()
     @g.vis = new Visibility data.vis
     @g.visorder = new VisOrdering data.visorder
-    @g.zoomer = new Zoomer data.zoomer,{g:@g}
+    @g.zoomer = new Zoomer data.zoomer,{g:@g, model: @seqs}
 
     # debug mode
     if window.location.hostname is "localhost"
