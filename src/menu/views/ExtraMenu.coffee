@@ -15,7 +15,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
     stats = @g.stats
     msa = @msa
     @addNode "Add consensus seq", =>
-      @g.config.set "hasRef", true
       con = stats.consensus()
       seq = new Seq
         seq: con
