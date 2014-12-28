@@ -56,15 +56,19 @@ module.exports = Zoomer = Model.extend
 
   # @param n [int] number of residues to scroll to the right
   setLeftOffset: (n) ->
-    val = (n - 1) * @get('columnWidth')
+    val = (n)
     val = Math.max 0, val
-    @set "_alignmentScrollLeft", val
+    val -= @g.columns.calcHiddenColumns val
+    @set "_alignmentScrollLeft", val * @get('columnWidth')
 
   # @param n [int] row that should be on top
   setTopOffset: (n) ->
-    val = (n - 1) * @get('rowHeight')
+    val = (n - 1)
+    for i in [0..val] by 1
+      seq = @model.at i
+      height += seq.attributes.height || 1
     val = Math.max 0, val
-    @set "_alignmentScrollTop",val
+    @set "_alignmentScrollTop",val * @get("rowHeight")
 
   # length of all elements left to the main sequence body: labels, metacell, ..
   getLabelWidth: ->
