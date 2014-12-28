@@ -73,6 +73,9 @@ module.exports = boneView.extend
     # depending config
     @g.colorscheme = new Colorator data.colorscheme, pureSeq, @g.stats
 
+    # more init
+    @g.zoomer.setEl @el, @seqs
+
     @addView "stage",new Stage {model: @seqs, g: @g}
     @el.setAttribute "class", "biojs_msa_div"
 
@@ -90,9 +93,11 @@ module.exports = boneView.extend
         "drop": @dropFile
       @delegateEvents events
 
-    #$(window).on("resize", (e) ->
-      #console.log "resize evt", e
-    #)
+    $(window).on("resize", (e) =>
+      f = ->
+        @g.zoomer.autoResize()
+      setTimeout f.bind(@), 5
+    )
 
   dragOver: (e) ->
     # prevent the normal browser actions
