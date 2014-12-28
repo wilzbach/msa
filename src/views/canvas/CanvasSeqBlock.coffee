@@ -19,7 +19,7 @@ module.exports = boneView.extend
         @render()
 
     @listenTo @g.columns,"change:hidden", @render
-    @listenTo @g.zoomer,"change:alignmentWidth", @render
+    @listenTo @g.zoomer,"change:alignmentWidth change:alignmentHeight", @render
     @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
 
@@ -63,6 +63,7 @@ module.exports = boneView.extend
       @throttledDraw = _.throttle @throttledDraw, 30
 
     @manageEvents()
+
 
   # measures the time of a redraw and thus set the throttle limit
   throttledDraw: ->
@@ -144,7 +145,7 @@ module.exports = boneView.extend
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
     @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
 
-    @g.zoomer._adjustWidth @el, @model
+    @g.zoomer._adjustWidth()
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
 

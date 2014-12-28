@@ -9,6 +9,8 @@ module.exports = boneView.extend
     @listenTo @g.zoomer, "change:_alignmentScrollTop", @_adjustScrollingTop
     @g.vis.once 'change:loaded', @_adjustScrollingTop , @
 
+    @listenTo @g.zoomer,"change:alignmentHeight", @_setHeight
+
   draw: ->
     @removeViews()
     for i in [0.. @model.length - 1] by 1
@@ -33,9 +35,13 @@ module.exports = boneView.extend
     @el.className = "biojs_msa_labelblock"
     @el.style.display = "inline-block"
     @el.style.verticalAlign = "top"
-    @el.style.height =  @g.zoomer.get("alignmentHeight") + "px"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
     @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}"
     @el.style.lineHeight = "#{@g.zoomer.get "labelLineHeight"}"
+    @_setHeight()
     @
+
+
+  _setHeight: ->
+    @el.style.height = @g.zoomer.get("alignmentHeight") + "px"

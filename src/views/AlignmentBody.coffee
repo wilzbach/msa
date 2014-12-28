@@ -18,6 +18,7 @@ module.exports = boneView.extend
       @addView "seqblock",seqblock
 
     @listenTo @g.zoomer, "change:alignmentHeight", @adjustHeight
+    @listenTo @g.zoomer, "change:alignmentWidth", @adjustWidth
     @listenTo @g.columns, "change:hidden", @adjustHeight
 
   render: ->
@@ -25,6 +26,7 @@ module.exports = boneView.extend
     @el.className = "biojs_msa_albody"
     @el.style.whiteSpace = "nowrap"
     @adjustHeight()
+    @adjustWidth()
     @
 
   adjustHeight: ->
@@ -34,15 +36,13 @@ module.exports = boneView.extend
     else
       @el.style.height = @g.zoomer.get "alignmentHeight"
 
+  adjustWidth: ->
     # TODO: 15 is the width of the scrollbar
-    @el.style.width = @getWidth() + 15
+    @el.style.width = @getWidth()
 
   getWidth: ->
     width = 0
-    if @g.vis.get "labels"
-      width += @g.zoomer.get "labelWidth"
-    if @g.vis.get "metacell"
-      width += @g.zoomer.get "metaWidth"
+    width += @g.zoomer.getLabelWidth()
     if @g.vis.get "sequences"
       width += @g.zoomer.get "alignmentWidth"
     width
