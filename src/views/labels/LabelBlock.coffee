@@ -10,6 +10,7 @@ module.exports = boneView.extend
     @g.vis.once 'change:loaded', @_adjustScrollingTop , @
 
     @listenTo @g.zoomer,"change:alignmentHeight", @_setHeight
+    @listenTo @model,"change:reference", @draw
 
   draw: ->
     @removeViews()

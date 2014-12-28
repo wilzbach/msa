@@ -58,7 +58,7 @@ LabelView = view.extend
     if @.g.vis.get "labelName"
       name = document.createElement "span"
       name.textContent = @model.get("name")
-      if @model.get "ref" and @g.config.get "hasRef"
+      if @model.get("ref") and @g.config.get "hasRef"
         name.style.fontWeight = "bold"
       @el.appendChild name
 

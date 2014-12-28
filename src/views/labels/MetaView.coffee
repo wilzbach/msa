@@ -43,9 +43,9 @@ module.exports = MetaView = view.extend
     ident = @g.stats.identity()[@model.id]
     identSpan = document.createElement 'span'
 
-    if @model.get "ref" and @g.config.get "hasRef"
+    if @model.get("ref") and @g.config.get "hasRef"
       identSpan.textContent = "ref."
-    else
+    else if ident?
       identSpan.textContent = ident.toFixed(2)
 
     identSpan.style.display = "inline-block"
