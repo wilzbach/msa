@@ -22,6 +22,7 @@ module.exports = view.extend
 
 
   draw: ->
+    console.log "redraw"
     arr = @g.stats.conservResidue {scaled: true}
     arr = _.map arr, (el) ->
       _.pick el, (e,k) ->

@@ -11,7 +11,7 @@ var msaDiv = document.createElement('div');
 yourDiv.appendChild(menuDiv);
 yourDiv.appendChild(msaDiv);
 
-var url = "./data/tete";
+var url = "./data/ssgp.clustal";
 clustal.read(url, function(seqs) {
   var opts = {
     el: msaDiv
@@ -22,9 +22,10 @@ clustal.read(url, function(seqs) {
     dropImport: true
   };
   opts.vis = {
-    conserv: false,
+    conserv: true,
     overviewbox: false,
-    seqlogo: true
+    seqlogo: true,
+    metacell: true
   };
   opts.zoomer = {
     alignmentHeight: 225,

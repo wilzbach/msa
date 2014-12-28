@@ -23,7 +23,8 @@ clustal.read(url, function(seqs) {
   opts.vis = {
     conserv: false,
     overviewbox: false,
-    seqlogo: true
+    seqlogo: true,
+    metacell: true
   };
   opts.zoomer = {
     alignmentHeight: 225,
