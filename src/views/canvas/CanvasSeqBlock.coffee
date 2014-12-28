@@ -124,7 +124,7 @@ module.exports = boneView.extend
       ctx = @ctx
       data.model.attributes.features.each (feature) ->
         ctx.fillStyle = feature.attributes.fillColor || "red"
-        len = feature.attributes.xEnd - feature.attributes.xStart
+        len = feature.attributes.xEnd - feature.attributes.xStart + 1
         y = (feature.attributes.row + 1) * rectHeight
         ctx.fillRect feature.attributes.xStart * rectWidth + data.xZero,y + data.yZero,rectWidth * len,rectHeight
 
@@ -135,7 +135,7 @@ module.exports = boneView.extend
       ctx.textAlign = "center"
 
       data.model.attributes.features.each (feature) ->
-        len = feature.attributes.xEnd - feature.attributes.xStart
+        len = feature.attributes.xEnd - feature.attributes.xStart + 1
         y = (feature.attributes.row + 1) * rectHeight
         ctx.fillText feature.attributes.text, data.xZero + feature.attributes.xStart *
         rectWidth + (len / 2) * rectWidth, data.yZero + rectHeight * 0.5 + y
