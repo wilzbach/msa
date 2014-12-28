@@ -33,8 +33,10 @@ module.exports = Zoomer = Model.extend
     residueFont: "13" # in px
     canvasEventScale: 1
 
-    boxRectHeight: 5
-    boxRectWidth: 5
+    # overview box
+    boxRectHeight: 2
+    boxRectWidth: 2
+    overviewboxPaddingTop: 10
 
     # menu
     menuFontsize: "14px"
@@ -63,12 +65,12 @@ module.exports = Zoomer = Model.extend
 
   # @param n [int] row that should be on top
   setTopOffset: (n) ->
-    val = (n - 1)
+    val = Math.max 0, (n - 1)
+    height = 0
     for i in [0..val] by 1
       seq = @model.at i
       height += seq.attributes.height || 1
-    val = Math.max 0, val
-    @set "_alignmentScrollTop",val * @get("rowHeight")
+    @set "_alignmentScrollTop",height * @get("rowHeight")
 
   # length of all elements left to the main sequence body: labels, metacell, ..
   getLabelWidth: ->
