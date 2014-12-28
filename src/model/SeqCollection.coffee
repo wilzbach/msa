@@ -5,8 +5,9 @@ Collection = require("backbone-thin").Collection
 module.exports = SeqManager = Collection.extend
   model: Sequence
 
-  constructor: ->
+  constructor: (seqs, g) ->
     Collection.apply @, arguments
+    @g = g
 
     @on "add reset remove", =>
       # invalidate cache
@@ -104,10 +105,11 @@ module.exports = SeqManager = Collection.extend
   setRef: (seq) ->
     obj = @get seq
     @each (s) ->
-      if obj.cid == s.cid
-        s.set "ref", true
-      else
-        s.set "ref", false
+      if seq.cid
+        if obj.cid == s.cid
+          s.set "ref", true
+        else
+          s.set "ref", false
 
-    #@g.config.set "hasRef", true
+    @g.config.set "hasRef", true
     @trigger "change:reference", seq

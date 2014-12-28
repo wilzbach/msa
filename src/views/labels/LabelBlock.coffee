@@ -38,7 +38,7 @@ module.exports = boneView.extend
     @el.style.verticalAlign = "top"
     @el.style.overflowY = "auto"
     @el.style.overflowX = "hidden"
-    @el.style.fontSize = "#{@g.zoomer.get "labelFontsize"}"
+    @el.style.fontSize = "#{@g.zoomer.get('labelFontsize')}px"
     @el.style.lineHeight = "#{@g.zoomer.get "labelLineHeight"}"
     @_setHeight()
     @

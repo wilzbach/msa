@@ -49,7 +49,7 @@ module.exports = boneView.extend
     @g = Eventhandler.mixin {}
 
     # load seqs and add subviews
-    @seqs = new SeqCollection data.seqs
+    @seqs = new SeqCollection data.seqs, @g
 
     # populate it and init the global models
     @g.config = new Config data.conf

@@ -42,7 +42,10 @@ LabelView = view.extend
 
     if @.g.vis.get "labelId"
       id = document.createElement "span"
-      id.textContent = @model.get "id"
+      val  = @model.get "id"
+      unless isNaN val
+        val++
+      id.textContent = val
       id.style.width = @g.zoomer.get "labelIdLength"
       id.style.display = "inline-block"
       @el.appendChild id
@@ -63,7 +66,7 @@ LabelView = view.extend
       @el.appendChild name
 
     @el.style.overflow = scroll
-    @el.style.fontSize = @g.zoomer.get "labelFontSize"
+    @el.style.fontSize = "#{@g.zoomer.get('labelFontsize')}px"
     @
 
   _onclick: (evt) ->
