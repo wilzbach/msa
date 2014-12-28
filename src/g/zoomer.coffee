@@ -21,7 +21,7 @@ module.exports = Zoomer = Model.extend
     metaWidth: 100
     textVisible: true
     labelIdLength: 30
-    labelFontsize: "13px"
+    labelFontsize: 13
     labelLineHeight: "13px"
 
     # marker
@@ -37,11 +37,11 @@ module.exports = Zoomer = Model.extend
     boxRectWidth: 5
 
     # menu
-    menuFontsize: "20px"
-    menuItemFontsize: "18px"
-    menuItemLineHeight: "18px"
-    menuMarginLeft: "5px"
-    menuPadding: "3px 5px 3px 5px"
+    menuFontsize: "14px"
+    menuItemFontsize: "14px"
+    menuItemLineHeight: "14px"
+    menuMarginLeft: "3px"
+    menuPadding: "3px 4px 3px 4px"
 
     # internal props
     _alignmentScrollLeft: 0
