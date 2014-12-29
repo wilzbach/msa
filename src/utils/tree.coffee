@@ -10,13 +10,13 @@ tf =
       @msa.g.package.loadPackages ["msa-tnt", "biojs-io-newick"], cb
 
     showTree: (newickStr) ->
-      newick = tf.require "biojs-io-newick"
+      newick = @require "biojs-io-newick"
       if typeof newickStr is "string"
         newickObj = newick.parse_newick newickStr
       else
         newickObj = newickStr
 
-      mt = tf.require "msa-tnt"
+      mt = @require "msa-tnt"
 
       sel = new mt.selections()
       treeDiv = document.createElement "div"
@@ -39,7 +39,7 @@ tf =
       treeDiv.style.width = "500px"
 
     # workaround against browserify's static analysis
-    requireHelper: (pkg) ->
+    require: (pkg) ->
       require pkg
 
 _.extend treeHelper:: , tf
