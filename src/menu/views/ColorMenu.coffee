@@ -67,7 +67,7 @@ module.exports = ColorMenu = MenuBuilder.extend
 
   grey: (menuColor) ->
     # greys all lowercase letters
-    @addNode "Grey", =>
+    @addNode "Shade", =>
       @g.colorscheme.set "showLowerCase", false
       @model.each (seq) ->
         residues = seq.get "seq"
@@ -77,7 +77,7 @@ module.exports = ColorMenu = MenuBuilder.extend
             grey.push index
         seq.set "grey", grey
 
-    @addNode "Grey by threshold", =>
+    @addNode "Shade by threshold", =>
       threshold = prompt "Enter threshold (in percent)", 20
       threshold = threshold / 100
       maxLen = @model.getMaxLength()
@@ -90,13 +90,13 @@ module.exports = ColorMenu = MenuBuilder.extend
       @model.each (seq) ->
         seq.set "grey", grey
 
-    @addNode "Grey selection", =>
+    @addNode "Shade selection", =>
       maxLen = @model.getMaxLength()
       @model.each (seq) =>
         blocks = @g.selcol.getBlocksForRow(seq.get("id"),maxLen)
         seq.set "grey", blocks
 
-    @addNode "Reset grey", =>
+    @addNode "Reset shade", =>
       @g.colorscheme.set "showLowerCase", true
       @model.each (seq) ->
         seq.set "grey", []
