@@ -22,11 +22,14 @@ treeHelperFun =
       treeDiv = document.createElement "div"
       document.body.appendChild treeDiv
 
+      console.log seqs
+      console.log tree
+
       nodes = mt.app
         seqs: @msa.seqs.models
         tree: newickObj
 
-      console.log nodes
+      console.log "nodes", nodes
 
       t = new mt.adapters.tree
         model: nodes,

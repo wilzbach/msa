@@ -6,22 +6,32 @@ module.exports = Zoomer = Model.extend
     @calcDefaults options.model
     Model.apply @, arguments
     @g = options.g
+
+    # events
+    @listenTo @, "change:labelIdLength change:labelNameLength change:labelPartLength change:labelCheckLength", ->
+      @trigger "change:labelWidth", @getLabelWidth()
+    , @
+    @listenTo @, "change:metaLinksWidth change:metaIdentWidth change:metaGapWidth", ->
+      @trigger "change:metaWidth", @getMetaWidth()
+    , @
+
     @
 
   defaults:
 
     # general
     alignmentWidth: "auto"
-    alignmentHeight: 195
+    alignmentHeight: 225
     columnWidth: 15
     rowHeight: 15
     autoResize: true # only for the width
 
     # labels
-    labelWidth: 100
-    metaWidth: 100
     textVisible: true
     labelIdLength: 30
+    labelNameLength: 100
+    labelPartLength: 15
+    labelCheckLength: 15
     labelFontsize: 13
     labelLineHeight: "13px"
 
@@ -45,6 +55,11 @@ module.exports = Zoomer = Model.extend
     menuItemLineHeight: "14px"
     menuMarginLeft: "3px"
     menuPadding: "3px 4px 3px 4px"
+
+    # meta cell
+    metaGapWidth: 35
+    metaIdentWidth: 40
+    metaLinksWidth: 25
 
     # internal props
     _alignmentScrollLeft: 0
@@ -80,12 +95,27 @@ module.exports = Zoomer = Model.extend
     @set "_alignmentScrollTop",height * @get("rowHeight")
 
   # length of all elements left to the main sequence body: labels, metacell, ..
-  getLabelWidth: ->
+  getLeftBlockWidth: ->
      paddingLeft = 0
-     paddingLeft += @get "labelWidth" if @g.vis.get "labels"
-     paddingLeft += @get "metaWidth" if @g.vis.get "metacell"
-     paddingLeft += 15 # scroll bar
+     paddingLeft += @getLabelWidth() if @g.vis.get "labels"
+     paddingLeft += @getMetaWidth() if @g.vis.get "metacell"
+     #paddingLeft += 15 # scroll bar
      return paddingLeft
+
+  getMetaWidth: ->
+     val = 0
+     val += @get "metaGapWidth" if @g.vis.get "metaGaps"
+     val += @get "metaIdentWidth" if @g.vis.get "metaIdentity"
+     val += @get "metaLinksWidth" if @g.vis.get "metaLinks"
+     val
+
+  getLabelWidth: ->
+     val = 0
+     val += @get "labelNameLength" if @g.vis.get "labelName"
+     val += @get "labelIdLength" if @g.vis.get "labelId"
+     val += @get "labelPartLength" if @g.vis.get "labelPartition"
+     val += @get "labelCheckLength" if @g.vis.get "labelCheckbox"
+     val
 
   _adjustWidth: ->
     return unless @el isnt undefined and @model isnt undefined
@@ -95,7 +125,7 @@ module.exports = Zoomer = Model.extend
       parentWidth = document.body.clientWidth - 35
 
     # TODO: dirty hack
-    maxWidth = parentWidth - @getLabelWidth()
+    maxWidth = parentWidth - @getLeftBlockWidth()
     calcWidth = @getAlignmentWidth( @model.getMaxLength() - @g.columns.get('hidden').length)
     val = Math.min(maxWidth,calcWidth)
     # round to a valid AA box

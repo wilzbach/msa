@@ -42,7 +42,6 @@ module.exports = ImportMenu = MenuBuilder.extend
         #zoomer = @g.zoomer.toJSON()
         ##zoomer.textVisible = false
         ##zoomer.columnWidth = 4
-        #zoomer.labelWidth = 200
         #zoomer.boxRectHeight = 2
         #zoomer.boxRectWidth = 2
         #@g.zoomer.set zoomer

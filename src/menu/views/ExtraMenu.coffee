@@ -71,7 +71,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
       columnWidth =  @g.zoomer.get("columnWidth")
       nColumnWidth = columnWidth + 5
       @g.zoomer.set "columnWidth",  nColumnWidth
-      #@g.zoomer.set "labelWidth", @g.zoomer.get "labelWidth" + 10
       @g.zoomer.set "rowHeight", nColumnWidth
       nFontSize = nColumnWidth * 0.7
       @g.zoomer.set "residueFont", nFontSize
@@ -80,7 +79,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
       columnWidth =  @g.zoomer.get("columnWidth")
       nColumnWidth = columnWidth - 2
       @g.zoomer.set "columnWidth",  nColumnWidth
-      #@g.zoomer.set "labelWidth", @g.zoomer.get "labelWidth" + 10
       @g.zoomer.set "rowHeight", nColumnWidth
       nFontSize = nColumnWidth * 0.6
       @g.zoomer.set "residueFont", nFontSize

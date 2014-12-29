@@ -10,6 +10,8 @@ module.exports = MetaView = view.extend
 
   initialize: (data) ->
     @g = data.g
+    @listenTo @g.vis, "change:metacell", @render
+    @listenTo @g.zoomer, "change:metaWidth", @render
 
   events:
     click: "_onclick"
@@ -21,52 +23,59 @@ module.exports = MetaView = view.extend
 
     @el.style.display = "inline-block"
 
-    width = @g.zoomer.get "metaWidth"
+    width = @g.zoomer.getMetaWidth()
     @el.style.width = width - 10
     @el.style.paddingRight = 5
     @el.style.paddingLeft = 5
+    # TODO: why do we need to decrease the font size?
+    # otherwise we see a scrollbar
+    @el.style.fontSize = "#{@g.zoomer.get('labelFontsize') - 2}px"
 
-    # adds gaps
-    seq = @model.get('seq')
-    gaps = _.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0
-    gaps = (gaps / seq.length).toFixed(1)
+    if @.g.vis.get "metaGaps"
+      # adds gaps
+      seq = @model.get('seq')
+      gaps = _.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0
+      gaps = (gaps / seq.length).toFixed(1)
 
-    # append gap count
-    gapSpan = document.createElement 'span'
-    gapSpan.textContent = gaps
-    gapSpan.style.display = "inline-block"
-    gapSpan.style.width = 35
-    @el.appendChild gapSpan
-
-    # identity
-    # TODO: there must be a better way to pass the id
-    ident = @g.stats.identity()[@model.id]
-    identSpan = document.createElement 'span'
-
-    if @model.get("ref") and @g.config.get "hasRef"
-      identSpan.textContent = "ref."
-    else if ident?
-      identSpan.textContent = ident.toFixed(2)
-
-    identSpan.style.display = "inline-block"
-    identSpan.style.width = 40
-    @el.appendChild identSpan
-
-    # TODO: this menu builder is just an example how one could customize this
-    # view
-    if @model.attributes.ids
-      menu = new MenuBuilder({name: "↗"})
-      links = st.buildLinks @model.attributes.ids
-      _.each links, (val, key) ->
-        menu.addNode key,(e) ->
-          window.open val
-
-      linkEl = menu.buildDOM()
-      linkEl.style.cursor = "pointer"
-      @el.appendChild linkEl
+      # append gap count
+      gapSpan = document.createElement 'span'
+      gapSpan.textContent = gaps
+      gapSpan.style.display = "inline-block"
+      gapSpan.style.width = 35
+      @el.appendChild gapSpan
 
 
-    @el.style.height = "#{@g.zoomer.get "rowHeight"}px"
+    if @.g.vis.get "metaIdentity"
+      # identity
+      # TODO: there must be a better way to pass the id
+      ident = @g.stats.identity()[@model.id]
+      identSpan = document.createElement 'span'
+
+      if @model.get("ref") and @g.config.get "hasRef"
+        identSpan.textContent = "ref."
+      else if ident?
+        identSpan.textContent = ident.toFixed(2)
+
+      identSpan.style.display = "inline-block"
+      identSpan.style.width = 40
+      @el.appendChild identSpan
+
+    if @.g.vis.get "metaLinks"
+      # TODO: this menu builder is just an example how one could customize this
+      # view
+      if @model.attributes.ids
+        menu = new MenuBuilder({name: "↗"})
+        links = st.buildLinks @model.attributes.ids
+        _.each links, (val, key) ->
+          menu.addNode key,(e) ->
+            window.open val
+
+        linkEl = menu.buildDOM()
+        linkEl.style.cursor = "pointer"
+        @el.appendChild linkEl
+
+
+    #@el.style.height = "#{@g.zoomer.get "rowHeight"}px"
 
   _onclick: (evt) ->
     @g.trigger "meta:click", {seqId: @model.get "id", evt:evt}
