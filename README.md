@@ -116,10 +116,41 @@ __Infos__
  - generating browser builds for the codebase
  - executing all unit tests 
 
-Step 2) Unit Testing
+Step 2) Developing
+------------------
+
+```
+./w
+```
+
+(in the root dir)
+
+This will automatically execute these two commands
+
+### 2.1 Watching and recompile
+
+```
+npm run watch
+```
+
+This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
+
+Have fun coding.
+You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets. Without global installation, just hit 
+
+### 2.2 Example (snippets) server
+
+```
+npm run sniper
+```
+
+(then you can browse the snippets at [localhost:9090/snippets](http:localhost:9090/snippets)).
+
+
+3) Unit Testing
 -------------------------
 
-### Running tests from the CLI
+### 3.1 Running tests from the CLI
 
 
 ```
@@ -136,7 +167,7 @@ gulp test
 
 If you wish to let it watch for file changes and rerun the test automatically, use `gulp watch`
 
-### 2.2 Adding your test
+### 3.2 Adding your test
 
 * test without DOM interaction, can go into `test/mocha`
 * test with DOM interaction (= need to be run by a browser) -> `test/phantom`
@@ -149,30 +180,11 @@ Hints for phantom:
  - `test-mocha` wil only execute mocha tests
  - `test-phantom` will only execute phantom tests
 
-### 2.3 Debugging tests
+### 3.3 Debugging tests
 
 Open the `tests/index.html` with your browser and set breakpoints.
 Important: the coffeescript is not directly compiled in your browser, so in theory you need to compile everything to `all_tests.js`.
 However this is done automatically by `gulp test` or `gulp wacth`.
-
-
-Step 3) Developing
-------------------
-
-```
-npm run watch
-```
-
-This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
-
-Have fun coding.
-You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets. Without global installation, just hit 
-
-```
-npm run sniper
-```
-
-(then you can browse the snippets at [localhost:9090/snippets](http:localhost:9090/snippets)).
 
 
 Compiling for the browser
@@ -183,7 +195,7 @@ gulp build
 ```
 
 This is will regenerate the CSS and JS (+minimization).
-However this is done automatically by Travis (and on `npm install`), so you normally don't need to run it.
+However this is done automatically by Travis (and on `npm install`), so you __normally don't need to run it__.
 (If you can't install gulp globally, hit `npm run preinstall`.).
 The minimization is done by [Browserify](http://browserify.org/).
 
@@ -198,9 +210,8 @@ Project structure
 
 * `browser.js` main file for browserify - defines the global namespace in the browser
 * `coffeelint.json` linting config for CoffeeScript (run it with `gulp lint`)
-* `css` css config folder (previously used for SASS)
+* `css` stylesheet folder (previously used for SASS)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
-* `Gemfile` defines the dependency to ruby-sass (needed for the auto-install with bundler)
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
 * `snippets` short coding snippets that are run by [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
 * `src` the main source code
