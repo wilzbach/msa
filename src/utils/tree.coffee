@@ -23,7 +23,7 @@ tf =
       document.body.appendChild treeDiv
 
       console.log @msa.seqs.models
-      console.log tree
+      console.log newickObj
 
       nodes = mt.app
         seqs: @msa.seqs.models
