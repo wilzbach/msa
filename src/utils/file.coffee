@@ -2,6 +2,7 @@ FastaReader = require("biojs-io-fasta")
 ClustalReader = require "biojs-io-clustal"
 GffReader = require "biojs-io-gff"
 _ = require "underscore"
+xhr = require "xhr"
 
 module.exports = FileHelper = (msa) ->
   @msa = msa
@@ -69,5 +70,19 @@ funs =
         @msa.u.tree.showTree file
 
     fileName = file.name
+
+  importURL: (url, cb) ->
+    url = @msa.u.proxy.corsURL url
+    @msa.g.config.set "url", url
+    xhr url, (err,status,body) =>
+      unless err
+        res = @importFile body
+        if res is "error"
+          return
+        @msa.g.trigger "import:url", url
+        if cb
+          cb()
+      else
+        console.log err
 
 _.extend FileHelper::, funs

@@ -26,6 +26,7 @@ Stats = require "biojs-stat-seqs"
 $ = require("jbone")
 FileHelper = require "./utils/file"
 TreeHelper = require "./utils/tree"
+ProxyHelper = require "./utils/proxy"
 
 # opts is a dictionary consisting of
 # @param el [String] id or reference to a DOM element
@@ -82,6 +83,7 @@ module.exports = boneView.extend
     # utils
     @u = {}
     @u.file = new FileHelper @
+    @u.proxy = new ProxyHelper g: @g
     @u.tree = new TreeHelper @
 
     if @g.config.get("eventBus") is true
