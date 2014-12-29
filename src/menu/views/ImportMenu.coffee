@@ -1,7 +1,4 @@
-FileHelper = require "../../utils/file"
 MenuBuilder = require "../menubuilder"
-xhr = require "xhr"
-corsURL = require("../../utils/proxy").corsURL
 k = require("koala-js")
 
 module.exports = ImportMenu = MenuBuilder.extend
@@ -30,14 +27,7 @@ module.exports = ImportMenu = MenuBuilder.extend
     @addNode "URL",(e) =>
       url = prompt "URL",
       "http://rostlab.org/~goldberg/clustalw2-I20140818-215249-0556-53699878-pg.clustalw"
-      url = corsURL url, @g
-      @g.trigger "import:url", url
-      xhr url, (err,resp,body) =>
-        if err
-          console.log err
-        res = @msa.u.file.importFile body
-        if res is "error"
-          return
+      @msa.u.file.importURL url, ->
         # mass update on zoomer
         #zoomer = @g.zoomer.toJSON()
         ##zoomer.textVisible = false

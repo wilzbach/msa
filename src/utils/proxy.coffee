@@ -1,13 +1,22 @@
-module.exports = proxy =
+_ = require "underscore"
 
-    corsURL: (url, @g) =>
-      # do not filter on localhost
-      return url if document.URL.indexOf('localhost') >= 0 and url[0] is "/"
+module.exports = ProxyHelper = (opts) ->
+  @g = opts.g
+  @
 
-      # remove www + http
-      url = url.replace "www\.", ""
-      url = url.replace "http://", ""
+proxyFun =
 
-      # prepend proxy
-      url = @g.config.get('importProxy') + url
-      url
+  corsURL: (url) ->
+    # do not filter on localhost
+    return url if document.URL.indexOf('localhost') >= 0 and url[0] is "/"
+    return url if url.charAt(0) is "." or url.charAt(0) is "/"
+
+    # remove www + http
+    url = url.replace "www\.", ""
+    url = url.replace "http://", ""
+
+    # prepend proxy
+    url = @g.config.get('importProxy') + url
+    url
+
+_.extend ProxyHelper::, proxyFun
