@@ -1,6 +1,5 @@
-FastaExporter = require("biojs-io-fasta").writer
+Fasta = require("biojs-io-fasta")
 GFF = require("biojs-io-gff")
-corsURL = require("./proxy").corsURL
 xhr = require "xhr"
 blobURL = require "blueimp_canvastoblob"
 saveAs = require "browser-saveas"
@@ -25,9 +24,9 @@ module.exports = Exporter =
     window.open jalviewUrl, '_blank'
 
   publishWeb: (that, cb) ->
-    text = FastaExporter.export that.seqs.toJSON()
+    text = Fasta.write that.seqs.toJSON()
     text = encodeURIComponent text
-    url = corsURL "http://sprunge.biojs.net", that.g
+    url = that.u.proxy.corsURL "http://sprunge.biojs.net"
     xhr
       method: "POST"
       body: "sprunge=" + text
@@ -40,7 +39,7 @@ module.exports = Exporter =
 
   saveAsFile: (that,name) ->
     # limit at about 256k
-    text = FastaExporter.export that.seqs.toJSON()
+    text = Fasta.write that.seqs.toJSON()
     blob = new Blob([text], {type : 'text/plain'})
     saveAs blob, name
 
@@ -56,7 +55,7 @@ module.exports = Exporter =
     else
       selection = that.seqs.toJSON()
       console.warn "no selection found"
-    text = FastaExporter.export selection
+    text = Fasta.write selection
     blob = new Blob([text], {type : 'text/plain'})
     saveAs blob, name
 
