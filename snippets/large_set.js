@@ -12,7 +12,6 @@ opts.zoomer = {
   boxRectHeight: 1,
   boxRectWidth: 1,
   alignmentHeight: window.innerHeight * 0.8,
-  labelWidth: 120,
   labelFontsize: 12,
   labelIdLength: 50
 };

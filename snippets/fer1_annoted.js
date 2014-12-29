@@ -6,7 +6,7 @@ var gffParser = require("biojs-io-gff");
 var xhr = require("xhr");
 
 // set your custom properties
-// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
+// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
 
 var menuDiv = document.createElement('div');
 var msaDiv = document.createElement('div');
@@ -19,18 +19,13 @@ var opts = {
 var url = "./data/fer1.clustal";
 
 opts.conf = {
-  url: url, // we tell the MSA viewer about the URL source 
+  url: url, // we tell the MSA viewer about the URL source
   dropImport: true
 };
 opts.vis = {
   conserv: false,
   overviewbox: false,
   seqlogo: true
-};
-opts.zoomer = {
-  alignmentHeight: 225,
-  labelWidth: 130,
-  labelIdLength: 20,
 };
 
 // init msa

@@ -3,7 +3,7 @@ var msa = require("biojs-vis-msa");
 var clustal = require("biojs-io-clustal");
 
 // set your custom properties
-// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
+// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
 
 // you can use any DOM element instead of those divs
 var menuDiv = document.createElement('div');
@@ -18,7 +18,7 @@ clustal.read(url, function(seqs) {
   };
 
   opts.conf = {
-    url: url, // we tell the MSA viewer about the URL source 
+    url: url, // we tell the MSA viewer about the URL source
     dropImport: true
   };
   opts.vis = {
@@ -28,10 +28,7 @@ clustal.read(url, function(seqs) {
     metacell: true
   };
   opts.zoomer = {
-    alignmentHeight: 225,
-    autoResize: true,
-    labelWidth: 130,
-    labelIdLength: 20,
+    autoResize: true
   };
 
   // init msa
