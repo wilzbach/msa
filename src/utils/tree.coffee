@@ -22,7 +22,7 @@ tf =
       treeDiv = document.createElement "div"
       document.body.appendChild treeDiv
 
-      console.log seqs
+      console.log @msa.seqs.models
       console.log tree
 
       nodes = mt.app
