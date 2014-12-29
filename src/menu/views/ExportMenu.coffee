@@ -28,6 +28,10 @@ module.exports = ExportMenu = MenuBuilder.extend
       Exporter.publishWeb @msa, (link) ->
         window.open link, '_blank'
 
+    @addNode "Share link", =>
+      Exporter.shareLink @msa, (link) ->
+        window.open link, '_blank'
+
     @addNode "Export sequences", =>
       Exporter.saveAsFile @msa, "all.fasta"
 
