@@ -13,6 +13,8 @@ module.exports = boneView.extend
     @listenTo @g.zoomer, "change:rowHeight", ->
       @el.style.height = @g.zoomer.get("rowHeight") + "px"
 
+    @listenTo @g.selcol,"change reset add", @setSelection
+
   draw: ->
     @removeViews()
     if @g.vis.get "labels"
@@ -30,4 +32,13 @@ module.exports = boneView.extend
 
     @el.setAttribute "class", "biojs_msa_labelrow"
     @el.style.height = @g.zoomer.get("rowHeight") * @model.attributes.height + "px"
+
+    @setSelection()
     @
+
+  setSelection: ->
+    sel = @g.selcol.getSelForRow @model.id
+    if sel.length > 0
+      @el.style.fontWeight = "bold"
+    else
+      @el.style.fontWeight = "normal"
