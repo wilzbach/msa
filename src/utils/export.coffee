@@ -37,6 +37,18 @@ module.exports = Exporter =
       link = body.trim()
       cb(link)
 
+  shareLink: (that, cb) ->
+    url = that.g.config.get "importURL"
+    msaURL = "http://biojs-msa.org/app/?seq="
+    fCB = (link) ->
+      fURL = msaURL + link
+      if cb
+        cb fURL
+    unless url
+      Exporter.publishWeb that, fCB
+    else
+      fCB url
+
   saveAsFile: (that,name) ->
     # limit at about 256k
     text = Fasta.write that.seqs.toJSON()
