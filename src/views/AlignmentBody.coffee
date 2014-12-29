@@ -42,7 +42,7 @@ module.exports = boneView.extend
 
   getWidth: ->
     width = 0
-    width += @g.zoomer.getLabelWidth()
+    width += @g.zoomer.getLeftBlockWidth()
     if @g.vis.get "sequences"
       width += @g.zoomer.get "alignmentWidth"
     width

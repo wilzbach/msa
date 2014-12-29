@@ -11,8 +11,7 @@ module.exports = boneView.extend
     @g = data.g
     @blockEvents = false
 
-    @listenTo @g.vis,"change:markers change:conserv change:seqlogo
-    change:gapHeader", ->
+    @listenTo @g.vis,"change:header", ->
       @draw()
       @render()
     @listenTo @g.vis,"change", @_setSpacer
@@ -85,8 +84,7 @@ module.exports = boneView.extend
   _getLabelWidth: ->
     paddingLeft = 0
     unless @g.vis.get "leftHeader"
-      paddingLeft += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-      paddingLeft += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
+      paddingLeft += @g.zoomer.getLeftBlockWidth()
     return paddingLeft
 
   _setWidth: ->

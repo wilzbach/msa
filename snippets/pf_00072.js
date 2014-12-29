@@ -13,7 +13,7 @@ fasta.read('http://dev.biojs-msa.org/v1/dummy/external/PF00072_rp15.txt', functi
   opts.zoomer = {
     boxRectHeight: 1,
     boxRectWidth: 1,
-    labelWidth: 270,
+    labelNameLength: 200,
     labelFontsize: 12,
     labelIdLength: 50,
     alignmentHeight: window.innerHeight * 0.85

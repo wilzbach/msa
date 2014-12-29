@@ -9,13 +9,15 @@ module.exports = LabelHeader = view.extend
   initialize: (data) ->
     @g = data.g
 
+    @listenTo @g.vis, "change:metacell change:labels", @render
+    @listenTo @g.zoomer, "change:labelWidth change:metaWidth", @render
+
   render: ->
 
     dom.removeAllChilds @el
 
     width = 0
-    width += @g.zoomer.get "labelWidth" if @g.vis.get "labels"
-    width += @g.zoomer.get "metaWidth" if @g.vis.get "metacell"
+    width += @g.zoomer.getLeftBlockWidth()
     @el.style.width = width + "px"
 
     if @g.vis.get "labels"
@@ -30,7 +32,7 @@ module.exports = LabelHeader = view.extend
 
   labelDOM: ->
     labelHeader = k.mk "div"
-    labelHeader.style.width = @g.zoomer.get "labelWidth"
+    labelHeader.style.width = @g.zoomer.getLabelWidth()
     labelHeader.style.display = "inline-block"
 
     if @.g.vis.get "labelCheckbox"
@@ -59,11 +61,14 @@ module.exports = LabelHeader = view.extend
 
   metaDOM: ->
     metaHeader = k.mk "div"
-    metaHeader.style.width = @g.zoomer.get "metaWidth"
+    metaHeader.style.width = @g.zoomer.getMetaWidth()
     metaHeader.style.display = "inline-block"
 
-    metaHeader.appendChild @addEl("gaps", 35)
-    metaHeader.appendChild @addEl("ident", 40)
-    metaHeader.appendChild @addEl("links")
+    if @.g.vis.get "metaGaps"
+      metaHeader.appendChild @addEl("gaps", @g.zoomer.get('metaGapWidth'))
+    if @.g.vis.get "metaIdentity"
+      metaHeader.appendChild @addEl("ident", @g.zoomer.get('metaIdentWidth'))
+    if @.g.vis.get "metaLinks"
+      metaHeader.appendChild @addEl("links")
 
     metaHeader
