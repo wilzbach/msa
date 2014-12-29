@@ -4,19 +4,19 @@ module.exports = treeHelper =  (msa) ->
   @msa = msa
   @
 
-treeHelperFun =
+tf =
 
     loadTree: (cb) ->
       @msa.g.package.loadPackages ["msa-tnt", "biojs-io-newick"], cb
 
     showTree: (newickStr) ->
-      newick = require "biojs-io-newick"
+      newick = tf.require "biojs-io-newick"
       if typeof newickStr is "string"
         newickObj = newick.parse_newick newickStr
       else
         newickObj = newickStr
 
-      mt = require("msa-tnt")
+      mt = tf.require "msa-tnt"
 
       sel = new mt.selections()
       treeDiv = document.createElement "div"
@@ -38,4 +38,8 @@ treeHelperFun =
 
       treeDiv.style.width = "500px"
 
-_.extend treeHelper:: , treeHelperFun
+    # workaround against browserify's static analysis
+    requireHelper: (pkg) ->
+      require pkg
+
+_.extend treeHelper:: , tf
