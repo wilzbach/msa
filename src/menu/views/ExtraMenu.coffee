@@ -26,22 +26,7 @@ module.exports = ExtraMenu = MenuBuilder.extend
         not seq.get "ref"
       @model.sort()
 
-    @addNode "Load TnT", =>
-      # this is a very experimental feature
-      # TODO: exclude msa & tnt in the adapter package
-      newickStr = ""
-
-      cbs = Loader.joinCb ->
-        msa.u.tree.showTree newickStr
-      , 2, @
-
-      @msa.u.tree.loadTree cbs
-      newickUrl = prompt "URL", "/node_modules/msa-tnt/test/dummy/dummy_newick.newick"
-      xhr newickUrl, (err, req, body) ->
-        newickStr = body
-        cbs()
-
-    @addNode "Load TnT (gen)", ->
+    @addNode "Calc Tree", ->
       # this is a very experimental feature
       # TODO: exclude msa & tnt in the adapter package
       newickStr = ""
