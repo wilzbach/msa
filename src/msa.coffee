@@ -57,7 +57,7 @@ module.exports = boneView.extend
     @g.package = new Package @g
     @g.selcol = new SelCol [],{g:@g}
     @g.user = new User()
-    @g.vis = new Visibility data.vis
+    @g.vis = new Visibility data.vis, {model: @seqs}
     @g.visorder = new VisOrdering data.visorder
     @g.zoomer = new Zoomer data.zoomer,{g:@g, model: @seqs}
 
