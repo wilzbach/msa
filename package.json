@@ -35,7 +35,6 @@
     "biojs-vis-seqlogo": "^0.0.11",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.0",
-    "browserify": "^7.0.3",
     "dom-helper": "^1.0.0",
     "jbone": "^1.0.18",
     "koala-js": "^1.0.7",
@@ -43,14 +42,13 @@
     "mouse-pos": "^1.0.2",
     "msa-tnt": "^0.1.8",
     "underscore": "^1.6.0",
-    "watchify": "^2.2.1",
     "xhr": "^1.17.0"
   },
   "devDependencies": {
     "benchmark": "^1.0.0",
     "biojs-io-newick": "git://github.com/greenify/biojs-io-newick",
     "biojs-sniper": "^0.1.1",
-    "browserify": "^5.12.1",
+    "browserify": "^8.0.3",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
     "coffee-script": "^1.7.1",
@@ -88,7 +86,7 @@
     "tnt.tree": "0.0.10",
     "uglify-js": "~2.4.15",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^1.0.2"
+    "watchify": "^2.2.1"
   },
   "keywords": [
     "bio",
