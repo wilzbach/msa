@@ -25,6 +25,10 @@ module.exports = Visibility = Model.extend
     metaIdentity: true
     metaLinks: true
 
+  constructor: (attributes,options) ->
+    @calcDefaults options.model
+    Model.apply @, arguments
+
   initialize: ->
 
     @listenTo @, "change:metaLinks change:metaIdentity change:metaGaps", ->
@@ -38,3 +42,11 @@ module.exports = Visibility = Model.extend
     @listenTo @,"change:markers change:conserv change:seqlogo change:gapHeader", ->
       @trigger "change:header"
     , @
+
+  calcDefaults: (seqs) ->
+    console.log seqs
+    if seqs.length > 0
+      seq = seqs.at(0)
+      ids = seq.get "ids"
+      if ids isnt undefined and Object.keys(ids).length is 0
+        @defaults.metaLinks = false
