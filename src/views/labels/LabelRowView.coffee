@@ -31,7 +31,7 @@ module.exports = boneView.extend
     @renderSubviews()
 
     @el.setAttribute "class", "biojs_msa_labelrow"
-    @el.style.height = @g.zoomer.get("rowHeight") * @model.attributes.height + "px"
+    @el.style.height = @g.zoomer.get("rowHeight") * (@model.attributes.height || 1) + "px"
 
     @setSelection()
     @

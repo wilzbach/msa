@@ -7,7 +7,7 @@ cache =
     @maxScrollHeight = @g.zoomer.getMaxAlignmentHeight() - @g.zoomer.get('alignmentHeight')
 
   setMaxScrollWidth: ->
-    @maxScrollWidth = @g.zoomer.getMaxAlignmentWidth() - @g.zoomer.get('alignmentWidth')
+    @maxScrollWidth = @g.zoomer.getMaxAlignmentWidth() - @g.zoomer.getAlignmentWidth()
 
 module.exports = cacheConstructor = (g,model) ->
   this.g = g

@@ -64,15 +64,17 @@ module.exports = MetaView = view.extend
       # TODO: this menu builder is just an example how one could customize this
       # view
       if @model.attributes.ids
-        menu = new MenuBuilder({name: "↗"})
         links = st.buildLinks @model.attributes.ids
-        _.each links, (val, key) ->
-          menu.addNode key,(e) ->
-            window.open val
+        if _.keys(links).length > 0
+          menu = new MenuBuilder({name: "↗"})
+          console.log _.keys(links)
+          _.each links, (val, key) ->
+            menu.addNode key,(e) ->
+              window.open val
 
-        linkEl = menu.buildDOM()
-        linkEl.style.cursor = "pointer"
-        @el.appendChild linkEl
+          linkEl = menu.buildDOM()
+          linkEl.style.cursor = "pointer"
+          @el.appendChild linkEl
 
 
     #@el.style.height = "#{@g.zoomer.get "rowHeight"}px"

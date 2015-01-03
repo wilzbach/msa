@@ -26,7 +26,7 @@ drawer =
       continue if seq.get('hidden')
       callback.call target, {model: seq, yPos: y, y: i, hidden: hidden}
 
-      seqHeight = seq.attributes.height * @rectHeight
+      seqHeight = (seq.attributes.height || 1) * @rectHeight
       y = y + seqHeight
 
       # out of viewport - stop
@@ -54,10 +54,10 @@ drawer =
     counter = 0
     i = 0
     while counter < start and i < @model.length
-      counter += @model.at(i).attributes.height
+      counter += @model.at(i).attributes.height || 1
       i++
-    y = Math.max(0, @g.zoomer.get('_alignmentScrollTop') - counter * @rectHeight + @model.at(i - 1)
-    .attributes.height  * @rectHeight)
+    y = Math.max(0, @g.zoomer.get('_alignmentScrollTop') - counter * @rectHeight + (@model.at(i - 1)
+    .attributes.height  || 1 ) * @rectHeight)
     [i - 1, -y]
 
   # returns [the clicked seq for a viewport, row number]
@@ -68,9 +68,9 @@ drawer =
     counter = 0
     i = start
     while counter < clickedRows and i < @model.length
-      counter += @model.at(i).attributes.height
+      counter += @model.at(i).attributes.height || 1
       i++
-    rowNumber = Math.max(0, Math.floor(click / @rectHeight) - counter + @model.at(i - 1).get("height"))
+    rowNumber = Math.max(0, Math.floor(click / @rectHeight) - counter + (@model.at(i - 1).get("height") || 1))
     return [i - 1, rowNumber]
 
   # TODO: very expensive method
