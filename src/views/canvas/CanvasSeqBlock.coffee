@@ -143,7 +143,7 @@ module.exports = boneView.extend
   render: ->
 
     @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
-    @el.setAttribute 'width', @g.zoomer.get "alignmentWidth"
+    @el.setAttribute 'width', @g.zoomer.getAlignmentWidth()
 
     @g.zoomer._adjustWidth()
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
