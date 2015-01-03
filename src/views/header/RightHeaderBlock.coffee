@@ -88,4 +88,4 @@ module.exports = boneView.extend
     return paddingLeft
 
   _setWidth: ->
-    @el.style.width = @g.zoomer.get("alignmentWidth") + "px"
+    @el.style.width = @g.zoomer.getAlignmentWidth() + "px"
