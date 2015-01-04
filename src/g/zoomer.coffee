@@ -73,8 +73,10 @@ module.exports = Zoomer = Model.extend
 
   # @param n [int] maxLength of all seqs
   getAlignmentWidth: (n) ->
-    if @get("alignmentWidth") is "auto" or @get("autoResize")
-      @get("columnWidth") * n
+    if @get("autoResize") and n isnt undefined
+      return @get("columnWidth") * n
+    if @get("alignmentWidth") is undefined or @get("alignmentWidth") is "auto"
+      @_adjustWidth()
     else
       @get "alignmentWidth"
 
@@ -131,7 +133,8 @@ module.exports = Zoomer = Model.extend
     # round to a valid AA box
     val = Math.floor( val / @get("columnWidth")) * @get("columnWidth")
 
-    @set "alignmentWidth", val
+    #@set "alignmentWidth", val
+    @.attributes.alignmentWidth = val
 
   autoResize:  ->
     if @get "autoResize"
