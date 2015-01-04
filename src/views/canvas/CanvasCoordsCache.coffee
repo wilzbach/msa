@@ -12,6 +12,8 @@ cache =
 module.exports = cacheConstructor = (g,model) ->
   this.g = g
   this.model = model
+  @maxScrollWidth = 0
+  @maxScrollHeight = 0
   @setMaxScrollHeight()
   @setMaxScrollWidth()
 
