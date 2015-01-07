@@ -19,8 +19,6 @@ module.exports = SelectionManager = Collection.extend
 
       @listenTo @g, "row:click", (e) ->
         @_handleE e.evt, new sel.rowsel
-          xStart: e.rowPos
-          xEnd: e.rowPos
           seqId: e.seqId
 
       @listenTo @g, "column:click", (e) ->

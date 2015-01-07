@@ -28,7 +28,8 @@ clustal.read(url, function(seqs) {
     metacell: true
   };
   opts.zoomer = {
-    autoResize: true
+    autoResize: true,
+    labelNameLength: 150
   };
 
   // init msa
