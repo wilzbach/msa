@@ -39,6 +39,7 @@ module.exports = Zoomer = Model.extend
     markerFontsize: "10px"
     stepSize: 1
     markerStepSize: 2
+    markerHeight: 20
 
     # canvas
     residueFont: "13" # in px

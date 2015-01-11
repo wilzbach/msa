@@ -37,7 +37,7 @@ LabelView = view.extend
       checkBox.setAttribute "type", "checkbox"
       checkBox.value = @model.get('id')
       checkBox.name = "seq"
-      checkBox.style.width= @g.zoomer.get "labelCheckLength"
+      checkBox.style.width= @g.zoomer.get("labelCheckLength") + "px"
       @el.appendChild checkBox
 
     if @.g.vis.get "labelId"
@@ -46,13 +46,13 @@ LabelView = view.extend
       unless isNaN val
         val++
       id.textContent = val
-      id.style.width = @g.zoomer.get "labelIdLength"
+      id.style.width = @g.zoomer.get("labelIdLength") + "px"
       id.style.display = "inline-block"
       @el.appendChild id
 
     if @.g.vis.get "labelPartition"
       part = document.createElement "span"
-      part.style.width= @g.zoomer.get "labelPartLength"
+      part.style.width= @g.zoomer.get("labelPartLength") + "px"
       part.textContent = @model.get("partition")
       part.style.display = "inline-block"
       @el.appendChild id
@@ -63,7 +63,7 @@ LabelView = view.extend
       name.textContent = @model.get("name")
       if @model.get("ref") and @g.config.get "hasRef"
         name.style.fontWeight = "bold"
-      name.style.width= @g.zoomer.get "labelNameLength"
+      name.style.width= @g.zoomer.get("labelNameLength") + "px"
       @el.appendChild name
 
     @el.style.overflow = scroll

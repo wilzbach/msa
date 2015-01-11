@@ -38,6 +38,7 @@ module.exports = boneView.extend
 
   initialize: (data) ->
 
+    data = {} unless data?
     # check for default arrays
     data.colorscheme = {} unless data.colorscheme?
     data.columns = {} unless data.columns?
