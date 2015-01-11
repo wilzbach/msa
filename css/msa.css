@@ -23,6 +23,12 @@
     overflow: hidden;
     text-overflow: clip;
     /*margin:auto; */
+    text-align: left;
+}
+
+.biojs_msa_header {
+    white-space: nowrap;
+    text-align: left;
 }
 
 .biojs_msa_labelrow:before {

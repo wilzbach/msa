@@ -61,6 +61,7 @@ module.exports = boneView.extend
     @el.className = "biojs_msa_rheader"
     @el.style.overflowX = "auto"
     @el.style.display = "inline-block"
+    @el.style.height = @g.zoomer.get("markerHeight") + "px"
     @_setWidth()
     @_adjustScrollingLeft()
     @
