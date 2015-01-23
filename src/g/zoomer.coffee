@@ -76,7 +76,7 @@ module.exports = Zoomer = Model.extend
   getAlignmentWidth: (n) ->
     if @get("autoResize") and n isnt undefined
       return @get("columnWidth") * n
-    if @get("alignmentWidth") is undefined or @get("alignmentWidth") is "auto"
+    if @get("alignmentWidth") is undefined or @get("alignmentWidth") is "auto" or @get("alignmentWidth") is 0
       @_adjustWidth()
     else
       @get "alignmentWidth"

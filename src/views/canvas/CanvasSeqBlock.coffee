@@ -23,6 +23,8 @@ module.exports = boneView.extend
     @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
 
+    console.log "hello"
+
     # el props
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
@@ -142,8 +144,8 @@ module.exports = boneView.extend
 
   render: ->
 
-    @el.setAttribute 'height', @g.zoomer.get "alignmentHeight"
-    @el.setAttribute 'width', @g.zoomer.getAlignmentWidth()
+    @el.setAttribute 'height', @g.zoomer.get("alignmentHeight") + "px"
+    @el.setAttribute 'width', @g.zoomer.getAlignmentWidth() + "px"
 
     @g.zoomer._checkScrolling( @_checkScrolling([@g.zoomer.get('_alignmentScrollLeft'),
     @g.zoomer.get('_alignmentScrollTop')] ),{header: "canvasseq"})
