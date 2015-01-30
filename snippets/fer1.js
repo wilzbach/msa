@@ -39,5 +39,4 @@ m.u.file.importURL(url, function() {
   defMenu.render();
 });
 
-// BioJS event system test (you can safely remove this in your app)
-//instance=m.g
+//@biojs-instance=m.g
