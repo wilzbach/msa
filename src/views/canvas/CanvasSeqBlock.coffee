@@ -23,8 +23,6 @@ module.exports = boneView.extend
     @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
 
-    console.log "hello"
-
     # el props
     @el.style.display = "inline-block"
     @el.style.overflowX = "hidden"
