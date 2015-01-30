@@ -1,13 +1,18 @@
 {
   "name": "biojs-vis-msa",
   "description": "Display multiple sequences",
-  "version": "0.3.11",
+  "version": "0.3.13",
   "homepage": "http://github.com/greenify/biojs-vis-msa",
   "repository": {
     "type": "git",
     "url": "git://github.com/greenify/biojs-vis-msa"
   },
   "contributors": [
+    {
+      "name": "Sebastian Wilzbach",
+      "email": "seb [at] wilzba.ch",
+      "url": "http://sebi.wilzba.ch"
+    },
     {
       "name": "Tatyana Goldberg",
       "email": "goldberg@rostlab.org",
@@ -117,7 +122,8 @@
   "biojs": {
     "registryHeight": "400",
     "screenshot": "screenshot.png",
-    "logo": "/logo.png"
+    "logo": "/logo.png",
+    "events": ["column:click"]
   },
   "sniper": {
     "js": [
