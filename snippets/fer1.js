@@ -1,4 +1,4 @@
-/* global yourDiv */
+/* global rootDiv */
 var msa = require("biojs-vis-msa");
 
 // set your custom properties
@@ -6,8 +6,8 @@ var msa = require("biojs-vis-msa");
 
 var menuDiv = document.createElement('div');
 var msaDiv = document.createElement('div');
-yourDiv.appendChild(menuDiv);
-yourDiv.appendChild(msaDiv);
+rootDiv.appendChild(menuDiv);
+rootDiv.appendChild(msaDiv);
 
 var url = "./data/fer1.clustal";
 var opts = {
