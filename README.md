@@ -38,6 +38,8 @@ In case
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
+[![NPM](https://nodei.co/npm/biojs-vis-msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/biojs-vis-msa/)
+
 Use it
 ------
 
