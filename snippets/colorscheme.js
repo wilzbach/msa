@@ -1,4 +1,4 @@
-var msa = require("biojs-vis-msa");
+var msa = require("msa");
 
 // documentation
 // https://github.com/greenify/biojs-util-colorschemes

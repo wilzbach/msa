@@ -1,4 +1,4 @@
-var msa = require("biojs-vis-msa");
+var msa = require("msa");
 var opts = {};
 opts.seqs = msa.utils.seqgen.getDummySequences(15,100);
 opts.el = document.getElementById('msa_tree_menu');

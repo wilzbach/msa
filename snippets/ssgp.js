@@ -1,9 +1,9 @@
 /* global yourDiv */
-var msa = require("biojs-vis-msa");
+var msa = require("msa");
 var clustal = require("biojs-io-clustal");
 
 // set your custom properties
-// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
+// @see: https://github.com/greenify/msa/tree/master/src/g
 
 // you can use any DOM element instead of those divs
 var menuDiv = document.createElement('div');

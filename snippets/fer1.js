@@ -1,8 +1,8 @@
 /* global rootDiv */
-var msa = require("biojs-vis-msa");
+var msa = require("msa");
 
 // set your custom properties
-// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
+// @see: https://github.com/greenify/msa/tree/master/src/g
 
 var menuDiv = document.createElement('div');
 var msaDiv = document.createElement('div');
