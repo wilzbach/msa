@@ -79,7 +79,8 @@ FAQ
 
 Q: How can I define my own color scheme?
 
-↝ [http://workmen.biojs.net/jsbin/biojs-vis-msa/colorscheme](here)
+↝ [play in JSBin](http://workmen.biojs.net/jsbin/biojs-vis-msa/colorscheme)
+↝ [read the documentation](https://github.com/greenify/biojs-util-colorschemes)
 
 Documentation
 -------------
