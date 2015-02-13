@@ -54,7 +54,7 @@ These examples show how you could embed the MSA viewer into your page.
 [![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit?html,js,output) 
 
 
-[Current sniper](http://sniper.biojs-msa.org:9090/snippets/msa_show_menu) with different examples
+[Current sniper](http://workmen.biojs.net/demo/msa) with different examples
 
 #### display an MSA
 
@@ -139,7 +139,7 @@ npm run watch
 This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
 
 Have fun coding.
-You can also start [biojs-sniper](https://github.com/greenify/biojs-sniper), to view the snippets. Without global installation, just hit 
+You can also start [sniper](https://github.com/greenify/sniper), to view the snippets. Without global installation, just hit 
 
 ### 2.2 Example (snippets) server
 
@@ -216,7 +216,7 @@ Project structure
 * `css` stylesheet folder (previously used for SASS)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
-* `snippets` short coding snippets that are run by [`biojs-sniper`](https://github.com/greenify/biojs-sniper)
+* `snippets` short coding snippets that are run by [`sniper`](https://github.com/greenify/sniper)
 * `src` the main source code
 * `test` unit tests that are run with either mocha or phantomjs (headless browser)
 
