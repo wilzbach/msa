@@ -38,6 +38,8 @@ In case
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
+[![NPM](https://nodei.co/npm/biojs-vis-msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/biojs-vis-msa/)
+
 Use it
 ------
 
@@ -77,7 +79,8 @@ FAQ
 
 Q: How can I define my own color scheme?
 
-↝ [http://workmen.biojs.net/jsbin/msa/colorscheme](here)
+↝ [play in JSBin](http://workmen.biojs.net/jsbin/msa/colorscheme)
+↝ [read the documentation](https://github.com/greenify/biojs-util-colorschemes)
 
 Documentation
 -------------
