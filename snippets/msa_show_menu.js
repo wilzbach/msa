@@ -1,5 +1,5 @@
 /* global yourDiv */
-var msa = require("biojs-vis-msa");
+var msa = require("msa");
 
 var opts = {};
 

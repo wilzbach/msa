@@ -1,16 +1,16 @@
 {
-  "name": "biojs-vis-msa",
+  "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.3.23",
-  "homepage": "http://github.com/greenify/biojs-vis-msa",
+  "version": "0.3.24",
+  "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
-    "url": "git://github.com/greenify/biojs-vis-msa"
+    "url": "git://github.com/greenify/msa"
   },
   "contributors": [
     {
       "name": "Sebastian Wilzbach",
-      "email": "seb [at] wilzba.ch",
+      "email": "sebi.wilzbach@gmail.com",
       "url": "http://sebi.wilzba.ch"
     },
     {
@@ -24,7 +24,7 @@
       "url": "https://www.linkedin.com/in/gyachdav"
     }
   ],
-  "author": "greenify <greeenify@gmail.com>",
+  "author": "Sebastian Wilzbach <sebi.wilzbach@gmail.com>",
   "dependencies": {
     "backbone-childs": "^1.0.3",
     "backbone-thin": "^1.0.8",
@@ -52,7 +52,7 @@
   "devDependencies": {
     "benchmark": "^1.0.0",
     "biojs-io-newick": "git://github.com/greenify/biojs-io-newick",
-    "biojs-sniper": "^0.1.1",
+    "biojs-sniper": "^0.2.7",
     "browserify": "^8.0.3",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
@@ -110,7 +110,7 @@
     "sniper": "biojs-sniper .",
     "watch": "gulp watch",
     "w": "prunner 'npm run sniper' 'npm run watch'",
-    "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:biojs-vis-msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
+    "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
   },
   "license": "Apache 2",
   "browserify": {

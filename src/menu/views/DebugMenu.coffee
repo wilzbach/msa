@@ -10,7 +10,7 @@ module.exports = DebugMenu = MenuBuilder.extend
     @setName("Debug")
 
     @addNode "Get the code", =>
-      window.open "https://github.com/greenify/biojs-vis-msa"
+      window.open "https://github.com/greenify/msa"
 
     @addNode "Toggle mouseover events", =>
       @g.config.set "registerMouseHover", !@g.config.get "registerMouseHover"

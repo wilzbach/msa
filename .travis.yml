@@ -14,4 +14,4 @@ deploy:
   skip_cleanup: true
   local-dir: build
   on:
-    repo: greenify/biojs-vis-msa
+    repo: greenify/msa

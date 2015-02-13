@@ -8,11 +8,11 @@ module.exports = HelpMenu = MenuBuilder.extend
   render: ->
     @setName("Help")
     @addNode "About the project", =>
-      window.open "https://github.com/greenify/biojs-vis-msa"
+      window.open "https://github.com/greenify/msa"
     @addNode "Report issues", =>
-      window.open "https://github.com/greenify/biojs-vis-msa/issues"
+      window.open "https://github.com/greenify/msa/issues"
     @addNode "User manual", =>
-      window.open "https://github.com/greenify/biojs-vis-msa/wiki"
+      window.open "https://github.com/greenify/msa/wiki"
     @el.style.display = "inline-block"
     @el.appendChild @buildDOM()
     @
