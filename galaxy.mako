@@ -14,7 +14,7 @@ xhr(jsonURL, function(err, response,text){
 		var seqs = require("biojs-io-clustal").parse(data); 
 	}
 	
-	var msa = require("biojs-vis-msa");
+	var msa = require("msa");
 	
 	var opts = {};
 	

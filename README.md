@@ -1,4 +1,4 @@
-biojs-vis-msa
+msa
 ==========
 
 The BioJS MSA Viewer written in CoffeeScript. 
@@ -17,11 +17,11 @@ The BioJS MSA Viewer written in CoffeeScript.
 ,8'         `         `8.`8888. `Y8888P ,88P'.8'       `8. `88888.
 ```
 
-[![Build Status](https://travis-ci.org/greenify/biojs-vis-msa.svg?branch=master)](https://travis-ci.org/greenify/biojs-vis-msa)
-[![NPM version](http://img.shields.io/npm/v/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
-[![Dependencies](https://david-dm.org/greenify/biojs-vis-msa.png)](https://david-dm.org/greenify/biojs-vis-msa)
-[![Code Climate](https://codeclimate.com/github/greenify/biojs-vis-msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/biojs-vis-msa)
-[![NPM downloads](http://img.shields.io/npm/dm/biojs-vis-msa.svg)](https://www.npmjs.org/package/biojs-vis-msa)
+[![Build Status](https://travis-ci.org/greenify/msa.svg?branch=master)](https://travis-ci.org/greenify/msa)
+[![NPM version](http://img.shields.io/npm/v/msa.svg)](https://www.npmjs.org/package/msa)
+[![Dependencies](https://david-dm.org/greenify/msa.png)](https://david-dm.org/greenify/msa)
+[![Code Climate](https://codeclimate.com/github/greenify/msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/msa)
+[![NPM downloads](http://img.shields.io/npm/dm/msa.svg)](https://www.npmjs.org/package/msa)
 
 
 ```html
@@ -34,7 +34,7 @@ Yes you can either link to the minified, gzipped CDN version or download the dev
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) 
 
 In case
-* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/biojs-vis-msa/files). 
+* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/msa/files). 
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
@@ -62,10 +62,10 @@ These examples show how you could embed the MSA viewer into your page.
 ####  Features
 * runs purely in the Browser
 * import files in format like FASTA, Clustal, ...
-* be interactive and receive [Events](https://github.com/greenify/biojs-vis-msa/wiki/Events)
+* be interactive and receive [Events](https://github.com/greenify/msa/wiki/Events)
 * filter, sort, hide the sequences
 * display sequence [features](https://github.com/greenify/biojs-vis-easy_features/) 
-* extendable [Views](https://github.com/greenify/biojs-vis-msa/wiki/Views) for your integration
+* extendable [Views](https://github.com/greenify/msa/wiki/Views) for your integration
 * customizable viewport
 * simplicity as design rule
 * export to fASTA
@@ -77,12 +77,12 @@ FAQ
 
 Q: How can I define my own color scheme?
 
-↝ [http://workmen.biojs.net/jsbin/biojs-vis-msa/colorscheme](here)
+↝ [http://workmen.biojs.net/jsbin/msa/colorscheme](here)
 
 Documentation
 -------------
 
-See below and head to the [wiki](https://github.com/greenify/biojs-vis-msa/wiki/).
+See below and head to the [wiki](https://github.com/greenify/msa/wiki/).
 
 Please report bugs or feature request directly on github.
 
@@ -103,8 +103,8 @@ Step 1) Setting up
 -----------------
 
 ```bash
-git clone https://github.com/greenify/biojs-vis-msa
-cd biojs-vis-msa
+git clone https://github.com/greenify/msa
+cd msa
 npm install
 ```
 
@@ -202,7 +202,7 @@ The minimization is done by [Browserify](http://browserify.org/).
 Package list
 -----------
 
-↝ [Package list](https://github.com/greenify/biojs-vis-msa/wiki/Package-list)
+↝ [Package list](https://github.com/greenify/msa/wiki/Package-list)
 
 
 Project structure
@@ -220,4 +220,4 @@ Project structure
 Want to learn more?
 -------------------
 
-Continue at the [wiki](https://github.com/greenify/biojs-vis-msa/wiki).
+Continue at the [wiki](https://github.com/greenify/msa/wiki).
