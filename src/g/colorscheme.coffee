@@ -1,4 +1,4 @@
-Colors = require("biojs-util-colorschemes")
+Colors = require("msa-colorschemes")
 
 Model = require("backbone-thin").Model
 
