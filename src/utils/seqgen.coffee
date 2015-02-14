@@ -1,6 +1,6 @@
 Sequence = require("biojs-model").seq
 BMath = require "./bmath"
-Stat = require "biojs-stat-seqs"
+Stat = require "stat.seqs"
 
 seqgen = module.exports =
   _generateSequence: (len) ->

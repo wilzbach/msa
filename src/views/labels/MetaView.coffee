@@ -2,7 +2,7 @@ view = require("backbone-viewj")
 MenuBuilder = require "../../menu/menubuilder"
 _ = require 'underscore'
 dom = require "dom-helper"
-st = require "biojs-utils-seqtools"
+st = require "msa-seqtools"
 
 module.exports = MetaView = view.extend
 

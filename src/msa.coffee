@@ -20,7 +20,7 @@ Eventhandler = require "biojs-events"
 Stage = require "./views/Stage"
 
 # statistics
-Stats = require "biojs-stat-seqs"
+Stats = require "stat.seqs"
 
 # utils
 $ = require("jbone")
