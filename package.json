@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.3.26",
+  "version": "0.3.27",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
@@ -44,7 +44,7 @@
     "mouse-pos": "^1.0.2",
     "msa-colorschemes": "^1.0.8",
     "msa-seqtools": "^0.1.6",
-    "stat.seqs": "^0.1.6",
+    "stat.seqs": "^0.1.7",
     "underscore": "^1.6.0",
     "xhr": "^1.17.0"
   },
