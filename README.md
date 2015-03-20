@@ -74,6 +74,89 @@ These examples show how you could embed the MSA viewer into your page.
 * generate the consenus seq
 * more to come ...
 
+### Config
+
+```
+ registerMouseHover: false,
+    registerMouseClicks: true,
+    importProxy: "https://cors-anywhere.herokuapp.com/"
+    eventBus: true
+    alphabetSize: 20
+    dropImport: false
+    debug: false
+    hasRef: false # hasReference
+
+vis:
+    sequences: true
+    markers: true
+    metacell: false
+    conserv: false
+    overviewbox: false
+    seqlogo: false
+    gapHeader: false
+    leftHeader: true
+
+    # about the labels
+    labels: true
+    labelName: true
+    labelId: true
+    labelPartition: false
+    labelCheckbox: false
+
+    # meta stuff
+    metaGaps: true
+    metaIdentity: true
+    metaLinks: true
+
+zoomer:
+    # general
+    alignmentWidth: "auto"
+    alignmentHeight: 225
+    columnWidth: 15
+    rowHeight: 15
+    autoResize: true # only for the width
+
+    # labels
+    textVisible: true
+    labelIdLength: 30
+    labelNameLength: 100
+    labelPartLength: 15
+    labelCheckLength: 15
+    labelFontsize: 13
+    labelLineHeight: "13px"
+
+    # marker
+    markerFontsize: "10px"
+    stepSize: 1
+    markerStepSize: 2
+    markerHeight: 20
+
+    # canvas
+    residueFont: "13" # in px
+    canvasEventScale: 1
+
+    # overview box
+    boxRectHeight: 2
+    boxRectWidth: 2
+    overviewboxPaddingTop: 10
+
+    # menu
+    menuFontsize: "14px"
+    menuItemFontsize: "14px"
+    menuItemLineHeight: "14px"
+    menuMarginLeft: "3px"
+    menuPadding: "3px 4px 3px 4px"
+
+    # meta cell
+    metaGapWidth: 35
+    metaIdentWidth: 40
+    metaLinksWidth: 25
+
+    # internal props
+    _alignmentScrollLeft: 0
+    _alignmentScrollTop: 0
+```
+
 FAQ
 ----
 
