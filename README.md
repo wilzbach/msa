@@ -114,6 +114,22 @@ clustal.read("https://raw.githubusercontent.com/greenify/msa/master/test/dummy/s
 });
 ```
 
+### Basic config parameters
+
+* `bootstrapMenu`: automagically show a menu
+* `el`: the root DOM element
+* `importURL`: when you want to import a file automagically
+* `seqs`: if you prefer to pass sequences as object
+
+There also many other option - grouped into these categories. See below for more details.
+
+* `column`: hide columns
+* `colorscheme`: everything about a colorscheme
+* `conf`: basic configuration
+* `vis`:  visual elements
+* `visorder`: ordering of the visual elements
+* `zoomer`: everything that is pixel-based
+
 ### Change the colorscheme
 
 Checkout this [live example](http://workmen.biojs.net/demo/msa/colorscheme) or [edit](http://workmen.biojs.net/jsbin/msa/colorscheme).
@@ -251,10 +267,47 @@ msa.g.vis.set("marker", false); // hides the markers
 msa.g.zoomer.set("alignmentHeight", 500) // modifies the default height
 ```
 
+### Listen to attribute events
+
+All classes 
+
+```
+m.g.selcol.on("change", function(prev, new){
+
+})
+```
+
+You can also listen to more specific events
+
+```
+m.g.vis.on("change:alignmentWidth", function(prev, new){
+
+})
+```
+
+### Listen to user interactions
+
+```
+msa.g.on("residue:click", function(data){ ... }):
+msa.g.on("residue:mousein", function(data){ ... }):
+msa.g.on("residue:mouseout", function(data){ ... }):
+```
+
+If you want to listen to mouse events, you need to set the flag: `conf.registerMouseHover`.
+There is a plethora of events that you can listen to
+
+```
+msa.g.on("row:click", function(data){ ... }):
+msa.g.on("column:click", function(data){ ... }):
+msa.g.on("meta:click", function(data){ ... }):
+...
+```
+
+
 ### Config parameters in g
 
 ```
-config: {
+conf: {
  	registerMouseHover: false,
     registerMouseClicks: true,
     importProxy: "https://cors-anywhere.herokuapp.com/",
