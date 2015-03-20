@@ -74,87 +74,283 @@ These examples show how you could embed the MSA viewer into your page.
 * generate the consenus seq
 * more to come ...
 
-### Config
+## Use the MSA viewer
+
+### Import seqs
+
+#### a) Directly import a url
 
 ```
- registerMouseHover: false,
+var msa = require("msa");
+var opts = {
+  el: rootDiv,
+  importURL: "./data/fer1.clustal",
+};
+var m = new msa(opts);
+```
+
+#### b) Import your own seqs
+
+```
+var msa = require("msa");
+var m = new msa({
+	el: rootDiv,
+	seq: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
+});
+m.render()
+```
+
+#### c) Asynchronously import seqs
+
+```
+var msa = require("msa");
+var clustal = require("biojs-io-clustal");
+var m = new msa({
+	el: rootDiv,
+});
+clustal.read("https://raw.githubusercontent.com/greenify/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
+	m.seqs.reset(seqs);
+	m.render();
+});
+```
+
+### Change the colorscheme
+
+Checkout this [live example](http://workmen.biojs.net/demo/msa/colorscheme) or [edit](http://workmen.biojs.net/jsbin/msa/colorscheme).
+
+```
+var msa = require("msa");
+var opts = {
+  el: rootDiv,
+  importURL: "./data/fer1.clustal",
+  colorscheme: {"scheme": "hydro"}
+};
+var m = new msa(opts);
+```
+
+Own colorscheme
+
+```
+var msa = require("msa");
+var opts = {
+  el: rootDiv,
+  importURL: "./data/fer1.clustal",
+  colorscheme: {"scheme": "hydro"}
+};
+var m = new msa(opts);
+m.g.colorscheme.addStaticScheme("own",{A: "orange", C: "red", G: "green", T: "blue"});
+m.g.colorscheme.set("scheme", "own");
+```
+
+Have a look at the [doc](https://github.com/greenify/biojs-util-colorschemes) for more info.
+
+
+### Add features
+
+Checkout this [live example](http://workmen.biojs.net/demo/msa/fer1_annoted) or [edit](http://workmen.biojs.net/jsbin/msa/fer1_annoted).
+
+```
+var msa = require("msa");
+var xhr = require("xhr");
+var gffParser = require("biojs-io-gff");
+var m = msa({el: rootDiv, importURL: "https://raw.githubusercontent.com/greenify/msa/master/test/dummy/samples/p53.clustalo.clustal");
+
+// add features
+xhr("./data/fer1.gff3", function(err, request, body) {
+  var features = gffParser.parseSeqs(body);
+  m.seqs.addFeatures(features);
+});
+
+// or even more
+xhr("./data/fer1.gff_jalview", function(err, request, body) {
+  var features = gffParser.parseSeqs(body);
+  m.seqs.addFeatures(features);
+});
+```
+
+### Update seqs
+
+```
+m.seqs.at(0).set("hidden") // hides the first seq
+m.seqs.at(0).get("seq") // get raw seq
+m.seqs.at(0).get("seqId") // get seqid
+m.seqs.at(0).set("seq", "AAAA") // sets seq
+m.seqs.add({seq: "AAA"});  // we add a new seq at the end
+m.seqs.unshift({seq: "AAA"});  // we add a new seq at the beginning
+m.seqs.pop() // remove and return last seq
+m.seqs.shift() // remove and return first seq 
+m.seqs.length // nr
+m.seqs.pluck("seqId") // ["id1", "id2", ..]
+m.seqs.remove(m.seqs.at(2)) // remove seq2
+m.seqs.getMaxLength() // 200
+m.seqs.addFeatures()
+m.seqs.removeAllFeatures()
+m.seqs.setRef(m.seqs.at(1)) // sets the second seq as reference (default: first)
+m.seqs.comparator = "seqId" // sort after seqId
+m.seqs.sort() // apply our new comparator
+m.seqs.comparator =  function(a,b){ return - a.get("seq").localeCompare(b.get("seq"))} // sort after the seq itself in descending order
+m.seqs.sort()
+```
+
+Even [more](http://backbonejs.org/#Collection) is possible.
+
+### Update selection
+
+```
+m.g.selcol.add(new msa.selection.rowsel({seqId: "f1"})); // row-based
+m.g.selcol.add(new msa.selection.columnsel({xStart: 10, xEnd: 12})); // column-wise
+m.g.selcol.add(new msa.selection.possel({xStart: 10, xEnd: 12, seqId: "f1"})); // union of row and column
+m.g.selcol.reset([new msa.selection.rowsel({seqId: "f1"})]); // reset
+```
+
+```
+m.g.selcol.getBlocksForRow() // array of all selected residues for a row
+m.g.selcol.getAllColumnBlocks() // array with all selected columns
+m.g.selcol.invertRow(@model.pluck "id")
+m.g.selcol.invertCol([0,1,2])
+m.g.selcol.reset() // remove the entire selection
+m.g.user.set("searchText", search) // search 
+```
+
+### Jump to a column
+
+```
+m.g.zoomer.setLeftOffset(10) // jumps to column 10
+```
+
+### Export and save
+
+
+```
+m.utils.export.saveAsFile(m, "all.fasta") // export seqs
+m.utils.export.saveSelection(m, "selection.fasta")
+m.utils.export.saveAnnots(m, "features.gff3")
+m.utils.export.saveAsImg(m,"biojs-msa.png")
+
+// share the seqs with the public = get a public link
+m.utils.export.shareLink(m, function(link){
+	window.open(link, '_blank')
+})
+
+// share via jalview
+var url =  m.g.config.get('url')
+if url.indexOf("localhost") || url === "dragimport"
+    m.utils.export.publishWeb(m, function(link){
+    	m.utils.export.openInJalview(link, m.g.colorscheme.get("scheme"))
+    });
+}else{
+    m.utils.export.openInJalview(url, m.g.colorscheme.get("scheme"))
+}
+```
+
+
+### Update attributes
+
+```
+msa.g.vis.set("marker", false); // hides the markers
+msa.g.zoomer.set("alignmentHeight", 500) // modifies the default height
+```
+
+### Config parameters in g
+
+```
+config: {
+ 	registerMouseHover: false,
     registerMouseClicks: true,
-    importProxy: "https://cors-anywhere.herokuapp.com/"
-    eventBus: true
-    alphabetSize: 20
-    dropImport: false
-    debug: false
-    hasRef: false # hasReference
+    importProxy: "https://cors-anywhere.herokuapp.com/",
+    eventBus: true,
+    alphabetSize: 20,
+    dropImport: false,
+    debug: false,
+    hasRef: false // hasReference,
+},
+colorscheme: {
+    scheme: "taylor", // name of your color scheme
+    colorBackground: true, // otherwise only the text will be colored
+    showLowerCase: true, // used to hide and show lowercase chars in the overviewbox
+    opacity: 0.6 //opacity for the residues
+},
+columns: {
+	hidden: [] // hidden columns
+}
+vis: {
+    sequences: true,
+    markers: true,
+    metacell: false,
+    conserv: false,
+    overviewbox: false,
+    seqlogo: false,
+    gapHeader: false,
+    leftHeader: true,
 
-vis:
-    sequences: true
-    markers: true
-    metacell: false
-    conserv: false
-    overviewbox: false
-    seqlogo: false
-    gapHeader: false
-    leftHeader: true
+    // about the labels
+    labels: true,
+    labelName: true,
+    labelId: true,
+    labelPartition: false,
+    labelCheckbox: false,
 
-    # about the labels
-    labels: true
-    labelName: true
-    labelId: true
-    labelPartition: false
-    labelCheckbox: false
-
-    # meta stuff
-    metaGaps: true
-    metaIdentity: true
+    // meta stuff
+    metaGaps: true,
+    metaIdentity: true,
     metaLinks: true
+},
+zoomer: {
+    // general
+    alignmentWidth: "auto",
+    alignmentHeight: 225,
+    columnWidth: 15,
+    rowHeight: 15,
+    autoResize: true // only for the width
 
-zoomer:
-    # general
-    alignmentWidth: "auto"
-    alignmentHeight: 225
-    columnWidth: 15
-    rowHeight: 15
-    autoResize: true # only for the width
+    // labels
+    textVisible: true,
+    labelIdLength: 30,
+    labelNameLength: 100,
+    labelPartLength: 15,
+    labelCheckLength: 15,
+    labelFontsize: 13,
+    labelLineHeight: "13px",
 
-    # labels
-    textVisible: true
-    labelIdLength: 30
-    labelNameLength: 100
-    labelPartLength: 15
-    labelCheckLength: 15
-    labelFontsize: 13
-    labelLineHeight: "13px"
+    // marker
+    markerFontsize: "10px",
+    stepSize: 1,
+    markerStepSize: 2,
+    markerHeight: 20,
 
-    # marker
-    markerFontsize: "10px"
-    stepSize: 1
-    markerStepSize: 2
-    markerHeight: 20
+    // canvas
+    residueFont: "13", //in px
+    canvasEventScale: 1,
 
-    # canvas
-    residueFont: "13" # in px
-    canvasEventScale: 1
+    // overview box
+    boxRectHeight: 2,
+    boxRectWidth: 2,
+    overviewboxPaddingTop: 10,
 
-    # overview box
-    boxRectHeight: 2
-    boxRectWidth: 2
-    overviewboxPaddingTop: 10
+    // menu
+    menuFontsize: "14px",
+    menuItemFontsize: "14px",
+    menuItemLineHeight: "14px",
+    menuMarginLeft: "3px",
+    menuPadding: "3px 4px 3px 4px",
 
-    # menu
-    menuFontsize: "14px"
-    menuItemFontsize: "14px"
-    menuItemLineHeight: "14px"
-    menuMarginLeft: "3px"
-    menuPadding: "3px 4px 3px 4px"
-
-    # meta cell
-    metaGapWidth: 35
-    metaIdentWidth: 40
+    // meta cell
+    metaGapWidth: 35,
+    metaIdentWidth: 40,
     metaLinksWidth: 25
+}
+```
 
-    # internal props
-    _alignmentScrollLeft: 0
-    _alignmentScrollTop: 0
+### Sequence model
+
+```
+{
+  name: "",
+  id: "",
+  seq: "",
+  height: 1,
+  ref: false // reference: the sequence used in BLAST or the consensus seq
+}
 ```
 
 FAQ
