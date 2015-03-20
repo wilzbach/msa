@@ -96,6 +96,28 @@ module.exports = boneView.extend
         "drop": @dropFile
       @delegateEvents events
 
+    if data.importURL
+      @u.file.importURL data.importURL, =>
+        @render()
+
+    # bootstraps the menu bar by default -> destroys modularity
+    if data.bootstrapMenu
+      menuDiv = document.createElement('div')
+      wrapperDiv = document.createElement('div')
+      unless @el.parentNode
+        wrapperDiv.appendChild menuDiv
+        wrapperDiv.appendChild @el
+      else
+        @el.parentNode.replaceChild(wrapperDiv, @el)
+        wrapperDiv.appendChild menuDiv
+        wrapperDiv.appendChild @el
+
+      defMenu = new msa.menu.defaultmenu(
+        el: menuDiv,
+        msa: @
+      )
+      defMenu.render()
+
     $(window).on("resize", (e) =>
       f = ->
         @g.zoomer.autoResize()

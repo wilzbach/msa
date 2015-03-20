@@ -44,6 +44,7 @@
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
     "msa-seqtools": "^0.1.6",
+    "sniper": "^0.2.16",
     "stat.seqs": "^0.1.8",
     "underscore": "^1.6.0",
     "xhr": "^1.17.0"
