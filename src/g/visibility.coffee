@@ -1,6 +1,6 @@
 Model = require("backbone-thin").Model
 
-# visible areas
+ visible areas
 module.exports = Visibility = Model.extend
 
   defaults:
@@ -44,7 +44,6 @@ module.exports = Visibility = Model.extend
     , @
 
   calcDefaults: (seqs) ->
-    console.log seqs
     if seqs.length > 0
       seq = seqs.at(0)
       ids = seq.get "ids"
