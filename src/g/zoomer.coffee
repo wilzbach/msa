@@ -28,7 +28,7 @@ module.exports = Zoomer = Model.extend
 
     # labels
     textVisible: true
-    labelIdLength: 30
+    labelIdLength: 50
     labelNameLength: 100
     labelPartLength: 15
     labelCheckLength: 15
