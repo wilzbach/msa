@@ -70,7 +70,7 @@ if (getURLParameter('fasta') !== null) {
   overviewbox.el.style.marginTop = "30px";
 }
 
-function renderMSA(seqs) {
+function renderMSA(err, seqs) {
   // hide some UI elements for large alignments
   if (seqs.length > 1000) {
     m.g.vis.set("conserv", false);
