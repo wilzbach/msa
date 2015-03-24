@@ -12,7 +12,7 @@ yourDiv.appendChild(menuDiv);
 yourDiv.appendChild(msaDiv);
 
 var url = "./data/ssgp.clustal";
-clustal.read(url, function(seqs) {
+clustal.read(url, function(err, seqs) {
   var opts = {
     el: msaDiv
   };

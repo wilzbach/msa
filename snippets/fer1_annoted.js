@@ -32,7 +32,7 @@ opts.vis = {
 var m = msa(opts);
 
 // download the sequences itself
-clustal.read(url, function(seqs) {
+clustal.read(url, function(err, seqs) {
   m.seqs.reset(seqs);
   m.render();
 });

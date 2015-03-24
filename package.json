@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.3.31",
+  "version": "0.3.32",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
