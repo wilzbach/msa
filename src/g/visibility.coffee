@@ -1,6 +1,6 @@
 Model = require("backbone-thin").Model
 
- visible areas
+# visible areas
 module.exports = Visibility = Model.extend
 
   defaults:
