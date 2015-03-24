@@ -23,6 +23,9 @@ opts.vis = {
   seqlogo: true,
   metacell: true
 };
+opts.zoomer = {
+  labelIdLength: 20
+};
 
 // init msa
 var m = msa(opts);
