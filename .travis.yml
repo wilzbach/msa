@@ -4,7 +4,7 @@ node_js:
 before_deploy: gulp build
 deploy:
   provider: s3
-  access_key_id: AKIAJ7SXC23CS2USONIA
+  access_key_id: AKIAIUBRKBVSD3LAFBUQ
   secret_access_key:
     secure: V40rWpz/ruqzI+5eXYCcJSmkDcaMgkhadJ1wMS/rmlFZvEshdz9i4qDQtp347djAubWCjO8rcGJkK0AFBSxMnWu6UHYjrkZ80eAr2MFaJKjgMLIzJqZqDTHBvPlMpFuVUnVD8WWwc7vHRLa6hSkozov9KWuBVZapD58fqMcPnOk=
   bucket: biojs
