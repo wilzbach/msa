@@ -12,3 +12,4 @@ module.exports = Config = Model.extend
     dropImport: false
     debug: false
     hasRef: false # hasReference
+    bootstrapMenu: false
