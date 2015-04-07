@@ -14,5 +14,6 @@ deploy:
   detect_encoding: true
   skip_cleanup: true
   local-dir: build
+  region: eu-west-1
   on:
     repo: greenify/msa
