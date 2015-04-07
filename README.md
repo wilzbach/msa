@@ -25,12 +25,12 @@ The BioJS MSA Viewer written in CoffeeScript.
 
 
 ```html
-<script src=//cdn.biojs-msa.org/msa/0.3/msa.min.gz.js></script>
+<script src=//cdn.biojs.net/msa/0.3/msa.min.gz.js></script>
 ```
 
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
 
-[![Min version](http://img.shields.io/badge/prod-35kB-blue.svg)](https://cdn.biojs-msa.org/msa/latest/msa.min.gz.js)  
+[![Min version](http://img.shields.io/badge/prod-35kB-blue.svg)](https://cdn.biojs.net/msa/latest/msa.min.gz.js)  
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) 
 
 In case
@@ -43,7 +43,7 @@ In case
 Use it
 ------
 
-[Full screen](http://biojs-msa.org/app) mode.
+[Full screen](http://msa.biojs.net/app) mode.
 
 Demo
 -----
@@ -70,7 +70,7 @@ These examples show how you could embed the MSA viewer into your page.
 * extendable [Views](https://github.com/greenify/msa/wiki/Views) for your integration
 * customizable viewport
 * simplicity as design rule
-* export to fASTA
+* export to fASTAb
 * generate the consenus seq
 * more to come ...
 
