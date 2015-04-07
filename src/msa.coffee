@@ -66,20 +66,7 @@ module.exports = boneView.extend
     if window.location.hostname is "localhost"
       @g.config.set "debug", true
 
-    # stats
-    pureSeq = @seqs.pluck("seq")
-    @g.stats = new Stats @seqs
-    @g.stats.alphabetSize = @g.config.get "alphabetSize"
-    @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
-
-    # depending config
-    @g.colorscheme = new Colorator data.colorscheme, pureSeq, @g.stats
-
-    # more init
-    @g.zoomer.setEl @el, @seqs
-
-    @addView "stage",new Stage {model: @seqs, g: @g}
-    @el.setAttribute "class", "biojs_msa_div"
+    @_loadSeqs(data)
 
     # utils
     @u = {}
@@ -100,8 +87,49 @@ module.exports = boneView.extend
       @u.file.importURL data.importURL, =>
         @render()
 
-    # bootstraps the menu bar by default -> destroys modularity
     if data.bootstrapMenu
+      @g.config.set("bootstrapMenu", true)
+
+    @draw()
+    # add models to the msa (convenience)
+    @m()
+
+  _loadSeqs: (data) ->
+    # stats
+    pureSeq = @seqs.pluck("seq")
+    @g.stats = new Stats @seqs
+    @g.stats.alphabetSize = @g.config.get "alphabetSize"
+    @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
+
+    # depending config
+    @g.colorscheme = new Colorator data.colorscheme, pureSeq, @g.stats
+
+    # more init
+    @g.zoomer.setEl @el, @seqs
+
+  # proxy to the utility package
+  importURL: ->
+    return @u.file.importURL.apply @u.file, arguments
+
+  # add models to the msa (convenience)
+  m: ->
+    m = {}
+    m.model = require("./model")
+    m.selection = require("./g/selection/Selection")
+    m.selcol = require("./g/selection/SelectionCol")
+    m.view = require("backbone-viewj")
+    m.boneView = require("backbone-childs")
+    @m = m
+
+  draw: ->
+
+    @removeViews()
+
+    @addView "stage",new Stage {model: @seqs, g: @g}
+    @el.setAttribute "class", "biojs_msa_div"
+
+    # bootstraps the menu bar by default -> destroys modularity
+    if @g.config.get("bootstrapMenu")
       menuDiv = document.createElement('div')
       wrapperDiv = document.createElement('div')
       unless @el.parentNode
