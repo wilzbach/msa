@@ -187,7 +187,7 @@ xhr("./data/fer1.gff_jalview", function(err, request, body) {
 ### Update seqs
 
 ```
-m.seqs.at(0).set("hidden") // hides the first seq
+m.seqs.at(0).set("hidden", true) // hides the first seq
 m.seqs.at(0).get("seq") // get raw seq
 m.seqs.at(0).get("seqId") // get seqid
 m.seqs.at(0).set("seq", "AAAA") // sets seq
