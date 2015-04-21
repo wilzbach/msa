@@ -57,5 +57,6 @@ module.exports = boneView.extend
     @
 
   rerender: ->
-    @draw()
-    @render()
+    unless @g.config.get "manualRendering"
+      @draw()
+      @render()

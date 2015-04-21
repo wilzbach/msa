@@ -16,6 +16,7 @@ var opts = {
 
 opts.conf = {
   dropImport: true // allow to import sequences via drag & drop
+  , manualRendering: true
 };
 opts.vis = {
   conserv: false,
@@ -30,9 +31,11 @@ opts.zoomer = {
 // init msa
 var m = msa(opts);
 
+gg = m;
+
 m.u.file.importURL(url, function() {
   m.g.zoomer.autoHeight(1000); // calcs the height from the sequences (with a cut-off)
-  m.render();
+  //m.render();
 
   // the menu is independent to the MSA container
   var defMenu = new msa.menu.defaultmenu({
