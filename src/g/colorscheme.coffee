@@ -20,8 +20,10 @@ module.exports = Colorscheme = Model.extend
     )
     # the stats module sends an event every time it is refreshed
     stat.on "reset", ->
+      # some dynamic modules might require a redraw
       if @getSelectedScheme().type is "dyn"
-        @getSelectedScheme().reset()
+        if "reset" in @getSelectedScheme()
+          @getSelectedScheme().reset()
     ,@
 
   # You can enter your own color scheme here
