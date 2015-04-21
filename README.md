@@ -316,6 +316,7 @@ conf: {
     dropImport: false,
     debug: false,
     hasRef: false // hasReference,
+    manualRendering: false // manually control the render (not recommened)
 },
 colorscheme: {
     scheme: "taylor", // name of your color scheme

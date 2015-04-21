@@ -12,22 +12,26 @@ module.exports = OverviewBox = view.extend
   initialize: (data) ->
     @g = data.g
     @listenTo @g.zoomer,"change:boxRectWidth change:boxRectHeight
-    change:overviewboxPaddingTop", @render
-    @listenTo @g.selcol, "add reset change", @render
-    @listenTo @g.columns, "change:hidden", @render
-    @listenTo @g.colorscheme, "change:showLowerCase", @render
-    @listenTo @model, "change", _.debounce @render, 5
+    change:overviewboxPaddingTop", @rerender
+    @listenTo @g.selcol, "add reset change", @rerender
+    @listenTo @g.columns, "change:hidden", @rerender
+    @listenTo @g.colorscheme, "change:showLowerCase", @rerender
+    @listenTo @model, "change", _.debounce @rerender, 5
 
     # color
     @color = @g.colorscheme.getSelectedScheme()
     @listenTo @g.colorscheme, "change:scheme", ->
       @color = @g.colorscheme.getSelectedScheme()
-      @render()
+      @rerender()
     @dragStart = []
 
   events:
     click: "_onclick"
     mousedown: "_onmousedown"
+
+  rerender: ->
+    unless @g.config.get "manualRendering"
+      @render()
 
   render: ->
     @_createCanvas()

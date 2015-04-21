@@ -13,3 +13,4 @@ module.exports = Config = Model.extend
     debug: false
     hasRef: false # hasReference
     bootstrapMenu: false
+    manualRendering: false # not recommended to turn on
