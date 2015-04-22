@@ -38,7 +38,7 @@ In case
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
-[![NPM](https://nodei.co/npm/biojs-vis-msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/biojs-vis-msa/)
+[![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
 Use it
 ------
@@ -158,7 +158,7 @@ m.g.colorscheme.addStaticScheme("own",{A: "orange", C: "red", G: "green", T: "bl
 m.g.colorscheme.set("scheme", "own");
 ```
 
-Have a look at the [doc](https://github.com/greenify/biojs-util-colorschemes) for more info.
+Have a look at the [doc](https://github.com/greenify/msa-colorschemes) for more info.
 
 
 ### Add features
@@ -413,7 +413,7 @@ FAQ
 Q: How can I define my own color scheme?
 
 ↝ [play in JSBin](http://workmen.biojs.net/jsbin/msa/colorscheme)
-↝ [read the documentation](https://github.com/greenify/biojs-util-colorschemes)
+↝ [read the documentation](https://github.com/greenify/msa-colorschemes)
 
 Documentation
 -------------
