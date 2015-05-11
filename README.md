@@ -95,7 +95,7 @@ var m = new msa(opts);
 var msa = require("msa");
 var m = new msa({
 	el: rootDiv,
-	seq: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
+	seqs: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
 });
 m.render()
 ```
