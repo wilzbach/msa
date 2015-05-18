@@ -44,7 +44,7 @@
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
     "msa-seqtools": "^0.1.6",
-    "stat.seqs": "^0.1.8",
+    "stat.seqs": "^0.1.19",
     "underscore": "^1.6.0",
     "xhr": "^1.17.0"
   },
@@ -111,7 +111,7 @@
     "w": "prunner 'npm run sniper' 'npm run watch'",
     "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
   },
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "browserify": {
     "exclude": [
       "biojs-io-newick",
