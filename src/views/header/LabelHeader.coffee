@@ -39,13 +39,13 @@ module.exports = LabelHeader = view.extend
       labelHeader.appendChild @addEl(".", 10)
 
     if @.g.vis.get "labelId"
-      labelHeader.appendChild @addEl("id", @g.zoomer.get "labelIdLength")
+      labelHeader.appendChild @addEl("ID", @g.zoomer.get "labelIdLength")
 
     if @.g.vis.get "labelPartition"
       labelHeader.appendChild @addEl("part", 15)
 
     if @.g.vis.get "labelName"
-      name = @addEl("name")
+      name = @addEl("Label")
       #name.style.marginLeft = "50px"
       labelHeader.appendChild name
 
