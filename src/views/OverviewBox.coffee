@@ -85,7 +85,7 @@ module.exports = OverviewBox = view.extend
     rectWidth = @g.zoomer.get "boxRectWidth"
     rectHeight = @g.zoomer.get "boxRectHeight"
     maxHeight = rectHeight * @model.length
-    @ctx.fillStyle = "#ffff00"
+    @ctx.fillStyle = "#666666"
     @ctx.globalAlpha = 0.9
     for i in [0.. @g.selcol.length - 1] by 1
       sel = @g.selcol.at(i)
@@ -111,7 +111,7 @@ module.exports = OverviewBox = view.extend
     return if @dragStart.length is 0
 
     @render()
-    @ctx.fillStyle = "#ffff00"
+    @ctx.fillStyle = "#666666"
     @ctx.globalAlpha = 0.9
 
     rect = @_calcSelection( mouse.abs e )
