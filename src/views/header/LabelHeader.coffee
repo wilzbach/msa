@@ -65,10 +65,10 @@ module.exports = LabelHeader = view.extend
     metaHeader.style.display = "inline-block"
 
     if @.g.vis.get "metaGaps"
-      metaHeader.appendChild @addEl("gaps", @g.zoomer.get('metaGapWidth'))
+      metaHeader.appendChild @addEl("Gaps", @g.zoomer.get('metaGapWidth'))
     if @.g.vis.get "metaIdentity"
-      metaHeader.appendChild @addEl("ident", @g.zoomer.get('metaIdentWidth'))
+      metaHeader.appendChild @addEl("Ident", @g.zoomer.get('metaIdentWidth'))
     if @.g.vis.get "metaLinks"
-      metaHeader.appendChild @addEl("links")
+      metaHeader.appendChild @addEl("Links")
 
     metaHeader
