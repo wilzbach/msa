@@ -51,7 +51,7 @@ module.exports = boneView.extend
     @g = Eventhandler.mixin {}
 
     # load seqs and add subviews
-    @seqs = new SeqCollection data.seqs, @g
+    @seqs = @g.seqs = new SeqCollection data.seqs, @g
 
     # populate it and init the global models
     @g.config = new Config data.conf
@@ -97,7 +97,7 @@ module.exports = boneView.extend
   _loadSeqs: (data) ->
     # stats
     pureSeq = @seqs.pluck("seq")
-    @g.stats = new Stats @seqs
+    @g.stats = new Stats @seqs, {useGaps: true}
     @g.stats.alphabetSize = @g.config.get "alphabetSize"
     @g.columns = new Columns data.columns,@g.stats  # for action on the columns like hiding
 

@@ -13,10 +13,13 @@ module.exports = view.extend
       @render()
 
     @listenTo @g.zoomer,"change:columnWidth", ->
-        @seqlogo.column_width = @g.zoomer.get('columnWidth')
-      @render
+      @seqlogo.column_width = @g.zoomer.get('columnWidth')
+      @render()
 
     #@listenTo @g.zoomer,"change:columnWidth change:rowHeight", ->
+
+    @listenTo @g.stats, "reset", ->
+      @draw()
 
     @draw()
 
