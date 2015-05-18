@@ -46,20 +46,20 @@ module.exports = OrderingMenu = MenuBuilder.extend
     models = []
 
 
-    models.push text: "ID", comparator: "id"
+    models.push text: "ID ↑", comparator: "id"
 
-    models.push text: "ID Desc", comparator: (a, b) ->
+    models.push text: "ID ↓", comparator: (a, b) ->
       # auto converts to string for localeCompare
         - ("" + a.get("id")).localeCompare("" + b.get("id"), [], numeric: true )
 
-    models.push text: "Label", comparator: "name"
+    models.push text: "Label ↑", comparator: "name"
 
-    models.push text: "Label Desc", comparator: (a, b) ->
+    models.push text: "Label ↓", comparator: (a, b) ->
         - a.get("name").localeCompare(b.get("name"))
 
-    models.push text: "Seq", comparator: "seq"
+    models.push text: "Seq ↑", comparator: "seq"
 
-    models.push text: "Seq Desc", comparator: (a,b) ->
+    models.push text: "Seq ↓", comparator: (a,b) ->
         - a.get("seq").localeCompare(b.get("seq"))
 
     setIdent = =>
@@ -71,42 +71,42 @@ module.exports = OrderingMenu = MenuBuilder.extend
         seq = el.attributes.seq
         @gaps[el.id] = (_.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0)/ seq.length
 
-    models.push text: "Identity", comparator: (a,b) =>
+    models.push text: "Identity ↑", comparator: (a,b) =>
       val = @ident[a.id] - @ident[b.id]
       return 1 if val > 0
       return -1 if val < 0
       0
     , precode: setIdent
 
-    models.push text: "Identity Desc", comparator: (a,b) =>
+    models.push text: "Identity ↓", comparator: (a,b) =>
       val = @ident[a.id] - @ident[b.id]
       return -1 if val > 0
       return 1 if val < 0
       0
     , precode: setIdent
 
-    models.push text: "Gaps", comparator: (a,b) =>
+    models.push text: "Gaps ↑", comparator: (a,b) =>
       val = @gaps[a.id] - @gaps[b.id]
       return 1 if val > 0
       return -1 if val < 0
       0
     , precode: setGaps
 
-    models.push text: "Gaps Desc", comparator: (a,b) =>
+    models.push text: "Gaps ↓", comparator: (a,b) =>
       val = @gaps[a.id] - @gaps[b.id]
       return 1 if val < 0
       return -1 if val > 0
       0
     , precode: setGaps
 
-    models.push text: "Reference", comparator: (seq) ->
+    models.push text: "Consensus to top", comparator: (seq) ->
         not seq.get "ref"
 
-    models.push text: "Partition codes", comparator: "partition", precode: =>
-      # set partitions random
-      @g.vis.set('labelPartition', true)
-      @model.each (el) ->
-        el.set('partition', _.random(1,3))
+    #models.push text: "Partition codes ↑", comparator: "partition", precode: =>
+      ## set partitions random
+      #@g.vis.set('labelPartition', true)
+      #@model.each (el) ->
+        #el.set('partition', _.random(1,3))
 
 
     return models

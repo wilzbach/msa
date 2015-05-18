@@ -19,7 +19,7 @@ module.exports = ExtraMenu = MenuBuilder.extend
       seq = new Seq
         seq: con
         id: "0c"
-        name: "consenus"
+        name: "Consenus"
       @model.add seq
       @model.setRef seq
       @model.comparator = (seq) ->
