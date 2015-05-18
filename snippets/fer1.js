@@ -15,8 +15,8 @@ var opts = {
 };
 
 opts.conf = {
-  dropImport: true // allow to import sequences via drag & drop
-  , manualRendering: true
+  dropImport: true,// allow to import sequences via drag & drop
+  manualRendering: true
 };
 opts.vis = {
   conserv: false,
@@ -34,8 +34,7 @@ var m = msa(opts);
 gg = m;
 
 m.u.file.importURL(url, function() {
-  m.g.zoomer.autoHeight(1000); // calcs the height from the sequences (with a cut-off)
-  //m.render();
+  //m.g.zoomer.autoHeight(1000); // calcs the height from the sequences (with a cut-off)
 
   // the menu is independent to the MSA container
   var defMenu = new msa.menu.defaultmenu({
@@ -43,6 +42,7 @@ m.u.file.importURL(url, function() {
     msa: m
   });
   defMenu.render();
+  m.render();
 });
 
 //@biojs-instance=m.g

@@ -36,7 +36,7 @@ module.exports = MetaView = view.extend
       seq = @model.get('seq')
       gaps = _.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0
       # 2-place percentage , e.g. 42%
-      gaps = (gaps * 100 / seq.length).toFixed(0)
+      gaps = (gaps * 100 / seq.length).toFixed(0) + "%"
 
       # append gap count
       gapSpan = document.createElement 'span'
