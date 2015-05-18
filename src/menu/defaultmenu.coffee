@@ -19,11 +19,11 @@ module.exports = MenuView = boneView.extend
     @msa = data.msa
 
     @addView  "10_import", new ImportMenu model: @msa.seqs, g:@msa.g, msa: @msa
+    @addView  "15_ordering", new OrderingMenu model: @msa.seqs, g:@msa.g
     @addView  "20_filter", new FilterMenu model: @msa.seqs, g:@msa.g
     @addView  "30_selection", new SelectionMenu model: @msa.seqs, g:@msa.g
     @addView  "40_vis", new VisMenu model: @msa.seqs, g:@msa.g
     @addView  "50_color", new ColorMenu model: @msa.seqs, g:@msa.g
-    @addView  "60_ordering", new OrderingMenu model: @msa.seqs, g:@msa.g
     @addView  "70_extra", new ExtraMenu model: @msa.seqs, g:@msa.g, msa: @msa
     @addView  "80_export", new ExportMenu model: @msa.seqs, g:@msa.g, msa:@msa
     @addView  "90_help", new HelpMenu  g:@msa.g
