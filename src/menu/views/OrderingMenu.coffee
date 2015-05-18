@@ -65,6 +65,12 @@ module.exports = OrderingMenu = MenuBuilder.extend
     setIdent = =>
       @ident = @g.stats.identity()
 
+    setGaps = =>
+      @gaps = {}
+      @model.each (el) =>
+        seq = el.attributes.seq
+        @gaps[el.id] = (_.reduce seq, ((memo, c) -> memo++ if c is '-';memo),0)/ seq.length
+
     models.push text: "Identity", comparator: (a,b) =>
       val = @ident[a.id] - @ident[b.id]
       return 1 if val > 0
@@ -78,6 +84,20 @@ module.exports = OrderingMenu = MenuBuilder.extend
       return 1 if val < 0
       0
     , precode: setIdent
+
+    models.push text: "Gaps", comparator: (a,b) =>
+      val = @gaps[a.id] - @gaps[b.id]
+      return 1 if val > 0
+      return -1 if val < 0
+      0
+    , precode: setGaps
+
+    models.push text: "Gaps Desc", comparator: (a,b) =>
+      val = @gaps[a.id] - @gaps[b.id]
+      return 1 if val < 0
+      return -1 if val > 0
+      0
+    , precode: setGaps
 
     models.push text: "Reference", comparator: (seq) ->
         not seq.get "ref"
