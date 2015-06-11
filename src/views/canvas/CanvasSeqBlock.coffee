@@ -22,6 +22,7 @@ module.exports = boneView.extend
     @listenTo @g.zoomer,"change:alignmentWidth change:alignmentHeight", @render
     @listenTo @g.colorscheme, "change", @render
     @listenTo @g.selcol, "reset add", @render
+    @listenTo @model, "reset add", @render
 
     # el props
     @el.style.display = "inline-block"
