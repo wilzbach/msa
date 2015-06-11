@@ -13,6 +13,10 @@ module.exports = ExportMenu = MenuBuilder.extend
   render: ->
     @setName("Export")
 
+    @addNode "Share view (URL) ↪", =>
+      Exporter.shareLink @msa, (link) ->
+        window.open link, '_blank'
+
     @addNode "View in Jalview", =>
       url = @g.config.get('url')
       unless url?
@@ -24,24 +28,20 @@ module.exports = ExportMenu = MenuBuilder.extend
         else
           Exporter.openInJalview url, @g.colorscheme.get "scheme"
 
-    @addNode "Publish to the web", =>
+    @addNode "Export alignment (FASTA)", =>
+      Exporter.saveAsFile @msa, "all.fasta"
+
+    @addNode "Export alignment (URL)", =>
       Exporter.publishWeb @msa, (link) ->
         window.open link, '_blank'
 
-    @addNode "Share link", =>
-      Exporter.shareLink @msa, (link) ->
-        window.open link, '_blank'
-
-    @addNode "Export sequences", =>
-      Exporter.saveAsFile @msa, "all.fasta"
-
-    @addNode "Export selection", =>
+    @addNode "Export selected sequences (FASTA)", =>
       Exporter.saveSelection @msa, "selection.fasta"
 
-    @addNode "Export features", =>
+    @addNode "Export features (GFF)", =>
       Exporter.saveAnnots @msa, "features.gff3"
 
-    @addNode "Export image", =>
+    @addNode "Export MSA image (PNG)", =>
       Exporter.saveAsImg @msa, "biojs-msa.png"
 
     @el.appendChild @buildDOM()

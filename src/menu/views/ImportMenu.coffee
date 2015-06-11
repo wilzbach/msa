@@ -23,9 +23,11 @@ module.exports = ImportMenu = MenuBuilder.extend
 
     @el.appendChild uploader
 
+    filetypes = "(Fasta, Clustal, GFF, Jalview features, Newick)"
+
     @setName("Import")
     @addNode "URL",(e) =>
-      url = prompt "URL",
+      url = prompt "URL " + filetypes,
       "http://rostlab.org/~goldberg/clustalw2-I20140818-215249-0556-53699878-pg.clustalw"
       @msa.u.file.importURL url, ->
         # mass update on zoomer
@@ -36,11 +38,11 @@ module.exports = ImportMenu = MenuBuilder.extend
         #zoomer.boxRectWidth = 2
         #@g.zoomer.set zoomer
 
-    @addNode "From file", =>
+    @addNode "From file " + filetypes, =>
       uploader.click()
 
     @addNode "Drag & Drop", =>
-      alert "Yep. Just drag & drop your file"
+      alert "Yep. Just drag & drop your file " + filetypes
 
     @el.appendChild @buildDOM()
     @
