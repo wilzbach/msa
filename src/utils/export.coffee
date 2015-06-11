@@ -39,7 +39,7 @@ module.exports = Exporter =
 
   shareLink: (that, cb) ->
     url = that.g.config.get "importURL"
-    msaURL = "http://biojs-msa.org/app/?seq="
+    msaURL = "http://msa.biojs.net/app/?seq="
     fCB = (link) ->
       fURL = msaURL + link
       if cb
