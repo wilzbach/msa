@@ -21,6 +21,7 @@ module.exports = view.extend
 
     @listenTo @g.stats, "reset", ->
       @draw()
+      @render()
 
     @draw()
 
