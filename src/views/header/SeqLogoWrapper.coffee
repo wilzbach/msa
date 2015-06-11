@@ -1,5 +1,6 @@
 SeqLogoView = require "biojs-vis-seqlogo/light"
 view = require("backbone-viewj")
+dom = require("dom-helper")
 
 # this is a bridge between the MSA and the seqlogo viewer
 module.exports = view.extend
@@ -25,7 +26,9 @@ module.exports = view.extend
 
 
   draw: ->
-    console.log "redraw"
+    dom.removeAllChilds @el
+
+    console.log "redraw seqlogo"
     arr = @g.stats.conservResidue {scaled: true}
     arr = _.map arr, (el) ->
       _.pick el, (e,k) ->
