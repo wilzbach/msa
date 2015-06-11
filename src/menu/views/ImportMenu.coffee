@@ -29,7 +29,8 @@ module.exports = ImportMenu = MenuBuilder.extend
     @addNode "URL",(e) =>
       url = prompt "URL " + filetypes,
       "http://rostlab.org/~goldberg/clustalw2-I20140818-215249-0556-53699878-pg.clustalw"
-      @msa.u.file.importURL url, ->
+      if url.length > 5
+        @msa.u.file.importURL url, ->
         # mass update on zoomer
         #zoomer = @g.zoomer.toJSON()
         ##zoomer.textVisible = false

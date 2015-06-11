@@ -12,10 +12,13 @@ module.exports = boneView.extend
     @listenTo @g.zoomer,"change:alignmentHeight", @_setHeight
     @listenTo @model,"change:reference", @draw
 
-    @listenTo @model,"reset add remove", @draw
+    @listenTo @model,"reset add remove", =>
+      @draw()
+      @render()
 
   draw: ->
     @removeViews()
+    console.log "redraw columns" , @model.length
     for i in [0.. @model.length - 1] by 1
       continue if @model.at(i).get('hidden')
       view = new LabelRowView {model: @model.at(i), g: @g}
