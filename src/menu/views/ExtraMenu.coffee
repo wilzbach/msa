@@ -26,31 +26,31 @@ module.exports = ExtraMenu = MenuBuilder.extend
         not seq.get "ref"
       @model.sort()
 
-    @addNode "Calc Tree", ->
-      # this is a very experimental feature
-      # TODO: exclude msa & tnt in the adapter package
-      newickStr = ""
+    #@addNode "Calc Tree", ->
+      ## this is a very experimental feature
+      ## TODO: exclude msa & tnt in the adapter package
+      #newickStr = ""
 
-      cbs = Loader.joinCb ->
-        msa.u.tree.showTree nwkData
-      , 2, @
+      #cbs = Loader.joinCb ->
+        #msa.u.tree.showTree nwkData
+      #, 2, @
 
-      msa.u.tree.loadTree cbs
-      # load fake tree
-      nwkData =
-        name: "root",
-        children: [
-          name: "c1",
-          branch_length: 4
-          children: msa.seqs.filter (f,i) ->  i % 2 is 0
-        ,
-          name: "c2",
-          children: msa.seqs.filter (f,i) ->  i % 2 is 1
-          branch_length: 4
-        ]
-      msa.seqs.each (s) ->
-        s.set "branch_length", 2
-      cbs()
+      #msa.u.tree.loadTree cbs
+      ## load fake tree
+      #nwkData =
+        #name: "root",
+        #children: [
+          #name: "c1",
+          #branch_length: 4
+          #children: msa.seqs.filter (f,i) ->  i % 2 is 0
+        #,
+          #name: "c2",
+          #children: msa.seqs.filter (f,i) ->  i % 2 is 1
+          #branch_length: 4
+        #]
+      #msa.seqs.each (s) ->
+        #s.set "branch_length", 2
+      #cbs()
 
     @addNode "Increase font size", =>
       columnWidth =  @g.zoomer.get("columnWidth")
@@ -72,10 +72,6 @@ module.exports = ExtraMenu = MenuBuilder.extend
       if @g.zoomer.get("columnWidth") < 8
         @g.zoomer.set "textVisible", false
 
-    @addNode "Minimized width", =>
-      @g.zoomer.set "alignmentWidth", 600
-    @addNode "Minimized height", =>
-      @g.zoomer.set "alignmentHeight", 120
 
     @addNode "Jump to a column", =>
       offset = prompt "Column", "20"

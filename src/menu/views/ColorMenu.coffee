@@ -47,21 +47,21 @@ module.exports = ColorMenu = MenuBuilder.extend
 
   getColorschemes: ->
     schemes  = []
-    schemes.push name: "Zappo", id: "zappo"
     schemes.push name: "Taylor", id: "taylor"
-    schemes.push name: "Hydrophobicity", id: "hydro"
-    schemes.push name: "Lesk", id: "lesk"
+    schemes.push name: "Buried", id: "buried"
     schemes.push name: "Cinema", id: "cinema"
-    schemes.push name: "MAE", id: "mae"
     schemes.push name: "Clustal", id: "clustal"
     schemes.push name: "Clustal2", id: "clustal2"
-    schemes.push name: "Turn", id: "turn"
-    schemes.push name: "Strand", id: "strand"
-    schemes.push name: "Buried", id: "buried"
     schemes.push name: "Helix", id: "helix"
+    schemes.push name: "Hydrophobicity", id: "hydro"
+    schemes.push name: "Lesk", id: "lesk"
+    schemes.push name: "MAE", id: "mae"
     schemes.push name: "Nucleotide", id: "nucleotide"
     schemes.push name: "Purine", id: "purine"
     schemes.push name: "PID", id: "pid"
+    schemes.push name: "Strand", id: "strand"
+    schemes.push name: "Turn", id: "turn"
+    schemes.push name: "Zappo", id: "zappo"
     schemes.push name: "No color", id: "foo"
     schemes
 
