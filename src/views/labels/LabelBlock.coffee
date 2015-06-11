@@ -12,6 +12,8 @@ module.exports = boneView.extend
     @listenTo @g.zoomer,"change:alignmentHeight", @_setHeight
     @listenTo @model,"change:reference", @draw
 
+    @listenTo @model,"reset add remove", @draw
+
   draw: ->
     @removeViews()
     for i in [0.. @model.length - 1] by 1
