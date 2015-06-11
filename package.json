@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
@@ -52,7 +52,7 @@
     "benchmark": "^1.0.0",
     "biojs-io-newick": "git://github.com/greenify/biojs-io-newick",
     "sniper": "^0.2.16",
-    "browserify": "^8.0.3",
+    "browserify": "^10.2.1",
     "chai": "^1.9.1",
     "codo": "^2.0.9",
     "coffee-script": "^1.7.1",
