@@ -21,7 +21,8 @@ tf =
 
       sel = new mt.selections()
       treeDiv = document.createElement "div"
-      @msa.el.insertBefore treeDiv, @msa.el.childNodes[0]
+    #   @msa.el.insertBefore treeDiv, @msa.el.childNodes[0]
+      @msa.el.appendChild treeDiv
 
       console.log @msa.seqs.models
       console.log newickObj
