@@ -45,7 +45,7 @@ tf =
         model: nodes,
         sel: sel,
         msa: @msa
-      console.log m
+
       # remove top collection
       _.each(nodes.models, (e) ->
         delete e.collection
