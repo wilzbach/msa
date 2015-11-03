@@ -106,7 +106,7 @@
     "prepublish": "gulp test-fast && gulp build && rm -rf lib && coffee --bare --compile --output lib/ src/ && ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
-    "sniper": "biojs-sniper .",
+    "sniper": "sniper .",
     "watch": "gulp watch",
     "w": "prunner 'npm run sniper' 'npm run watch'",
     "browserify-pure": "browserify -t coffeeify --extension='.coffee' -t cssify -r ./browser:msa -r biojs-io-clustal -r biojs-io-fasta -r xhr -r biojs-io-gff -d -o build/msa.js"
