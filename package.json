@@ -102,7 +102,7 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "test": "gulp test",
+    "test": "gulp test-fast",
     "prepublish": "gulp test-fast && gulp build && rm -rf lib && coffee --bare --compile --output lib/ src/ && ( cd src/; find . -type f -not -iname '*.coffee' -exec cp '{}' '../lib/{}' ';' )",
     "build-browser": "gulp build-browser",
     "build-browser-min": "gulp build",
