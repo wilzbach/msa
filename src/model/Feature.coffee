@@ -19,9 +19,11 @@ module.exports = Feature = Model.extend
 
   initialize: (obj) ->
     if obj.start?
-      @set "xStart", obj.start
+      # gff counts from 1 where MSA starts at 0
+      # This fix that misalignment
+      @set "xStart", (obj.start-1)
     if obj.end?
-      @set "xEnd", obj.end
+      @set "xEnd", (obj.end-1)
     # name has a predefined meaning
     if obj.attributes?
       if obj.attributes.Name?

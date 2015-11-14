@@ -18,14 +18,14 @@ module.exports = ColorMenu = MenuBuilder.extend
     for scheme in colorschemes
       @addScheme menuColor, scheme
 
-    text = "Background"
-    if @g.colorscheme.get("colorBackground")
-      text = "Hide " + text
-    else
-      text = "Show " + text
+    # text = "Background"
+    # if @g.colorscheme.get("colorBackground")
+    #   text = "Hide " + text
+    # else
+    #   text = "Show " + text
 
-    @addNode text, =>
-      @g.colorscheme.set "colorBackground", !@g.colorscheme.get("colorBackground")
+    # @addNode text, =>
+    #   @g.colorscheme.set "colorBackground", !@g.colorscheme.get("colorBackground")
 
     @grey menuColor
 
@@ -67,36 +67,36 @@ module.exports = ColorMenu = MenuBuilder.extend
 
   grey: (menuColor) ->
     # greys all lowercase letters
-    @addNode "Shade", =>
-      @g.colorscheme.set "showLowerCase", false
-      @model.each (seq) ->
-        residues = seq.get "seq"
-        grey = []
-        _.each residues, (el, index) ->
-          if el is el.toLowerCase()
-            grey.push index
-        seq.set "grey", grey
+    # @addNode "Shade", =>
+    #   @g.colorscheme.set "showLowerCase", false
+    #   @model.each (seq) ->
+    #     residues = seq.get "seq"
+    #     grey = []
+    #     _.each residues, (el, index) ->
+    #       if el is el.toLowerCase()
+    #         grey.push index
+    #     seq.set "grey", grey
 
-    @addNode "Shade by threshold", =>
-      threshold = prompt "Enter threshold (in percent)", 20
-      threshold = threshold / 100
-      maxLen = @model.getMaxLength()
-      # TODO: cache
-      conserv = @g.stats.scale @g.stats.conservation()
-      grey = []
-      for i in [0.. maxLen - 1]
-        if conserv[i] < threshold
-          grey.push i
-      @model.each (seq) ->
-        seq.set "grey", grey
+    # @addNode "Shade by threshold", =>
+    #   threshold = prompt "Enter threshold (in percent)", 20
+    #   threshold = threshold / 100
+    #   maxLen = @model.getMaxLength()
+    #   # TODO: cache
+    #   conserv = @g.stats.scale @g.stats.conservation()
+    #   grey = []
+    #   for i in [0.. maxLen - 1]
+    #     if conserv[i] < threshold
+    #       grey.push i
+    #   @model.each (seq) ->
+    #     seq.set "grey", grey
 
-    @addNode "Shade selection", =>
-      maxLen = @model.getMaxLength()
-      @model.each (seq) =>
-        blocks = @g.selcol.getBlocksForRow(seq.get("id"),maxLen)
-        seq.set "grey", blocks
+    # @addNode "Shade selection", =>
+    #   maxLen = @model.getMaxLength()
+    #   @model.each (seq) =>
+    #     blocks = @g.selcol.getBlocksForRow(seq.get("id"),maxLen)
+    #     seq.set "grey", blocks
 
-    @addNode "Reset shade", =>
-      @g.colorscheme.set "showLowerCase", true
-      @model.each (seq) ->
-        seq.set "grey", []
+    # @addNode "Reset shade", =>
+    #   @g.colorscheme.set "showLowerCase", true
+    #   @model.each (seq) ->
+    #     seq.set "grey", []
