@@ -28,7 +28,7 @@ module.exports = Zoomer = Model.extend
 
     # labels
     textVisible: true
-    labelIdLength: 50
+    labelIdLength: 20
     labelNameLength: 100
     labelPartLength: 15
     labelCheckLength: 15
@@ -60,7 +60,7 @@ module.exports = Zoomer = Model.extend
     # meta cell
     metaGapWidth: 35
     metaIdentWidth: 40
-    metaLinksWidth: 25
+    # metaLinksWidth: 25
 
     # internal props
     _alignmentScrollLeft: 0
