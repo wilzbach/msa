@@ -68,7 +68,7 @@ module.exports = LabelHeader = view.extend
       metaHeader.appendChild @addEl("Gaps", @g.zoomer.get('metaGapWidth'))
     if @.g.vis.get "metaIdentity"
       metaHeader.appendChild @addEl("Ident", @g.zoomer.get('metaIdentWidth'))
-    if @.g.vis.get "metaLinks"
-      metaHeader.appendChild @addEl("Links")
+    # if @.g.vis.get "metaLinks"
+    #   metaHeader.appendChild @addEl("Links")
 
     metaHeader
