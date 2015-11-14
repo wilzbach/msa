@@ -15,7 +15,7 @@ module.exports = OrderingMenu = MenuBuilder.extend
 
   # TODO: make more generic
   render: ->
-    @setName("Ordering")
+    @setName("Sorting")
     @removeAllNodes()
 
     comps = @getComparators()
@@ -73,6 +73,7 @@ module.exports = OrderingMenu = MenuBuilder.extend
 
     models.push text: "Identity ↑", comparator: (a,b) =>
       val = @ident[a.id] - @ident[b.id]
+      console.log @ident[a.id],@ident[b.id]
       return 1 if val > 0
       return -1 if val < 0
       0
