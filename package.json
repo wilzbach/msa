@@ -81,6 +81,7 @@
     "mocha": "^1.21.4",
     "msa-tnt": "^0.1.7",
     "phantom": "^0.7.0",
+    "phantomjs": "^1.9.7-15",
     "prunner": "^1.0.0",
     "shelljs": "^0.3.0",
     "sinon": "^1.12.1",
