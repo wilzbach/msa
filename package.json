@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
@@ -141,7 +141,6 @@
     ],
     "first": "fer1"
   },
-  "style": "./css/msa.css",
   "galaxy": {
     "datatypes": [
       "sequence.Fasta",
