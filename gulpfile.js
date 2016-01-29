@@ -1,12 +1,10 @@
 var gulp = require('gulp');
-var mochaPhantomJS = require('gulp-mocha-phantomjs');
+//var mochaPhantomJS = require('gulp-mocha-phantomjs');
 var mocha = require('gulp-mocha');
 var watch = require('gulp-watch');
-var run = require('gulp-run');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
-var coffeelint = require('gulp-coffeelint');
 require('shelljs/global');
 
 var docco = require("gulp-docco");
@@ -35,7 +33,7 @@ var watchify = require("watchify");
 var deepcopy = require("deepcopy");
 
 var mochaSelenium = require('gulp-mocha-selenium');
-var phantomRunner = require('./test/perf/run');
+//var phantomRunner = require('./test/perf/run');
 
 // for mocha
 require('coffee-script/register');
@@ -56,13 +54,18 @@ var browserifyOptions =  {
 
 var packageConfig = require('./package.json');
 
-gulp.task('default', ['clean','test','lint','build']);
+gulp.task('default', ['clean','test','build']);
 
+/*
 gulp.task('test-fast', ['test-mocha','test-phantom'],function () {
   return true;
 });
 
 gulp.task('test', ['test-fast','test-perf'],function () {
+  return true;
+});
+*/
+gulp.task('test', ['test-mocha'],function () {
   return true;
 });
 
@@ -129,6 +132,9 @@ gulp.task('build-gzip-css', ['min-css'], function() {
 
 gulp.task('build-gzip', ['build-gzip-js', 'build-gzip-css']);
 
+/*
+ * currently using phantom tests is not supported 
+ *
 gulp.task('build-test', function() {
   return buildTest('./test/phantom/index.coffee', './test/all_test.js');
 });
@@ -148,6 +154,7 @@ gulp.task('test-perf', ["build-perf"], function () {
   .src('./test/perf/index.html')
   .pipe(phantomRunner());
 });
+*/
 
 gulp.task('test-mocha', function () {
     return gulp.src('./test/mocha/**/*.coffee', {read: false})
@@ -157,21 +164,18 @@ gulp.task('test-mocha', function () {
                     compilers: "coffee:coffee-script/register"}));
 });
 
-gulp.task('watch-mocha', function() {
+gulp.task('watch-mocha', ['test-mocha'], function() {
    // watch coffee files
-  gulp.run('test-mocha');
-   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
-     gulp.run('test-mocha');
-   });
+   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], ['test-mocha']);
 });
 
 // runs the mocha test in your browser
-gulp.task('test-mocha-selenium', function () {
-    return gulp.src('./test/mocha/**/*.coffee', {read: false})
-        .pipe(mochaSelenium({reporter: 'spec',
-                    ui: "qunit",
-                    compilers: "coffee:coffee-script/register"}));
-});
+//gulp.task('test-mocha-selenium', function () {
+//    return gulp.src('./test/mocha/**/*.coffee', {read: false})
+//        .pipe(mochaSelenium({reporter: 'spec',
+//                    ui: "qunit",
+//                    compilers: "coffee:coffee-script/register"}));
+//});
 
 gulp.task('doc', ["init"], function () {
   return gulp.src("./src/**/*.coffee")
@@ -179,11 +183,11 @@ gulp.task('doc', ["init"], function () {
     .pipe(gulp.dest(join(buildDir, 'doc')));
 });
 
-gulp.task('lint', function () {
-    return gulp.src('./src/**/*.coffee')
-        .pipe(coffeelint("coffeelint.json"))
-        .pipe(coffeelint.reporter());
-});
+//gulp.task('lint', function () {
+//    return gulp.src('./src/**/*.coffee')
+//        .pipe(coffeelint("coffeelint.json"))
+//        .pipe(coffeelint.reporter());
+//});
 
 gulp.task('css',['init'], function () {
     return gulp.src('./css/*.css')
@@ -246,21 +250,25 @@ function makeBundle(b){
 
 gulp.task('watch-test', function() {
    // watch coffee files
-   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], function() {
-     gulp.run('test');
-   });
+   gulp.watch(['./src/**/*.coffee', './test/**/*.coffee'], ['test']);
 });
 
 // be careful when using this task.
 // will remove everything in build
-gulp.task('clean', function() {
-  del.sync(buildDir);
-  gulp.run('init');
+gulp.task('clean', ['del-builddir', 'init']);
+
+gulp.task('del-builddir', function() {
+  return del(buildDir);
+  /*
+  .catch(function (err) {
+    if (err) console.error(err)
+  });
+  */
 });
 
 // just makes sure that the build dir exists
 gulp.task('init', function() {
-  mkdirp(buildDir, function (err) {
+  return mkdirp(buildDir, function (err) {
     if (err) console.error(err)
   });
 });
