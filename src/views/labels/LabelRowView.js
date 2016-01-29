@@ -28,12 +28,12 @@ module.exports = boneView.extend({
     }
   },
 
-  drawR(): function {
+  drawR: function() {
     this.draw();
     return this.render();
   },
 
-  render(): function {
+  render: function() {
     this.renderSubviews();
 
     this.el.setAttribute("class", "biojs_msa_labelrow");
@@ -43,7 +43,7 @@ module.exports = boneView.extend({
     return this;
   },
 
-  setSelection(): function {
+  setSelection: function() {
     var sel = this.g.selcol.getSelForRow(this.model.id);
     if (sel.length > 0) {
       return this.el.style.fontWeight = "bold";

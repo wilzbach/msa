@@ -23,11 +23,9 @@ var LabelView = view.extend({
     this.listenTo(this.g.config, "change:registerMouseHover", this.manageEvents);
     this.listenTo(this.g.config, "change:registerMouseClick", this.manageEvents);
     this.listenTo(this.g.vis, "change:labelName change:labelId change:labelPartition change:labelCheckbox", this.render);
-    this.listenTo( this.g.zoomer, "change:labelIdLength change:labelNameLength
-    change:labelPartLength change:labelCheckLength", this.render
+    this.listenTo( this.g.zoomer, "change:labelIdLength change:labelNameLength change:labelPartLength change:labelCheckLength", this.render
     );
-    return this.listenTo( this.g.zoomer, "change:labelFontSize change:labelLineHeight
-    change:labelWidth change:rowHeight", this.render
+    return this.listenTo( this.g.zoomer, "change:labelFontSize change:labelLineHeight change:labelWidth change:rowHeight", this.render
     );
   },
 

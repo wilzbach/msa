@@ -58,20 +58,20 @@ module.exports = OrderingMenu = MenuBuilder.extend({
 
     models.push({text: "ID ↑", comparator: "id"});
 
-    models.push({text: "ID ↓", comparator(a, b) {
+    models.push({text: "ID ↓", comparator: function(a, b) {
       // auto converts to string for localeCompare
         return - ("" + a.get("id")).localeCompare("" + b.get("id"), [], {numeric: true} );
     }});
 
     models.push({text: "Label ↑", comparator: "name"});
 
-    models.push({text: "Label ↓", comparator(a, b) {
+    models.push({text: "Label ↓", comparator: function(a, b) {
         return - a.get("name").localeCompare(b.get("name"));
     }});
 
     models.push({text: "Seq ↑", comparator: "seq"});
 
-    models.push({text: "Seq ↓", comparator(a,b) {
+    models.push({text: "Seq ↓", comparator: function(a,b) {
         return - a.get("seq").localeCompare(b.get("seq"));
     }});
 
@@ -83,7 +83,7 @@ module.exports = OrderingMenu = MenuBuilder.extend({
       this.gaps = {};
       return this.model.each((el) => {
         var seq = el.attributes.seq;
-        return this.gaps[el.id] = (_.reduce(seq, (function(memo, c) { return c === '-' ? memo++,memo : undefined; }),0))/ seq.length;
+        return this.gaps[el.id] = (_.reduce(seq, (function(memo, c) { return c === '-' ? ++memo: undefined; }),0))/ seq.length;
       });
     };
 

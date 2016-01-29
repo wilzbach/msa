@@ -80,7 +80,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
       var threshold = prompt("Enter threshold (in percent)", 40);
       return this.model.each(function(el,i) {
         var seq = el.get('seq');
-        var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? memo++,memo : undefined; }),0);
+        var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? ++memo: undefined; }),0);
         if (gaps >  threshold) {
           return el.set('hidden', true);
         }

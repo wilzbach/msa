@@ -12,9 +12,7 @@ module.exports = OverviewBox = view.extend({
 
   initialize: function(data) {
     this.g = data.g;
-    this.listenTo( this.g.zoomer,"change:boxRectWidth change:boxRectHeight
-    change:overviewboxPaddingTop", this.rerender
-    );
+    this.listenTo( this.g.zoomer,"change:boxRectWidth change:boxRectHeight change:overviewboxPaddingTop", this.rerender);
     this.listenTo(this.g.selcol, "add reset change", this.rerender);
     this.listenTo(this.g.columns, "change:hidden", this.rerender);
     this.listenTo(this.g.colorscheme, "change:showLowerCase", this.rerender);

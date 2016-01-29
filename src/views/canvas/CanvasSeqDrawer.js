@@ -23,26 +23,21 @@ var drawer =
 
     var [start, y] = this.getStartSeq();
 
-    return (() => {
-      var result = [];
-      var end = this.model.length - 1;
-      for (var i = start; start < end ? i <= end : i >= end; start < end ? i++ : i++) {
-        var seq = this.model.at(i);
-        if (seq.get('hidden')) { continue; }
-        callback.call(target, {model: seq, yPos: y, y: i, hidden: hidden});
-
-        var seqHeight = (seq.attributes.height || 1) * this.rectHeight;
-        y = y + seqHeight;
-
-        // out of viewport - stop
-        result.push((() => {
-          if (y > this.height) {
-            return break;
-          }
-        })());
+    for (var i = start; i < this.model.length; i++) {
+      var seq = this.model.at(i);
+      if (seq.get('hidden')) {
+        continue;
       }
-      return result;
-    })();
+      callback.call(target, {model: seq, yPos: y, y: i, hidden: hidden});
+
+      var seqHeight = (seq.attributes.height || 1) * this.rectHeight;
+      y = y + seqHeight;
+
+      // out of viewport - stop
+      if (y > this.height) {
+          break;
+      }
+    }
   },
 
   // calls the callback for every drawable row
@@ -105,38 +100,31 @@ var drawer =
     var res = {rectWidth: rectWidth, rectHeight: rectHeight, yPos: y, y: data.y};
     var elWidth = this.width;
 
-    return (() => {
-      var result = [];
-      var end = seq.length - 1;
-      for (var j = start; start < end ? j <= end : j >= end; start < end ? j++ : j++) {
-        var c = seq[j];
-        c = c.toUpperCase();
+    for (var j = start; j <  seq.length; j++) {
+      var c = seq[j];
+      c = c.toUpperCase();
 
-        // call the custom function
-        res.x = j;
-        res.c = c;
-        res.xPos = x;
+      // call the custom function
+      res.x = j;
+      res.c = c;
+      res.xPos = x;
 
-        // local call is faster than apply
-        // http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
-        if (data.hidden.indexOf(j) < 0) {
-          callback(this,res);
-        } else {
-          continue;
-        }
-
-        // move to the right
-        x = x + rectWidth;
-
-        // out of viewport - stop
-        result.push((() => {
-          if (x > elWidth) {
-            return break;
-          }
-        })());
+      // local call is faster than apply
+      // http://jsperf.com/function-calls-direct-vs-apply-vs-call-vs-bind/6
+      if (data.hidden.indexOf(j) < 0) {
+        callback(this, res);
+      } else {
+        continue;
       }
-      return result;
-    })();
+
+      // move to the right
+      x = x + rectWidth;
+
+      // out of viewport - stop
+      if (x > elWidth) {
+        break;
+      }
+    }
   },
 
   _drawRect: function(that, data) {
