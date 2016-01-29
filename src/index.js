@@ -1,6 +1,7 @@
 var MSA = require("./msa");
 
-module.exports = function() {
+
+module.exports = window.msa = function() {
   var msa = function(args) {
     return MSA.apply(this, args);
   };
