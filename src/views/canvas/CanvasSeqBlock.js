@@ -256,8 +256,7 @@ module.exports = boneView.extend({
     this.dragStart = mouse.abs(e.changedTouches[0]);
     this.dragStartScroll = [this.g.zoomer.get('_alignmentScrollLeft'), this.g.zoomer.get('_alignmentScrollTop')];
     jbone(document.body).on('touchmove.overtmove', (e) => this._ontouchmove(e));
-    return jbone(document.body).on( 'touchend.overtend touchleave.overtleave
-    touchcancel.overtcanel', (e) => this._touchCleanup(e)
+    return jbone(document.body).on( 'touchend.overtend touchleave.overtleave touchcancel.overtcanel', (e) => this._touchCleanup(e)
     );
   },
 

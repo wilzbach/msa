@@ -7,14 +7,14 @@ var Model = require("backbone-thin").Model;
 // feel free to create your own color scheme in the /css/schemes folder
 module.exports = Colorscheme = Model.extend({
 
-  defaults:
-    {scheme: "taylor", // name of your color scheme
+  defaults: {
+    scheme: "taylor", // name of your color scheme
     colorBackground: true, // otherwise only the text will be colored
     showLowerCase: true, // used to hide and show lowercase chars in the overviewbox
     opacity: 0.6, // opacity for the residues
-    }
+  },
 
-  initialize(data,seqs, stat) {
+  initialize: function(data,seqs, stat) {
     this.colors = new Colors(
       {seqs: seqs,
       conservation: function() {
@@ -31,8 +31,7 @@ module.exports = Colorscheme = Model.extend({
         }
       }
     }
-    ),this
-    );
+    ),this);
   },
 
   // You can enter your own color scheme here

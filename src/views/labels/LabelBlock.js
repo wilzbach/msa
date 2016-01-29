@@ -21,17 +21,12 @@ module.exports = boneView.extend({
   draw: function() {
     this.removeViews();
     console.log("redraw columns" , this.model.length);
-    return (() => {
-      var result = [];
-      var end = this.model.length - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; i < this.model.length; i++) {
         if (this.model.at(i).get('hidden')) { continue; }
         var view = new LabelRowView({model: this.model.at(i), g: this.g});
         view.ordering = i;
-        result.push(this.addView(`row_${i}`, view));
-      }
-      return result;
-    })();
+        this.addView("row_" + i, view)
+    }
   },
 
   events:

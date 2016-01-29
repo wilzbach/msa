@@ -37,7 +37,7 @@ module.exports = MetaView = view.extend({
     if (this.g.vis.get("metaGaps")) {
       // adds gaps
       var seq = this.model.get('seq');
-      var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? memo++,memo : undefined; }),0);
+      var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? ++memo : undefined; }),0);
       // 2-place percentage , e.g. 42%
       gaps = (gaps * 100 / seq.length).toFixed(0) + "%";
 
