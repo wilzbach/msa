@@ -40,6 +40,11 @@ In case
 
 [![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
+News
+----
+
+* Pure JS version (with ES6 and webpack) in the [`develop`](https://github.com/greenify/msa/tree/develop) branch
+
 Use it
 ------
 
