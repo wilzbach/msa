@@ -7,8 +7,6 @@ var gutil = require('gulp-util');
 var uglify = require('gulp-uglify');
 require('shelljs/global');
 
-var docco = require("gulp-docco");
-
 // browserify 
 var browserify = require('browserify');
 var coffeify = require("coffeeify");
@@ -177,11 +175,11 @@ gulp.task('watch-mocha', ['test-mocha'], function() {
 //                    compilers: "coffee:coffee-script/register"}));
 //});
 
-gulp.task('doc', ["init"], function () {
-  return gulp.src("./src/**/*.coffee")
-    .pipe(docco())
-    .pipe(gulp.dest(join(buildDir, 'doc')));
-});
+// gulp.task('doc', ["init"], function () {
+//   return gulp.src("./src/**/*.coffee")
+//     .pipe(docco())
+//     .pipe(gulp.dest(join(buildDir, 'doc')));
+// });
 
 //gulp.task('lint', function () {
 //    return gulp.src('./src/**/*.coffee')
