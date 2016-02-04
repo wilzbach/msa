@@ -13,9 +13,10 @@ var proxyFun =
     if (document.URL.indexOf('localhost') >= 0 && url[0] === "/") { return url; }
     if (url.charAt(0) === "." || url.charAt(0) === "/") { return url; }
 
+    // DEPRECATED as crossorigin.me requires http
     // remove www + http
-    url = url.replace("www\.", "");
-    url = url.replace("http://", "");
+    //url = url.replace("www\.", "");
+    //url = url.replace("http://", "");
 
     // prepend proxy
     url = this.g.config.get('importProxy') + url;

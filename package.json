@@ -105,7 +105,7 @@
   },
   "sniper": {
     "js": [
-      "build/msa.js"
+      "dist/msa.js"
     ],
     "css": [
       "css/msa.css"
