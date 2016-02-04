@@ -17,25 +17,23 @@
 
     <script>
         // this is a way how you use a bundled file parser
-        msa = require("msa");
-
-        var opts = {};
-
         // set your custom properties
         // @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
-        opts.el = document.getElementById("yourDiv");
-        opts.vis = {
-            conserv: false,
-            overviewbox: false,
-            seqlogo: true
-        };
-        opts.conf = {
-            dropImport: true
-        };
-        opts.zoomer = {
-            menuFontsize: "12px",
-            autoResize: true
-        };
+        var opts = {
+			el: document.getElementById("yourDiv");
+        	vis: {
+            	conserv: false,
+            	overviewbox: false,
+            	seqlogo: true
+        	},
+        	conf: {
+            	dropImport: true
+        	},
+        	opts.zoomer: {
+        	    menuFontsize: "12px",
+        	    autoResize: true
+        	}
+		};
 
         // init msa
         var m = new msa.msa(opts);
@@ -53,9 +51,10 @@
         function renderMSA() {
 
             // the menu is independent to the MSA container
-            var menuOpts = {};
-            menuOpts.el = document.getElementById('div');
-            menuOpts.msa = m;
+            var menuOpts = {
+				el: document.getElementById('div'),
+				msa: m
+			};
             var defMenu = new msa.menu.defaultmenu(menuOpts);
             m.addView("menu", defMenu);
 
