@@ -94,6 +94,10 @@ module.exports = boneView.extend({
     }
 
     if (data.bootstrapMenu) {
+      // pass menu configuration to defaultmenu
+      if(data.menu){
+        this.menuConfig = data.menu;
+      }
       this.g.config.set("bootstrapMenu", true);
     }
 
@@ -152,10 +156,13 @@ module.exports = boneView.extend({
         wrapperDiv.appendChild(this.el);
       }
 
-      var defMenu = new msa.menu.defaultmenu(
-        {el: menuDiv,
-        msa: this}
-      );
+      var bootstrapOpts = {el: menuDiv,
+        msa: this,
+      };
+      if(this.menuConfig){
+        bootstrapOpts.menu = this.menuConfig;
+      }
+      var defMenu = new msa.menu.defaultmenu(bootstrapOpts);
       defMenu.render();
     }
 

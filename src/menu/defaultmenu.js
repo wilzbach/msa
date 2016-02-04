@@ -12,12 +12,19 @@ var ExtraMenu = require("./views/ExtraMenu");
 var ExportMenu = require("./views/ExportMenu");
 var HelpMenu = require("./views/HelpMenu");
 var DebugMenu = require("./views/DebugMenu");
+var MenuSettings = require("./settings");
 
 // this very basic menu demonstrates calls to the MSA component
 module.exports = MenuView = boneView.extend({
 
   initialize: function(data) {
+    if(!data.msa){
+      throw new Error("No msa instance provided. Please provide .msa");
+    }
     this.msa = data.msa;
+
+    // add menu config to the global object
+    this.msa.g.menuconfig = new MenuSettings(data.menu);
 
     this.addView("10_import", new ImportMenu({model: this.msa.seqs, g:this.msa.g, msa: this.msa}));
     this.addView("15_ordering", new OrderingMenu({model: this.msa.seqs, g:this.msa.g}));

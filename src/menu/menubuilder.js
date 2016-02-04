@@ -12,21 +12,21 @@ module.exports = MenuBuilder = builder.extend({
 
     buildNode: function(li) {
       if ((this.g != null)) {
-        return li.style.lineHeight = this.g.zoomer.get("menuItemLineHeight");
+        return li.style.lineHeight = this.g.menuconfig.get("menuItemLineHeight");
       }
     },
 
     buildButton: function(btn) {
       if ((this.g != null)) {
-        btn.style.fontSize = this.g.zoomer.get("menuFontsize");
-        btn.style.marginLeft = this.g.zoomer.get("menuMarginLeft");
-        return btn.style.padding = this.g.zoomer.get("menuPadding");
+        btn.style.fontSize = this.g.menuconfig.get("menuFontsize");
+        btn.style.marginLeft = this.g.menuconfig.get("menuMarginLeft");
+        return btn.style.padding = this.g.menuconfig.get("menuPadding");
       }
     },
 
     buildMenu: function(menu) {
       if ((this.g != null)) {
-        return menu.style.fontSize = this.g.zoomer.get("menuItemFontsize");
+        return menu.style.fontSize = this.g.menuconfig.get("menuItemFontsize");
       }
     }
 });

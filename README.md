@@ -381,17 +381,23 @@ zoomer: {
     boxRectWidth: 2,
     overviewboxPaddingTop: 10,
 
-    // menu
+    // meta cell
+    metaGapWidth: 35,
+    metaIdentWidth: 40,
+    metaLinksWidth: 25
+}
+```
+
+The menu has its own small set of properties that can be modified. It's the `menu`
+property for both the defaultmenu as using the menu bootstrapping.
+
+```
+menu: {
     menuFontsize: "14px",
     menuItemFontsize: "14px",
     menuItemLineHeight: "14px",
     menuMarginLeft: "3px",
     menuPadding: "3px 4px 3px 4px",
-
-    // meta cell
-    metaGapWidth: 35,
-    metaIdentWidth: 40,
-    metaLinksWidth: 25
 }
 ```
 
