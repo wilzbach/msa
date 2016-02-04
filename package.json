@@ -81,7 +81,7 @@
     "alignment",
     "sequence"
   ],
-  "main": "bundle.js",
+  "main": "dist/msa.js",
   "scripts": {
     "test": "echo 'temporarily disabled'",
     "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build",
