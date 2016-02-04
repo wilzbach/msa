@@ -43,7 +43,11 @@
         var m = new msa.msa(opts);
 
         var url = "https://cdn.rawgit.com/greenify/msa/master/snippets/data/fer1.clustal";
+  		function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        }
 
+		var url = getURLParameter('seq') || defaultURL;
         m.u.file.importURL(url, renderMSA);
 
         function renderMSA() {
