@@ -3,9 +3,9 @@ var Model = require("backbone-thin").Model;
 module.exports = MenuSettings = Model.extend({
     constructor: function(attributes,options) {
         if(attributes == "small"){
-            attributes = MenuSettings.small;
+            attributes = this.small;
         }
-        return Model.apply(this, arguments);
+        return Model.apply(this, [attributes]);
     },
     small: {
         menuFontsize: "12px"
