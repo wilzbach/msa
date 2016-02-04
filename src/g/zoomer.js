@@ -21,10 +21,10 @@ module.exports = Zoomer = Model.extend({
     return this;
   },
 
-  defaults:
+  defaults: {
 
     // general
-    {alignmentWidth: "auto",
+    alignmentWidth: "auto",
     alignmentHeight: 225,
     columnWidth: 15,
     rowHeight: 15,
@@ -53,13 +53,6 @@ module.exports = Zoomer = Model.extend({
     boxRectHeight: 2,
     boxRectWidth: 2,
     overviewboxPaddingTop: 10,
-
-    // menu
-    menuFontsize: "14px",
-    menuItemFontsize: "14px",
-    menuItemLineHeight: "14px",
-    menuMarginLeft: "3px",
-    menuPadding: "3px 4px 3px 4px",
 
     // meta cell
     metaGapWidth: 35,
