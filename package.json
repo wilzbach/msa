@@ -87,7 +87,7 @@
   "scripts": {
     "test": "echo 'temporarily disabled'",
     "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build",
-    "build": "./node_modules/webpack/bin/webpack.js -p gulp build",
+    "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
     "sniper": "./node_modules/sniper/bin/sniper .",
     "watch": "./node_modules/webpack/bin/webpack.js -w",
     "w": "prunner 'npm run sniper' 'npm run watch'"
