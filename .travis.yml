@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - '0.12'
-before_deploy: gulp build
+before_deploy: npm run build
 deploy:
   provider: s3
   access_key_id: AKIAIUBRKBVSD3LAFBUQ
