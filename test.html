@@ -7,8 +7,6 @@
 
     <!-- include MSA js + css -->
     <script src="./dist/msa.js"></script>
-	<link rel="stylesheet" href="./css/msa.css">
-
 </head>
 
 <body>
@@ -42,7 +40,7 @@
         // init msa
         var m = new msa.msa(opts);
 
-        var url = "https://cdn.rawgit.com/greenify/msa/master/snippets/data/fer1.clustal";
+        var defaultURL = "https://cdn.rawgit.com/greenify/msa/master/snippets/data/fer1.clustal";
   		function getURLParameter(name) {
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
         }
@@ -65,5 +63,4 @@
     </script>
 
 </body>
-
 </html>
