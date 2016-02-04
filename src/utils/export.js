@@ -30,7 +30,7 @@ module.exports = Exporter =
   publishWeb: function(that, cb) {
     var text = Fasta.write(that.seqs.toJSON());
     text = encodeURIComponent(text);
-    var url = that.u.proxy.corsURL("http://sprunge.biojs.net");
+    var url = "http://sprunge.biojs.net";
     return xhr({
       method: "POST",
       body: "sprunge=" + text,
