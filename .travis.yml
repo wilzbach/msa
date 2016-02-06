@@ -1,18 +1,18 @@
 language: node_js
 node_js:
-- '0.12'
-before_deploy: gulp build
+- '5.0'
+before_deploy: npm run build
 deploy:
   provider: s3
-  access_key_id: AKIAIUBRKBVSD3LAFBUQ
+  access_key_id: AKIAJQSM2TLXCCXX2GJQ
   secret_access_key:
-    secure: V40rWpz/ruqzI+5eXYCcJSmkDcaMgkhadJ1wMS/rmlFZvEshdz9i4qDQtp347djAubWCjO8rcGJkK0AFBSxMnWu6UHYjrkZ80eAr2MFaJKjgMLIzJqZqDTHBvPlMpFuVUnVD8WWwc7vHRLa6hSkozov9KWuBVZapD58fqMcPnOk=
-  bucket: cdn.biojs.net
+    secure: XeweqoFLC7xUeLo9xZOovhA9Fo74wDgxUW+qpTvd2QJ9QvNPeaF6e5eSc8/PHcWNB6CPGfUhnTGXTDsDbOE2qQio6Qs9486wWgf7104EZmU51mzA95LyS6rdMAute9RNAvszU/rSBq6DtjFfTt5u9ZTYrJ3IDvgnHDInxz/3FgA=
+  bucket: cdn.bio.sh
   upload-dir: msa/latest
   acl: public-read
   detect_encoding: true
   skip_cleanup: true
-  local-dir: build
-  region: eu-west-1
+  local-dir: dist
+  region: eu-central-1
   on:
     repo: greenify/msa
