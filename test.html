@@ -1,0 +1,67 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
+    <meta name="description" content="Simple BioJS example" />
+
+    <!-- include MSA js + css -->
+    <script src="./dist/msa.js"></script>
+</head>
+
+<body>
+
+    <div id="menuDiv"></div>
+    <div id="yourDiv">Loading ... </div>
+
+    <script>
+        // this is a way how you use a bundled file parser
+        //msa = require("msa");
+		//msa = window.msa;
+
+        var opts = {};
+
+        // set your custom properties
+        // @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g 
+        opts.el = document.getElementById("yourDiv");
+        opts.vis = {
+            conserv: false,
+            overviewbox: false,
+            seqlogo: true
+        };
+        opts.conf = {
+            dropImport: true
+        };
+        opts.zoomer = {
+            menuFontsize: "12px",
+            autoResize: true
+        };
+
+        // init msa
+        var m = new msa.msa(opts);
+
+        var defaultURL = "https://cdn.rawgit.com/greenify/msa/master/snippets/data/fer1.clustal";
+  		function getURLParameter(name) {
+            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+        }
+
+		var url = getURLParameter('seq') || defaultURL;
+        m.u.file.importURL(url, renderMSA);
+
+        function renderMSA() {
+
+            // the menu is independent to the MSA container
+            var menuOpts = {};
+            menuOpts.el = document.getElementById('div');
+            menuOpts.msa = m;
+            menuOpts.menu = "small";
+            var defMenu = new msa.menu.defaultmenu(menuOpts);
+            m.addView("menu", defMenu);
+
+            // call render at the end to display the whole MSA
+            m.render();
+        }
+    </script>
+
+</body>
+</html>
