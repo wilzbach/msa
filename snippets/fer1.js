@@ -1,5 +1,5 @@
 /* global rootDiv */
-var msa = require("msa");
+var msa = window.msa;
 
 // set your custom properties
 // @see: https://github.com/greenify/msa/tree/master/src/g
