@@ -1,4 +1,4 @@
-var msa = require("msa");
+var msa = window.msa;
 
 yourDiv.textContent = "loading";
 

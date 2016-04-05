@@ -1,5 +1,5 @@
 /* global yourDiv */
-var msa = require("msa");
+var msa = window.msa;
 
 var opts = {};
 

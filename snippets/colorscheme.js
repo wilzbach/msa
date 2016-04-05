@@ -1,4 +1,4 @@
-var msa = require("msa");
+var msa = window.msa;
 
 // documentation
 // https://github.com/greenify/biojs-util-colorschemes
@@ -29,7 +29,7 @@ opts.seqs = msa.utils.seqgen.genConservedSequences(10,30);
 var c = msa(opts);
 yourDiv.appendChild(c.el);
 c.g.colorscheme.addDynScheme("dyn", function(letter,opts){
-  return opts.pos % 2 == 0 ? "#bbb" : "yellow" 
+  return opts.pos % 2 == 0 ? "#bbb" : "yellow"
 });
 c.g.colorscheme.set("scheme", "dyn");
 c.render();
@@ -50,7 +50,7 @@ fun.init = function(){
 }
 
 fun.run = function(letter,opts){
-  return this.cons[opts.pos] > 0.8 ? "red" : "#fff" 
+  return this.cons[opts.pos] > 0.8 ? "red" : "#fff"
 };
 
 d.g.colorscheme.addDynScheme("dyn", fun);
