@@ -16,7 +16,11 @@ var proxyFun =
     // DEPRECATED as crossorigin.me requires http
     // remove www + http
     //url = url.replace("www\.", "");
-    //url = url.replace("http://", "");
+
+    if(this.g.config.get('importProxyStripHttp')){
+        url = url.replace("http://", "");
+        url = url.replace("https://", "");
+    }
 
     // prepend proxy
     url = this.g.config.get('importProxy') + url;
