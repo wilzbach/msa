@@ -2,7 +2,6 @@
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="shortcut icon" type='image/x-icon' href="/favicon.ico">
     <meta name="description" content="Simple BioJS example" />
 
     <!-- include MSA js + css -->
@@ -40,7 +39,7 @@
         // init msa
         var m = new msa.msa(opts);
 
-        var defaultURL = "https://cdn.rawgit.com/greenify/msa/master/snippets/data/fer1.clustal";
+        var defaultURL = "./snippets/data/fer1.clustal";
   		function getURLParameter(name) {
             return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
         }
