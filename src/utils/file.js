@@ -96,7 +96,10 @@ var funs =
   importURL: function(url, cb) {
     url = this.msa.u.proxy.corsURL(url);
     this.msa.g.config.set("url", url);
-    return xhr(url, (err,status,body) => {
+    return xhr({
+        url: url,
+        timeout: 0
+    }, (err,status,body) => {
       if (!err) {
         var res = this.importFile(body);
         if (res === "error") {
