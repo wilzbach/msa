@@ -107,6 +107,8 @@
     "eventInstance": "m.g"
   },
   "sniper": {
+    "noBrowserify": true,
+    "buildJS": ["http://cdn.bio.sh.s3.eu-central-1.amazonaws.com/msa/latest/msa.min.gz.js"],
     "js": [
       "dist/msa.js"
     ],
@@ -115,12 +117,6 @@
     ],
     "snippets": [
       "snippets"
-    ],
-    "exposed": [
-      "biojs-io-fasta",
-      "biojs-io-clustal",
-      "biojs-io-gff",
-      "xhr"
     ],
     "first": "fer1"
   },
