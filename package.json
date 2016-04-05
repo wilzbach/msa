@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
@@ -49,6 +49,7 @@
     "xhr": "^1.17.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.6.5",
     "babel-core": "^6.4.5",
     "babel-loader": "^6.2.1",
     "babel-preset-es2015": "^6.3.13",
@@ -83,10 +84,10 @@
     "alignment",
     "sequence"
   ],
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo 'temporarily disabled'",
-    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build",
+    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
     "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
     "sniper": "./node_modules/sniper/bin/sniper .",
     "watch": "./node_modules/webpack/bin/webpack.js -w",
