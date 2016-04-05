@@ -1,6 +1,6 @@
 /* global yourDiv */
-var msa = require("msa");
-var clustal = require("biojs-io-clustal");
+var msa = window.msa;
+var clustal = msa.io.clustal;
 
 // set your custom properties
 // @see: https://github.com/greenify/msa/tree/master/src/g
