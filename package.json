@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "homepage": "http://github.com/greenify/msa",
   "repository": {
     "type": "git",
@@ -108,7 +108,9 @@
   },
   "sniper": {
     "noBrowserify": true,
-    "buildJS": ["http://cdn.bio.sh.s3.eu-central-1.amazonaws.com/msa/latest/msa.min.gz.js"],
+    "buildJS": [
+      "http://cdn.bio.sh.s3.eu-central-1.amazonaws.com/msa/latest/msa.min.gz.js"
+    ],
     "js": [
       "dist/msa.js"
     ],

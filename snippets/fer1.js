@@ -1,48 +1,47 @@
 /* global rootDiv */
-var msa = window.msa;
+// set your custom properties
+
+var opts = {};
 
 // set your custom properties
-// @see: https://github.com/greenify/msa/tree/master/src/g
-
-var menuDiv = document.createElement('div');
-var msaDiv = document.createElement('div');
-rootDiv.appendChild(menuDiv);
-rootDiv.appendChild(msaDiv);
-
-var url = "./data/fer1.clustal";
-var opts = {
-  el: msaDiv
-};
-
-opts.conf = {
-  dropImport: true,// allow to import sequences via drag & drop
-  manualRendering: true
-};
+// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
+opts.el = rootDiv;
 opts.vis = {
-  conserv: false,
-  overviewbox: false,
-  seqlogo: true,
-  metacell: true
+    conserv: false,
+    overviewbox: false,
+    seqlogo: true
+};
+opts.conf = {
+    dropImport: true
 };
 opts.zoomer = {
-  labelIdLength: 20
+    menuFontsize: "12px",
+    autoResize: true
 };
 
 // init msa
-var m = msa(opts);
+var m = new msa.msa(opts);
 
-gg = m;
+var defaultURL = "./data/fer1.clustal";
+function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+}
 
-m.u.file.importURL(url, function() {
-  //m.g.zoomer.autoHeight(1000); // calcs the height from the sequences (with a cut-off)
+var url = getURLParameter('seq') || defaultURL;
+m.u.file.importURL(url, renderMSA);
 
-  // the menu is independent to the MSA container
-  var defMenu = new msa.menu.defaultmenu({
-    el: menuDiv,
-    msa: m
-  });
-  defMenu.render();
-  m.render();
-});
+function renderMSA() {
+
+    // the menu is independent to the MSA container
+    var menuOpts = {};
+    menuOpts.el = document.getElementById('div');
+    menuOpts.msa = m;
+    menuOpts.menu = "small";
+    var defMenu = new msa.menu.defaultmenu(menuOpts);
+    m.addView("menu", defMenu);
+
+    // call render at the end to display the whole MSA
+    m.render();
+}
 
 //@biojs-instance=m.g
