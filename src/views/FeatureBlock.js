@@ -51,7 +51,7 @@
         // out of viewport - stop
         result.push((() => {
           if (x > this.el.width) {
-            return break;
+            return;
           }
         })());
       }
