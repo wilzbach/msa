@@ -1,5 +1,5 @@
 /* global rootDiv */
-var msa = require("msa");
+var msa = window.msa;
 var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",

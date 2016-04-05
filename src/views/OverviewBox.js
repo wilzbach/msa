@@ -103,6 +103,7 @@ module.exports = OverviewBox = view.extend({
     var end = this.g.selcol.length - 1;
     for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
       var sel = this.g.selcol.at(i);
+      if(!sel) continue;
       if (sel.get('type') === 'column') {
         this.ctx.fillRect( rectWidth * sel.get('xStart'),0,rectWidth *
         (sel.get('xEnd') - sel.get('xStart') + 1),maxHeight
