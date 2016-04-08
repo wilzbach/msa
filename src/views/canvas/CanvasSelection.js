@@ -21,15 +21,15 @@ _.extend(SelectionClass.prototype, {
     if ((typeof rows !== "undefined" && rows !== null)) {
       // full match
       var end = maxLen - 1;
-      for (var n = 0; 0 < end ? n <= end : n >= end; 0 < end ? n++ : n++) {
+      for (var n = 0; n <= end; n++) {
         selection.push(n);
       }
     } else if (sels.length > 0) {
       for (var i = 0, sel; i < sels.length; i++) {
         sel = sels[i];
         var start = sel.get("xStart");
-        var end1 = sel.get("xEnd");
-        for (var n = start; start < end1 ? n <= end1 : n >= end1; start < end1 ? n++ : n++) {
+        var end = sel.get("xEnd");
+        for (var n = start; n <= end; n++) {
           selection.push(n);
         }
       }
