@@ -3,7 +3,7 @@ var msa = window.msa;
 var clustal = msa.io.clustal;
 
 // set your custom properties
-// @see: https://github.com/greenify/msa/tree/master/src/g
+// @see: https://github.com/wilzbach/msa/tree/master/src/g
 
 // you can use any DOM element instead of those divs
 var menuDiv = document.createElement('div');

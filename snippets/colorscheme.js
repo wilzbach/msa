@@ -1,7 +1,7 @@
 var msa = window.msa;
 
 // documentation
-// https://github.com/greenify/biojs-util-colorschemes
+// https://github.com/wilzbach/biojs-util-colorschemes
 
 // 1) use a pre-defined schema
 

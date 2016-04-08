@@ -4,7 +4,7 @@
 var opts = {};
 
 // set your custom properties
-// @see: https://github.com/greenify/biojs-vis-msa/tree/master/src/g
+// @see: https://github.com/wilzbach/biojs-vis-msa/tree/master/src/g
 opts.el = rootDiv;
 opts.vis = {
     conserv: false,

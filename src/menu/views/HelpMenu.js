@@ -10,13 +10,13 @@ module.exports = HelpMenu = MenuBuilder.extend({
   render: function() {
     this.setName("Help");
     this.addNode("About the project", () => {
-      return window.open("https://github.com/greenify/msa");
+      return window.open("https://github.com/wilzbach/msa");
     });
     this.addNode("Report issues", () => {
-      return window.open("https://github.com/greenify/msa/issues");
+      return window.open("https://github.com/wilzbach/msa/issues");
     });
     this.addNode("User manual", () => {
-      return window.open("https://github.com/greenify/msa/wiki");
+      return window.open("https://github.com/wilzbach/msa/wiki");
     });
     this.el.style.display = "inline-block";
     this.el.appendChild(this.buildDOM());
