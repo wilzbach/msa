@@ -17,10 +17,10 @@ The BioJS MSA Viewer written in CoffeeScript.
 ,8'         `         `8.`8888. `Y8888P ,88P'.8'       `8. `88888.
 ```
 
-[![Build Status](https://travis-ci.org/greenify/msa.svg?branch=master)](https://travis-ci.org/greenify/msa)
+[![Build Status](https://travis-ci.org/wilzbach/msa.svg?branch=master)](https://travis-ci.org/wilzbach/msa)
 [![NPM version](http://img.shields.io/npm/v/msa.svg)](https://www.npmjs.org/package/msa)
-[![Dependencies](https://david-dm.org/greenify/msa.png)](https://david-dm.org/greenify/msa)
-[![Code Climate](https://codeclimate.com/github/greenify/msa/badges/gpa.svg)](https://codeclimate.com/github/greenify/msa)
+[![Dependencies](https://david-dm.org/wilzbach/msa.png)](https://david-dm.org/wilzbach/msa)
+[![Code Climate](https://codeclimate.com/github/wilzbach/msa/badges/gpa.svg)](https://codeclimate.com/github/wilzbach/msa)
 [![NPM downloads](http://img.shields.io/npm/dm/msa.svg)](https://www.npmjs.org/package/msa)
 
 
@@ -34,7 +34,7 @@ Yes you can either link to the minified, gzipped CDN version or download the dev
 [![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) 
 
 In case
-* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/greenify/msa/files). 
+* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/wilzbach/msa/files). 
 * you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
 * you want the latest version, replace the version number with `latest`.
 
@@ -43,7 +43,7 @@ In case
 News
 ----
 
-* Pure JS version (with ES6 and webpack) in the [`develop`](https://github.com/greenify/msa/tree/develop) branch
+* Pure JS version (with ES6 and webpack) in the [`develop`](https://github.com/wilzbach/msa/tree/develop) branch
 
 Use it
 ------
@@ -69,10 +69,10 @@ These examples show how you could embed the MSA viewer into your page.
 ####  Features
 * runs purely in the Browser
 * import files in format like FASTA, Clustal, ...
-* be interactive and receive [Events](https://github.com/greenify/msa/wiki/Events)
+* be interactive and receive [Events](https://github.com/wilzbach/msa/wiki/Events)
 * filter, sort, hide the sequences
-* display sequence [features](https://github.com/greenify/biojs-vis-easy_features/) 
-* extendable [Views](https://github.com/greenify/msa/wiki/Views) for your integration
+* display sequence [features](https://github.com/wilzbach/biojs-vis-easy_features/) 
+* extendable [Views](https://github.com/wilzbach/msa/wiki/Views) for your integration
 * customizable viewport
 * simplicity as design rule
 * export to fASTAb
@@ -113,7 +113,7 @@ var clustal = require("biojs-io-clustal");
 var m = new msa({
 	el: rootDiv,
 });
-clustal.read("https://raw.githubusercontent.com/greenify/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
+clustal.read("https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
 	m.seqs.reset(seqs);
 	m.render();
 });
@@ -163,7 +163,7 @@ m.g.colorscheme.addStaticScheme("own",{A: "orange", C: "red", G: "green", T: "bl
 m.g.colorscheme.set("scheme", "own");
 ```
 
-Have a look at the [doc](https://github.com/greenify/msa-colorschemes) for more info.
+Have a look at the [doc](https://github.com/wilzbach/msa-colorschemes) for more info.
 
 
 ### Add features
@@ -174,7 +174,7 @@ Checkout this [live example](http://workmen.biojs.net/demo/msa/fer1_annoted) or 
 var msa = require("msa");
 var xhr = require("xhr");
 var gffParser = require("biojs-io-gff");
-var m = msa({el: rootDiv, importURL: "https://raw.githubusercontent.com/greenify/msa/master/test/dummy/samples/p53.clustalo.clustal");
+var m = msa({el: rootDiv, importURL: "https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal");
 
 // add features
 xhr("./data/fer1.gff3", function(err, request, body) {
@@ -424,12 +424,12 @@ FAQ
 Q: How can I define my own color scheme?
 
 ↝ [play in JSBin](http://workmen.biojs.net/jsbin/msa/colorscheme)
-↝ [read the documentation](https://github.com/greenify/msa-colorschemes)
+↝ [read the documentation](https://github.com/wilzbach/msa-colorschemes)
 
 Documentation
 -------------
 
-See below and head to the [wiki](https://github.com/greenify/msa/wiki/).
+See below and head to the [wiki](https://github.com/wilzbach/msa/wiki/).
 
 Please report bugs or feature request directly on github.
 
@@ -450,7 +450,7 @@ Step 1) Setting up
 -----------------
 
 ```bash
-git clone https://github.com/greenify/msa
+git clone https://github.com/wilzbach/msa
 cd msa
 npm install
 ```
@@ -483,7 +483,7 @@ npm run watch
 This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
 
 Have fun coding.
-You can also start [sniper](https://github.com/greenify/sniper), to view the snippets. Without global installation, just hit 
+You can also start [sniper](https://github.com/wilzbach/sniper), to view the snippets. Without global installation, just hit 
 
 ### 2.2 Example (snippets) server
 
@@ -549,7 +549,7 @@ The minimization is done by [Browserify](http://browserify.org/).
 Package list
 -----------
 
-↝ [Package list](https://github.com/greenify/msa/wiki/Package-list)
+↝ [Package list](https://github.com/wilzbach/msa/wiki/Package-list)
 
 
 Project structure
@@ -560,11 +560,11 @@ Project structure
 * `css` stylesheet folder (previously used for SASS)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
-* `snippets` short coding snippets that are run by [`sniper`](https://github.com/greenify/sniper)
+* `snippets` short coding snippets that are run by [`sniper`](https://github.com/wilzbach/sniper)
 * `src` the main source code
 * `test` unit tests that are run with either mocha or phantomjs (headless browser)
 
 Want to learn more?
 -------------------
 
-Continue at the [wiki](https://github.com/greenify/msa/wiki).
+Continue at the [wiki](https://github.com/wilzbach/msa/wiki).

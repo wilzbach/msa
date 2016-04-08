@@ -6,7 +6,7 @@ deploy:
   provider: s3
   access_key_id: AKIAJQSM2TLXCCXX2GJQ
   secret_access_key:
-    secure: XeweqoFLC7xUeLo9xZOovhA9Fo74wDgxUW+qpTvd2QJ9QvNPeaF6e5eSc8/PHcWNB6CPGfUhnTGXTDsDbOE2qQio6Qs9486wWgf7104EZmU51mzA95LyS6rdMAute9RNAvszU/rSBq6DtjFfTt5u9ZTYrJ3IDvgnHDInxz/3FgA=
+    secure: Rz5GBL9lqz2qT24/5Id1szFsTG2AKArFDTANccpm1fwE6Zs/nPrt8EA4alXmyOwAkldXT9LLAC4Tv5HYGqUJtU+oyrz9mpLCtXkKahSfi3oG/VicAcyiLIQIkMPzwTGrF3tHR6pm1eqmzcD45JfEI3YPbBQvcegf0nk9mGnn5Nk=
   bucket: cdn.bio.sh
   upload-dir: msa/latest
   acl: public-read
@@ -15,4 +15,4 @@ deploy:
   local-dir: dist
   region: eu-central-1
   on:
-    repo: greenify/msa
+    repo: wilzbach/msa
