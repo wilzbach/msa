@@ -12,7 +12,7 @@ module.exports = DebugMenu = MenuBuilder.extend({
     this.setName("Debug");
 
     this.addNode("Get the code", () => {
-      return window.open("https://github.com/greenify/msa");
+      return window.open("https://github.com/wilzbach/msa");
     });
 
     this.addNode("Toggle mouseover events", () => {

@@ -2,7 +2,7 @@ var msa = window.msa;
 yourDiv.textContent = "loading. please wait."
 var fasta = msa.io.fasta;
 
-fasta.read('https://cdn.rawgit.com/greenify/msa-example-files/master/PF00072_rp15.txt', function(err, seqs) {
+fasta.read('https://cdn.rawgit.com/wilzbach/msa-example-files/master/PF00072_rp15.txt', function(err, seqs) {
   var opts = {};
   opts.seqs = seqs;
   opts.el = yourDiv;
