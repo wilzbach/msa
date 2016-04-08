@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.14",
+  "version": "0.4.15",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
