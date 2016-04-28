@@ -68,7 +68,7 @@ var ConservationView = view.extend({
     return (() => {
       var result = [];
       var end = stepSize - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         result.push(this.g.trigger("bar:click", {rowPos: rowPos + i, evt:evt}));
       }
       return result;

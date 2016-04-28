@@ -57,7 +57,7 @@ var HeaderView = view.extend({
 
     var min = Math.max(0, n - stepSize);
     var prevHidden = true;
-    for (var j = min; min < n ? j <= n : j >= n; min < n ? j++ : j++) {
+    for (var j = min; min < n ? j <= n : j >= n; min < n ? j++ : j--) {
       prevHidden &= hidden.indexOf(j) >= 0;
     }
 
@@ -69,7 +69,7 @@ var HeaderView = view.extend({
     var length = 0;
     var index = -1;
     // accumlate multiple rows
-    for (var n = n; n < nMax ? n <= nMax : n >= nMax; n < nMax ? n++ : n++) {
+    for (var n = n; n < nMax ? n <= nMax : n >= nMax; n < nMax ? n++ : n--) {
       if (!(index >= 0)) { index = hidden.indexOf(n); }// sets the first index
       if (hidden.indexOf(n) >= 0) {
         length++;

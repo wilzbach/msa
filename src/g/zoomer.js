@@ -96,7 +96,7 @@ module.exports = Zoomer = Model.extend({
   setTopOffset: function(n) {
     var val = Math.max(0, (n - 1));
     var height = 0;
-    for (var i = 0; 0 < val ? i <= val : i >= val; 0 < val ? i++ : i++) {
+    for (var i = 0; 0 < val ? i <= val : i >= val; 0 < val ? i++ : i--) {
       var seq = this.model.at(i);
       height += seq.attributes.height || 1;
     }
