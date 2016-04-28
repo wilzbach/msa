@@ -77,7 +77,7 @@ module.exports = Exporter =
         return _.contains(selection, el.get("id"));
       });
       var end = selection.length - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         selection[i] = selection[i].toJSON();
       }
     } else {
