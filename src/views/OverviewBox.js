@@ -54,7 +54,7 @@ module.exports = OverviewBox = view.extend({
 
     var y = -rectHeight;
     var end = this.model.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       var seq = this.model.at(i).get("seq");
       var x = 0;
       y = y + rectHeight;
@@ -69,7 +69,7 @@ module.exports = OverviewBox = view.extend({
       }
 
       var end1 = seq.length - 1;
-      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j++) {
+      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j--) {
         var c = seq[j];
         // todo: optional uppercasing
         if (showLowerCase) { c = c.toUpperCase(); }
@@ -100,8 +100,12 @@ module.exports = OverviewBox = view.extend({
     var maxHeight = rectHeight * this.model.length;
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
+    if ( this.g.selcol.length == 0 ) {
+      console.log( "" );
+      //return;
+    }
     var end = this.g.selcol.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       var sel = this.g.selcol.at(i);
       if(!sel) continue;
       if (sel.get('type') === 'column') {
