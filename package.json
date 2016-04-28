@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.15",
+  "version": "0.4.16",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
@@ -43,7 +43,7 @@
     "menu-builder": "^0.0.7",
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
-    "msa-seqtools": "^0.1.6",
+    "msa-seqtools": "^0.1.8",
     "stat.seqs": "^0.1.20",
     "underscore": "^1.6.0",
     "xhr": "^1.17.0"
