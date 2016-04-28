@@ -56,7 +56,7 @@ module.exports = FeatureCol = Collection.extend({
       var max = 0;
       var start = el.get("xStart");
       var end = el.get("xEnd");
-      for (var x = start; start < end ? x <= end : x >= end; start < end ? x++ : x++) {
+      for (var x = start; start < end ? x <= end : x >= end; start < end ? x++ : x--) {
         if (rows[x] > max) {
           max = rows[x];
         }
