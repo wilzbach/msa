@@ -100,10 +100,6 @@ module.exports = OverviewBox = view.extend({
     var maxHeight = rectHeight * this.model.length;
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
-    if ( this.g.selcol.length == 0 ) {
-      console.log( "" );
-      //return;
-    }
     var end = this.g.selcol.length - 1;
     for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       var sel = this.g.selcol.at(i);
