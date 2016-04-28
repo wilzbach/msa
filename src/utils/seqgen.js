@@ -6,7 +6,7 @@ var seqgen = module.exports =
   {_generateSequence: function(len) {
     var text = "";
     var end = len - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       text += seqgen.getRandomChar();
     }
     return text;
@@ -20,7 +20,7 @@ var seqgen = module.exports =
     if (!(typeof len !== "undefined" && len !== null)) { len = BMath.getRandomInt(3,5); }
     if (!(typeof seqLen !== "undefined" && seqLen !== null)) { seqLen = BMath.getRandomInt(50,200); }
 
-    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i++) {
+    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i--) {
       seqs.push(new Sequence(seqgen._generateSequence(seqLen), "seq" + i,"r" + i));
     }
     return seqs;
@@ -41,7 +41,7 @@ var seqgen = module.exports =
 
     dict = dict || "ACDEFGHIKLMNPQRSTVWY---";
 
-    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i++) {
+    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i--) {
       seqs[i-1] = "";
     }
 
@@ -49,13 +49,13 @@ var seqgen = module.exports =
 
     var conservAim = 1;
     var end = seqLen - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       if (i % 3 === 0) {
         conservAim = (BMath.getRandomInt(50,100)) / 100;
       }
       var observed = [];
       var end1 = len - 1;
-      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j++) {
+      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j--) {
         var counter = 0;
         while (counter < 100) {
           var c = seqgen.getRandomChar(dict);
@@ -72,7 +72,7 @@ var seqgen = module.exports =
     }
 
     var pseqs = [];
-    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i++) {
+    for (var i = 1; 1 < len ? i <= len : i >= len; 1 < len ? i++ : i--) {
       pseqs.push(new Sequence(seqs[i-1], "seq" + i, "r" + i));
     }
 

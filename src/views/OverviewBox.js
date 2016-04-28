@@ -210,7 +210,7 @@ module.exports = OverviewBox = view.extend({
 
     // select
     var selis = [];
-    for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j++) {
+    for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j--) {
       var args = {seqId: this.model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]};
       selis.push(new selection.possel(args));
     }
