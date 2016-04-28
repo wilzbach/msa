@@ -55,7 +55,7 @@ _.extend(SelectionClass.prototype, {
     return (() => {
       var result = [];
       var end = seq.length - 1;
-      for (var n = 0; 0 < end ? n <= end : n >= end; 0 < end ? n++ : n++) {
+      for (var n = 0; 0 < end ? n <= end : n >= end; 0 < end ? n++ : n--) {
         result.push((() => {
           if (data.hidden.indexOf(n) >= 0) {
             return hiddenOffset++;
@@ -87,7 +87,7 @@ _.extend(SelectionClass.prototype, {
     // get the length of this selection
     var selectionLength = 0;
     var end = data.model.get("seq").length - 1;
-    for (var i = n; n < end ? i <= end : i >= end; n < end ? i++ : i++) {
+    for (var i = n; n < end ? i <= end : i >= end; n < end ? i++ : i--) {
       if (selection.indexOf(i) >= 0) {
         selectionLength++;
       } else {

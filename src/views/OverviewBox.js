@@ -54,7 +54,7 @@ module.exports = OverviewBox = view.extend({
 
     var y = -rectHeight;
     var end = this.model.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       var seq = this.model.at(i).get("seq");
       var x = 0;
       y = y + rectHeight;
@@ -69,7 +69,7 @@ module.exports = OverviewBox = view.extend({
       }
 
       var end1 = seq.length - 1;
-      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j++) {
+      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j--) {
         var c = seq[j];
         // todo: optional uppercasing
         if (showLowerCase) { c = c.toUpperCase(); }
@@ -101,7 +101,7 @@ module.exports = OverviewBox = view.extend({
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
     var end = this.g.selcol.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
       var sel = this.g.selcol.at(i);
       if(!sel) continue;
       if (sel.get('type') === 'column') {
@@ -210,7 +210,7 @@ module.exports = OverviewBox = view.extend({
 
     // select
     var selis = [];
-    for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j++) {
+    for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j--) {
       var args = {seqId: this.model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]};
       selis.push(new selection.possel(args));
     }

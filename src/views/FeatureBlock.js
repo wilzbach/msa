@@ -33,7 +33,7 @@
     return (() => {
       var result = [];
       var end = seq.length - 1;
-      for (var j = start; start < end ? j <= end : j >= end; start < end ? j++ : j++) {
+      for (var j = start; start < end ? j <= end : j >= end; start < end ? j++ : j--) {
         var starts = features.startOn(j);
 
         if (data.hidden.indexOf(j) >= 0) {

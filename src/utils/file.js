@@ -60,7 +60,7 @@ var funs =
     return (() => {
       var result = [];
       var end = files.length - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i++) {
+      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         var file = files[i];
         var reader = new FileReader();
         reader.onload = (evt) => {
