@@ -113,7 +113,7 @@ module.exports = SeqManager = Collection.extend({
 
   // rehash the sequence feature binding
   _bindSeqsWithFeatures: function() {
-    return this.each((seq) =>  this._bindSeqWithFeatures(seq));
+    return this.each(function (seq) { this._bindSeqWithFeatures(seq) });
   },
 
   // removes all features from the cache (not from the seqs)

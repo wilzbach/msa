@@ -153,8 +153,8 @@ module.exports = OverviewBox = view.extend({
       this.prolongSelection = false;
     }
     // enable global listeners
-    jbone(document.body).on('mousemove.overmove', (e) => this._onmousemove(e));
-    jbone(document.body).on('mouseup.overup', (e) => this._onmouseup(e));
+    jbone(document.body).on('mousemove.overmove', function (e) { this._onmousemove(e) });
+    jbone(document.body).on('mouseup.overup', function (e) { this._onmouseup(e) });
     return this.dragStart;
   },
 
