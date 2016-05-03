@@ -16,7 +16,7 @@ module.exports = ExtraMenu = MenuBuilder.extend({
     this.setName("Extras");
     var stats = this.g.stats;
     var msa = this.msa;
-    this.addNode("Add consensus seq", () => {
+    this.addNode("Add consensus seq", function () {
       var con = stats.consensus();
       var seq = new Seq({
         seq: con,
@@ -57,7 +57,7 @@ module.exports = ExtraMenu = MenuBuilder.extend({
     //     s.set "branch_length", 2
     //   cbs()
 
-    this.addNode("Increase font size", () => {
+    this.addNode("Increase font size", function () {
       var columnWidth =  this.g.zoomer.get("columnWidth");
       var nColumnWidth = columnWidth + 5;
       this.g.zoomer.set("columnWidth",  nColumnWidth);
@@ -66,7 +66,7 @@ module.exports = ExtraMenu = MenuBuilder.extend({
       this.g.zoomer.set("residueFont", nFontSize);
       return this.g.zoomer.set("labelFontSize",  nFontSize);
     });
-    this.addNode("Decrease font size", () => {
+    this.addNode("Decrease font size", function () {
       var columnWidth =  this.g.zoomer.get("columnWidth");
       var nColumnWidth = columnWidth - 2;
       this.g.zoomer.set("columnWidth",  nColumnWidth);
@@ -81,7 +81,7 @@ module.exports = ExtraMenu = MenuBuilder.extend({
     });
 
 
-    this.addNode("Jump to a column", () => {
+    this.addNode("Jump to a column", function () {
       var offset = prompt("Column", "20");
       if (offset < 0 || offset > this.model.getMaxLength() || isNaN(offset)) {
         alert("invalid column");

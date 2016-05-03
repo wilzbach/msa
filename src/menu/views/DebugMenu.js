@@ -11,21 +11,21 @@ module.exports = DebugMenu = MenuBuilder.extend({
   render: function() {
     this.setName("Debug");
 
-    this.addNode("Get the code", () => {
+    this.addNode("Get the code", function () {
       return window.open("https://github.com/wilzbach/msa");
     });
 
-    this.addNode("Toggle mouseover events", () => {
+    this.addNode("Toggle mouseover events", function () {
       this.g.config.set("registerMouseHover", !this.g.config.get("registerMouseHover"));
       return this.g.onAll(function() {
         return console.log(arguments);
       });
     });
 
-    this.addNode("Minimized width", () => {
+    this.addNode("Minimized width", function () {
       return this.g.zoomer.set("alignmentWidth", 600);
     });
-    this.addNode("Minimized height", () => {
+    this.addNode("Minimized height", function () {
       return this.g.zoomer.set("alignmentHeight", 120);
     });
 

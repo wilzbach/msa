@@ -41,7 +41,7 @@ module.exports = OrderingMenu = MenuBuilder.extend({
     if (text === this.order) {
       style.backgroundColor = "#77ED80";
     }
-    return this.addNode(text, (() => {
+    return this.addNode(text, (function () {
       if ((m.precode != null)) { m.precode(); }
       this.model.comparator = m.comparator;
       this.model.sort();
@@ -75,19 +75,19 @@ module.exports = OrderingMenu = MenuBuilder.extend({
         return - a.get("seq").localeCompare(b.get("seq"));
     }});
 
-    var setIdent = () => {
+    var setIdent = function () {
       return this.ident = this.g.stats.identity();
     };
 
-    var setGaps = () => {
+    var setGaps = function () {
       this.gaps = {};
-      return this.model.each((el) => {
+      return this.model.each(function (el) {
         var seq = el.attributes.seq;
         return this.gaps[el.id] = (_.reduce(seq, (function(memo, c) { return c === '-' ? ++memo: undefined; }),0))/ seq.length;
       });
     };
 
-    models.push({text: "Identity ↑",comparator: ((a,b) => {
+    models.push({text: "Identity ↑",comparator: (function (a,b) {
       var val = this.ident[a.id] - this.ident[b.id];
       console.log(this.ident[a.id],this.ident[b.id]);
       if (val > 0) { return 1; }
@@ -96,7 +96,7 @@ module.exports = OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setIdent});
 
-    models.push({text: "Identity ↓", comparator: ((a,b) => {
+    models.push({text: "Identity ↓", comparator: (function (a,b) {
       var val = this.ident[a.id] - this.ident[b.id];
       if (val > 0) { return -1; }
       if (val < 0) { return 1; }
@@ -104,7 +104,7 @@ module.exports = OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setIdent});
 
-    models.push({text: "Gaps ↑", comparator: ((a,b) => {
+    models.push({text: "Gaps ↑", comparator: (function (a,b) {
       var val = this.gaps[a.id] - this.gaps[b.id];
       if (val > 0) { return 1; }
       if (val < 0) { return -1; }
@@ -112,7 +112,7 @@ module.exports = OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setGaps});
 
-    models.push({text: "Gaps ↓", comparator: ((a,b) => {
+    models.push({text: "Gaps ↓", comparator: (function (a,b) {
       var val = this.gaps[a.id] - this.gaps[b.id];
       if (val < 0) { return 1; }
       if (val > 0) { return -1; }

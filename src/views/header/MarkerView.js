@@ -82,7 +82,7 @@ var HeaderView = view.extend({
     s.style.position = "relative";
     var triangle = svg.polygon({points: "0,0 5,5 10,0", style:
       "fill:lime;stroke:purple;stroke-width:1"
-    });jbone(triangle).on("click", (evt) => {
+    });jbone(triangle).on("click", function (evt) {
       hidden.splice(index, length);
       return this.g.columns.set("hidden", hidden);
     });

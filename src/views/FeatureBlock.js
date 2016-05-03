@@ -30,7 +30,7 @@
 
     var yZero = data.y;
 
-    return (() => {
+    return (function () {
       var result = [];
       var end = seq.length - 1;
       for (var j = start; start < end ? j <= end : j >= end; start < end ? j++ : j--) {
@@ -49,7 +49,7 @@
 
         x = x + rectWidth;
         // out of viewport - stop
-        result.push((() => {
+        result.push((function () {
           if (x > this.el.width) {
             return;
           }

@@ -10,12 +10,12 @@ module.exports = SelectionMenu = MenuBuilder.extend({
 
   render() {
     this.setName("Selection");
-    this.addNode("Find Motif (supports RegEx)", () => {
+    this.addNode("Find Motif (supports RegEx)", function () {
       var search = prompt("your search", "D");
       return this.g.user.set("searchText", search);
     });
 
-    this.addNode("Invert columns", () => {
+    this.addNode("Invert columns", function () {
       return this.g.selcol.invertCol(((function() {
         var result = [];
         var end = this.model.getMaxLength();
@@ -32,10 +32,10 @@ module.exports = SelectionMenu = MenuBuilder.extend({
         return result;
       })()));
     });
-    this.addNode("Invert rows", () => {
+    this.addNode("Invert rows", function () {
       return this.g.selcol.invertRow(this.model.pluck("id"));
     });
-    this.addNode("Reset", () => {
+    this.addNode("Reset", function () {
       return this.g.selcol.reset();
     });
     this.el.appendChild(this.buildDOM());

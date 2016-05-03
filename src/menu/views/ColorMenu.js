@@ -47,7 +47,7 @@ module.exports = ColorMenu = MenuBuilder.extend({
       style.backgroundColor = "#77ED80";
     }
 
-    return this.addNode(scheme.name, () => {
+    return this.addNode(scheme.name, function () {
       this.g.colorscheme.set("scheme", scheme.id)
     }, {
         style: style

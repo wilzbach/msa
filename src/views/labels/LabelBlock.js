@@ -12,7 +12,7 @@ module.exports = boneView.extend({
     this.listenTo(this.g.zoomer,"change:alignmentHeight", this._setHeight);
     this.listenTo(this.model,"change:reference", this.draw);
 
-    return this.listenTo(this.model,"reset add remove", () => {
+    return this.listenTo(this.model,"reset add remove", function () {
       this.draw();
       return this.render();
     });

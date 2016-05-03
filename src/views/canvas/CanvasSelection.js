@@ -52,11 +52,11 @@ _.extend(SelectionClass.prototype, {
     if (selection.length === 0) { return; }
 
     var hiddenOffset = 0;
-    return (() => {
+    return (function () {
       var result = [];
       var end = seq.length - 1;
       for (var n = 0; 0 < end ? n <= end : n >= end; 0 < end ? n++ : n--) {
-        result.push((() => {
+        result.push((function () {
           if (data.hidden.indexOf(n) >= 0) {
             return hiddenOffset++;
           } else {

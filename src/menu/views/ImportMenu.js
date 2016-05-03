@@ -29,7 +29,7 @@ module.exports = ImportMenu = MenuBuilder.extend({
     var filetypes = "(Fasta, Clustal, GFF, Jalview features, Newick)";
 
     this.setName("Import");
-    this.addNode("URL",(e) => {
+    this.addNode("URL",function (e) {
       var url = prompt( "URL " + filetypes,
       "http://rostlab.org/~goldberg/clustalw2-I20140818-215249-0556-53699878-pg.clustalw"
       );
@@ -45,11 +45,11 @@ module.exports = ImportMenu = MenuBuilder.extend({
         //zoomer.boxRectWidth = 2
         //@g.zoomer.set zoomer
 
-    this.addNode("From file " + filetypes, () => {
+    this.addNode("From file " + filetypes, function () {
       return uploader.click();
     });
 
-    this.addNode("Drag & Drop", () => {
+    this.addNode("Drag & Drop", function () {
       return alert("Yep. Just drag & drop your file " + filetypes);
     });
 
