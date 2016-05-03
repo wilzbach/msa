@@ -88,7 +88,7 @@ module.exports = boneView.extend({
     }
 
     if (data.importURL) {
-      this.u.file.importURL(data.importURL, () => {
+      this.u.file.importURL(data.importURL, function () {
         return this.render();
       });
     }
@@ -166,7 +166,7 @@ module.exports = boneView.extend({
       defMenu.render();
     }
 
-    return $(window).on("resize", (e) => {
+    return $(window).on("resize", function (e) {
       var f = function() {
         return this.g.zoomer.autoResize();
       };
@@ -191,7 +191,7 @@ module.exports = boneView.extend({
 
   startEventBus() {
     var busObjs = ["config", "columns", "colorscheme", "selcol" ,"vis", "visorder", "zoomer"];
-    return (() => {
+    return (function () {
       var result = [];
       for (var i = 0, key; i < busObjs.length; i++) {
         key = busObjs[i];

@@ -55,19 +55,19 @@ module.exports = boneView.extend({
   buildBtns: function() {
     var prevBtn = k.mk("button");
     prevBtn.textContent = "Prev";
-    prevBtn.addEventListener("click", () => {
+    prevBtn.addEventListener("click", function () {
       return this.moveSel(-1);
     });
 
     var nextBtn = k.mk("button");
     nextBtn.textContent = "Next";
-    nextBtn.addEventListener("click", () => {
+    nextBtn.addEventListener("click", function () {
       return this.moveSel(1);
     });
 
     var allBtn = k.mk("button");
     allBtn.textContent = "All";
-    allBtn.addEventListener("click", () => {
+    allBtn.addEventListener("click", function () {
       return this.g.selcol.reset(this.sel);
     });
 
@@ -106,7 +106,7 @@ module.exports = boneView.extend({
 
     this.model.each(function(seq) {
       var strSeq = seq.get("seq");
-      return (() => {
+      return (function () {
         var match;
         var result = [];
         while (match = search.exec(strSeq)) {

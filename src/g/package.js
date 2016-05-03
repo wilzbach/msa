@@ -30,7 +30,7 @@ module.exports = Package = Model.extend({
       }
       ), pkgs.length
       );
-      return pkgs.forEach((pkg) => {
+      return pkgs.forEach(function (pkg) {
         return this.loadPackage(pkg, cbs);
       });
   },

@@ -65,7 +65,7 @@ var ConservationView = view.extend({
     var rowPos = evt.target.rowPos;
     var stepSize = this.g.zoomer.get("stepSize");
     // simulate hidden columns
-    return (() => {
+    return (function () {
       var result = [];
       var end = stepSize - 1;
       for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {

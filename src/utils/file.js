@@ -57,13 +57,13 @@ var funs =
   },
 
   importFiles: function(files) {
-    return (() => {
+    return (function () {
       var result = [];
       var end = files.length - 1;
       for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         var file = files[i];
         var reader = new FileReader();
-        reader.onload = (evt) => {
+        reader.onload = function (evt) {
           return this.importFile(evt.target.result);
         };
         result.push(reader.readAsText(file));
@@ -85,7 +85,7 @@ var funs =
     } else if (type === "features") {
       this.msa.seqs.addFeatures(objs);
     } else if (type === "newick") {
-      this.msa.u.tree.loadTree(() => {
+      this.msa.u.tree.loadTree(function () {
         return this.msa.u.tree.showTree(file);
       });
     }
@@ -99,7 +99,7 @@ var funs =
     return xhr({
         url: url,
         timeout: 0
-    }, (err,status,body) => {
+    }, function (err,status,body) {
       if (!err) {
         var res = this.importFile(body);
         if (res === "error") {

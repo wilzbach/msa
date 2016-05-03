@@ -7,7 +7,7 @@ module.exports = boneView.extend({
   initialize: function(data) {
     this.g = data.g;
     this.draw();
-    return this.listenTo(this.g.vis,"change:labels change:metacell change:leftHeader", () => {
+    return this.listenTo(this.g.vis,"change:labels change:metacell change:leftHeader", function () {
       this.draw();
       return this.render();
     });

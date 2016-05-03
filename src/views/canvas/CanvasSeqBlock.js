@@ -245,9 +245,9 @@ module.exports = boneView.extend({
   _onmousedown: function(e) {
     this.dragStart = mouse.abs(e);
     this.dragStartScroll = [this.g.zoomer.get('_alignmentScrollLeft'), this.g.zoomer.get('_alignmentScrollTop')];
-    jbone(document.body).on('mousemove.overmove', (e) => this._onmousemove(e));
-    jbone(document.body).on('mouseup.overup', () => this._cleanup());
-    //jbone(document.body).on 'mouseout.overout', (e) => @_onmousewinout(e)
+    jbone(document.body).on('mousemove.overmove', function (e) { this._onmousemove(e) });
+    jbone(document.body).on('mouseup.overup', function () { this._cleanup() });
+    //jbone(document.body).on 'mouseout.overout', function (e) { @_onmousewinout(e) }
     return e.preventDefault();
   },
 
@@ -255,8 +255,8 @@ module.exports = boneView.extend({
   _ontouchstart: function(e) {
     this.dragStart = mouse.abs(e.changedTouches[0]);
     this.dragStartScroll = [this.g.zoomer.get('_alignmentScrollLeft'), this.g.zoomer.get('_alignmentScrollTop')];
-    jbone(document.body).on('touchmove.overtmove', (e) => this._ontouchmove(e));
-    return jbone(document.body).on( 'touchend.overtend touchleave.overtleave touchcancel.overtcanel', (e) => this._touchCleanup(e)
+    jbone(document.body).on('touchmove.overtmove', function (e) { this._ontouchmove(e) });
+    return jbone(document.body).on( 'touchend.overtend touchleave.overtleave touchcancel.overtcanel', function (e) { this._touchCleanup(e) }
     );
   },
 

@@ -9,13 +9,13 @@ module.exports = HelpMenu = MenuBuilder.extend({
 
   render: function() {
     this.setName("Help");
-    this.addNode("About the project", () => {
+    this.addNode("About the project", function () {
       return window.open("https://github.com/wilzbach/msa");
     });
-    this.addNode("Report issues", () => {
+    this.addNode("Report issues", function () {
       return window.open("https://github.com/wilzbach/msa/issues");
     });
-    this.addNode("User manual", () => {
+    this.addNode("User manual", function () {
       return window.open("https://github.com/wilzbach/msa/wiki");
     });
     this.el.style.display = "inline-block";

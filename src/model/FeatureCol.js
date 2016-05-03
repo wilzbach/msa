@@ -44,7 +44,7 @@ module.exports = FeatureCol = Collection.extend({
   assignRows: function() {
 
     var len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
-    var rows = (() => {
+    var rows = (function () {
       var result = [];
       for (var x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
         result.push(0);
@@ -78,7 +78,7 @@ module.exports = FeatureCol = Collection.extend({
   getMinRows: function() {
 
     var len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
-    var rows = ((() => {
+    var rows = ((function () {
       var result = [];
       for (var x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
         result.push(0);
@@ -87,7 +87,7 @@ module.exports = FeatureCol = Collection.extend({
     })());
 
     this.each(function(el) {
-      return (() => {
+      return (function () {
         var result = [];
         var start = el.get("xStart");
         var end = el.get("xEnd");

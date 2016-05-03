@@ -21,7 +21,7 @@ module.exports = VisMenu = MenuBuilder.extend({
     }
 
     // other
-    this.addNode("Reset", () => {
+    this.addNode("Reset", function () {
       this.g.vis.set("labels", true);
       this.g.vis.set("sequences", true);
       this.g.vis.set("metacell", true);
@@ -54,7 +54,7 @@ module.exports = VisMenu = MenuBuilder.extend({
       style.color = "green";
     }
 
-    return this.addNode( (pre + visEl.name), (() => {
+    return this.addNode( (pre + visEl.name), (function () {
       return this.g.vis.set(visEl.id, ! this.g.vis.get(visEl.id));
     }
     ),

@@ -10,7 +10,7 @@ module.exports = SeqManager = Collection.extend({
     Collection.apply(this, arguments);
     this.g = g;
 
-    this.on( "add reset remove", (() => {
+    this.on( "add reset remove", (function () {
       // invalidate cache
       this.lengthCache = null;
       return this._bindSeqsWithFeatures();
@@ -18,7 +18,7 @@ module.exports = SeqManager = Collection.extend({
     );
 
     // use the first seq as reference as default
-    this.on("reset", () => {
+    this.on("reset", function () {
       return this._autoSetRefSeq();
     });
     this._autoSetRefSeq();
@@ -88,7 +88,7 @@ module.exports = SeqManager = Collection.extend({
     if (_.isEmpty(this.features)) {
       this.features = features;
     } else {
-      _.each(features, (val, key) => {
+      _.each(features, function (val, key) {
         if (!this.features.hasOwnProperty(key)) {
           return this.features[key] = val;
         } else {
@@ -113,7 +113,7 @@ module.exports = SeqManager = Collection.extend({
 
   // rehash the sequence feature binding
   _bindSeqsWithFeatures: function() {
-    return this.each((seq) =>  this._bindSeqWithFeatures(seq));
+    return this.each(function (seq) { this._bindSeqWithFeatures(seq) });
   },
 
   // removes all features from the cache (not from the seqs)

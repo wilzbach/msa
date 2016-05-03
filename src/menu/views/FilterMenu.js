@@ -11,7 +11,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
 
   render: function() {
     this.setName("Filter");
-    this.addNode("Hide columns by threshold",(e) => {
+    this.addNode("Hide columns by threshold",function (e) {
       var threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
       var maxLen = this.model.getMaxLength();
@@ -27,14 +27,14 @@ module.exports = FilterMenu = MenuBuilder.extend({
       return this.g.columns.set("hidden", hidden);
     });
 
-    this.addNode("Hide columns by selection", () => {
+    this.addNode("Hide columns by selection", function () {
       var hiddenOld = this.g.columns.get("hidden");
       var hidden = hiddenOld.concat(this.g.selcol.getAllColumnBlocks({maxLen: this.model.getMaxLength(), withPos: true}));
       this.g.selcol.reset([]);
       return this.g.columns.set("hidden", hidden);
     });
 
-    this.addNode("Hide columns by gaps", () => {
+    this.addNode("Hide columns by gaps", function () {
       var threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
       var maxLen = this.model.getMaxLength();
@@ -55,7 +55,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
       return this.g.columns.set("hidden", hidden);
     });
 
-    this.addNode("Hide seqs by identity", () => {
+    this.addNode("Hide seqs by identity", function () {
       var threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
       return this.model.each(function(el) {
@@ -65,7 +65,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
       });
     });
 
-    this.addNode("Hide seqs by selection", () => {
+    this.addNode("Hide seqs by selection", function () {
       var hidden = this.g.selcol.where({type: "row"});
       var ids = _.map(hidden, function(el) { return el.get('seqId'); });
       this.g.selcol.reset([]);
@@ -76,7 +76,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
       });
     });
 
-    this.addNode("Hide seqs by gaps", () => {
+    this.addNode("Hide seqs by gaps", function () {
       var threshold = prompt("Enter threshold (in percent)", 40);
       return this.model.each(function(el,i) {
         var seq = el.get('seq');
@@ -87,7 +87,7 @@ module.exports = FilterMenu = MenuBuilder.extend({
       });
     });
 
-    this.addNode("Reset", () => {
+    this.addNode("Reset", function () {
       this.g.columns.set("hidden", []);
       return this.model.each(function(el) {
         if (el.get('hidden')) {
