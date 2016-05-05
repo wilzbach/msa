@@ -19,16 +19,18 @@ var ConservationView = view.extend({
     // we need to wait until stats gives us the ok
     //@listenTo @model, "reset",@render
     this.listenTo(this.g.stats,"reset", this.render);
-        
+    
     var opts = _.extend( {}, { 
       fillColor: ['#660', '#ff0'],
       strokeColor: '#330',
       maxHeight: 20,
-    }, this.g.conservationDefaults );
-    
+      rectStyler: function(rect, data) { return rect }
+    }, this.g.conservationConfig );
+        
     this.fillColor = opts.fillColor;
     this.strokeColor = opts.strokeColor;
     this.maxHeight = opts.maxHeight;
+    this.rectStyler = opts.rectStyler;
     
     return this.manageEvents();
   },
@@ -36,12 +38,9 @@ var ConservationView = view.extend({
   // returns a function that will decide a colour 
   // based on the conservation data it is given
   colorer: function(colorRange) {
-    var colorer;
+    var colorer = function() { return "none" };
         
-    if ( !colorRange ) {
-      colorer = function() { return "none" };
-    }
-    else if( typeof colorRange === 'string' ) {
+    if( typeof colorRange === 'string' ) {
       colorer = function() { return colorRange };
     }
     else if( Array.isArray( colorRange ) ) {
@@ -49,14 +48,20 @@ var ConservationView = view.extend({
         console.error( "ERROR: colorRange array should have exactly two elements", colorRange );
       }
       
-      var scale = d3_scale.scaleLinear()
-        .domain( [0, this.maxHeight] )
-        .range(colorRange);
-        
-      colorer = function(d) { return scale(d.height) };
+      if ( !d3_scale ) {
+        console.warn( "providing a [min/max] range as input requires d3 to be included - only using the first color" );
+        colorer = function(d) { return colorRange[0] };
+      }
+      else {
+        var scale = d3_scale.scaleLinear()
+          .domain( [0, this.maxHeight] )
+          .range(colorRange);
+          
+        colorer = function(d) { return scale(d.height) };
+      }
     }
     else {
-      console.error( "ERROR: expected colorRange to be '#rgb' or ['#rgb', '#rgb']", colorRange, '(' + typeof colorRange + ')' );
+      console.warn( "expected colorRange to be '#rgb' or ['#rgb', '#rgb']", colorRange, '(' + typeof colorRange + ')' );
     }
     return colorer;
   },
@@ -78,6 +83,7 @@ var ConservationView = view.extend({
     var rectData = this.rectData;
     var fillColorer = this.colorer( this.fillColor );
     var strokeColorer = this.colorer( this.strokeColor );
+    var rectStyler = this.rectStyler;
     
     var stepSize = this.g.zoomer.get("stepSize");
     var hidden = this.g.columns.get("hidden");
@@ -102,13 +108,18 @@ var ConservationView = view.extend({
         maxheight: maxHeight,
         width: width - cellWidth / 4,
         height: height,
+        rowPos: n,
       };
       
       var rect = svg.rect( d );
-      
+            
       rect.style.stroke = strokeColorer(d);
       rect.style.fill = fillColorer(d);
       
+      if ( typeof rectStyler === 'function' ) {
+        rectStyler( rect, d );
+      }
+
       rect.rowPos = n;
       
       s.appendChild(rect);

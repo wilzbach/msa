@@ -9,7 +9,12 @@ var opts = {
   conserv: {
     maxHeight: 200,
     fillColor: ['blue', '#0f0'],
-    strokeColor: '#000'
+    strokeColor: '#000',
+    rectStyler: function (rect, data) { 
+      if ( data.rowPos < 10 ) {
+        rect.style.fill = "red" 
+      } 
+    }
   }
 };
 var m = new msa(opts);
