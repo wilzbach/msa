@@ -64,7 +64,7 @@ module.exports = boneView.extend({
     this.g.zoomer = new Zoomer(data.zoomer,{g:this.g, model: this.seqs});
     
     // store config options for plugins
-    this.g.conservationDefaults = data.conserv;
+    this.g.conservationConfig = data.conserv;
     
     // debug mode
     if (window.location.hostname === "localhost") {
