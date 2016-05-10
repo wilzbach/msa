@@ -1,12 +1,12 @@
-var boneView = require("backbone-childs");
-var _ = require('underscore');
-var k = require('koala-js');
-var dom = require('dom-helper');
-var sel = require("../g/selection/Selection");
+const boneView = require("backbone-childs");
+const _ = require('underscore');
+const k = require('koala-js');
+const dom = require('dom-helper');
+import sel from "../g/selection/Selection";
 
 // this is a very simplistic approach to show search result
 // TODO: needs proper styling
-module.exports = boneView.extend({
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -129,3 +129,4 @@ module.exports = boneView.extend({
     return this.sel = newSeli;
   }
 });
+export default View;

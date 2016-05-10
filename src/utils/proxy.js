@@ -1,7 +1,6 @@
-var ProxyHelper;
-var _ = require("underscore");
+const _ = require("underscore");
 
-module.exports = ProxyHelper = function(opts) {
+const ProxyHelper = function(opts) {
   this.g = opts.g;
   return this;
 };
@@ -29,3 +28,4 @@ var proxyFun =
   };
 
 _.extend(ProxyHelper.prototype, proxyFun);
+export default ProxyHelper;

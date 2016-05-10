@@ -1,8 +1,7 @@
-var Sequence;
-var Model = require("backbone-thin").Model;
-var FeatureCol = require("./FeatureCol");
+const Model = require("backbone-thin").Model;
+import FeatureCol from "./FeatureCol";
 
-module.exports = Sequence = Model.extend({
+const Sequence = Model.extend({
 
   defaults: {
     name: "",
@@ -20,3 +19,4 @@ module.exports = Sequence = Model.extend({
     }
   }
 });
+export default Sequence;

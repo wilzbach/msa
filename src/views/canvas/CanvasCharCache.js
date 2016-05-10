@@ -1,6 +1,6 @@
-var Events = require("biojs-events");
+const Events = require("biojs-events");
 
-module.exports = class CanvasCharCache {
+class CanvasCharCache {
 
   constructor(g) {
     this.g = g;
@@ -41,3 +41,4 @@ module.exports = class CanvasCharCache {
     return this.ctx.fillText(letter,width / 2,height / 2,width);
   }
 };
+export default CanvasCharCache;

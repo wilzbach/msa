@@ -1,4 +1,4 @@
-module.exports =
+export default
   // math utilities
   class BMath {
     static randomInt(lower, upper) {

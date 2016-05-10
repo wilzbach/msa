@@ -1,7 +1,7 @@
-var view = require("backbone-viewj");
-var dom = require("dom-helper");
+const view = require("backbone-viewj");
+const dom = require("dom-helper");
 
-var LabelView = view.extend({
+const LabelView = view.extend({
 
   initialize: function(data) {
     this.seq = data.seq;
@@ -97,4 +97,4 @@ var LabelView = view.extend({
   }
 });
 
-module.exports = LabelView;
+export default LabelView;

@@ -1,7 +1,6 @@
-var DebugMenu;
-var MenuBuilder = require("../menubuilder");
+import MenuBuilder from "../menubuilder";
 
-module.exports = DebugMenu = MenuBuilder.extend({
+const DebugMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -33,3 +32,4 @@ module.exports = DebugMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default DebugMenu;

@@ -1,38 +1,42 @@
-var MSA = require("./msa");
+import MSA from "./msa";
 
-
-module.exports = window.msa = function() {
+const MSAWrapper = function() {
   var msa = function(args) {
     return MSA.apply(this, args);
   };
   msa.prototype = MSA.prototype;
   return new msa(arguments);
 };
+MSAWrapper.msa = MSA;
 
-module.exports.msa = MSA;
+export default MSAWrapper;
+export {MSA as msa};
 
 // models
-module.exports.model = require("./model");
+export * as model from "./model";
 
 // extra plugins, extensions
-module.exports.menu = require("./menu");
-module.exports.utils = require("./utils");
+export * as menu from "./menu";
+export {default as utils} from "./utils";
 
 // probably needed more often
-module.exports.selection = require("./g/selection/Selection");
-module.exports.selcol = require("./g/selection/SelectionCol");
-module.exports.view = require("backbone-viewj");
-module.exports.boneView = require("backbone-childs");
+export {default as selection} from  "./g/selection/Selection";
+export {default as selcol} from "./g/selection/SelectionCol";
+export {default as view} from "backbone-viewj";
+export {default as boneView} from "backbone-childs";
 
 // convenience
-module.exports._ = require('underscore');
-module.exports.$ = require('jbone');
+export {default as _} from 'underscore';
+export {default as $} from 'jbone';
 
 // parser (are currently bundled - so we can also expose them)
-module.exports.io = {};
-module.exports.io.xhr = require('xhr');
-module.exports.io.fasta = require('biojs-io-fasta');
-module.exports.io.clustal = require('biojs-io-clustal');
-module.exports.io.gff = require('biojs-io-gff');
+const io = {};
+io.xhr = require('xhr');
+io.fasta = require('biojs-io-fasta');
+io.clustal = require('biojs-io-clustal');
+io.gff = require('biojs-io-gff');
 
-module.exports.version = "0.2.0";
+export {io};
+
+//import {version} from '../package.json';
+//module.exports.version = version;

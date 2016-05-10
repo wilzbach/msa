@@ -1,6 +1,5 @@
-var MenuSettings;
-var Model = require("backbone-thin").Model;
-module.exports = MenuSettings = Model.extend({
+const Model = require("backbone-thin").Model;
+const MenuSettings = Model.extend({
     constructor: function(attributes,options) {
         if(attributes == "small"){
             attributes = this.small;
@@ -18,3 +17,4 @@ module.exports = MenuSettings = Model.extend({
         menuPadding: "3px 4px 3px 4px"
     }
 });
+export default MenuSettings;

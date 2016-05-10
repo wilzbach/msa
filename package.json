@@ -49,9 +49,10 @@
     "xhr": "^1.17.0"
   },
   "devDependencies": {
-    "babel-cli": "^6.6.5",
-    "babel-core": "^6.4.5",
-    "babel-loader": "^6.2.1",
+    "babel-cli": "^6.8.0",
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-export-extensions": "^6.8.0",
     "babel-preset-es2015": "^6.3.13",
     "biojs-io-newick": "git://github.com/wilzbach/biojs-io-newick",
     "chai": "^1.9.1",
@@ -74,7 +75,7 @@
     "through2": "^0.6.3",
     "tnt.tree": "0.0.10",
     "uglify-js": "~2.4.15",
-    "webpack": "^1.12.12"
+    "webpack": "^1.13.0"
   },
   "keywords": [
     "bio",
@@ -87,7 +88,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo 'temporarily disabled'",
-    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src --presets es2015",
+    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
     "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
     "sniper": "./node_modules/sniper/bin/sniper .",
     "watch": "./node_modules/webpack/bin/webpack.js -w",
