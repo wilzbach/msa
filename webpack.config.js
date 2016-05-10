@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 module.exports = {
     entry: './src/index_webpack.js',
     output: {
@@ -14,5 +15,10 @@ module.exports = {
                 loader: "style-loader!css-loader" }
         ],
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    plugins: [
+        new webpack.DefinePlugin({
+            MSA_VERSION: JSON.stringify(require("./package.json").version)
+        })
+    ]
 };
