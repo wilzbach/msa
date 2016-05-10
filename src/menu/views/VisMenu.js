@@ -1,8 +1,7 @@
-var VisMenu;
-var MenuBuilder = require("../menubuilder");
+import MenuBuilder from "../menubuilder";
 var dom = require("dom-helper");
 
-module.exports = VisMenu = MenuBuilder.extend({
+const VisMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -82,3 +81,4 @@ module.exports = VisMenu = MenuBuilder.extend({
     return vis;
   }
 });
+export default VisMenu;

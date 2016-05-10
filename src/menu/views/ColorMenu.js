@@ -1,9 +1,8 @@
-var ColorMenu;
-var MenuBuilder = require("../menubuilder");
-var _ = require("underscore");
-var dom = require("dom-helper");
+import MenuBuilder from "../menubuilder";
+const _ = require("underscore");
+const dom = require("dom-helper");
 
-module.exports = ColorMenu = MenuBuilder.extend({
+const ColorMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -113,3 +112,4 @@ module.exports = ColorMenu = MenuBuilder.extend({
     //     seq.set "grey", []
   }
 });
+export default ColorMenu;

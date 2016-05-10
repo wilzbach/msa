@@ -1,32 +1,32 @@
 // models
-var SeqCollection = require("./model/SeqCollection");
+import SeqCollection from "./model/SeqCollection";
 
 // globals
-var Colorator = require("./g/colorscheme");
-var Columns = require("./g/columns");
-var Config = require("./g/config");
-var Package = require("./g/package");
-var SelCol = require("./g/selection/SelectionCol");
-var User = require("./g/user");
-var Visibility = require("./g/visibility");
-var VisOrdering = require("./g/visOrdering");
-var Zoomer = require("./g/zoomer");
+import Colorator from "./g/colorscheme";
+import Columns from "./g/columns";
+import Config from "./g/config";
+import Package from "./g/package";
+import SelCol from "./g/selection/SelectionCol";
+import User from "./g/user";
+import Visibility from "./g/visibility";
+import VisOrdering from "./g/visOrdering";
+import Zoomer from "./g/zoomer";
 
 // MV from backbone
-var boneView = require("backbone-childs");
-var Eventhandler = require("biojs-events");
+const boneView = require("backbone-childs");
+const Eventhandler = require("biojs-events");
 
 // MSA views
-var Stage = require("./views/Stage");
+import Stage from "./views/Stage";
 
 // statistics
-var Stats = require("stat.seqs");
+const Stats = require("stat.seqs");
 
 // utils
-var $ = require("jbone");
-var FileHelper = require("./utils/file");
-var TreeHelper = require("./utils/tree");
-var ProxyHelper = require("./utils/proxy");
+const $ = require("jbone");
+import FileHelper from "./utils/file";
+import TreeHelper from "./utils/tree";
+import ProxyHelper from "./utils/proxy";
 
 // opts is a dictionary consisting of
 // @param el [String] id or reference to a DOM element
@@ -34,7 +34,7 @@ var ProxyHelper = require("./utils/proxy");
 // @param conf [Dict] user config
 // @param vis [Dict] config of visible views
 // @param zoomer [Dict] display settings like columnWidth
-module.exports = boneView.extend({
+const MSA = boneView.extend({
 
   initialize: function(data) {
 
@@ -223,3 +223,4 @@ module.exports = boneView.extend({
     return this;
   }
 });
+export default MSA;

@@ -1,11 +1,10 @@
-var OverviewBox;
-var view = require("backbone-viewj");
-var mouse = require("mouse-pos");
-var selection = require("../g/selection/Selection");
-var jbone = require("jbone");
-var _ = require("underscore");
+const view = require("backbone-viewj");
+const mouse = require("mouse-pos");
+const jbone = require("jbone");
+const _ = require("underscore");
+import selection from "../g/selection/Selection";
 
-module.exports = OverviewBox = view.extend({
+const OverviewBox = view.extend({
 
   className: "biojs_msa_overviewbox",
   tagName: "canvas",
@@ -250,3 +249,4 @@ module.exports = OverviewBox = view.extend({
     return this.el.style.cursor = "crosshair";
   }
 });
+export default OverviewBox;
