@@ -1,7 +1,7 @@
-var LabelRowView = require("./LabelRowView");
-var boneView = require("backbone-childs");
+const boneView = require("backbone-childs");
+import LabelRowView from "./LabelRowView";
 
-module.exports = boneView.extend({
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -60,3 +60,4 @@ module.exports = boneView.extend({
     return this.el.style.height = this.g.zoomer.get("alignmentHeight") + "px";
   }
 });
+export default View;

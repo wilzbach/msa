@@ -1,8 +1,7 @@
-var ImportMenu;
-var MenuBuilder = require("../menubuilder");
-var k = require("koala-js");
+import MenuBuilder from "../menubuilder";
+const k = require("koala-js");
 
-module.exports = ImportMenu = MenuBuilder.extend({
+const ImportMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -57,3 +56,4 @@ module.exports = ImportMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default ImportMenu;

@@ -1,10 +1,9 @@
-var ExportMenu;
-var MenuBuilder = require("../menubuilder");
-var FastaExporter = require("biojs-io-fasta").writer;
-var _ = require("underscore");
-var Exporter = require("../../utils/export");
+import MenuBuilder from "../menubuilder";
+const FastaExporter = require("biojs-io-fasta").writer;
+const _ = require("underscore");
+const Exporter = require("../../utils/export");
 
-module.exports = ExportMenu = MenuBuilder.extend({
+const ExportMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -62,3 +61,4 @@ module.exports = ExportMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default ExportMenu;

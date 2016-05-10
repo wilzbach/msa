@@ -1,9 +1,8 @@
-var FeatureCol;
-var Feature = require("./Feature");
-var Collection = require("backbone-thin").Collection;
-var _ = require("underscore");
+const Feature = require("./Feature");
+const Collection = require("backbone-thin").Collection;
+import _ from "underscore";
 
-module.exports = FeatureCol = Collection.extend({
+const FeatureCol = Collection.extend({
   model: Feature,
 
   constructor: function() {
@@ -101,3 +100,4 @@ module.exports = FeatureCol = Collection.extend({
     return _.max(rows);
   }
 });
+export default FeatureCol;

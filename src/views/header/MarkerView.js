@@ -1,9 +1,9 @@
-var view = require("backbone-viewj");
-var dom = require("dom-helper");
-var svg = require("../../utils/svg");
-var jbone = require("jbone");
+const view = require("backbone-viewj");
+const dom = require("dom-helper");
+const jbone = require("jbone");
+import * as svg from "../../utils/svg";
 
-var HeaderView = view.extend({
+const MarkerView = view.extend({
 
   className: "biojs_msa_marker",
 
@@ -125,4 +125,4 @@ var HeaderView = view.extend({
   }
 });
 
-module.exports = HeaderView;
+export default MarkerView;

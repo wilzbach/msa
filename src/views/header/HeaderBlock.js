@@ -1,8 +1,8 @@
-var boneView = require("backbone-childs");
-var LabelHeader = require("./LabelHeader");
-var RightLabelHeader = require("./RightHeaderBlock");
+const boneView = require("backbone-childs");
+import LabelHeader from "./LabelHeader";
+import RightLabelHeader from "./RightHeaderBlock";
 
-module.exports = boneView.extend({
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -33,3 +33,4 @@ module.exports = boneView.extend({
     return this.el.className = "biojs_msa_header";
   }
 });
+export default View;

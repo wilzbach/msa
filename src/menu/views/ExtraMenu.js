@@ -1,10 +1,9 @@
-var ExtraMenu;
-var MenuBuilder = require("../menubuilder");
-var Seq = require("../../model/Sequence");
-var Loader = require("../../utils/loader");
-var xhr = require("xhr");
+import MenuBuilder from "../menubuilder";
+import Seq from "../../model/Sequence";
+const Loader = require("../../utils/loader");
+const xhr = require("xhr");
 
-module.exports = ExtraMenu = MenuBuilder.extend({
+const ExtraMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -94,3 +93,4 @@ module.exports = ExtraMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default ExtraMenu;

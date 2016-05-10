@@ -1,8 +1,8 @@
-var boneView = require("backbone-childs");
-var SeqBlock = require("./canvas/CanvasSeqBlock");
-var LabelBlock = require("./labels/LabelBlock");
+const boneView = require("backbone-childs");
+import SeqBlock from "./canvas/CanvasSeqBlock";
+import LabelBlock from "./labels/LabelBlock";
 
-module.exports = boneView.extend({
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -56,3 +56,4 @@ module.exports = boneView.extend({
     return width;
   }
 });
+export default View;

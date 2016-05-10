@@ -1,9 +1,8 @@
-var OrderingMenu;
-var MenuBuilder = require("../menubuilder");
-var dom = require("dom-helper");
-var _ = require('underscore');
+import MenuBuilder from "../menubuilder";
+const dom = require("dom-helper");
+const _ = require('underscore');
 
-module.exports = OrderingMenu = MenuBuilder.extend({
+const OrderingMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -134,3 +133,4 @@ module.exports = OrderingMenu = MenuBuilder.extend({
     return models;
   }
 });
+export default OrderingMenu;

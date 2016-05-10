@@ -1,6 +1,5 @@
-var cacheConstructor;
-var _ = require("underscore");
-var Events = require("biojs-events");
+const _ = require("underscore");
+const Events = require("biojs-events");
 
 var cache =
 
@@ -13,7 +12,7 @@ var cache =
   }
   };
 
-module.exports = cacheConstructor = function(g,model) {
+const CacheConstructor = function(g,model) {
   this.g = g;
   this.model = model;
   this.maxScrollWidth = 0;
@@ -33,5 +32,6 @@ module.exports = cacheConstructor = function(g,model) {
   return this;
 };
 
-_.extend(cacheConstructor.prototype, cache);
-Events.mixin(cacheConstructor.prototype);
+_.extend(CacheConstructor.prototype, cache);
+Events.mixin(CacheConstructor.prototype);
+export default CacheConstructor;

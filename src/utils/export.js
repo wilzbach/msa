@@ -1,12 +1,11 @@
-var Exporter;
-var Fasta = require("biojs-io-fasta");
-var GFF = require("biojs-io-gff");
-var xhr = require("xhr");
-var blobURL = require("blueimp_canvastoblob");
-var saveAs = require("browser-saveas");
-var _ = require("underscore");
+const Fasta = require("biojs-io-fasta");
+const GFF = require("biojs-io-gff");
+const xhr = require("xhr");
+const blobURL = require("blueimp_canvastoblob");
+const saveAs = require("browser-saveas");
+const _ = require("underscore");
 
-module.exports = Exporter =
+const Exporter =
 
   {openInJalview: function(url, colorscheme) {
     if (url.charAt(0) === '.') {
@@ -115,3 +114,4 @@ module.exports = Exporter =
       }
   }
   };
+export default Exporter;

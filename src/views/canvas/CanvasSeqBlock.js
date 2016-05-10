@@ -1,13 +1,14 @@
-var boneView = require("backbone-childs");
-var mouse = require("mouse-pos");
-var _ = require("underscore");
-var jbone = require("jbone");
-var CharCache = require("./CanvasCharCache");
-var SelectionClass = require("./CanvasSelection");
-var CanvasSeqDrawer = require("./CanvasSeqDrawer");
-var CanvasCoordsCache = require("./CanvasCoordsCache");
+const boneView = require("backbone-childs");
+const mouse = require("mouse-pos");
+const _ = require("underscore");
+const jbone = require("jbone");
 
-module.exports = boneView.extend({
+import CharCache from "./CanvasCharCache";
+import SelectionClass from "./CanvasSelection";
+import CanvasSeqDrawer from "./CanvasSeqDrawer";
+import CanvasCoordsCache from "./CanvasCoordsCache";
+
+const View = boneView.extend({
 
   tagName: "canvas",
 
@@ -388,3 +389,4 @@ module.exports = boneView.extend({
     return scrollObj;
   }
 });
+export default View;

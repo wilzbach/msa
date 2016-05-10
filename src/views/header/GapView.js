@@ -1,9 +1,9 @@
-var view = require("backbone-viewj");
-var dom = require("dom-helper");
-var svg = require("../../utils/svg");
+const view = require("backbone-viewj");
+const dom = require("dom-helper");
+import * as svg from "../../utils/svg";
 
 // TODO: merge this with the conservation view
-var ConservationView = view.extend({
+const ConservationView = view.extend({
 
   className: "biojs_msa_gapview",
 
@@ -100,4 +100,4 @@ var ConservationView = view.extend({
   }
 });
 
-module.exports = ConservationView;
+export default ConservationView;
