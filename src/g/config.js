@@ -7,7 +7,7 @@ module.exports = Config = Model.extend({
   defaults:
     {registerMouseHover: false,
     registerMouseClicks: true,
-    importProxy: "https://cors-anywhere.herokuapp.com/",
+    importProxy: "https://crossorigin.me/",
     importProxyStripHttp: true,
     eventBus: true,
     alphabetSize: 20,
