@@ -38,5 +38,4 @@ io.gff = require('biojs-io-gff');
 
 export {io};
 
-//import {version} from '../package.json';
-//module.exports.version = version;
+export const version = MSA_VERSION;
