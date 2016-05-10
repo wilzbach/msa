@@ -1,7 +1,6 @@
-var HelpMenu;
-var MenuBuilder = require("../menubuilder");
+import MenuBuilder from "../menubuilder";
 
-module.exports = HelpMenu = MenuBuilder.extend({
+const HelpMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     return this.g = data.g;
@@ -23,3 +22,4 @@ module.exports = HelpMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default HelpMenu;

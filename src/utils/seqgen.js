@@ -1,8 +1,8 @@
-var Sequence = require("biojs-model").seq;
-var BMath = require("./bmath");
-var Stat = require("stat.seqs");
+const Sequence = require("biojs-model").seq;
+import BMath from "./bmath";
+const Stat = require("stat.seqs");
 
-var seqgen = module.exports =
+const SeqGen =
   {_generateSequence: function(len) {
     var text = "";
     var end = len - 1;
@@ -79,3 +79,4 @@ var seqgen = module.exports =
     return pseqs;
   }
   };
+export default SeqGen;

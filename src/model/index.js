@@ -1,4 +1,4 @@
-module.exports.seq = require("./Sequence");
-module.exports.seqcol = require("./SeqCollection");
-module.exports.feature = require("./Feature");
-module.exports.featurecol = require("./FeatureCol");
+export {default as seq} from "./Sequence";
+export {default as seqcol} from "./SeqCollection";
+export {default as feature} from "./Feature";
+export {default as featurecol} from "./FeatureCol";

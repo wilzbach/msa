@@ -1,8 +1,7 @@
-var FilterMenu;
-var MenuBuilder = require("../menubuilder");
-var _ = require("underscore");
+import MenuBuilder from "../menubuilder";
+const _ = require("underscore");
 
-module.exports = FilterMenu = MenuBuilder.extend({
+const FilterMenu = MenuBuilder.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -100,3 +99,4 @@ module.exports = FilterMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default FilterMenu;

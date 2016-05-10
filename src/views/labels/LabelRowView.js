@@ -1,8 +1,8 @@
-var boneView = require("backbone-childs");
-var LabelView = require("./LabelView");
-var MetaView = require("./MetaView");
+const boneView = require("backbone-childs");
+import LabelView from "./LabelView";
+import MetaView from "./MetaView";
 
-module.exports = boneView.extend({
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -52,3 +52,4 @@ module.exports = boneView.extend({
     }
   }
 });
+export default View;

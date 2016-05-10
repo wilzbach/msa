@@ -1,7 +1,6 @@
-var SelectionMenu;
-var MenuBuilder = require("../menubuilder");
+import MenuBuilder from "../menubuilder";
 
-module.exports = SelectionMenu = MenuBuilder.extend({
+const SelectionMenu = MenuBuilder.extend({
 
   initialize(data) {
     this.g = data.g;
@@ -42,3 +41,4 @@ module.exports = SelectionMenu = MenuBuilder.extend({
     return this;
   }
 });
+export default SelectionMenu;

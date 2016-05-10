@@ -1,14 +1,13 @@
-var SelectionClass;
-var _ = require("underscore");
+const _ = require("underscore");
 
-module.exports = SelectionClass = (function(g,ctx) {
+const CanvasSelection = (function(g,ctx) {
   this.g = g;
   this.ctx = ctx;
   return this;
 }
 );
 
-_.extend(SelectionClass.prototype, {
+_.extend(CanvasSelection.prototype, {
 
   // TODO: should I be moved to the selection manager?
   // returns an array with the currently selected residues
@@ -156,3 +155,4 @@ _.extend(SelectionClass.prototype, {
     return [mPrevSel,mNextSel];
   }
 });
+export default CanvasSelection;
