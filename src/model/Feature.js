@@ -1,7 +1,5 @@
-var Feature = require("./Feature");
 var Model = require("backbone-thin").Model;
-
-module.exports = Feature = Model.extend({
+const Feature = Model.extend({
 
   defaults:
     {xStart: -1,
@@ -59,4 +57,4 @@ module.exports = Feature = Model.extend({
     return  this.attributes.xStart <= index && index <= this.attributes.xEnd;
   }
 });
-
+export default Feature;

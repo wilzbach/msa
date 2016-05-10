@@ -1,12 +1,13 @@
-var boneView = require("backbone-childs");
-var AlignmentBody = require("./AlignmentBody");
-var HeaderBlock = require("./header/HeaderBlock");
-var OverviewBox = require("./OverviewBox");
-var Search = require("./Search");
-var _ = require('underscore');
+const boneView = require("backbone-childs");
+const _ = require('underscore');
+
+import AlignmentBody from "./AlignmentBody";
+import HeaderBlock from "./header/HeaderBlock";
+import OverviewBox from "./OverviewBox";
+import Search from "./Search";
 
 // a neat collection view
-module.exports = boneView.extend({
+const View  = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -71,3 +72,4 @@ module.exports = boneView.extend({
     }
   }
 });
+export default View;

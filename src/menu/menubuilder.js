@@ -1,7 +1,6 @@
-var MenuBuilder;
-var builder = require("menu-builder");
+const builder = require("menu-builder");
 
-module.exports = MenuBuilder = builder.extend({
+const MenuBuilder = builder.extend({
 
     buildDOM: function() {
       this.on("new:node", this.buildNode);
@@ -30,3 +29,4 @@ module.exports = MenuBuilder = builder.extend({
       }
     }
 });
+export default MenuBuilder;

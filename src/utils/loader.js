@@ -1,7 +1,6 @@
-var loader;
-var k = require("koala-js");
+const k = require("koala-js");
 
-module.exports = loader =
+const Loader =
 
   // asynchronously require a script
   {loadScript: function(url, cb) {
@@ -50,3 +49,4 @@ module.exports = loader =
     return callbackWrapper;
   }
   };
+export default Loader;

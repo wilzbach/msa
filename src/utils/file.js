@@ -1,11 +1,10 @@
-var FileHelper;
-var FastaReader = require("biojs-io-fasta");
-var ClustalReader = require("biojs-io-clustal");
-var GffReader = require("biojs-io-gff");
-var _ = require("underscore");
-var xhr = require("xhr");
+const FastaReader = require("biojs-io-fasta");
+const ClustalReader = require("biojs-io-clustal");
+const GffReader = require("biojs-io-gff");
+const _ = require("underscore");
+const xhr = require("xhr");
 
-module.exports = FileHelper = function(msa) {
+const FileHelper = function(msa) {
   this.msa = msa;
   return this;
 };
@@ -117,3 +116,4 @@ var funs =
   };
 
 _.extend(FileHelper.prototype, funs);
+export default FileHelper;

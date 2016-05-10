@@ -1,9 +1,8 @@
-var LabelHeader;
-var k = require("koala-js");
-var view = require("backbone-viewj");
-var dom = require("dom-helper");
+const k = require("koala-js");
+const view = require("backbone-viewj");
+const dom = require("dom-helper");
 
-module.exports = LabelHeader = view.extend({
+const LabelHeader = view.extend({
 
   className: "biojs_msa_headers",
 
@@ -88,3 +87,4 @@ module.exports = LabelHeader = view.extend({
     return metaHeader;
   }
 });
+export default LabelHeader;

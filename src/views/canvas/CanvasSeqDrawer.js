@@ -1,7 +1,6 @@
-var construc;
-var _ = require("underscore");
+const _ = require("underscore");
 
-var drawer =
+const Drawer =
 
   {drawLetters: function() {
 
@@ -148,7 +147,7 @@ var drawer =
   };
 
 
-module.exports = construc = function(g,ctx,model,opts) {
+const CanvasSeqDrawer = function(g,ctx,model,opts) {
   this.g = g;
   this.ctx = ctx;
   this.model = model;
@@ -161,4 +160,5 @@ module.exports = construc = function(g,ctx,model,opts) {
   return this;
 };
 
-_.extend(construc.prototype, drawer);
+_.extend(CanvasSeqDrawer.prototype, Drawer);
+export default CanvasSeqDrawer;
