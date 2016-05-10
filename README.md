@@ -1,6 +1,8 @@
 msa
 ==========
 
+[![Join the chat at https://gitter.im/wilzbach/msa](https://badges.gitter.im/wilzbach/msa.svg)](https://gitter.im/wilzbach/msa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 The BioJS MSA Viewer written in CoffeeScript. 
 
 ```
