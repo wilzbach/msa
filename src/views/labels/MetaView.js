@@ -1,11 +1,10 @@
-var MetaView;
-var view = require("backbone-viewj");
-var MenuBuilder = require("../../menu/menubuilder");
-var _ = require('underscore');
-var dom = require("dom-helper");
-var st = require("msa-seqtools");
+const view = require("backbone-viewj");
+const _ = require('underscore');
+const dom = require("dom-helper");
+const st = require("msa-seqtools");
+import MenuBuilder from "../../menu/menubuilder";
 
-module.exports = MetaView = view.extend({
+const MetaView = view.extend({
 
   className: "biojs_msa_metaview",
 
@@ -104,3 +103,4 @@ module.exports = MetaView = view.extend({
     return this.g.trigger("meta:mouseout", {seqId: this.model.get("id", {evt:evt})});
   }
 });
+export default MetaView;

@@ -1,8 +1,7 @@
-var treeHelper;
-var _ = require("underscore");
-var SeqCollection = require("../model/SeqCollection");
+const _ = require("underscore");
+import SeqCollection from "../model/SeqCollection";
 
-module.exports = treeHelper =  function(msa) {
+const TreeHelper =  function(msa) {
   this.msa = msa;
   return this;
 };
@@ -72,4 +71,5 @@ var tf =
     }
     };
 
-_.extend(treeHelper.prototype , tf);
+_.extend(TreeHelper.prototype , tf);
+export default TreeHelper;

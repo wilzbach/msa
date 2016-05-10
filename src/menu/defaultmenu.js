@@ -1,21 +1,20 @@
-var MenuView;
-var boneView = require("backbone-childs");
+const boneView = require("backbone-childs");
 
 // menu views
-var ImportMenu = require("./views/ImportMenu");
-var FilterMenu = require("./views/FilterMenu");
-var SelectionMenu = require("./views/SelectionMenu");
-var VisMenu = require("./views/VisMenu");
-var ColorMenu = require("./views/ColorMenu");
-var OrderingMenu = require("./views/OrderingMenu");
-var ExtraMenu = require("./views/ExtraMenu");
-var ExportMenu = require("./views/ExportMenu");
-var HelpMenu = require("./views/HelpMenu");
-var DebugMenu = require("./views/DebugMenu");
-var MenuSettings = require("./settings");
+import ImportMenu from "./views/ImportMenu";
+import FilterMenu from "./views/FilterMenu";
+import SelectionMenu from "./views/SelectionMenu";
+import VisMenu from "./views/VisMenu";
+import ColorMenu from "./views/ColorMenu";
+import OrderingMenu from "./views/OrderingMenu";
+import ExtraMenu from "./views/ExtraMenu";
+import ExportMenu from "./views/ExportMenu";
+import HelpMenu from "./views/HelpMenu";
+import DebugMenu from "./views/DebugMenu";
+import MenuSettings from "./settings";
 
 // this very basic menu demonstrates calls to the MSA component
-module.exports = MenuView = boneView.extend({
+const MenuView = boneView.extend({
 
   initialize: function(data) {
     if(!data.msa){
@@ -47,3 +46,4 @@ module.exports = MenuView = boneView.extend({
     return this.el.appendChild(document.createElement("p"));
   }
 });
+export default MenuView;

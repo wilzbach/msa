@@ -1,11 +1,12 @@
-var MarkerView = require("./MarkerView");
-var ConservationView = require("./ConservationView");
-var boneView = require("backbone-childs");
-var _ = require('underscore');
-var SeqLogoWrapper = require("./SeqLogoWrapper");
-var GapView = require("./GapView");
+const boneView = require("backbone-childs");
+const _ = require('underscore');
 
-module.exports = boneView.extend({
+import MarkerView from "./MarkerView";
+import ConservationView from "./ConservationView";
+import SeqLogoWrapper from "./SeqLogoWrapper";
+import GapView from "./GapView";
+
+const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
@@ -108,3 +109,4 @@ module.exports = boneView.extend({
     return this.el.style.width = this.g.zoomer.getAlignmentWidth() + "px";
   }
 });
+export default View;

@@ -1,9 +1,8 @@
-var SeqManager;
-var Sequence = require("./Sequence");
-var FeatureCol = require("./FeatureCol");
-var Collection = require("backbone-thin").Collection;
+import Sequence from "./Sequence";
+import FeatureCol from "./FeatureCol";
+const Collection = require("backbone-thin").Collection;
 
-module.exports = SeqManager = Collection.extend({
+const SeqCollection = Collection.extend({
   model: Sequence,
 
   constructor: function(seqs, g) {
@@ -144,3 +143,4 @@ module.exports = SeqManager = Collection.extend({
     return this.trigger("change:reference", seq);
   }
 });
+export default SeqCollection;
