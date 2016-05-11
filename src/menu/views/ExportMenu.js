@@ -2,6 +2,7 @@ import MenuBuilder from "../menubuilder";
 const FastaExporter = require("biojs-io-fasta").writer;
 const _ = require("underscore");
 const Exporter = require("../../utils/export");
+const ShareSym = "\u21AA";
 
 const ExportMenu = MenuBuilder.extend({
 
@@ -14,7 +15,7 @@ const ExportMenu = MenuBuilder.extend({
   render: function() {
     this.setName("Export");
 
-    this.addNode("Share view (URL) ↪", () => {
+    this.addNode("Share view (URL)" + ShareSym, () => {
       return Exporter.shareLink(this.msa, function(link) {
         return window.open(link, '_blank');
       });
