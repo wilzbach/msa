@@ -1,6 +1,8 @@
 import MenuBuilder from "../menubuilder";
 const dom = require("dom-helper");
 const _ = require('underscore');
+const arrowUp = "\u2191";
+const arrowDown = "\u2193";
 
 const OrderingMenu = MenuBuilder.extend({
 
@@ -54,23 +56,22 @@ const OrderingMenu = MenuBuilder.extend({
   getComparators: function() {
     var models = [];
 
+    models.push({text: "ID " + arrowUp, comparator: "id"});
 
-    models.push({text: "ID ↑", comparator: "id"});
-
-    models.push({text: "ID ↓", comparator: function(a, b) {
+    models.push({text: "ID " + arrowDown, comparator: function(a, b) {
       // auto converts to string for localeCompare
         return - ("" + a.get("id")).localeCompare("" + b.get("id"), [], {numeric: true} );
     }});
 
-    models.push({text: "Label ↑", comparator: "name"});
+    models.push({text: "Label " + arrowUp, comparator: "name"});
 
-    models.push({text: "Label ↓", comparator: function(a, b) {
+    models.push({text: "Label " + arrowDown, comparator: function(a, b) {
         return - a.get("name").localeCompare(b.get("name"));
     }});
 
-    models.push({text: "Seq ↑", comparator: "seq"});
+    models.push({text: "Seq " + arrowUp, comparator: "seq"});
 
-    models.push({text: "Seq ↓", comparator: function(a,b) {
+    models.push({text: "Seq " + arrowDown, comparator: function(a,b) {
         return - a.get("seq").localeCompare(b.get("seq"));
     }});
 
@@ -86,7 +87,7 @@ const OrderingMenu = MenuBuilder.extend({
       });
     };
 
-    models.push({text: "Identity ↑",comparator: ((a,b) => {
+    models.push({text: "Identity " + arrowUp,comparator: ((a,b) => {
       var val = this.ident[a.id] - this.ident[b.id];
       console.log(this.ident[a.id],this.ident[b.id]);
       if (val > 0) { return 1; }
@@ -95,7 +96,7 @@ const OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setIdent});
 
-    models.push({text: "Identity ↓", comparator: ((a,b) => {
+    models.push({text: "Identity " + arrowDown, comparator: ((a,b) => {
       var val = this.ident[a.id] - this.ident[b.id];
       if (val > 0) { return -1; }
       if (val < 0) { return 1; }
@@ -103,7 +104,7 @@ const OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setIdent});
 
-    models.push({text: "Gaps ↑", comparator: ((a,b) => {
+    models.push({text: "Gaps " + arrowUp, comparator: ((a,b) => {
       var val = this.gaps[a.id] - this.gaps[b.id];
       if (val > 0) { return 1; }
       if (val < 0) { return -1; }
@@ -111,7 +112,7 @@ const OrderingMenu = MenuBuilder.extend({
     }
     ), precode: setGaps});
 
-    models.push({text: "Gaps ↓", comparator: ((a,b) => {
+    models.push({text: "Gaps " + arrowDown, comparator: ((a,b) => {
       var val = this.gaps[a.id] - this.gaps[b.id];
       if (val < 0) { return 1; }
       if (val > 0) { return -1; }
@@ -122,13 +123,6 @@ const OrderingMenu = MenuBuilder.extend({
     models.push({text: "Consensus to top", comparator(seq) {
         return !seq.get("ref");
     }});
-
-    //models.push text: "Partition codes ↑", comparator: "partition", precode: =>
-      //# set partitions random
-      //@g.vis.set('labelPartition', true)
-      //@model.each (el) ->
-        //el.set('partition', _.random(1,3))
-
 
     return models;
   }
