@@ -7,9 +7,8 @@ const MSAWrapper = function() {
   msa.prototype = MSA.prototype;
   return new msa(arguments);
 };
-MSAWrapper.msa = MSA;
-
 export default MSAWrapper;
+
 export {MSA as msa};
 
 // models
@@ -38,4 +37,5 @@ io.gff = require('biojs-io-gff');
 
 export {io};
 
+// version will be automatically injected by webpack
 export const version = MSA_VERSION;
