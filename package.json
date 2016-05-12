@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.19",
+  "version": "0.4.20",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
     {
       "name": "Sebastian Wilzbach",
       "email": "sebi.wilzbach@gmail.com",
-      "url": "http://sebi.wilzba.ch"
+      "url": "https://sebi.wilzba.ch"
     },
     {
       "name": "Tatyana Goldberg",
@@ -111,7 +111,7 @@
   "sniper": {
     "noBrowserify": true,
     "buildJS": [
-      "http://cdn.bio.sh.s3.eu-central-1.amazonaws.com/msa/latest/msa.min.gz.js"
+      "https://cdn.bio.sh/msa/latest/msa.min.gz.js"
     ],
     "js": [
       "dist/msa.js"
