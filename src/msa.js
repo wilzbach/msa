@@ -46,6 +46,7 @@ const MSA = boneView.extend({
     if (!(data.vis != null)) { data.vis = {}; }
     if (!(data.visorder != null)) { data.visorder = {}; }
     if (!(data.zoomer != null)) { data.zoomer = {}; }
+    if (!(data.conserv != null)) { data.conserv = {}; }
 
     // g is our global Mediator
     this.g = Eventhandler.mixin({});
@@ -61,7 +62,10 @@ const MSA = boneView.extend({
     this.g.vis = new Visibility(data.vis, {model: this.seqs});
     this.g.visorder = new VisOrdering(data.visorder);
     this.g.zoomer = new Zoomer(data.zoomer,{g:this.g, model: this.seqs});
-
+    
+    // store config options for plugins
+    this.g.conservationConfig = data.conserv;
+    
     // debug mode
     if (window.location.hostname === "localhost") {
       this.g.config.set("debug", true);

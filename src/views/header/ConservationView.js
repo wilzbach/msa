@@ -2,10 +2,14 @@ const view = require("backbone-viewj");
 const dom = require("dom-helper");
 import * as svg from "../../utils/svg";
 
+// this allows lots of flexibility wrt specifying colors
+// but adds ~25K to msa.min.gz ...
+var d3_scale; // = require "d3-scale" ;
+
 const ConservationView = view.extend({
 
   className: "biojs_msa_conserv",
-
+  
   initialize: function(data) {
     this.g = data.g;
     this.listenTo(this.g.zoomer,"change:stepSize change:labelWidth change:columnWidth", this.render);
@@ -14,9 +18,53 @@ const ConservationView = view.extend({
     // we need to wait until stats gives us the ok
     //@listenTo @model, "reset",@render
     this.listenTo(this.g.stats,"reset", this.render);
+    
+    var opts = _.extend( {}, { 
+      fillColor: '#660', // [ '#660', '#ff0'],
+      strokeColor: '#330',
+      maxHeight: 20,
+      rectStyler: function(rect, data) { return rect }
+    }, this.g.conservationConfig );
+        
+    this.fillColor = opts.fillColor;
+    this.strokeColor = opts.strokeColor;
+    this.maxHeight = opts.maxHeight;
+    this.rectStyler = opts.rectStyler;
+    
     return this.manageEvents();
   },
-
+  
+  // returns a function that will decide a colour 
+  // based on the conservation data it is given
+  colorer: function(colorRange) {
+    var colorer = function() { return "none" };
+        
+    if( typeof colorRange === 'string' ) {
+      colorer = function() { return colorRange };
+    }
+    else if( Array.isArray( colorRange ) ) {
+      if ( colorRange.length != 2 ) {
+        console.error( "ERROR: colorRange array should have exactly two elements", colorRange );
+      }
+      
+      if ( !d3_scale ) {
+        console.warn( "providing a [min/max] range as input requires d3 to be included - only using the first color" );
+        colorer = function(d) { return colorRange[0] };
+      }
+      else {
+        var scale = d3_scale.scaleLinear()
+          .domain( [0, this.maxHeight] )
+          .range(colorRange);
+          
+        colorer = function(d) { return scale(d.height) };
+      }
+    }
+    else {
+      console.warn( "expected colorRange to be '#rgb' or ['#rgb', '#rgb']", colorRange, '(' + typeof colorRange + ')' );
+    }
+    return colorer;
+  },
+  
   render: function() {
     var conserv = this.g.stats.scale(this.g.stats.conservation());
 
@@ -24,13 +72,18 @@ const ConservationView = view.extend({
 
     var nMax = this.model.getMaxLength();
     var cellWidth = this.g.zoomer.get("columnWidth");
-    var maxHeight = 20;
+    var maxHeight = this.maxHeight;
     var width = cellWidth * (nMax - this.g.columns.get('hidden').length);
-
+    
     var s = svg.base({height: maxHeight, width: width});
     s.style.display = "inline-block";
     s.style.cursor = "pointer";
 
+    var rectData = this.rectData;
+    var fillColorer = this.colorer( this.fillColor );
+    var strokeColorer = this.colorer( this.strokeColor );
+    var rectStyler = this.rectStyler;
+    
     var stepSize = this.g.zoomer.get("stepSize");
     var hidden = this.g.columns.get("hidden");
     var x = 0;
@@ -48,9 +101,26 @@ const ConservationView = view.extend({
       }
       var height = maxHeight *  (avgHeight / stepSize);
 
-      var rect =  svg.rect({x:x,y: maxHeight - height,width:width - cellWidth / 4,height:height,style:
-        "stroke:red;stroke-width:1;"
-      });rect.rowPos = n;
+      var d = { 
+        x: x,
+        y: maxHeight - height,
+        maxheight: maxHeight,
+        width: width - cellWidth / 4,
+        height: height,
+        rowPos: n,
+      };
+      
+      var rect = svg.rect( d );
+            
+      rect.style.stroke = strokeColorer(d);
+      rect.style.fill = fillColorer(d);
+      
+      if ( typeof rectStyler === 'function' ) {
+        rectStyler( rect, d );
+      }
+
+      rect.rowPos = n;
+      
       s.appendChild(rect);
       x += width;
       n += stepSize;
