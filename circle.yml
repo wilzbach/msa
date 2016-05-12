@@ -1,0 +1,14 @@
+dependencies:
+  override:
+    - npm install
+    - pip install s3cmd
+  cache_directories:
+    - "node_modules"
+test:
+  override:
+    - npm test
+deployment:
+  production:
+    branch: master
+    commands:
+      - ./cdn.sh
