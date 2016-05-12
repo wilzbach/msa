@@ -2,7 +2,7 @@ var maxHeight = 200;
 
 // support both the modularized and standalone d3
 var scaleLinear = (typeof d3 != "undefined") ? d3.scale.linear() : d3_scale.scaleLinear();
-var scale = scaleLinear()
+var scale = scaleLinear
   .domain([0, maxHeight / 2, maxHeight])
   .range(['#f00', '#ff0', '#0f0']);
 
