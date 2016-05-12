@@ -1,7 +1,7 @@
 dependencies:
   override:
     - npm install
-    - pip install s3cmd
+    - pip install awscli
   cache_directories:
     - "node_modules"
 test:
