@@ -1,3 +1,9 @@
 {
-  "js": ["/node_modules/d3/d3.min.js"]
+  "js": [
+      "/node_modules/d3-array/build/d3-array.js",
+      "/node_modules/d3-color/build/d3-color.js",
+      "/node_modules/d3-interpolate/build/d3-interpolate.js",
+      "/node_modules/d3-scale/build/d3-scale.js"
+  ],
+  "buildJS": ["https://d3js.org/d3-scale.v0.7.min.js"]
 }

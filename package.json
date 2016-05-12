@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.18",
+  "version": "0.4.19",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
@@ -57,7 +57,7 @@
     "biojs-io-newick": "git://github.com/wilzbach/biojs-io-newick",
     "chai": "^1.9.1",
     "css-loader": "^0.23.1",
-    "d3": "^3.5.17",
+    "d3-scale": "^0.7.0",
     "gulp": "^3.8.7",
     "gulp-chmod": "^1.1.0",
     "gulp-concat": "^2.3.4",
