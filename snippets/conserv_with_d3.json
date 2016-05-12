@@ -5,5 +5,10 @@
       "/node_modules/d3-interpolate/build/d3-interpolate.js",
       "/node_modules/d3-scale/build/d3-scale.js"
   ],
-  "buildJS": ["https://d3js.org/d3-scale.v0.7.min.js"]
+  "buildJS": [
+      "https://d3js.org/d3-array.v0.7.min.js",
+      "https://d3js.org/d3-color.v0.4.min.js",
+      "https://d3js.org/d3-interpolate.v0.7.min.js",
+      "https://d3js.org/d3-scale.v0.7.min.js"
+  ]
 }
