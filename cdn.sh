@@ -1,5 +1,9 @@
 #!/bin/bash
 
+s3="aws s3"
+export AWS_DEFAULT_REGION="eu-central-1"
+
+# to be sure - run build again
 npm run build
 
 # current version
@@ -18,9 +22,9 @@ for folder in "latest" ${PACKAGE_VERSION} ${MINOR_VERSION} ${MAJOR_VERSION} ; do
 
 echo "uploading to s3 folder: $folder"
 
-s3cmd --acl-public -m "application/javascript" put dist/msa.js "s3://cdn.bio.sh/msa/${folder}/msa.js"
-s3cmd --acl-public -m "application/octet-stream" put dist/msa.js.map "s3://cdn.bio.sh/msa/${folder}/msa.js.map"
-s3cmd --acl-public -m "application/javascript" --add-header='Content-Encoding: gzip' put dist/msa.min.gz.js "s3://cdn.bio.sh/msa/${folder}/msa.min.gz.js"
-s3cmd --acl-public -m "application/octet-stream" put dist/msa.js.map "s3://cdn.bio.sh/msa/${folder}/msa.min.js.map"
+$s3 cp --acl public-read --content-type "application/javascript" dist/msa.js "s3://cdn.bio.sh/msa/${folder}/msa.js"
+$s3 cp --acl public-read --content-type "application/octet-stream" dist/msa.js.map "s3://cdn.bio.sh/msa/${folder}/msa.js.map"
+$s3 cp --acl public-read --content-type "application/javascript" --content-encoding "gzip" dist/msa.min.gz.js "s3://cdn.bio.sh/msa/${folder}/msa.min.gz.js"
+$s3 cp --acl public-read --content-type "application/octet-stream" dist/msa.js.map "s3://cdn.bio.sh/msa/${folder}/msa.min.js.map"
 
 done
