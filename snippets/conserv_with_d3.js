@@ -15,10 +15,12 @@ var opts = {
   },
   conserv: {
     maxHeight: 200,
-    fillColor: ['blue', '#0f0'],
     strokeColor: '#000',
     rectStyler: function (rect, data) { 
-      rect.style.fill = scale(data.height);
+      if ( data.rowPos < 20 ) {
+        rect.style.fill = scale(data.height);
+      }
+      return rect;
     }
   }
 };
