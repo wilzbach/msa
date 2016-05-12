@@ -2,10 +2,6 @@ const view = require("backbone-viewj");
 const dom = require("dom-helper");
 import * as svg from "../../utils/svg";
 
-// this allows lots of flexibility wrt specifying colors
-// but adds ~25K to msa.min.gz ...
-var d3_scale; // = require "d3-scale" ;
-
 const ConservationView = view.extend({
 
   className: "biojs_msa_conserv",
@@ -20,7 +16,7 @@ const ConservationView = view.extend({
     this.listenTo(this.g.stats,"reset", this.render);
     
     var opts = _.extend( {}, { 
-      fillColor: '#660', // [ '#660', '#ff0'],
+      fillColor: ['#660', '#ff0'],
       strokeColor: '#330',
       maxHeight: 20,
       rectStyler: function(rect, data) { return rect }
@@ -47,12 +43,12 @@ const ConservationView = view.extend({
         console.error( "ERROR: colorRange array should have exactly two elements", colorRange );
       }
       
-      if ( !d3_scale ) {
+      if ( !(typeof d3 != "undefined" && !!d3.scale) ) {
         console.warn( "providing a [min/max] range as input requires d3 to be included - only using the first color" );
         colorer = function(d) { return colorRange[0] };
       }
       else {
-        var scale = d3_scale.scaleLinear()
+        var scale = d3.scale.linear()
           .domain( [0, this.maxHeight] )
           .range(colorRange);
           
