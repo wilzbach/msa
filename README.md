@@ -1,44 +1,38 @@
 msa
 ==========
 
-[![Join the chat at https://gitter.im/wilzbach/msa](https://badges.gitter.im/wilzbach/msa.svg)](https://gitter.im/wilzbach/msa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-The BioJS MSA Viewer written in CoffeeScript. 
+The BioJS MSA Viewer written in CoffeeScript.
 
 ```
-          .         .                                              
-         ,8.       ,8.            d888888o.           .8.          
-        ,888.     ,888.         .`8888:' `88.        .888.         
-       .`8888.   .`8888.        8.`8888.   Y8       :88888.        
-      ,8.`8888. ,8.`8888.       `8.`8888.          . `88888.       
-     ,8'8.`8888,8^8.`8888.       `8.`8888.        .8. `88888.      
-    ,8' `8.`8888' `8.`8888.       `8.`8888.      .8`8. `88888.     
-   ,8'   `8.`88'   `8.`8888.       `8.`8888.    .8' `8. `88888.    
-  ,8'     `8.`'     `8.`8888.  8b   `8.`8888.  .8'   `8. `88888.   
- ,8'       `8        `8.`8888. `8b.  ;8.`8888 .888888888. `88888.  
+          .         .
+         ,8.       ,8.            d888888o.           .8.
+        ,888.     ,888.         .`8888:' `88.        .888.
+       .`8888.   .`8888.        8.`8888.   Y8       :88888.
+      ,8.`8888. ,8.`8888.       `8.`8888.          . `88888.
+     ,8'8.`8888,8^8.`8888.       `8.`8888.        .8. `88888.
+    ,8' `8.`8888' `8.`8888.       `8.`8888.      .8`8. `88888.
+   ,8'   `8.`88'   `8.`8888.       `8.`8888.    .8' `8. `88888.
+  ,8'     `8.`'     `8.`8888.  8b   `8.`8888.  .8'   `8. `88888.
+ ,8'       `8        `8.`8888. `8b.  ;8.`8888 .888888888. `88888.
 ,8'         `         `8.`8888. `Y8888P ,88P'.8'       `8. `88888.
 ```
 
 [![Build Status](https://travis-ci.org/wilzbach/msa.svg?branch=master)](https://travis-ci.org/wilzbach/msa)
 [![NPM version](http://img.shields.io/npm/v/msa.svg)](https://www.npmjs.org/package/msa)
+[![Join the chat at https://gitter.im/wilzbach/msa](https://badges.gitter.im/wilzbach/msa.svg)](https://gitter.im/wilzbach/msa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Dependencies](https://david-dm.org/wilzbach/msa.png)](https://david-dm.org/wilzbach/msa)
 [![Code Climate](https://codeclimate.com/github/wilzbach/msa/badges/gpa.svg)](https://codeclimate.com/github/wilzbach/msa)
 [![NPM downloads](http://img.shields.io/npm/dm/msa.svg)](https://www.npmjs.org/package/msa)
 
 
 ```html
-<script src=//cdn.biojs.net/msa/0.4/msa.min.gz.js></script>
+<script src=//cdn.bio.sh/msa/0.4/msa.min.gz.js></script>
 ```
 
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
 
-[![Min version](http://img.shields.io/badge/prod-35kB-blue.svg)](https://cdn.biojs.net/msa/latest/msa.min.gz.js)  
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://s3-eu-west-1.amazonaws.com/biojs/msa/latest/msa.js) 
-
-In case
-* Amazon S3 should be ever down, there is a [redundant build server](https://drone.io/github.com/wilzbach/msa/files). 
-* you need a uglified unzipped CDN version, just remove the `.gz` in the file name.
-* you want the latest version, replace the version number with `latest`.
+[![Min version](http://img.shields.io/badge/prod-35kB-blue.svg)](https://cdn.bio.sh/msa/latest/msa.min.gz.js)
+[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://cdn.bio.sh/msa/latest/msa.js)
 
 [![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
@@ -57,8 +51,8 @@ Demo
 
 These examples show how you could embed the MSA viewer into your page.
 
-[![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/4/edit?js,output) 
-[![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit?html,js,output) 
+[![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/4/edit?js,output)
+[![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit?html,js,output)
 
 
 [Current sniper](http://workmen.biojs.net/demo/msa) with different examples
@@ -73,7 +67,7 @@ These examples show how you could embed the MSA viewer into your page.
 * import files in format like FASTA, Clustal, ...
 * be interactive and receive [Events](https://github.com/wilzbach/msa/wiki/Events)
 * filter, sort, hide the sequences
-* display sequence [features](https://github.com/wilzbach/biojs-vis-easy_features/) 
+* display sequence [features](https://github.com/wilzbach/biojs-vis-easy_features/)
 * extendable [Views](https://github.com/wilzbach/msa/wiki/Views) for your integration
 * customizable viewport
 * simplicity as design rule
@@ -201,7 +195,7 @@ m.seqs.at(0).set("seq", "AAAA") // sets seq
 m.seqs.add({seq: "AAA"});  // we add a new seq at the end
 m.seqs.unshift({seq: "AAA"});  // we add a new seq at the beginning
 m.seqs.pop() // remove and return last seq
-m.seqs.shift() // remove and return first seq 
+m.seqs.shift() // remove and return first seq
 m.seqs.length // nr
 m.seqs.pluck("seqId") // ["id1", "id2", ..]
 m.seqs.remove(m.seqs.at(2)) // remove seq2
@@ -232,7 +226,7 @@ m.g.selcol.getAllColumnBlocks() // array with all selected columns
 m.g.selcol.invertRow(@model.pluck "id")
 m.g.selcol.invertCol([0,1,2])
 m.g.selcol.reset() // remove the entire selection
-m.g.user.set("searchText", search) // search 
+m.g.user.set("searchText", search) // search
 ```
 
 ### Jump to a column
@@ -276,7 +270,7 @@ msa.g.zoomer.set("alignmentHeight", 500) // modifies the default height
 
 ### Listen to attribute events
 
-All classes 
+All classes
 
 ```
 m.g.selcol.on("change", function(prev, new){
@@ -463,7 +457,7 @@ __Infos__
 
 * This will also automatically validate your installation by running `gulp build`
  - generating browser builds for the codebase
- - executing all unit tests 
+ - executing all unit tests
 
 Step 2) Developing
 ------------------
@@ -485,7 +479,7 @@ npm run watch
 This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
 
 Have fun coding.
-You can also start [sniper](https://github.com/wilzbach/sniper), to view the snippets. Without global installation, just hit 
+You can also start [sniper](https://github.com/wilzbach/sniper), to view the snippets. Without global installation, just hit
 
 ### 2.2 Example (snippets) server
 
@@ -507,7 +501,7 @@ npm test
 ```
 
 
-If you install gulp globally (`npm install -g gulp`), you can run 
+If you install gulp globally (`npm install -g gulp`), you can run
 
 Execute all unit tests
 ```
