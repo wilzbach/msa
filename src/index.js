@@ -38,4 +38,10 @@ io.gff = require('biojs-io-gff');
 export {io};
 
 // version will be automatically injected by webpack
-export const version = MSA_VERSION;
+// MSA_VERSION is only defined if loaded via webpack
+var VERSION = "imported";
+if (typeof MSA_VERSION !== undefined) {
+    VERSION = MSA_VERSION;
+}
+
+export const version = VERSION;
