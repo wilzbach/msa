@@ -40,7 +40,7 @@ export {io};
 // version will be automatically injected by webpack
 // MSA_VERSION is only defined if loaded via webpack
 var VERSION = "imported";
-if (typeof MSA_VERSION !== undefined) {
+if (typeof MSA_VERSION !== "undefined" ) {
     VERSION = MSA_VERSION;
 }
 
