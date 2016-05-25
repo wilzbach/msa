@@ -87,7 +87,7 @@ If you have loaded ```msa``` as a script in your web page with something like...
 
 If you are using ```npm``` and are adding msa as a dependency, then you can use the following:
 ```
-var msa = require("msa").msa;
+var msa = require("msa");
 ```
 
 ### Import seqs
@@ -99,13 +99,13 @@ var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",
 };
-var m = new msa(opts);
+var m = msa(opts);
 ```
 
 #### b) Import your own seqs
 
 ```
-var m = new msa({
+var m = msa({
 	el: rootDiv,
 	seqs: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
 });
@@ -116,7 +116,7 @@ m.render()
 
 ```
 var clustal = require("biojs-io-clustal");
-var m = new msa({
+var m = msa({
 	el: rootDiv,
 });
 clustal.read("https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
@@ -151,7 +151,7 @@ var opts = {
   importURL: "./data/fer1.clustal",
   colorscheme: {"scheme": "hydro"}
 };
-var m = new msa(opts);
+var m = msa(opts);
 ```
 
 Own colorscheme
@@ -162,7 +162,7 @@ var opts = {
   importURL: "./data/fer1.clustal",
   colorscheme: {"scheme": "hydro"}
 };
-var m = new msa(opts);
+var m = msa(opts);
 m.g.colorscheme.addStaticScheme("own",{A: "orange", C: "red", G: "green", T: "blue"});
 m.g.colorscheme.set("scheme", "own");
 ```
