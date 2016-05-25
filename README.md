@@ -85,7 +85,7 @@ If you have loaded ```msa``` as a script in your web page with something like...
 ```
 ... then congratulations! You are ready to go.
 
-If you are using ```require``` to import msa into your own library, then you'll need use the following:
+If you are using ```npm``` and are adding msa as a dependency, then you can use the following:
 ```
 var msa = require("msa").msa;
 ```
