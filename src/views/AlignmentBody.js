@@ -21,10 +21,12 @@ const View = boneView.extend({
 
     this.listenTo(this.g.zoomer, "change:alignmentHeight", this.adjustHeight);
     this.listenTo(this.g.zoomer, "change:alignmentWidth", this.adjustWidth);
-    return this.listenTo(this.g.columns, "change:hidden", this.adjustHeight);
+    this.listenTo(this.g.columns, "change:hidden", this.adjustHeight);
+    return this;
   },
 
   render: function() {
+    console.log("AlignmentBody.render()");
     this.renderSubviews();
     this.el.className = "biojs_msa_albody";
     this.el.style.whiteSpace = "nowrap";

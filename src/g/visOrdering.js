@@ -10,6 +10,7 @@ module.exports = Visibility = Model.extend({
     {searchBox: -10,
     overviewBox: 30,
     headerBox: -1,
-    alignmentBody: 0
+    alignmentBody: 0,
+    scaleSlider: 50
     }
 });

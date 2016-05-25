@@ -162,3 +162,22 @@
 }
 
 /* END Menubar */
+
+.biojs_msa_scale {
+  width: 300px;
+  margin: 5px 0 0 auto;
+  padding: 5px;
+  text-align: center;
+}
+.biojs_msa_scale .msa-btngroup {
+  margin: 5px auto 0;
+}
+.biojs_msa_scale .msa-btn {
+  font-size: 1.3em;
+  display: inline-block;
+  padding: 2px 8px;
+  margin-bottom: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

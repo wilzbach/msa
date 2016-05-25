@@ -5,6 +5,7 @@ import AlignmentBody from "./AlignmentBody";
 import HeaderBlock from "./header/HeaderBlock";
 import OverviewBox from "./OverviewBox";
 import Search from "./Search";
+import ScaleSlider from "./ScaleSlider";
 
 // a neat collection view
 const View  = boneView.extend({
@@ -29,7 +30,10 @@ const View  = boneView.extend({
 
     this.listenTo(this.g.vis,"change:sequences", this.rerender);
     this.listenTo(this.g.vis,"change:overviewbox", this.rerender);
-    return this.listenTo(this.g.visorder,"change", this.rerender);
+    this.listenTo(this.g.visorder,"change", this.rerender);
+    this.listenTo(this.g.zoomer, "change:columnWidth", this.rerender);
+
+    return this;
   },
 
   draw: function() {
@@ -55,13 +59,23 @@ const View  = boneView.extend({
 
     var body = new AlignmentBody({model: this.model, g: this.g});
     body.ordering = this.g.visorder.get('alignmentBody');
-    return this.addView("body",body);
+    this.addView("body",body);
+
+    if (this.g.vis.get("scaleslider")) {
+      var scaleslider = new ScaleSlider({model: this.g.scale, g: this.g});
+      //console.log( "scaleslider", scaleslider )
+      scaleslider.ordering = this.g.visorder.get('scaleSlider');
+      this.addView("scaleSlider", scaleslider);
+    }
+    
+    return this;
   },
 
-  render: function() {
+  render: function(e) {
+    console.log( "Stage.render.START" );
     this.renderSubviews();
     this.el.className = "biojs_msa_stage";
-
+    console.log( "Stage.render.DONE" );
     return this;
   },
 
