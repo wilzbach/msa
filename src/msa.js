@@ -145,7 +145,7 @@ const MSA = boneView.extend({
     this.removeViews();
 
     this.addView("stage",new Stage({model: this.seqs, g: this.g}));
-    this.$el.addClass("class", "biojs_msa_div");
+    this.$el.addClass("biojs_msa_div");
 
     // bootstraps the menu bar by default -> destroys modularity
     if (this.g.config.get("bootstrapMenu")) {
