@@ -77,12 +77,24 @@ These examples show how you could embed the MSA viewer into your page.
 
 ## Use the MSA viewer
 
+**The following examples assume that the ```msa()``` constructor is available.**
+
+If you have loaded ```msa``` as a script in your web page with something like...
+```
+<script src="//cdn.bio.sh/msa/latest/msa.min.gz.js"></script>
+```
+... then congratulations! You are ready to go.
+
+If you are using ```require``` to import msa into your own library, then you'll need use the following:
+```
+var msa = require("msa").msa;
+```
+
 ### Import seqs
 
 #### a) Directly import a url
 
 ```
-var msa = require("msa");
 var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",
@@ -93,7 +105,6 @@ var m = new msa(opts);
 #### b) Import your own seqs
 
 ```
-var msa = require("msa");
 var m = new msa({
 	el: rootDiv,
 	seqs: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
@@ -104,7 +115,6 @@ m.render()
 #### c) Asynchronously import seqs
 
 ```
-var msa = require("msa");
 var clustal = require("biojs-io-clustal");
 var m = new msa({
 	el: rootDiv,
@@ -136,7 +146,6 @@ There also many other option - grouped into these categories. See below for more
 Checkout this [live example](http://workmen.biojs.net/demo/msa/colorscheme) or [edit](http://workmen.biojs.net/jsbin/msa/colorscheme).
 
 ```
-var msa = require("msa");
 var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",
@@ -148,7 +157,6 @@ var m = new msa(opts);
 Own colorscheme
 
 ```
-var msa = require("msa");
 var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",
@@ -167,7 +175,6 @@ Have a look at the [doc](https://github.com/wilzbach/msa-colorschemes) for more 
 Checkout this [live example](http://workmen.biojs.net/demo/msa/fer1_annoted) or [edit](http://workmen.biojs.net/jsbin/msa/fer1_annoted).
 
 ```
-var msa = require("msa");
 var xhr = require("xhr");
 var gffParser = require("biojs-io-gff");
 var m = msa({el: rootDiv, importURL: "https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal");
@@ -309,7 +316,7 @@ msa.g.on("meta:click", function(data){ ... }):
 
 ```
 conf: {
- 	registerMouseHover: false,
+    registerMouseHover: false,
     registerMouseClicks: true,
     importProxy: "https://cors-anywhere.herokuapp.com/",
     eventBus: true,
