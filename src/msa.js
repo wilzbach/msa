@@ -66,7 +66,7 @@ const MSA = boneView.extend({
     this.g.visorder = new VisOrdering(data.visorder);
     this.g.zoomer = new Zoomer(data.zoomer,{g:this.g, model: this.seqs});
     
-    this.g.scale = new StageScale(data.scale, this.g);
+    this.g.scale = new StageScale(data.scale, {g: this.g});
     
     // store config options for plugins
     this.g.conservationConfig = data.conserv;
