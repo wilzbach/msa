@@ -63,14 +63,19 @@
 /* END BASIC */
 /* Marker */
 
-.biojs_msa_marker{
-    color:grey;
-    white-space: nowrap;
-    cursor: pointer;
+.biojs_msa_marker {
+  color: #999;
+  white-space: nowrap;
 }
 
-.biojs_msa_marker span{
-    text-align: center;
+.biojs_msa_marker .msa-col-header {
+  cursor: pointer;
+  cursor: pointer;
+  text-align: center;
+}
+
+.biojs_msa_marker .msa-col-header:hover {
+  color: #f00;
 }
 
 /* END Marker */
@@ -168,8 +173,17 @@
 
 /* END Menubar */
 
+.biojs_msa_div {
+  position: relative;
+}
+
 .biojs_msa_scale {
-  width: 300px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 3px #999;
+  border-radius: 3px;
   margin: 5px 0 0 auto;
   padding: 5px;
   text-align: center;
@@ -177,8 +191,12 @@
 .biojs_msa_scale .msa-btngroup {
   margin: 5px auto 0;
 }
+.biojs_msa_scale [type="range"] {
+  cursor: pointer;
+}
 .biojs_msa_scale .msa-btn {
-  font-size: 1.3em;
+  cursor: pointer;
+  font-size: 1.1em;
   display: inline-block;
   padding: 2px 8px;
   margin-bottom: 0;
