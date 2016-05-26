@@ -6,52 +6,38 @@ var LinearScale = require("linear-scale");
 module.exports = StageScale = Model.extend({
 
   constructor: function(attributes,options) {
-    Model.apply(this, arguments);
     this.g = options.g;
+    Model.apply(this, arguments);
     return this;
   },
   
   defaults: {
     // general
-    currentSize: 4,
+    currentSize: 5,
     step: 1,
     originalSize: false,
-    scaleBy: 'category',
-    columnWidthCategories: [ 3, 5, 8, 12, 20, 30 ],
-    sizeRange: [ 1, 5 ],
-    columnWidthRange: [ 3, 40 ],
+    scaleCategories: [ 
+      { columnWidth: 1, markerStepSize: 20, stepSize: 0 },
+      { columnWidth: 3, markerStepSize: 20, stepSize: 0 },
+      { columnWidth: 5, markerStepSize: 10, stepSize: 0 },
+      { columnWidth: 9, markerStepSize: 5, stepSize: 1 },
+      { columnWidth: 13, markerStepSize: 5, stepSize: 1 },
+      { columnWidth: 20, markerStepSize: 1, stepSize: 1 },
+      { columnWidth: 30, markerStepSize: 1, stepSize: 1 },
+    ],
   },
 
   initialize: function(args) {
-    var params = _.extend({}, this.defaults, args);
-    this.set('originalSize', params.currentSize);
-    this.columnWidthCategories = [ 3, 5, 7, 10, 20, 30 ];
     
-    var sizeRange, columnWidthRange, scale;
-    if ( params.scaleBy == 'category' ) {
-      var categories = params.columnWidthCategories;
-      sizeRange = [ 1, categories.length ];
-      columnWidthRange = [ _.first( categories ), _.last( categories ) ];
-      scale = function (size) { return categories[size - 1] };
-    }
-    else {
-      sizeRange = params.sizeRange;
-      columnWidthRange = params.columnWidthRange;
-      scale = LinearScale().domain(this.sizeRange).range(this.columnWidthRange);
-    }
-    this.sizeRange = sizeRange;
-    this.columnWidthRange = columnWidthRange;
-    this.scale = scale;
+    var currentSize = this.get('currentSize');    
+    this.set('originalSize', currentSize);
+    this.setSize( currentSize );
 
-    this.setSize( params.currentSize );
     return this;
   },
   
-  getColumnWidth: function() {
-    var s = this.getSize();
-    var w = this.scale(s);
-    //console.log( "getColumnWidth", "scale", this.scale, "size", s, "width: ", w);
-    return w;
+  getSizeRange() {
+    return [ 1, this.get('scaleCategories').length ];
   },
   
   bigger: function(){
@@ -67,18 +53,33 @@ module.exports = StageScale = Model.extend({
   },
   
   setSize: function(size) {
+    var range = this.getSizeRange();
     size = parseInt(size);
-    size = size < this.sizeRange[0] ? this.sizeRange[0]
-         : size > this.sizeRange[1] ? this.sizeRange[1]
+    size = size < range[0] ? range[0]
+         : size > range[1] ? range[1]
          : size;
-         
-    this.set( 'currentSize', size );
-    console.log( "setSize", size, this.getColumnWidth() );
+    
+    this.set('currentSize', size);    
     return this;
   },
   
   getSize: function() {
-    return this.get('currentSize');    
+    return this.get('currentSize');
+  },
+
+  getColumnWidth: function() {
+    return this.getScaleInfo().columnWidth;
+  },
+    
+  getScaleInfo: function() {
+    var size = this.getSize();
+    var categories = this.get('scaleCategories');
+    if ( size > 0 && size <= categories.length ) {
+      return categories[size-1];
+    }
+    else {
+      console.error( "out of bounds" );
+    }
   },
   
 });
