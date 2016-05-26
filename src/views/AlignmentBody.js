@@ -26,7 +26,6 @@ const View = boneView.extend({
   },
 
   render: function() {
-    console.log("AlignmentBody.render()");
     this.renderSubviews();
     this.el.className = "biojs_msa_albody";
     this.el.style.whiteSpace = "nowrap";
