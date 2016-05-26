@@ -5,10 +5,12 @@ const $ = require("jbone");
 
 const View = BoneView.extend({
 
+  
   initialize: function(data) {
     this.g = data.g;
     this.listenTo(this.g.zoomer,"change:columnWidth", this.render);
     this.toggleClass = 'msa-hide';
+    this.isVisible = true;
     return this;
   },
   
@@ -29,6 +31,7 @@ const View = BoneView.extend({
 </div>\
 <div class="msa-scale-maximised">\
   <button class="btn msa-btn msa-btn-close" style="float:right">&times; close</button>\
+  <div>\
   <input type="range" \
     data-provide="slider" \
     min="<%= min %>" \
@@ -36,6 +39,7 @@ const View = BoneView.extend({
     step="<%= step %>" \
     value="<%= value %>" \
   >\
+  </div>\
   <div class="btngroup msa-btngroup">\
     <button class="btn msa-btn" data-action="smaller"><span class="glyphicon-zoom-out"></span>-</button>\
     <button class="btn msa-btn" data-action="bigger"><span class="glyphicon-zoom-in"></span>+</button>\
@@ -54,7 +58,12 @@ const View = BoneView.extend({
       colWidth: this.model.getColumnWidth(),
     };
     this.$el.html( this.template(stash) );
-    this.hide();    
+    if ( this.isVisible ) {
+      this.show();
+    }
+    else {
+      this.hide();
+    }
     return this;
   },
 
@@ -80,11 +89,13 @@ const View = BoneView.extend({
   },
   
   hide: function() {
+    this.isVisible = false;
     this.$el.find(".msa-scale-minimised").removeClass(this.toggleClass);
     this.$el.find(".msa-scale-maximised").addClass(this.toggleClass);
   },
 
   show: function() {
+    this.isVisible = false;
     this.$el.find(".msa-scale-minimised").addClass(this.toggleClass);
     this.$el.find(".msa-scale-maximised").removeClass(this.toggleClass);
   },
