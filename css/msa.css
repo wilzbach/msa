@@ -194,7 +194,25 @@
 .biojs_msa_scale [type="range"] {
   cursor: pointer;
 }
-.biojs_msa_scale .msa-btn {
+
+.biojs_msa_scale .msa-scale-minimised {
+}
+.biojs_msa_scale .msa-scale-minimised {
+}
+.biojs_msa_scale .msa-btn-close {
+  text-align: right;
+  font-size: 0.8em;
+  padding: 2px;
+}
+.biojs_msa_scale .msa-btn-open {
+  background-color: #fff;
+}
+
+.biojs_msa_scale .msa-hide {
+  display: none;
+}
+
+.msa-btn {
   cursor: pointer;
   font-size: 1.1em;
   display: inline-block;
@@ -203,4 +221,7 @@
   border: 1px solid transparent;
   border-radius: 4px;
   box-sizing: border-box;
+}
+.msa-btn:hover {
+  background-color: #ddd;
 }
