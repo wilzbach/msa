@@ -63,19 +63,17 @@ const View  = boneView.extend({
 
     if (this.g.vis.get("scaleslider")) {
       var scaleslider = new ScaleSlider({model: this.g.scale, g: this.g});
-      //console.log( "scaleslider", scaleslider )
       scaleslider.ordering = this.g.visorder.get('scaleSlider');
       this.addView("scaleSlider", scaleslider);
+      scaleslider.syncModel();
     }
     
     return this;
   },
 
   render: function(e) {
-    console.log( "Stage.render.START" );
     this.renderSubviews();
     this.el.className = "biojs_msa_stage";
-    console.log( "Stage.render.DONE" );
     return this;
   },
 
