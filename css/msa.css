@@ -1,8 +1,13 @@
 /* BASIC */
 
+.biojs_msa_div {
+  
+}
+
 .biojs_msa_stage {
     cursor: default;
     line-height: normal; 
+    font-family: Helvetica;
 }
 
 .biojs_msa_seqblock {
