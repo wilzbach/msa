@@ -54,12 +54,12 @@ const View = boneView.extend({
     if ((document.documentElement.style.webkitAppearance != null)) {
       // webkit browser - no throttling needed
       this.throttledDraw = function() {
-        var start = +new Date();
+        const start = +new Date();
         this.draw();
         this.throttleTime += +new Date() - start;
         this.throttleCounts++;
         if (this.throttleCounts > 15) {
-          var tTime = Math.ceil(this.throttleTime / this.throttleCounts);
+          const tTime = Math.ceil(this.throttleTime / this.throttleCounts);
           console.log("avgDrawTime/WebKit", tTime);
           // remove perf analyser
           return this.throttledDraw = this.draw;
@@ -77,14 +77,14 @@ const View = boneView.extend({
   // measures the time of a redraw and thus set the throttle limit
   throttledDraw: function() {
     // +new is the fastest: http://jsperf.com/new-date-vs-date-now-vs-performance-now/6
-    var start = +new Date();
+    const start = +new Date();
     this.draw();
     this.throttleTime += +new Date() - start;
     this.throttleCounts++;
 
     // remove itself after analysis
     if (this.throttleCounts > 15) {
-      var tTime = Math.ceil(this.throttleTime / this.throttleCounts);
+      let tTime = Math.ceil(this.throttleTime / this.throttleCounts);
       console.log("avgDrawTime", tTime);
       tTime *=  1.2; // add safety time
       tTime = Math.max(20, tTime); // limit for ultra fast computers
@@ -93,7 +93,7 @@ const View = boneView.extend({
   },
 
   manageEvents: function() {
-    var events = {};
+    const events = {};
     events.mousedown = "_onmousedown";
     events.touchstart = "_ontouchstart";
 
@@ -135,14 +135,14 @@ const View = boneView.extend({
   },
 
   drawFeatures: function(data) {
-    var rectWidth = this.g.zoomer.get("columnWidth");
-    var rectHeight = this.g.zoomer.get("rowHeight");
+    const rectWidth = this.g.zoomer.get("columnWidth");
+    const rectHeight = this.g.zoomer.get("rowHeight");
     if (data.model.attributes.height > 1) {
-      var ctx = this.ctx;
+      const ctx = this.ctx;
       data.model.attributes.features.each(function(feature) {
         ctx.fillStyle = feature.attributes.fillColor || "red";
-        var len = feature.attributes.xEnd - feature.attributes.xStart + 1;
-        var y = (feature.attributes.row + 1) * rectHeight;
+        const len = feature.attributes.xEnd - feature.attributes.xStart + 1;
+        const y = (feature.attributes.row + 1) * rectHeight;
         return ctx.fillRect(feature.attributes.xStart * rectWidth + data.xZero,y + data.yZero,rectWidth * len,rectHeight);
       });
 
@@ -153,8 +153,8 @@ const View = boneView.extend({
       ctx.textAlign = "center";
 
       return data.model.attributes.features.each(function(feature) {
-        var len = feature.attributes.xEnd - feature.attributes.xStart + 1;
-        var y = (feature.attributes.row + 1) * rectHeight;
+        const len = feature.attributes.xEnd - feature.attributes.xStart + 1;
+        const y = (feature.attributes.row + 1) * rectHeight;
         return ctx.fillText( feature.attributes.text, data.xZero + feature.attributes.xStart *
         rectWidth + (len / 2) * rectWidth, data.yZero + rectHeight * 0.5 + y
         );
@@ -186,34 +186,34 @@ const View = boneView.extend({
   _onmousemove: function(e, reversed) {
     if (this.dragStart.length === 0) { return; }
 
-    var dragEnd = mouse.abs(e);
+    const dragEnd = mouse.abs(e);
     // relative to first click
-    var relEnd = [dragEnd[0] - this.dragStart[0], dragEnd[1] - this.dragStart[1]];
+    const relEnd = [dragEnd[0] - this.dragStart[0], dragEnd[1] - this.dragStart[1]];
     // relative to initial scroll status
 
     // scale events
-    var scaleFactor = this.g.zoomer.get("canvasEventScale");
+    let scaleFactor = this.g.zoomer.get("canvasEventScale");
     if (reversed) {
       scaleFactor = 3;
     }
-    for (var i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 1; i++) {
       relEnd[i] = relEnd[i] * scaleFactor;
     }
 
     // calculate new scrolling vals
-    var relDist = [this.dragStartScroll[0] - relEnd[0], this.dragStartScroll[1] - relEnd[1]];
+    const relDist = [this.dragStartScroll[0] - relEnd[0], this.dragStartScroll[1] - relEnd[1]];
 
     // round values
-    for (var i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 1; i++) {
       relDist[i] = Math.round(relDist[i]);
     }
 
     // update scrollbar
-    var scrollCorrected = this._checkScrolling( relDist);
+    const scrollCorrected = this._checkScrolling( relDist);
     this.g.zoomer._checkScrolling(scrollCorrected, {origin: "canvasseq"});
 
     // reset start if use scrolls out of bounds
-    for (var i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 1; i++) {
       if (scrollCorrected[i] !== relDist[i]) {
         if (scrollCorrected[i] === 0) {
           // reset of left, top
@@ -257,7 +257,7 @@ const View = boneView.extend({
     this.dragStart = mouse.abs(e.changedTouches[0]);
     this.dragStartScroll = [this.g.zoomer.get('_alignmentScrollLeft'), this.g.zoomer.get('_alignmentScrollTop')];
     jbone(document.body).on('touchmove.overtmove', (e) => this._ontouchmove(e));
-    return jbone(document.body).on( 'touchend.overtend touchleave.overtleave touchcancel.overtcanel', (e) => this._touchCleanup(e)
+      return jbone(document.body).on( 'touchend.overtend touchleave.overtleave touchcancel.overtcanel', (e) => this._touchCleanup(e)
     );
   },
 
@@ -295,14 +295,14 @@ const View = boneView.extend({
 
   // might be incompatible with some browsers
   _onmousewheel: function(e) {
-    var delta = mouse.wheelDelta(e);
+    const delta = mouse.wheelDelta(e);
     this.g.zoomer.set('_alignmentScrollLeft', this.g.zoomer.get('_alignmentScrollLeft') + delta[0]);
     this.g.zoomer.set('_alignmentScrollTop', this.g.zoomer.get('_alignmentScrollTop') + delta[1]);
     return e.preventDefault();
   },
 
   _onclick: function(e) {
-    var res = this._getClickPos(e);
+    const res = this._getClickPos(e);
     if ((typeof res !== "undefined" && res !== null)) {
       if ((res.feature != null)) {
         this.g.trigger("feature:click", res);
@@ -314,7 +314,7 @@ const View = boneView.extend({
   },
 
   _onmousein: function(e) {
-    var res = this._getClickPos(e);
+    const res = this._getClickPos(e);
     if ((typeof res !== "undefined" && res !== null)) {
       if ((res.feature != null)) {
         this.g.trigger("feature:mousein", res);
@@ -326,7 +326,7 @@ const View = boneView.extend({
   },
 
   _onmouseout: function(e) {
-    var res = this._getClickPos(e);
+    const res = this._getClickPos(e);
     if ((typeof res !== "undefined" && res !== null)) {
       if ((res.feature != null)) {
         this.g.trigger("feature:mouseout", res);
@@ -339,11 +339,11 @@ const View = boneView.extend({
   },
 
   _getClickPos: function(e) {
-    var coords = mouse.rel(e);
+    const coords = mouse.rel(e);
 
     coords[0] += this.g.zoomer.get("_alignmentScrollLeft");
-    var x = Math.floor(coords[0] / this.g.zoomer.get("columnWidth") );
-    var [y,rowNumber] = this.seqDrawer._getSeqForYClick(coords[1]);
+    let x = Math.floor(coords[0] / this.g.zoomer.get("columnWidth") );
+    let [y, rowNumber] = this.seqDrawer._getSeqForYClick(coords[1]);
 
     // add hidden columns
     x += this.g.columns.calcHiddenColumns(x);
@@ -353,13 +353,13 @@ const View = boneView.extend({
     x = Math.max(0,x);
     y = Math.max(0,y);
 
-    var seqId = this.model.at(y).get("id");
+    const seqId = this.model.at(y).get("id");
 
     if (rowNumber > 0) {
       // click on a feature
-      var features = this.model.at(y).get("features").getFeatureOnRow(rowNumber - 1, x);
+      const features = this.model.at(y).get("features").getFeatureOnRow(rowNumber - 1, x);
       if (!(features.length === 0)) {
-        var feature = features[0];
+        const feature = features[0];
         console.log(features[0].attributes);
         return {seqId:seqId, feature: feature, rowPos: x, evt:e};
       }
@@ -374,9 +374,9 @@ const View = boneView.extend({
   _checkScrolling: function(scrollObj) {
 
     // 0: maxLeft, 1: maxTop
-    var max = [this.coordsCache.maxScrollWidth, this.coordsCache.maxScrollHeight];
+    const max = [this.coordsCache.maxScrollWidth, this.coordsCache.maxScrollHeight];
 
-    for (var i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 1; i++) {
       if (scrollObj[i] > max[i]) {
         scrollObj[i] = max[i];
       }

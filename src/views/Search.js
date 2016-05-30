@@ -2,7 +2,7 @@ const boneView = require("backbone-childs");
 const _ = require('underscore');
 const k = require('koala-js');
 const dom = require('dom-helper');
-import sel from "../g/selection/Selection";
+import {possel} from "../g/selection/Selection";
 
 // this is a very simplistic approach to show search result
 // TODO: needs proper styling
@@ -113,7 +113,7 @@ const View = boneView.extend({
           var index = match.index;
           var args = {xStart: index, xEnd: index + match[0].length - 1, seqId:
             seq.get("id")};
-          newSeli.push(new sel.possel(args));
+          newSeli.push(new possel(args));
           result.push(leftestIndex = Math.min(index, leftestIndex));
         }
         return result;
