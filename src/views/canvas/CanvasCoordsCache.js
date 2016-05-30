@@ -1,7 +1,7 @@
 const _ = require("underscore");
 const Events = require("biojs-events");
 
-var cache =
+const cache =
 
   {setMaxScrollHeight() {
     return this.maxScrollHeight = this.g.zoomer.getMaxAlignmentHeight() - this.g.zoomer.get('alignmentHeight');
