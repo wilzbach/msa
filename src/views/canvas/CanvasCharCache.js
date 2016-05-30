@@ -29,7 +29,7 @@ class CanvasCharCache {
   // (for the fast font cache)
   createTile(letter, width, height) {
 
-    var canvas = this.cache[letter] = document.createElement("canvas");
+    const canvas = this.cache[letter] = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
     this.ctx = canvas.getContext('2d');

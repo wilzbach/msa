@@ -2,7 +2,7 @@ const view = require("backbone-viewj");
 const mouse = require("mouse-pos");
 const jbone = require("jbone");
 const _ = require("underscore");
-import selection from "../g/selection/Selection";
+import {possel} from "../g/selection/Selection";
 
 const OverviewBox = view.extend({
 
@@ -211,7 +211,7 @@ const OverviewBox = view.extend({
     var selis = [];
     for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j--) {
       var args = {seqId: this.model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]};
-      selis.push(new selection.possel(args));
+      selis.push(new possel(args));
     }
 
     // reset
