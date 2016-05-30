@@ -15,10 +15,10 @@ const SelectionMenu = MenuBuilder.extend({
     });
 
     this.addNode("Invert columns", () => {
-      return this.g.selcol.invertCol(((function() {
-        var result = [];
-        var end = this.model.getMaxLength();
-        var i = 0;
+      return this.g.selcol.invertCol(((() => {
+        const result = [];
+        const end = this.model.getMaxLength();
+        let i = 0;
         if (0 <= end) {
           while (i <= end) {
             result.push(i++);
