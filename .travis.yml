@@ -1,9 +1,14 @@
 language: node_js
 node_js:
 - '5.0'
-before_deploy: npm run build
+after_install:
+- npm install npm-prepublish
+before_deploy:
+- npm-prepublish --verbose
+- npm run build
 deploy:
   provider: npm
+  email: greeenify@gmail.com
   api_key:
     secure: KOag4ahg5GPAuq3/BI7ighqz+EyVu/XQwmhZgZB6cQMqp946IxlvEn7RYNjbIbIST7BGZHA84v8VMAK93maRMb9yvNydsQZmlLi4Wpg2VIg5Vi4e9C+gXwbLMBK/UQQYMa4eamGzwOdVByv86jBwVnwaTJ2dFY9fSGzL5ciC5q0=
   on:
