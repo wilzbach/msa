@@ -2,16 +2,15 @@ language: node_js
 node_js:
 - stable
 before_install:
-- npm install -g npm@'>=2.13.5'
 - npm install npm-prepublish
-- ./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose
+- "./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose"
 before_deploy:
 - npm run build
 deploy:
   provider: npm
   email: greeenify@gmail.com
   api_key:
-    secure: KOag4ahg5GPAuq3/BI7ighqz+EyVu/XQwmhZgZB6cQMqp946IxlvEn7RYNjbIbIST7BGZHA84v8VMAK93maRMb9yvNydsQZmlLi4Wpg2VIg5Vi4e9C+gXwbLMBK/UQQYMa4eamGzwOdVByv86jBwVnwaTJ2dFY9fSGzL5ciC5q0=
+    secure: Kyueij9xNpWjN+ASR0yBuSnNUOH+Z4FtZNmWhrtuJ0Qp0uAemlHBizKFnFXqoMYxkMfJs6JN37DoaRuNnfi6HVKIpldWEUVwKBH744EewUBusFhd2T84zVMtElhZm0xIchcuDxUCWyaC8yFo8yucXj4C5oywmRwPSDRO4i1HHZY=
   on:
     tags: true
     branch: master
