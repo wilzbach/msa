@@ -1,8 +1,8 @@
-var Model = require("backbone-thin").Model;
+const Model = require("backbone-thin").Model;
 const Feature = Model.extend({
 
-  defaults:
-    {xStart: -1,
+  defaults: {
+    xStart: -1,
     xEnd: -1,
     height: -1,
     text: "",
@@ -14,7 +14,7 @@ const Feature = Model.extend({
     borderOpacity: 0.5,
     validate: true,
     row: 0
-    },
+  },
 
   initialize: function(obj) {
     if ((obj.start != null)) {
