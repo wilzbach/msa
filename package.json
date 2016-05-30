@@ -96,7 +96,7 @@
     "watch": "./node_modules/webpack/bin/webpack.js -w",
     "w": "prunner 'npm run sniper' 'npm run watch'"
   },
-  "license": "Apache-2.0",
+  "license": "BSL-1.0",
   "browserify": {
     "exclude": [
       "biojs-io-newick",
