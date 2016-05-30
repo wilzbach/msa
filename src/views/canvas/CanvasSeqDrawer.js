@@ -1,18 +1,30 @@
 const _ = require("underscore");
 
-const Drawer =
+const Drawer = {
+    
+  updateRectWidth: function() {
+    this.rectWidth = this.g.zoomer.get('columnWidth');
+  },
+  
+  drawLetters: function() {
 
-  {drawLetters: function() {
-
+    this.updateRectWidth();
+    
     var rectHeight = this.rectHeight;
-
+    var rectWidth = this.rectWidth;
+    var minLetterDrawSize = 7;
+    
     // rects
     this.ctx.globalAlpha = this.g.colorscheme.get("opacity");
     this.drawSeqs(function(data) { return this.drawSeq(data, this._drawRect); });
     this.ctx.globalAlpha = 1;
 
     // letters
-    return this.drawSeqs(function(data) { return this.drawSeq(data, this._drawLetter); });
+    if ( rectWidth >= minLetterDrawSize ) {
+      this.drawSeqs(function(data) { return this.drawSeq(data, this._drawLetter); });
+    }
+    
+    return this;
   },
 
   drawSeqs: function(callback, target) {
@@ -156,7 +168,7 @@ const CanvasSeqDrawer = function(g,ctx,model,opts) {
   this.color = opts.color;
   this.cache = opts.cache;
   this.rectHeight = this.g.zoomer.get("rowHeight");
-  this.rectWidth = this.g.zoomer.get("columnWidth");
+  this.rectWidth = this.g.zoomer.get("columnWidth"); // note: this can change
   return this;
 };
 

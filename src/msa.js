@@ -12,6 +12,8 @@ import Visibility from "./g/visibility";
 import VisOrdering from "./g/visOrdering";
 import Zoomer from "./g/zoomer";
 
+import StageScale from "./g/StageScale";
+
 // MV from backbone
 const boneView = require("backbone-childs");
 const Eventhandler = require("biojs-events");
@@ -47,13 +49,14 @@ const MSA = boneView.extend({
     if (!(data.visorder != null)) { data.visorder = {}; }
     if (!(data.zoomer != null)) { data.zoomer = {}; }
     if (!(data.conserv != null)) { data.conserv = {}; }
+    if (!(data.scale != null)) { data.scale = {}; }
 
     // g is our global Mediator
     this.g = Eventhandler.mixin({});
 
     // load seqs and add subviews
     this.seqs = this.g.seqs = new SeqCollection(data.seqs, this.g);
-
+        
     // populate it and init the global models
     this.g.config = new Config(data.conf);
     this.g.package = new Package(this.g);
@@ -62,6 +65,8 @@ const MSA = boneView.extend({
     this.g.vis = new Visibility(data.vis, {model: this.seqs});
     this.g.visorder = new VisOrdering(data.visorder);
     this.g.zoomer = new Zoomer(data.zoomer,{g:this.g, model: this.seqs});
+    
+    this.g.scale = new StageScale(data.scale, {g: this.g});
     
     // store config options for plugins
     this.g.conservationConfig = data.conserv;
