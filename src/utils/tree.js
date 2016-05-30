@@ -13,29 +13,33 @@ var tf =
     },
 
     showTree: function(newickStr) {
-      var newick = this.require("biojs-io-newick");
+      var newick = require("biojs-io-newick");
       if (typeof newickStr === "string") {
         var newickObj = newick.parse_newick(newickStr);
       } else {
         newickObj = newickStr;
       }
 
-      var mt = this.require("msa-tnt");
+      var mt = require("msa-tnt");
 
       var sel = new mt.selections();
-      var treeDiv = document.createElement("div");
-    //   @msa.el.insertBefore treeDiv, @msa.el.childNodes[0]
-      this.msa.el.appendChild(treeDiv);
+      var treeDiv;
+      if(this.msa.el.childNodes.length === 1){
+        treeDiv = document.createElement("div");
+        this.msa.el.appendChild(treeDiv);
+      } else {
+        console.log('A tree already exists. It will be overridden.');
+        treeDiv = this.msa.el.childNodes[1];
+        treeDiv.innerHTML = '';
+      }
 
-      console.log(this.msa.seqs.models);
-      console.log(newickObj);
-
+      console.log(this.msa.seqs.toJSON());
       var nodes = mt.app({
         seqs: this.msa.seqs.toJSON(),
         tree: newickObj
       });
 
-      console.log("nodes", nodes);
+      console.log("nodes", nodes.seqs);
 
       var t = new mt.adapters.tree({
         model: nodes,
@@ -56,8 +60,7 @@ var tf =
       _.each(nodes.models, function(e) {
         delete e.collection;
         return Object.setPrototypeOf(e, require("backbone-thin").Model.prototype);
-      }
-      );
+      });
 
       this.msa.seqs.reset(nodes.models);
       //@msa.draw()
