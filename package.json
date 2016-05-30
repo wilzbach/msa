@@ -73,10 +73,11 @@
     "prunner": "^1.0.0",
     "sinon": "^1.12.1",
     "sniper": "^0.2.16",
+    "strip-loader": "^0.1.2",
     "style-loader": "^0.13.0",
     "through2": "^0.6.3",
     "tnt.tree": "0.1.4",
-    "uglify-js": "~2.4.15",
+    "uglify-js": "~2.6.2",
     "webpack": "^1.13.0"
   },
   "keywords": [
