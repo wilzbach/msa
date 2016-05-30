@@ -71,6 +71,7 @@ const VisMenu = MenuBuilder.extend({
     vis.push({name: "sequence logo", id: "seqlogo"});
     vis.push({name: "gap weights", id: "gapHeader"});
     vis.push({name: "conservation weights", id: "conserv"});
+    vis.push({name: "scale slider", id: "scaleslider"});
     //vis.push name: "Left header", id: "leftHeader"
     vis.push({name: "Label", id: "labelName"});
     vis.push({name: "ID", id: "labelId"});

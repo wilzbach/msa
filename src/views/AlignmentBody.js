@@ -21,7 +21,8 @@ const View = boneView.extend({
 
     this.listenTo(this.g.zoomer, "change:alignmentHeight", this.adjustHeight);
     this.listenTo(this.g.zoomer, "change:alignmentWidth", this.adjustWidth);
-    return this.listenTo(this.g.columns, "change:hidden", this.adjustHeight);
+    this.listenTo(this.g.columns, "change:hidden", this.adjustHeight);
+    return this;
   },
 
   render: function() {

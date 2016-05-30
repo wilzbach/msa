@@ -1,13 +1,13 @@
-var _ = require("underscore");
-var Model = require("backbone-thin").Model;
+const _ = require("underscore");
+const Model = require("backbone-thin").Model;
 
 // holds the current user selection
-var Selection = Model.extend({
+const Selection = Model.extend({
   defaults:
     {type: "super"}
+});
 
-
-});var RowSelection = Selection.extend({
+const RowSelection = Selection.extend({
   defaults: _.extend( {}, Selection.prototype.defaults,
     {type: "row",
     seqId: ""
@@ -26,7 +26,7 @@ var Selection = Model.extend({
   }
 });
 
-var ColumnSelection = Selection.extend({
+const ColumnSelection = Selection.extend({
   defaults: _.extend( {}, Selection.prototype.defaults,
     {type: "column",
     xStart: -1,
@@ -48,15 +48,16 @@ var ColumnSelection = Selection.extend({
 
 // pos is a mixin of column and row
 // start with Row and only overwrite "inColumn" from Column
-var PosSelection = RowSelection.extend(_.extend( {},_.pick(ColumnSelection,"inColumn"),_.pick(ColumnSelection,"getLength"),
-
+const PosSelection = RowSelection.extend(_.extend( {},
+                    _.pick(ColumnSelection,"inColumn"),
+                    _.pick(ColumnSelection,"getLength"),
   // merge both defaults
   {defaults: _.extend( {}, ColumnSelection.prototype.defaults, RowSelection.prototype.defaults,
     {type: "pos"
   })
 }));
 
-module.exports.sel = Selection;
-module.exports.possel = PosSelection;
-module.exports.rowsel = RowSelection;
-module.exports.columnsel = ColumnSelection;
+export {Selection as sel};
+export {PosSelection as possel};
+export {RowSelection as rowsel};
+export {ColumnSelection as columnsel};

@@ -16,35 +16,39 @@ const MarkerView = view.extend({
 
   render: function() {
     dom.removeAllChilds(this.el);
+    
+    var fontSize = this.g.zoomer.get("markerFontsize");
+    var cellWidth = this.g.zoomer.get("columnWidth");
+    var stepSize = this.g.zoomer.get("stepSize");
+    var markerStepSize = this.g.zoomer.get("markerStepSize");
 
-    this.el.style.fontSize = this.g.zoomer.get("markerFontsize");
+    var hidden = this.g.columns.get("hidden");
+    
+    this.el.style.fontSize = fontSize;
 
     var container = document.createElement("span");
     var n = 0;
-    var cellWidth = this.g.zoomer.get("columnWidth");
-
     var nMax = this.model.getMaxLength();
-    var stepSize = this.g.zoomer.get("stepSize");
-    var hidden = this.g.columns.get("hidden");
 
-    while (n < nMax) {
+    for( var n=0; n < nMax; n++ ) {
       if (hidden.indexOf(n) >= 0) {
         this.markerHidden(span,n, stepSize);
         n += stepSize;
         continue;
       }
       var span = document.createElement("span");
-      span.style.width = (cellWidth * stepSize) + "px";
+      span.className = 'msa-col-header';
+      span.style.width = cellWidth + "px";
       span.style.display = "inline-block";
-      // TODO: this doesn't work for a larger stepSize
-      if ((n + 1) % this.g.zoomer.get('markerStepSize') === 0) {
+      
+      if ((n+1) % markerStepSize === 0) {
         span.textContent = (n + 1);
-      } else {
+      } else if ((n+1) % stepSize === 0) {
         span.textContent = ".";
+      } else {
+        span.textContent = " ";
       }
       span.rowPos = n;
-
-      n += stepSize;
       container.appendChild(span);
     }
 
