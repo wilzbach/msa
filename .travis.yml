@@ -1,10 +1,10 @@
 language: node_js
 node_js:
 - '5.0'
-after_install:
+before_install:
 - npm install npm-prepublish
+- ./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose
 before_deploy:
-- npm-prepublish --verbose
 - npm run build
 deploy:
   provider: npm
