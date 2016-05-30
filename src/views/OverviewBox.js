@@ -61,7 +61,6 @@ const OverviewBox = view.extend({
 
       if (this.model.at(i).get("hidden")) {
         // hidden seq
-        console.log(this.model.at(i).get("hidden"));
         this.ctx.fillStyle = "grey";
         this.ctx.fillRect(0,y,seq.length * rectWidth,rectHeight);
         continue;
