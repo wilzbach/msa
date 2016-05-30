@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- '5.0'
+- stable
 before_install:
 - npm install npm-prepublish
 - ./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose
