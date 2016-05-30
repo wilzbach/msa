@@ -13,14 +13,14 @@ var tf =
     },
 
     showTree: function(newickStr) {
-      var newick = require("biojs-io-newick");
+      var newick = window.require("biojs-io-newick");
+      var mt = window.require("msa-tnt");
+
       if (typeof newickStr === "string") {
         var newickObj = newick.parse_newick(newickStr);
       } else {
         newickObj = newickStr;
       }
-
-      var mt = require("msa-tnt");
 
       var sel = new mt.selections();
       var treeDiv;
@@ -33,7 +33,6 @@ var tf =
         treeDiv.innerHTML = '';
       }
 
-      console.log(this.msa.seqs.toJSON());
       var nodes = mt.app({
         seqs: this.msa.seqs.toJSON(),
         tree: newickObj
