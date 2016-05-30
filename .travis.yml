@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - stable
 before_install:
+- npm install -g npm@'>=2.13.5'
 - npm install npm-prepublish
 - ./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose
 before_deploy:
