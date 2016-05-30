@@ -1,19 +1,18 @@
-var SelectionManager;
-var sel = require("./Selection");
-var _ = require("underscore");
-var Collection = require("backbone-thin").Collection;
+import {sel, possel, rowsel, columnsel} from "./Selection";
+const _ = require("underscore");
+const Collection = require("backbone-thin").Collection;
 
 // holds the current user selection
-module.exports = SelectionManager = Collection.extend({
+const SelectionManager = Collection.extend({
 
-  model: sel.sel,
+  model: sel,
 
   initialize: function(data, opts) {
     if ((typeof opts !== "undefined" && opts !== null)) {
       this.g = opts.g;
 
       this.listenTo(this.g, "residue:click", function(e) {
-        return this._handleE(e.evt, new sel.possel({
+        return this._handleE(e.evt, new possel({
           xStart: e.rowPos,
           xEnd: e.rowPos,
           seqId: e.seqId
@@ -21,22 +20,19 @@ module.exports = SelectionManager = Collection.extend({
       });
 
       this.listenTo(this.g, "row:click", function(e) {
-        return this._handleE(e.evt, new sel.rowsel({
+        return this._handleE(e.evt, new rowsel({
           seqId: e.seqId
         }));
       });
 
       return this.listenTo(this.g, "column:click", function(e) {
-        return this._handleE(e.evt, new sel.columnsel({
+        return this._handleE(e.evt, new columnsel({
           xStart: e.rowPos,
           xEnd: e.rowPos + e.stepSize - 1
         }));
       });
     }
   },
-
-    //@listenTo @, "add reset", (e) ->
-      //@_reduceColumns()
 
   getSelForRow: function(seqId) {
     return this.filter(function(el) { return el.inRow(seqId); });
@@ -52,9 +48,9 @@ module.exports = SelectionManager = Collection.extend({
 
   _fromJSON: function(model) {
    switch (model.type) {
-     case "column":  return new sel.columnsel(model);
-     case "row":  return new sel.rowsel(model);
-     case "pos":  return new sel.possel(model);
+     case "column":  return new columnsel(model);
+     case "row":  return new rowsel(model);
+     case "pos":  return new possel(model);
    }
   },
 
@@ -66,14 +62,14 @@ module.exports = SelectionManager = Collection.extend({
 
   // @returns array of all selected residues for a row
   getBlocksForRow: function(seqId, maxLen) {
-    var selis = this.filter(function(el) { return el.inRow(seqId); });
-    var blocks = [];
-    for (var i = 0, seli; i < selis.length; i++) {
-      seli = selis[i];
+    const selis = this.filter(function(el) { return el.inRow(seqId); });
+    let blocks = [];
+    for (let i = 0, seli; i < selis.length; i++) {
+      let seli = selis[i];
       if (seli.attributes.type === "row") {
         blocks = ((function() {
-          var result = [];
-          var i1 = 0;
+          const result = [];
+          let i1 = 0;
           if (0 <= maxLen) {
             while (i1 <= maxLen) {
               result.push(i1++);
@@ -88,8 +84,8 @@ module.exports = SelectionManager = Collection.extend({
         break;
       } else {
         blocks = blocks.concat(((function() {
-          var result = [];
-          var i1 = seli.attributes.xStart;
+          const result = [];
+          let i1 = seli.attributes.xStart;
           if (seli.attributes.xStart <= seli.attributes.xEnd) {
             while (i1 <= seli.attributes.xEnd) {
               result.push(i1++);
@@ -109,19 +105,20 @@ module.exports = SelectionManager = Collection.extend({
   // @returns array with all columns being selected
   // example: 0-4... 12-14 selected -> [0,1,2,3,4,12,13,14]
   getAllColumnBlocks: function(conf) {
-    var maxLen = conf.maxLen;
-    var withPos = conf.withPos;
-    var blocks = [];
+    const maxLen = conf.maxLen;
+    const withPos = conf.withPos;
+    let blocks = [];
+    let filtered;
     if (conf.withPos) {
-      var filtered = (this.filter(function(el) { return (el.get('xStart') != null); }) );
+      filtered = (this.filter(function(el) { return (el.get('xStart') != null); }) );
     } else {
       filtered = (this.filter(function(el) { return el.get('type') === "column"; }));
     }
-    for (var i = 0, seli; i < filtered.length; i++) {
-      seli = filtered[i];
+    for (let i = 0, seli; i < filtered.length; i++) {
+      let seli = filtered[i];
       blocks = blocks.concat(((function() {
-        var result = [];
-        var i1 = seli.attributes.xStart;
+        const result = [];
+        let i1 = seli.attributes.xStart;
         if (seli.attributes.xStart <= seli.attributes.xEnd) {
           while (i1 <= seli.attributes.xEnd) {
             result.push(i1++);
@@ -141,17 +138,17 @@ module.exports = SelectionManager = Collection.extend({
   // inverts the current selection for columns
   // @param rows [Array] all available seqId
   invertRow: function(rows) {
-    var selRows = this.where({type:"row"});
+    let selRows = this.where({type:"row"});
     selRows = _.map(selRows, function(el) { return el.attributes.seqId; });
-    var inverted = _.filter(rows, function(el) {
+    const inverted = _.filter(rows, function(el) {
       if (selRows.indexOf(el) >= 0) { return false; } // existing selection
       return true;
     });
     // mass insert
-    var s = [];
-    for (var i = 0, el; i < inverted.length; i++) {
-      el = inverted[i];
-      s.push(new sel.rowsel({seqId:el}));
+    const s = [];
+    for (let i = 0, el; i < inverted.length; i++) {
+      let el = inverted[i];
+      s.push(new rowsel({seqId:el}));
     }
     return this.reset(s);
   },
@@ -159,12 +156,10 @@ module.exports = SelectionManager = Collection.extend({
   // inverts the current selection for rows
   // @param rows [Array] all available rows (0..max.length)
   invertCol: function(columns) {
-    var xEnd;
-    var selColumns = this.where({type:"column"});
-    selColumns = _.reduce( selColumns, (function(memo,el) {
+    const selColumns = _.reduce( this.where({type:"column"}), (function(memo,el) {
       return memo.concat(((function() {
-        var result = [];
-        var i = el.attributes.xStart;
+        const result = [];
+        let i = el.attributes.xStart;
         if (el.attributes.xStart <= el.attributes.xEnd) {
           while (i <= el.attributes.xEnd) {
             result.push(i++);
@@ -176,10 +171,8 @@ module.exports = SelectionManager = Collection.extend({
         }
         return result;
       })()));
-    }
-    ), []
-    );
-    var inverted = _.filter(columns, function(el) {
+    }), []);
+    const inverted = _.filter(columns, function(el) {
       if (selColumns.indexOf(el) >= 0) {
         // existing selection
         return false;
@@ -188,21 +181,22 @@ module.exports = SelectionManager = Collection.extend({
     });
     // mass insert
     if (inverted.length === 0) { return; }
-    var s = [];
-    var xStart = xEnd = inverted[0];
-    for (var i = 0, el; i < inverted.length; i++) {
+    const s = [];
+    let xStart = inverted[0];
+    let xEnd = xStart;
+    for (let i = 0, el; i < inverted.length; i++) {
       el = inverted[i];
       if (xEnd + 1 === el) {
         // contiguous
         xEnd = el;
       } else {
         // gap between
-        s.push(new sel.columnsel({xStart:xStart, xEnd: xEnd}));
+        s.push(new columnsel({xStart:xStart, xEnd: xEnd}));
         xStart = xEnd = el;
       }
     }
     // check for last gap
-    if (xStart !== xEnd) { s.push(new sel.columnsel({xStart:xStart, xEnd: inverted[inverted.length - 1]})); }
+    if (xStart !== xEnd) { s.push(new columnsel({xStart:xStart, xEnd: inverted[inverted.length - 1]})); }
     return this.reset(s);
   },
 
@@ -219,19 +213,19 @@ module.exports = SelectionManager = Collection.extend({
   // experimental reduce method for columns
   _reduceColumns: function() {
     return this.each(function(el, index, arr) {
-      var cols = _.filter(arr, function(el) { return el.get('type') === 'column'; });
-      var xStart = el.get('xStart');
-      var xEnd = el.get('xEnd');
+      const cols = _.filter(arr, function(el) { return el.get('type') === 'column'; });
+      const xStart = el.get('xStart');
+      const xEnd = el.get('xEnd');
 
-      var lefts = _.filter(cols, function(el) { return el.get('xEnd') === (xStart - 1); });
-      for (var i = 0, left; i < lefts.length; i++) {
-        left = lefts[i];
+      const lefts = _.filter(cols, function(el) { return el.get('xEnd') === (xStart - 1); });
+      for (let i = 0, left; i < lefts.length; i++) {
+        let left = lefts[i];
         left.set('xEnd', xStart);
       }
 
-      var rights = _.filter(cols, function(el) { return el.get('xStart') === (xEnd + 1); });
-      for (var j = 0, right; j < rights.length; j++) {
-        right = rights[j];
+      const rights = _.filter(cols, function(el) { return el.get('xStart') === (xEnd + 1); });
+      for (let j = 0, right; j < rights.length; j++) {
+        let right = rights[j];
         right.set('xStart', xEnd);
       }
 
@@ -242,3 +236,4 @@ module.exports = SelectionManager = Collection.extend({
     });
   }
 });
+export default SelectionManager;
