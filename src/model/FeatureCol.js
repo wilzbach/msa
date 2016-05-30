@@ -1,6 +1,7 @@
-const Feature = require("./Feature");
 const Collection = require("backbone-thin").Collection;
 import _ from "underscore";
+
+import Feature from "./Feature";
 
 const FeatureCol = Collection.extend({
   model: Feature,
@@ -10,9 +11,7 @@ const FeatureCol = Collection.extend({
     // invalidate cache
     this.on( "all", (function() {
       return this.startOnCache = [];
-    }
-    ), this
-    );
+    }), this);
     return Collection.apply(this, arguments);
   },
 
@@ -27,9 +26,7 @@ const FeatureCol = Collection.extend({
   contains: function(index) {
     return this.reduce( (function(el,memo) {
       return memo || el.contains(index);
-    }
-    ), false
-    );
+    }), false);
   },
 
   getFeatureOnRow: function(row,x) {
@@ -42,20 +39,20 @@ const FeatureCol = Collection.extend({
   // not a very efficient algorithm
   assignRows: function() {
 
-    var len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
-    var rows = (() => {
-      var result = [];
-      for (var x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
+    const len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
+    const rows = (() => {
+      const result = [];
+      for (let x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
         result.push(0);
       }
       return result;
     })();
 
     this.each(function(el) {
-      var max = 0;
-      var start = el.get("xStart");
-      var end = el.get("xEnd");
-      for (var x = start; start < end ? x <= end : x >= end; start < end ? x++ : x--) {
+      let max = 0;
+      const start = el.get("xStart");
+      const end = el.get("xEnd");
+      for (let x = start; start < end ? x <= end : x >= end; start < end ? x++ : x--) {
         if (rows[x] > max) {
           max = rows[x];
         }
@@ -76,10 +73,10 @@ const FeatureCol = Collection.extend({
   // (there is one in O(n) )
   getMinRows: function() {
 
-    var len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
-    var rows = ((() => {
-      var result = [];
-      for (var x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
+    const len = (this.max(function(el) { return el.get("xEnd"); })).attributes.xEnd;
+    const rows = ((() => {
+      const result = [];
+      for (let x = 0; 0 < len ? x <= len : x >= len; 0 < len ? x++ : x--) {
         result.push(0);
       }
       return result;
@@ -87,10 +84,10 @@ const FeatureCol = Collection.extend({
 
     this.each(function(el) {
       return (() => {
-        var result = [];
-        var start = el.get("xStart");
-        var end = el.get("xEnd");
-        for (var x = start; start < end ? x <= end : x >= end; start < end ? x++ : x++) {
+        const result = [];
+        const start = el.get("xStart");
+        const end = el.get("xEnd");
+        for (let x = start; start < end ? x <= end : x >= end; start < end ? x++ : x++) {
           result.push(rows[x]++);
         }
         return result;

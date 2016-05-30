@@ -1,6 +1,6 @@
 import MenuBuilder from "../menubuilder";
 import Seq from "../../model/Sequence";
-const Loader = require("../../utils/loader");
+import Loader from "../../utils/loader";
 const xhr = require("xhr");
 
 const ExtraMenu = MenuBuilder.extend({
