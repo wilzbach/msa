@@ -30,7 +30,8 @@ module.exports = StageScale = Model.extend({
   initialize: function(args) {
     const currentSize = this.get('currentSize');
     this.set('originalSize', currentSize);
-    this.setSize( currentSize );
+    // TODO: don't overwrite the default settings
+    //this.setSize( currentSize );
 
     return this;
   },
@@ -60,10 +61,15 @@ module.exports = StageScale = Model.extend({
 
     this.set('currentSize', size);
     const info = this._getScaleInfo();
-    this.g.zoomer.set('columnWidth', info.columnWidth);
-    this.g.zoomer.set('rowHeight', info.columnWidth);
-    this.g.zoomer.set('stepSize', info.stepSize);
-    this.g.zoomer.set('markerStepSize', info.markerStepSize );
+    this.g.zoomer.set({
+        columnWidth: info.columnWidth,
+        //rowHeight: columnWidth,
+        stepSize: info.stepSize,
+        markerStepSize: info.markerStepSize,
+        // update font too (hackish)
+        //residueFont: nFontSize,
+        //labelFontSize:  nFontSize
+    });
     return this;
   },
 
