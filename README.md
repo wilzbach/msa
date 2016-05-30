@@ -36,11 +36,6 @@ Yes you can either link to the minified, gzipped CDN version or download the dev
 
 [![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
-News
-----
-
-* Pure JS version (with ES6 and webpack) in the [`develop`](https://github.com/wilzbach/msa/tree/develop) branch
-
 Use it
 ------
 
@@ -140,6 +135,11 @@ There also many other option - grouped into these categories. See below for more
 * `vis`:  visual elements
 * `visorder`: ordering of the visual elements
 * `zoomer`: everything that is pixel-based
+
+## Getting help
+
+Please open an [issue](https://github.com/wilzbach/msa/issues/new)
+or ping us on [Gitter](https://gitter.im/wilzbach/msa)
 
 ### Change the colorscheme
 
@@ -443,11 +443,7 @@ Guidelines
 * keep it modular
 * avoid boiler-plate code
 * avoid more than two args for public methods -> accepting a dictionary is more flexible
-* trust the linter (for coffeescript there is a default config)
 * max. 200 lines per file (-> better organization)
-
-BTW the use of Coffeescript is optional.
-
 
 Step 1) Setting up
 -----------------
@@ -458,116 +454,58 @@ cd msa
 npm install
 ```
 
-* __npm__: You will need the `npm` package manager (and node) for this. On most distributions there is a package, look [here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
-
-__Infos__
-
-* This will also automatically validate your installation by running `gulp build`
- - generating browser builds for the codebase
- - executing all unit tests
+* __npm__: You will need the `npm` package manager (and node) for this.
+On most distributions there is a package, look [here](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
 Step 2) Developing
 ------------------
+
+In the root dir execute:
 
 ```
 ./w
 ```
 
-(in the root dir)
-
-This will automatically execute these two commands
-
-### 2.1 Watching and recompile
-
-```
-npm run watch
-```
-
-This will use [watchify](https://github.com/substack/watchify) to recompile the JS to the build folder on every change.
-
-Have fun coding.
-You can also start [sniper](https://github.com/wilzbach/sniper), to view the snippets. Without global installation, just hit
-
-### 2.2 Example (snippets) server
-
-```
-npm run sniper
-```
-
-(then you can browse the snippets at [localhost:9090/snippets](http:localhost:9090/snippets)).
-
-
-3) Unit Testing
--------------------------
-
-### 3.1 Running tests from the CLI
-
-
-```
-npm test
-```
-
-
-If you install gulp globally (`npm install -g gulp`), you can run
-
-Execute all unit tests
-```
-gulp test
-```
-
-If you wish to let it watch for file changes and rerun the test automatically, use `gulp watch`
-
-### 3.2 Adding your test
-
-* test without DOM interaction, can go into `test/mocha`
-* test with DOM interaction (= need to be run by a browser) -> `test/phantom`
-
-Hints for phantom:
-
-* it takes way longer to run phantom tests (headless browser tests), than normal mocha tests
-* you need to add your phantom tests to `test/phantom/index.coffee`
-* there are sub directives
- - `test-mocha` wil only execute mocha tests
- - `test-phantom` will only execute phantom tests
-
-### 3.3 Debugging tests
-
-Open the `tests/index.html` with your browser and set breakpoints.
-Important: the coffeescript is not directly compiled in your browser, so in theory you need to compile everything to `all_tests.js`.
-However this is done automatically by `gulp test` or `gulp wacth`.
-
+You can browse the snippets at [localhost:9090/snippets](http:localhost:9090/snippets).
 
 Compiling for the browser
---------------------------------
+--------------------------
+
+For most cases using our CDN builds, is the best way to go.
+If you need to make some changes to the MSA, you can get a minified bundle in
+the folder `dist` with:
 
 ```
 gulp build
 ```
-
-This is will regenerate the CSS and JS (+minimization).
-However this is done automatically by Travis (and on `npm install`), so you __normally don't need to run it__.
-(If you can't install gulp globally, hit `npm run preinstall`.).
-The minimization is done by [Browserify](http://browserify.org/).
 
 Package list
 -----------
 
 ↝ [Package list](https://github.com/wilzbach/msa/wiki/Package-list)
 
-
 Project structure
 ------------------
 
 * `browser.js` main file for browserify - defines the global namespace in the browser
-* `coffeelint.json` linting config for CoffeeScript (run it with `gulp lint`)
 * `css` stylesheet folder (previously used for SASS)
 * `gulpfile.js` task definition file (for [gulp](http://gulpjs.com/])
 * `package.json` [npm config](https://www.npmjs.org/doc/files/package.json.html)
-* `snippets` short coding snippets that are run by [`sniper`](https://github.com/wilzbach/sniper)
+* `examples` short coding snippets that are run by [`sniper`](https://github.com/biojs/sniper)
 * `src` the main source code
-* `test` unit tests that are run with either mocha or phantomjs (headless browser)
 
 Want to learn more?
 -------------------
 
 Continue at the [wiki](https://github.com/wilzbach/msa/wiki).
+
+Getting involved
+----------------
+
+Just pick a open issue on the [issue tracker](https://github.com/wilzbach/msa/issues)
+and help to make the MSA viewer better.
+
+The best way to get your feature request is to send us a pull request.
+Don't worry about simple implementations, we will help you to make it better.
+
+For more questions, ping us on the issue tracker or [Gitter](https://gitter.im/wilzbach/msa).
