@@ -2,17 +2,15 @@ const _ = require("underscore");
 
 const Drawer = {
 
-  updateRectWidth: function() {
+  // caching the access is done for performance reasons
+  updateConfig: function() {
     this.rectWidth = this.g.zoomer.get('columnWidth');
+    this.rectHeight = this.g.zoomer.get('rowHeight');
   },
 
   drawLetters: function() {
 
-    this.updateRectWidth();
-
-    const rectHeight = this.rectHeight;
-    const rectWidth = this.rectWidth;
-    const minLetterDrawSize = 7;
+    this.updateConfig();
 
     // rects
     this.ctx.globalAlpha = this.g.colorscheme.get("opacity");
@@ -20,7 +18,7 @@ const Drawer = {
     this.ctx.globalAlpha = 1;
 
     // letters
-    if ( rectWidth >= minLetterDrawSize ) {
+    if ( this.rectWidth >= this.g.zoomer.get('minLetterDrawSize')) {
       this.drawSeqs(function(data) { return this.drawSeq(data, this._drawLetter); });
     }
 

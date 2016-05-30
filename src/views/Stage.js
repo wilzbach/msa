@@ -32,6 +32,7 @@ const View  = boneView.extend({
     this.listenTo(this.g.vis,"change:overviewbox", this.rerender);
     this.listenTo(this.g.visorder,"change", this.rerender);
     this.listenTo(this.g.zoomer, "change:columnWidth", this.rerender);
+    this.listenTo(this.g.vis,"change:scaleslider", this.rerender);
 
     return this;
   },
@@ -65,9 +66,8 @@ const View  = boneView.extend({
       var scaleslider = new ScaleSlider({model: this.g.scale, g: this.g});
       scaleslider.ordering = this.g.visorder.get('scaleSlider');
       this.addView("scaleSlider", scaleslider);
-      scaleslider.syncModel();
     }
-    
+
     return this;
   },
 
