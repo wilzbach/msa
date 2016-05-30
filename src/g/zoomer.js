@@ -68,10 +68,11 @@ module.exports = Zoomer = Model.extend({
   calcDefaults: function(model) {
     var maxLen = model.getMaxLength();
     if (maxLen < 200 && model.length < 30) {
-      return this.defaults.boxRectWidth = this.defaults.boxRectHeight = 5;
+      this.defaults.boxRectWidth = this.defaults.boxRectHeight = 5;
     }
+    return this;
   },
-
+    
   // @param n [int] maxLength of all seqs
   getAlignmentWidth: function(n) {
     if (this.get("autoResize") && n !== undefined) {

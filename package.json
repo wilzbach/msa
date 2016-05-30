@@ -40,6 +40,7 @@
     "dom-helper": "^1.0.0",
     "jbone": "^1.1.2",
     "koala-js": "^1.0.7",
+    "linear-scale": "0.0.1",
     "menu-builder": "^0.0.7",
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
