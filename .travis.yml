@@ -3,16 +3,9 @@ node_js:
 - '5.0'
 before_deploy: npm run build
 deploy:
-  provider: s3
-  access_key_id: AKIAJQSM2TLXCCXX2GJQ
-  secret_access_key:
-    secure: Rz5GBL9lqz2qT24/5Id1szFsTG2AKArFDTANccpm1fwE6Zs/nPrt8EA4alXmyOwAkldXT9LLAC4Tv5HYGqUJtU+oyrz9mpLCtXkKahSfi3oG/VicAcyiLIQIkMPzwTGrF3tHR6pm1eqmzcD45JfEI3YPbBQvcegf0nk9mGnn5Nk=
-  bucket: cdn.bio.sh
-  upload-dir: msa/latest
-  acl: public-read
-  detect_encoding: true
-  skip_cleanup: true
-  local-dir: dist
-  region: eu-central-1
+  provider: npm
+  api_key:
+    secure: KOag4ahg5GPAuq3/BI7ighqz+EyVu/XQwmhZgZB6cQMqp946IxlvEn7RYNjbIbIST7BGZHA84v8VMAK93maRMb9yvNydsQZmlLi4Wpg2VIg5Vi4e9C+gXwbLMBK/UQQYMa4eamGzwOdVByv86jBwVnwaTJ2dFY9fSGzL5ciC5q0=
   on:
-    repo: wilzbach/msa
+    tags: true
+    branch: master
