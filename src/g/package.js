@@ -19,13 +19,13 @@ module.exports = Package = Model.extend({
       var p = require(pkg);
       return cb(p);
     } catch (error) {
-      return Loader.loadScript(this._pkgURL(pkg), cb);
+      return Loader.default.loadScript(this._pkgURL(pkg), cb);
     }
   },
 
   // loads multiple packages and calls the cb if all packages are loaded
   loadPackages: function(pkgs, cb) {
-      var cbs = Loader.joinCb( (function() {
+      var cbs = Loader.default.joinCb( (function() {
         return cb();
       }
       ), pkgs.length
