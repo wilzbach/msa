@@ -1,7 +1,9 @@
 import MenuBuilder from "../menubuilder";
+import Exporter from "../../utils/export";
+
 const FastaExporter = require("biojs-io-fasta").writer;
 const _ = require("underscore");
-const Exporter = require("../../utils/export");
+
 const ShareSym = "\u21AA";
 
 const ExportMenu = MenuBuilder.extend({
