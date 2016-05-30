@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "automatically_filled_by_travis",
+  "version": "0.0.0",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
