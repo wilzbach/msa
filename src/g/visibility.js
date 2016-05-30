@@ -12,6 +12,7 @@ module.exports = Visibility = Model.extend({
     seqlogo: false,
     gapHeader: false,
     leftHeader: true,
+    scaleslider: false,
 
     // about the labels
     labels: true,
