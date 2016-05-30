@@ -5,7 +5,7 @@ const $ = require("jbone");
 
 const View = BoneView.extend({
 
-  
+
   initialize: function(data) {
     this.g = data.g;
     this.listenTo(this.g.zoomer,"change:columnWidth", this.render);
@@ -13,18 +13,18 @@ const View = BoneView.extend({
     this.isVisible = true;
     return this;
   },
-  
+
   attributes: {
     class: "biojs_msa_scale"
   },
-  
+
   events: {
     'change input': 'updateSlider',
     'click button.msa-btn-close': 'hide',
     'click button.msa-btn-open': 'show',
     'click button[data-action]': 'clickButton',
   },
-  
+
   template: _.template('\
 <div class="msa-scale-minimised">\
   <button class="btn msa-btn msa-btn-open">Zoom</button>\
@@ -47,15 +47,14 @@ const View = BoneView.extend({
   </div>\
 </div>\
 '),
-  
+
   render: function() {
-    var sizeRange = this.model.getSizeRange();
-    var stash = {
+    const sizeRange = this.model.getSizeRange();
+    const stash = {
       value: this.model.getSize(),
       min: sizeRange[0],
       max: sizeRange[1],
       step: this.model.step || 1,
-      colWidth: this.model.getColumnWidth(),
     };
     this.$el.html( this.template(stash) );
     if ( this.isVisible ) {
@@ -68,26 +67,24 @@ const View = BoneView.extend({
   },
 
   updateSlider: function(e) {
-    var target = e.target;
-    var size = parseInt( $(target).val() );
+    const target = e.target;
+    const size = parseInt( $(target).val() );
     //console.log( "updateSize", size );
     this.model.setSize(size);
-    this.syncModel();
   },
 
   clickButton: function(e) {
     console.log( "clickButton", this, e );
-    var target = e.target;
-    var action = $(target).data('action');
-    var method = this.model[action];
+    const target = e.target;
+    const action = $(target).data('action');
+    const method = this.model[action];
     // bigger, smaller, reset
     if( typeof this.model[action] === 'function' ) {
       this.model[action]();
-      this.syncModel();
     }
     return this;
   },
-  
+
   hide: function() {
     this.isVisible = false;
     this.$el.find(".msa-scale-minimised").removeClass(this.toggleClass);
@@ -99,13 +96,6 @@ const View = BoneView.extend({
     this.$el.find(".msa-scale-minimised").addClass(this.toggleClass);
     this.$el.find(".msa-scale-maximised").removeClass(this.toggleClass);
   },
-  
-  syncModel: function() {
-    var info = this.model.getScaleInfo();
-    this.g.zoomer.set('columnWidth', info.columnWidth );
-    this.g.zoomer.set('stepSize', info.stepSize );
-    this.g.zoomer.set('markerStepSize', info.markerStepSize );
-  },
-  
+
 });
 export default View;
