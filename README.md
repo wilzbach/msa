@@ -509,3 +509,20 @@ The best way to get your feature request is to send us a pull request.
 Don't worry about simple implementations, we will help you to make it better.
 
 For more questions, ping us on the issue tracker or [Gitter](https://gitter.im/wilzbach/msa).
+> do so, all subject to the following:
+
+If you use the MSA Viewer on your website, it solely requires you to link to us.
+
+License
+-------
+
+This project is licensed under the [Boost Software License 1.0](https://github.com/wilzbach/msa/blob/master/LICENSE).
+
+> Permission is hereby granted, free of charge, to any person or organization
+> obtaining a copy of the software and accompanying documentation covered by
+> this license (the "Software") to use, reproduce, display, distribute,
+> execute, and transmit the Software, and to prepare derivative works of the
+> Software, and to permit third-parties to whom the Software is furnished to
+> do so, all subject to the following:
+
+If you use the MSA Viewer on your website, it solely requires you to link to us.
