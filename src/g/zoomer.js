@@ -31,7 +31,6 @@ module.exports = Zoomer = Model.extend({
     autoResize: true, // only for the width
 
     // labels
-    textVisible: true,
     labelIdLength: 20,
     labelNameLength: 100,
     labelPartLength: 15,
@@ -48,6 +47,7 @@ module.exports = Zoomer = Model.extend({
     // canvas
     residueFont: "13", // in px
     canvasEventScale: 1,
+    minLetterDrawSize: 11,
 
     // overview box
     boxRectHeight: 2,
@@ -72,7 +72,7 @@ module.exports = Zoomer = Model.extend({
     }
     return this;
   },
-    
+
   // @param n [int] maxLength of all seqs
   getAlignmentWidth: function(n) {
     if (this.get("autoResize") && n !== undefined) {
