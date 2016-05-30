@@ -42,7 +42,7 @@ const SeqCollection = Collection.extend({
   // @param endless [boolean] for the first element
   // true: returns the last element, false: returns undefined
   prev: function(model, endless) {
-    var index = this.indexOf(model) - 1;
+    let index = this.indexOf(model) - 1;
     if (index < 0 && endless) { index = this.length - 1; }
     return this.at(index);
   },
@@ -51,15 +51,15 @@ const SeqCollection = Collection.extend({
   // @param endless [boolean] for the last element
   // true: returns the first element, false: returns undefined
   next: function(model, endless) {
-    var index = this.indexOf(model) + 1;
+    let index = this.indexOf(model) + 1;
     if (index === this.length && endless) { index = 0; }
     return this.at(index);
   },
 
   // @returns n [int] number of hidden columns until n
   calcHiddenSeqs: function(n) {
-    var nNew = n;
-    for (var i = 0; 0 < nNew ? i <= nNew : i >= nNew; 0 < nNew ? i++ : i--) {
+    let nNew = n;
+    for (let i = 0; 0 < nNew ? i <= nNew : i >= nNew; 0 < nNew ? i++ : i--) {
       if (this.at(i).get("hidden")) {
         nNew++;
       }
@@ -71,10 +71,10 @@ const SeqCollection = Collection.extend({
   // later (lagging connection)
   addFeatures: function(features) {
     if ((features.config != null)) {
-      var obj = features;
+      const obj = features;
       features = features.seqs;
       if ((obj.config.colors != null)) {
-        var colors = obj.config.colors;
+        const colors = obj.config.colors;
         _.each(features, function(seq) {
           return _.each(seq, function(val) {
             if ((colors[val.feature] != null)) {
@@ -128,7 +128,7 @@ const SeqCollection = Collection.extend({
 
   // sets a sequence (e.g. BLAST start or consensus seq) as reference
   setRef: function(seq) {
-    var obj = this.get(seq);
+    const obj = this.get(seq);
     this.each(function(s) {
       if (seq.cid) {
         if (obj.cid === s.cid) {
