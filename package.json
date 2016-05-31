@@ -119,7 +119,8 @@
       "dist/msa.js"
     ],
     "css": [
-      "css/msa.css"
+      "css/msa.css",
+      "css/font-awesome/css/font-awesome.min.css"
     ],
     "snippets": [
       "snippets"

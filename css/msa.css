@@ -1,12 +1,12 @@
 /* BASIC */
 
 .biojs_msa_div {
-  
+
 }
 
 .biojs_msa_stage {
     cursor: default;
-    line-height: normal; 
+    line-height: normal;
     font-family: Helvetica;
 }
 
@@ -177,7 +177,7 @@
   position: relative;
 }
 
-.biojs_msa_scale {
+.msa-scale {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -188,40 +188,48 @@
   padding: 5px;
   text-align: center;
 }
-.biojs_msa_scale .msa-btngroup {
+
+.msa-scale h4 {
+  text-align: left;
+  font-size: 0.7em;
+  color: #999;
+  margin: 0 0 5px;
+}
+
+.msa-scale .msa-btngroup {
   margin: 5px auto 0;
 }
-.biojs_msa_scale [type="range"] {
+.msa-scale [type="range"] {
   cursor: pointer;
 }
 
-.biojs_msa_scale .msa-scale-minimised {
+.msa-scale .msa-scale-minimised {
 }
-.biojs_msa_scale .msa-scale-minimised {
+.msa-scale .msa-scale-max       imised {
 }
-.biojs_msa_scale .msa-btn-close {
+.msa-scale .msa-btn-close {
   text-align: right;
-  font-size: 0.8em;
-  padding: 2px;
+  font-size: 0.7em;
+  padding: 0;
 }
-.biojs_msa_scale .msa-btn-open {
+.msa-scale .msa-btn-open {
   background-color: #fff;
 }
 
-.biojs_msa_scale .msa-hide {
+.msa-scale .msa-hide {
   display: none;
 }
 
 .msa-btn {
   cursor: pointer;
-  font-size: 1.1em;
   display: inline-block;
-  padding: 2px 8px;
   margin-bottom: 0;
   border: 1px solid transparent;
   border-radius: 4px;
   box-sizing: border-box;
+  padding: 4px;
 }
+
 .msa-btn:hover {
   background-color: #ddd;
 }
