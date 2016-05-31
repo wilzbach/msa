@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend} from "lodash";
 
 const ProxyHelper = function(opts) {
   this.g = opts.g;
@@ -27,5 +27,5 @@ var proxyFun =
   }
   };
 
-_.extend(ProxyHelper.prototype, proxyFun);
+extend(ProxyHelper.prototype, proxyFun);
 export default ProxyHelper;

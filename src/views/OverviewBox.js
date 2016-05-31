@@ -1,7 +1,6 @@
 const view = require("backbone-viewj");
 const mouse = require("mouse-pos");
 const jbone = require("jbone");
-const _ = require("underscore");
 import {possel} from "../g/selection/Selection";
 
 const OverviewBox = view.extend({
