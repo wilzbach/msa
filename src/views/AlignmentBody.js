@@ -2,16 +2,19 @@ const boneView = require("backbone-childs");
 import SeqBlock from "./canvas/CanvasSeqBlock";
 import LabelBlock from "./labels/LabelBlock";
 
+import LabelBlock2 from "./labels2/LabelBlock";
+import {h, render} from 'preact';
+
 const View = boneView.extend({
 
   initialize: function(data) {
     this.g = data.g;
 
-    if (true) {
-      var labelblock = new LabelBlock({model: this.model, g: this.g});
-      labelblock.ordering = -1;
-      this.addView("labelblock",labelblock);
-    }
+    //if (true) {
+      //var labelblock = new LabelBlock({model: this.model, g: this.g});
+      //labelblock.ordering = -1;
+      //this.addView("labelblock",labelblock);
+    //}
 
     if (this.g.vis.get("sequences")) {
       var seqblock = new SeqBlock({model: this.model, g: this.g});
@@ -29,6 +32,11 @@ const View = boneView.extend({
     this.renderSubviews();
     this.el.className = "biojs_msa_albody";
     this.el.style.whiteSpace = "nowrap";
+
+    const label2 = document.createElement("span");
+    render(<LabelBlock2 seqs={this.g.seqs} g={this.g} />, label2);
+    this.el.insertBefore(label2, this.el.firstChild);
+
     this.adjustHeight();
     this.adjustWidth();
     return this;
