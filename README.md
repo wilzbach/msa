@@ -1,7 +1,7 @@
 msa
-==========
+=====
 
-The BioJS MSA Viewer written in CoffeeScript.
+BioJS: Multiple Sequence Alignment (MSA) Viewer
 
 ```
           .         .
