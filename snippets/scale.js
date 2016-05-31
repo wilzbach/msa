@@ -6,6 +6,9 @@ var opts = {
   bootstrapMenu: true, // simplified behavior to add the menu bar, you can also create your own menu instance
   vis: {
     scaleslider: true
+  },
+  zoomer: {
+    columnWidth: 18, // take into account custom columnWidth
   }
 };
 var m = new msa(opts);

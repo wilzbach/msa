@@ -24,16 +24,44 @@ module.exports = StageScale = Model.extend({
       { columnWidth: 15, markerStepSize: 2, stepSize: 1 },
       { columnWidth: 20, markerStepSize: 1, stepSize: 1 },
       { columnWidth: 30, markerStepSize: 1, stepSize: 1 },
+      { columnWidth: 45, markerStepSize: 1, stepSize: 1 },
     ],
   },
 
   initialize: function(args) {
+    const categories = this.get('scaleCategories');
+    const initialColumnWidth = this.g.zoomer.get('columnWidth') || this._getScaleInfo().columnWidth;
+
+    /* if the global columnWidth setting doesn't match any of our categories
+     * then create a category that does match and add it to a sensible place
+     * in the list
+     */
+    var category = _.find( categories, function(c) { return c.columnWidth == initialColumnWidth });
+    if (!category) {
+      const catindex = this._insertScaleCategory( initialColumnWidth );
+      category = categories[ catindex ];
+      // custom columnWidth should overwrite the default currentSize
+      this.set('currentSize', catindex + 1);
+    }
+
     const currentSize = this.get('currentSize');
     this.set('originalSize', currentSize);
-    // TODO: don't overwrite the default settings
-    //this.setSize( currentSize );
+    this.setSize(currentSize);
 
     return this;
+  },
+
+  // insert new category based on columnWidth
+  // return the index of newly inserted category
+  _insertScaleCategory: function(columnWidth) {
+    var categories = this.get('scaleCategories');
+    const lastcatindex = _.findLastIndex( categories, function(c) { return c.columnWidth < columnWidth });
+    const lastcat = categories[lastcatindex];
+    const insertindex = lastcatindex + 1;
+    const category = { columnWidth: columnWidth, markerStepSize: lastcat.markerStepSize, stepSize: lastcat.markerStepSize };
+    categories.splice( insertindex, 0, category );
+    this.set('scaleCategories', categories);
+    return insertindex;
   },
 
   getSizeRange() {
@@ -88,4 +116,3 @@ module.exports = StageScale = Model.extend({
     }
   }
 });
-
