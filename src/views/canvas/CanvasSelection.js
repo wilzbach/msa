@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {find} from "lodash";
 
 const CanvasSelection = (function(g,ctx) {
   this.g = g;
@@ -16,7 +16,7 @@ _.extend(CanvasSelection.prototype, {
     const maxLen = model.get("seq").length;
     const selection = [];
     const sels = this.g.selcol.getSelForRow(model.get("id"));
-    const rows = _.find(sels, function(el) { return el.get("type") === "row"; });
+    const rows = find(sels, function(el) { return el.get("type") === "row"; });
     if ((typeof rows !== "undefined" && rows !== null)) {
       // full match
       const end = maxLen - 1;

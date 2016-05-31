@@ -1,5 +1,5 @@
 import {sel, possel, rowsel, columnsel} from "./Selection";
-const _ = require("underscore");
+import {uniq, filter} from "lodash";
 const Collection = require("backbone-thin").Collection;
 
 // holds the current user selection
@@ -56,7 +56,7 @@ const SelectionManager = Collection.extend({
 
   // allows normal JSON input
   resetJSON: function(arr) {
-    arr = _.map(arr, this._fromJSON);
+    arr = arr.map(this._fromJSON);
     return this.reset(arr);
   },
 
@@ -131,7 +131,7 @@ const SelectionManager = Collection.extend({
         return result;
       })()));
     }
-    blocks = _.uniq(blocks);
+    blocks = uniq(blocks);
     return blocks;
   },
 
@@ -139,8 +139,8 @@ const SelectionManager = Collection.extend({
   // @param rows [Array] all available seqId
   invertRow: function(rows) {
     let selRows = this.where({type:"row"});
-    selRows = _.map(selRows, function(el) { return el.attributes.seqId; });
-    const inverted = _.filter(rows, function(el) {
+    selRows = selRows.map((el) => el.attributes.seqId);
+    const inverted = filter(rows, function(el) {
       if (selRows.indexOf(el) >= 0) { return false; } // existing selection
       return true;
     });
@@ -156,8 +156,8 @@ const SelectionManager = Collection.extend({
   // inverts the current selection for rows
   // @param rows [Array] all available rows (0..max.length)
   invertCol: function(columns) {
-    const selColumns = _.reduce( this.where({type:"column"}), (function(memo,el) {
-      return memo.concat(((function() {
+    const selColumns = this.where({type:"column"}).reduce((memo,el) => {
+      return memo.concat(((() => {
         const result = [];
         let i = el.attributes.xStart;
         if (el.attributes.xStart <= el.attributes.xEnd) {
@@ -171,8 +171,8 @@ const SelectionManager = Collection.extend({
         }
         return result;
       })()));
-    }), []);
-    const inverted = _.filter(columns, function(el) {
+    }, []);
+    const inverted = filter(columns, (el) => {
       if (selColumns.indexOf(el) >= 0) {
         // existing selection
         return false;
@@ -213,17 +213,17 @@ const SelectionManager = Collection.extend({
   // experimental reduce method for columns
   _reduceColumns: function() {
     return this.each(function(el, index, arr) {
-      const cols = _.filter(arr, function(el) { return el.get('type') === 'column'; });
+      const cols = filter(arr, (el) => el.get('type') === 'column');
       const xStart = el.get('xStart');
       const xEnd = el.get('xEnd');
 
-      const lefts = _.filter(cols, function(el) { return el.get('xEnd') === (xStart - 1); });
+      const lefts = filter(cols, (el) => el.get('xEnd') === (xStart - 1));
       for (let i = 0, left; i < lefts.length; i++) {
         let left = lefts[i];
         left.set('xEnd', xStart);
       }
 
-      const rights = _.filter(cols, function(el) { return el.get('xStart') === (xEnd + 1); });
+      const rights = filter(cols, (el) =>  el.get('xStart') === (xEnd + 1));
       for (let j = 0, right; j < rights.length; j++) {
         let right = rights[j];
         right.set('xStart', xEnd);

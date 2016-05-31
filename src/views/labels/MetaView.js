@@ -1,8 +1,8 @@
 const view = require("backbone-viewj");
-const _ = require('underscore');
 const dom = require("dom-helper");
 const st = require("msa-seqtools");
 import MenuBuilder from "../../menu/menubuilder";
+import {reduce} from "lodash";
 
 const MetaView = view.extend({
 
@@ -36,7 +36,7 @@ const MetaView = view.extend({
     if (this.g.vis.get("metaGaps")) {
       // adds gaps
       var seq = this.model.get('seq');
-      var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? ++memo : undefined; }),0);
+      var gaps = reduce(seq, (memo, c) => c === '-' ? ++memo : undefined, 0);
       // 2-place percentage , e.g. 42%
       gaps = (gaps * 100 / seq.length).toFixed(0) + "%";
 
@@ -71,10 +71,10 @@ const MetaView = view.extend({
       // view
       if (this.model.attributes.ids) {
         var links = st.buildLinks(this.model.attributes.ids);
-        if (_.keys(links).length > 0) {
+        if (Object.keys(links).length > 0) {
           var menu = new MenuBuilder({name: "↗"});
-          console.log(_.keys(links));
-          _.each(links, function(val, key) {
+          console.log(Object.keys(links));
+          links.forEach(function(val, key) {
             return menu.addNode(key,function(e) {
               return window.open(val);
             });
