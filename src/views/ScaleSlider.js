@@ -15,7 +15,7 @@ const View = BoneView.extend({
   },
 
   attributes: {
-    class: "biojs_msa_scale"
+    class: "msa-scale"
   },
 
   events: {
@@ -26,11 +26,10 @@ const View = BoneView.extend({
   },
 
   template: _.template('\
-<div class="msa-scale-minimised">\
-  <button class="btn msa-btn msa-btn-open">Zoom</button>\
+<div class="msa-scale-minimised"><button class="btn msa-btn msa-btn-open"><i class="fa fa-angle-double-up" aria-label="Settings"></i></button>\
 </div>\
 <div class="msa-scale-maximised">\
-  <button class="btn msa-btn msa-btn-close" style="float:right">&times; close</button>\
+  <button class="btn msa-btn msa-btn-close" style="float:right"><i class="fa fa-close"></i> close</button>\
   <div>\
   <input type="range" \
     data-provide="slider" \
@@ -41,9 +40,9 @@ const View = BoneView.extend({
   >\
   </div>\
   <div class="btngroup msa-btngroup">\
-    <button class="btn msa-btn" data-action="smaller"><span class="glyphicon-zoom-out"></span>-</button>\
-    <button class="btn msa-btn" data-action="bigger"><span class="glyphicon-zoom-in"></span>+</button>\
-    <button class="btn msa-btn" data-action="reset"><span class="glyphicon-repeat"></span>reset</button>\
+    <button class="btn msa-btn" data-action="smaller"><i class="fa fa-minus" aria-label="zoom out"></i> </button>\
+    <button class="btn msa-btn" data-action="bigger"><i class="fa fa-plus" aria-label="zoom in"></i> </button>\
+    <button class="btn msa-btn" data-action="reset"><i class="fa fa-refresh" aria-label="reset"></i> </button>\
   </div>\
 </div>\
 '),

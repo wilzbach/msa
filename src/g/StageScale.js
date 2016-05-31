@@ -17,7 +17,6 @@ module.exports = StageScale = Model.extend({
     step: 1,
     originalSize: false,
     scaleCategories: [
-      { columnWidth: 1, markerStepSize: 20, stepSize: 0 },
       { columnWidth: 3, markerStepSize: 20, stepSize: 0 },
       { columnWidth: 5, markerStepSize: 10, stepSize: 0 },
       { columnWidth: 9, markerStepSize: 5, stepSize: 1 },
