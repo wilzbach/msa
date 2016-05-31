@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend} from "lodash";
 
 const Drawer = {
 
@@ -169,5 +169,5 @@ const CanvasSeqDrawer = function(g,ctx,model,opts) {
   return this;
 };
 
-_.extend(CanvasSeqDrawer.prototype, Drawer);
+extend(CanvasSeqDrawer.prototype, Drawer);
 export default CanvasSeqDrawer;

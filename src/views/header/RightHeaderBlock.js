@@ -1,5 +1,4 @@
 const boneView = require("backbone-childs");
-const _ = require('underscore');
 
 import MarkerView from "./MarkerView";
 import ConservationView from "./ConservationView";

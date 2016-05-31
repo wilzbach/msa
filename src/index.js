@@ -25,7 +25,6 @@ export {default as view} from "backbone-viewj";
 export {default as boneView} from "backbone-childs";
 
 // convenience
-export {default as _} from 'underscore';
 export {default as $} from 'jbone';
 
 // parser (are currently bundled - so we can also expose them)

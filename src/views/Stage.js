@@ -1,5 +1,5 @@
 const boneView = require("backbone-childs");
-const _ = require('underscore');
+import {debounce} from "lodash";
 
 import AlignmentBody from "./AlignmentBody";
 import HeaderBlock from "./header/HeaderBlock";
@@ -21,7 +21,7 @@ const View  = boneView.extend({
     });
 
     // debounce a bulk operation
-    this.listenTo(this.model,"change:hidden", _.debounce(this.rerender, 10));
+    this.listenTo(this.model,"change:hidden", debounce(this.rerender, 10));
 
     this.listenTo(this.model,"sort", this.rerender);
     this.listenTo(this.model,"add", function() {

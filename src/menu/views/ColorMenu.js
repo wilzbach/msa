@@ -1,5 +1,4 @@
 import MenuBuilder from "../menubuilder";
-const _ = require("underscore");
 const dom = require("dom-helper");
 
 const ColorMenu = MenuBuilder.extend({

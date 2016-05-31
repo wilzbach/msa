@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend, pick} from "lodash";
 const Model = require("backbone-thin").Model;
 
 // holds the current user selection
@@ -8,7 +8,7 @@ const Selection = Model.extend({
 });
 
 const RowSelection = Selection.extend({
-  defaults: _.extend( {}, Selection.prototype.defaults,
+  defaults: extend( {}, Selection.prototype.defaults,
     {type: "row",
     seqId: ""
   }),
@@ -27,7 +27,7 @@ const RowSelection = Selection.extend({
 });
 
 const ColumnSelection = Selection.extend({
-  defaults: _.extend( {}, Selection.prototype.defaults,
+  defaults: extend( {}, Selection.prototype.defaults,
     {type: "column",
     xStart: -1,
     xEnd: -1
@@ -48,11 +48,11 @@ const ColumnSelection = Selection.extend({
 
 // pos is a mixin of column and row
 // start with Row and only overwrite "inColumn" from Column
-const PosSelection = RowSelection.extend(_.extend( {},
-                    _.pick(ColumnSelection,"inColumn"),
-                    _.pick(ColumnSelection,"getLength"),
+const PosSelection = RowSelection.extend(extend( {},
+                    pick(ColumnSelection,"inColumn"),
+                    pick(ColumnSelection,"getLength"),
   // merge both defaults
-  {defaults: _.extend( {}, ColumnSelection.prototype.defaults, RowSelection.prototype.defaults,
+  {defaults: extend( {}, ColumnSelection.prototype.defaults, RowSelection.prototype.defaults,
     {type: "pos"
   })
 }));
