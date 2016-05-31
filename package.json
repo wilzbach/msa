@@ -91,11 +91,11 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo 'temporarily disabled'",
-    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
-    "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
-    "sniper": "./node_modules/sniper/bin/sniper .",
-    "watch": "./node_modules/webpack/bin/webpack.js -w",
-    "w": "prunner 'npm run sniper' 'npm run watch'"
+    "prepublish": "node ./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
+    "build": "node ./node_modules/webpack/bin/webpack.js -p && gulp build",
+    "sniper": "node ./node_modules/sniper/bin/sniper .",
+    "watch": "node ./node_modules/webpack/bin/webpack.js -w",
+    "w": "prunner \"npm run sniper\" \"npm run watch\""
   },
   "license": "BSL-1.0",
   "browserify": {

@@ -28,7 +28,7 @@ gulp.task('build', ['min-css', 'build-gzip']);
 //});
 
 gulp.task('css',['init'], function () {
-    return gulp.src('./css/*.css')
+    return gulp.src(path.join('css', '*.css') )
       .pipe(concat('msa.css'))
       .pipe(chmod(644))
       .pipe(gulp.dest(buildDir));
