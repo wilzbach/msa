@@ -2,7 +2,6 @@ import MenuBuilder from "../menubuilder";
 import Exporter from "../../utils/export";
 
 const FastaExporter = require("biojs-io-fasta").writer;
-const _ = require("underscore");
 
 const ShareSym = "\u21AA";
 

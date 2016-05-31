@@ -1,5 +1,4 @@
 import MenuBuilder from "../menubuilder";
-const _ = require("underscore");
 
 const FilterMenu = MenuBuilder.extend({
 
@@ -42,7 +41,7 @@ const FilterMenu = MenuBuilder.extend({
       for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         var gaps = 0;
         var total = 0;
-        this.model.each(function(el) {
+        this.model.each((el) => {
           if (el.get('seq')[i] === "-") { gaps++; }
           return total++;
         });
@@ -57,7 +56,7 @@ const FilterMenu = MenuBuilder.extend({
     this.addNode("Hide seqs by identity", () => {
       var threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
-      return this.model.each(function(el) {
+      return this.model.each((el) => {
         if (el.get('identity') < threshold) {
           return el.set('hidden', true);
         }
@@ -66,9 +65,9 @@ const FilterMenu = MenuBuilder.extend({
 
     this.addNode("Hide seqs by selection", () => {
       var hidden = this.g.selcol.where({type: "row"});
-      var ids = _.map(hidden, function(el) { return el.get('seqId'); });
+      var ids = hidden.map((el) => el.get('seqId'));
       this.g.selcol.reset([]);
-      return this.model.each(function(el) {
+      return this.model.each((el) => {
         if (ids.indexOf(el.get('id')) >= 0) {
           return el.set('hidden', true);
         }
@@ -77,9 +76,9 @@ const FilterMenu = MenuBuilder.extend({
 
     this.addNode("Hide seqs by gaps", () => {
       var threshold = prompt("Enter threshold (in percent)", 40);
-      return this.model.each(function(el,i) {
+      return this.model.each((el,i) => {
         var seq = el.get('seq');
-        var gaps = _.reduce(seq, (function(memo, c) { return c === '-' ? ++memo: undefined; }),0);
+        var gaps = seq.reduce((memo, c) => c === '-' ? ++memo: undefined,0);
         if (gaps >  threshold) {
           return el.set('hidden', true);
         }
@@ -88,7 +87,7 @@ const FilterMenu = MenuBuilder.extend({
 
     this.addNode("Reset", () => {
       this.g.columns.set("hidden", []);
-      return this.model.each(function(el) {
+      return this.model.each((el) => {
         if (el.get('hidden')) {
           return el.set('hidden', false);
         }
