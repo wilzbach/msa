@@ -36,7 +36,7 @@ module.exports = StageScale = Model.extend({
      * then create a category that does match and add it to a sensible place
      * in the list
      */
-    var category = _.find( categories, function(c) { return c.columnWidth == initialColumnWidth });
+    var category = _.find( categories, { columnWidth: initialColumnWidth });
     if (!category) {
       const catindex = this._insertScaleCategory( initialColumnWidth );
       category = categories[ catindex ];
@@ -54,8 +54,8 @@ module.exports = StageScale = Model.extend({
   // insert new category based on columnWidth
   // return the index of newly inserted category
   _insertScaleCategory: function(columnWidth) {
-    var categories = this.get('scaleCategories');
-    const lastcatindex = _.findLastIndex( categories, function(c) { return c.columnWidth < columnWidth });
+    let categories = this.get('scaleCategories');
+    const lastcatindex = _.findLastIndex( categories, c => c.columnWidth < columnWidth);
     const lastcat = categories[lastcatindex];
     const insertindex = lastcatindex + 1;
     const category = { columnWidth: columnWidth, markerStepSize: lastcat.markerStepSize, stepSize: lastcat.markerStepSize };
