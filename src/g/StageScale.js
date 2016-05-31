@@ -36,7 +36,7 @@ module.exports = StageScale = Model.extend({
      * then create a category that does match and add it to a sensible place
      * in the list
      */
-    var category = _.find( categories, c => c.columnWidth == initialColumnWidth);
+    var category = _.find( categories, { columnWidth: initialColumnWidth });
     if (!category) {
       const catindex = this._insertScaleCategory( initialColumnWidth );
       category = categories[ catindex ];
