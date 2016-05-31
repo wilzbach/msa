@@ -1,7 +1,8 @@
+import {extend} from "lodash";
+
 const FastaReader = require("biojs-io-fasta");
 const ClustalReader = require("biojs-io-clustal");
 const GffReader = require("biojs-io-gff");
-const _ = require("underscore");
 const xhr = require("xhr");
 
 const FileHelper = function(msa) {
@@ -115,5 +116,5 @@ var funs =
   }
   };
 
-_.extend(FileHelper.prototype, funs);
+extend(FileHelper.prototype, funs);
 export default FileHelper;

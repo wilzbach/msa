@@ -1,5 +1,5 @@
 const Collection = require("backbone-thin").Collection;
-import _ from "underscore";
+import {max} from "lodash";
 
 import Feature from "./Feature";
 
@@ -61,7 +61,7 @@ const FeatureCol = Collection.extend({
       return el.set("row", max);
     });
 
-    return _.max(rows);
+    return max(rows);
   },
 
   getCurrentHeight: function() {
@@ -94,7 +94,7 @@ const FeatureCol = Collection.extend({
       })();
     });
 
-    return _.max(rows);
+    return max(rows);
   }
 });
 export default FeatureCol;

@@ -1,5 +1,5 @@
 const BoneView = require("backbone-viewj");
-const _ = require("underscore");
+import {template} from "lodash";
 const $ = require("jbone");
 //const Slider = require("bootstrap-slider");
 
@@ -25,7 +25,7 @@ const View = BoneView.extend({
     'click button[data-action]': 'clickButton',
   },
 
-  template: _.template('\
+  template: template('\
 <div class="msa-scale-minimised">\
   <button class="btn msa-btn msa-btn-open">Zoom</button>\
 </div>\

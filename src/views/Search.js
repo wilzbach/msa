@@ -1,5 +1,4 @@
 const boneView = require("backbone-childs");
-const _ = require('underscore');
 const k = require('koala-js');
 const dom = require('dom-helper');
 import {possel} from "../g/selection/Selection";
