@@ -1,6 +1,6 @@
 const boneView = require("backbone-childs");
 const mouse = require("mouse-pos");
-const _ = require("underscore");
+import {throttle} from "lodash";
 const jbone = require("jbone");
 
 import CharCache from "./CanvasCharCache";
@@ -67,7 +67,7 @@ const View = boneView.extend({
       };
     } else {
       // slow browsers like Gecko
-      this.throttledDraw = _.throttle(this.throttledDraw, 30);
+      this.throttledDraw = throttle(this.throttledDraw, 30);
     }
 
     return this.manageEvents();

@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend} from "lodash";
 import SeqCollection from "../model/SeqCollection";
 
 const TreeHelper =  function(msa) {
@@ -56,7 +56,7 @@ var tf =
       });
 
       // remove top collection
-      _.each(nodes.models, function(e) {
+      nodes.models.forEach((e) => {
         delete e.collection;
         return Object.setPrototypeOf(e, require("backbone-thin").Model.prototype);
       });
@@ -73,5 +73,5 @@ var tf =
     }
     };
 
-_.extend(TreeHelper.prototype , tf);
+extend(TreeHelper.prototype , tf);
 export default TreeHelper;

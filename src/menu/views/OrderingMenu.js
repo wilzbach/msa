@@ -1,6 +1,5 @@
 import MenuBuilder from "../menubuilder";
 const dom = require("dom-helper");
-const _ = require('underscore');
 const arrowUp = "\u2191";
 const arrowDown = "\u2193";
 
@@ -83,7 +82,7 @@ const OrderingMenu = MenuBuilder.extend({
       this.gaps = {};
       return this.model.each((el) => {
         var seq = el.attributes.seq;
-        return this.gaps[el.id] = (_.reduce(seq, (function(memo, c) { return c === '-' ? ++memo: undefined; }),0))/ seq.length;
+        return this.gaps[el.id] = (seq.reduce(function(memo, c) { return c === '-' ? ++memo: undefined; }),0)/ seq.length;
       });
     };
 

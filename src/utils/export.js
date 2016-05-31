@@ -3,7 +3,7 @@ const GFF = require("biojs-io-gff");
 const xhr = require("xhr");
 const blobURL = require("blueimp_canvastoblob");
 const saveAs = require("browser-saveas");
-const _ = require("underscore");
+import {flatten, compact} from "lodash";
 
 const Exporter =
 
@@ -62,21 +62,19 @@ const Exporter =
 
   saveAsFile: function(that,name) {
     // limit at about 256k
-    var text = Fasta.write(that.seqs.toJSON());
-    var blob = new Blob([text], {type : 'text/plain'});
+    const text = Fasta.write(that.seqs.toJSON());
+    const blob = new Blob([text], {type : 'text/plain'});
     return saveAs(blob, name);
   },
 
   saveSelection: function(that,name) {
-    var selection = that.g.selcol.pluck("seqId");
+    let selection = that.g.selcol.pluck("seqId");
     console.log(selection);
     if (selection.length > 0) {
       // filter those seqids
-      selection = that.seqs.filter(function(el) {
-        return _.contains(selection, el.get("id"));
-      });
+      selection = that.seqs.filter((el) => selection.indexOf(el.get("id")) >= 0);
       var end = selection.length - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
+      for (let i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
         selection[i] = selection[i].toJSON();
       }
     } else {
@@ -98,7 +96,7 @@ const Exporter =
       });
       return features.toJSON();
     });
-    features = _.flatten(_.compact(features));
+    features = flatten(compact(features));
     console.log(features);
     var text = GFF.exportLines(features);
     var blob = new Blob([text], {type : 'text/plain'});

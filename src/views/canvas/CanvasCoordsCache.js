@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend} from "lodash";
 const Events = require("biojs-events");
 
 const cache =
@@ -32,6 +32,6 @@ const CacheConstructor = function(g,model) {
   return this;
 };
 
-_.extend(CacheConstructor.prototype, cache);
+extend(CacheConstructor.prototype, cache);
 Events.mixin(CacheConstructor.prototype);
 export default CacheConstructor;
