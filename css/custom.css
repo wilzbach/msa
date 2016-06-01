@@ -48,6 +48,16 @@
     margin-top: 0;
 }
 
+.help p {
+    text-decoration: none;
+    color: black;
+}
+
+.help .icon-md {
+    font-size: 36px;
+    display: inline-block;
+}
+
 .code_links {
     text-align:left;
     width: auto;
