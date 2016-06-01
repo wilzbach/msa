@@ -513,6 +513,16 @@ For more questions, ping us on the issue tracker or [Gitter](https://gitter.im/w
 
 If you use the MSAViewer on your website, it solely requires you to link to us.
 
+Team
+----
+
+Without the help of these awesome people the MSA Viewer project wouldn't have been possible:
+
+Sebastian Wilzbach (Technical University of Munich; TUM), Ian Sillitoe (University College London), Benedikt Rauscher (TUM), Robert Sheridan (Harvard Medical School), James Procter (University of Dundee), Suzanna Lewis (Berkeley), Burkhard Rost (TUM), Tatyana Goldberg(TUM) and Guy Yachdav (TUM).
+
+Do you want to be part of the team? Just grab an issue and send us a PR!
+Ask us on [Gitter](https://gitter.im/wilzbach/msa) if you need help to get started.
+
 License
 -------
 
