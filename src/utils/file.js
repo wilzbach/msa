@@ -83,8 +83,10 @@ var funs =
       this.msa.g.config.set("url", "userimport");
       this.msa.g.trigger("url:userImport");
     } else if (type === "features") {
+      alert("Support for reading JalView files is limited. Please open a issue on github if you run into troubles");
       this.msa.seqs.addFeatures(objs);
     } else if (type === "newick") {
+      console.error("Loading Newick files is experimental. Please open a issue on github if you run into troubles");
       this.msa.u.tree.loadTree(() => {
         return this.msa.u.tree.showTree(file);
       });
