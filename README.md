@@ -429,13 +429,6 @@ Q: How can I define my own color scheme?
 ↝ [play in JSBin](http://workmen.biojs.net/jsbin/msa/colorscheme)
 ↝ [read the documentation](https://github.com/wilzbach/msa-colorschemes)
 
-Documentation
--------------
-
-See below and head to the [wiki](https://github.com/wilzbach/msa/wiki/).
-
-Please report bugs or feature request directly on github.
-
 Guidelines
 -----------
 
