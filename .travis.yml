@@ -1,18 +1,16 @@
 language: node_js
 node_js:
-- '5.0'
-before_deploy: npm run build
+- stable
+before_install:
+- npm install npm-prepublish
+- "./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose"
+before_deploy:
+- npm run build
 deploy:
-  provider: s3
-  access_key_id: AKIAJQSM2TLXCCXX2GJQ
-  secret_access_key:
-    secure: Rz5GBL9lqz2qT24/5Id1szFsTG2AKArFDTANccpm1fwE6Zs/nPrt8EA4alXmyOwAkldXT9LLAC4Tv5HYGqUJtU+oyrz9mpLCtXkKahSfi3oG/VicAcyiLIQIkMPzwTGrF3tHR6pm1eqmzcD45JfEI3YPbBQvcegf0nk9mGnn5Nk=
-  bucket: cdn.bio.sh
-  upload-dir: msa/latest
-  acl: public-read
-  detect_encoding: true
-  skip_cleanup: true
-  local-dir: dist
-  region: eu-central-1
+  provider: npm
+  email: greeenify@gmail.com
+  api_key:
+    secure: Kyueij9xNpWjN+ASR0yBuSnNUOH+Z4FtZNmWhrtuJ0Qp0uAemlHBizKFnFXqoMYxkMfJs6JN37DoaRuNnfi6HVKIpldWEUVwKBH744EewUBusFhd2T84zVMtElhZm0xIchcuDxUCWyaC8yFo8yucXj4C5oywmRwPSDRO4i1HHZY=
   on:
-    repo: wilzbach/msa
+    tags: true
+    branch: master

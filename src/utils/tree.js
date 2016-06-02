@@ -1,4 +1,4 @@
-const _ = require("underscore");
+import {extend} from "lodash";
 import SeqCollection from "../model/SeqCollection";
 
 const TreeHelper =  function(msa) {
@@ -33,24 +33,8 @@ var tf =
         treeDiv.innerHTML = '';
       }
 
-      const seqs = this.msa.seqs.toJSON();
-      //adapt tree ids to sequence ids
-      function iterateTree(nwck){
-        if(nwck.children != null){
-          nwck.children.forEach(x => iterateTree(x));
-        } else {
-          //found a leave
-          let seq = seqs.filter(s => s.name === nwck.name)[0];
-          if(seq != null){
-            seq.ids = [seq.id];
-            nwck.name = seq.id;
-          }
-        }
-      }
-      iterateTree(newickObj);
-
       var nodes = mt.app({
-        seqs: seqs,
+        seqs: this.msa.seqs.toJSON(),
         tree: newickObj
       });
 
@@ -72,7 +56,7 @@ var tf =
       });
 
       // remove top collection
-      _.each(nodes.models, function(e) {
+      nodes.models.forEach((e) => {
         delete e.collection;
         return Object.setPrototypeOf(e, require("backbone-thin").Model.prototype);
       });
@@ -89,5 +73,5 @@ var tf =
     }
     };
 
-_.extend(TreeHelper.prototype , tf);
+extend(TreeHelper.prototype , tf);
 export default TreeHelper;

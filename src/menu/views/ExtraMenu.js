@@ -56,30 +56,6 @@ const ExtraMenu = MenuBuilder.extend({
     //     s.set "branch_length", 2
     //   cbs()
 
-    this.addNode("Increase font size", () => {
-      var columnWidth =  this.g.zoomer.get("columnWidth");
-      var nColumnWidth = columnWidth + 5;
-      this.g.zoomer.set("columnWidth",  nColumnWidth);
-      this.g.zoomer.set("rowHeight", nColumnWidth);
-      var nFontSize = nColumnWidth * 0.7;
-      this.g.zoomer.set("residueFont", nFontSize);
-      return this.g.zoomer.set("labelFontSize",  nFontSize);
-    });
-    this.addNode("Decrease font size", () => {
-      var columnWidth =  this.g.zoomer.get("columnWidth");
-      var nColumnWidth = columnWidth - 2;
-      this.g.zoomer.set("columnWidth",  nColumnWidth);
-      this.g.zoomer.set("rowHeight", nColumnWidth);
-      var nFontSize = nColumnWidth * 0.6;
-      this.g.zoomer.set("residueFont", nFontSize);
-      this.g.zoomer.set("labelFontSize",  nFontSize);
-
-      if (this.g.zoomer.get("columnWidth") < 8) {
-        return this.g.zoomer.set("textVisible", false);
-      }
-    });
-
-
     this.addNode("Jump to a column", () => {
       var offset = prompt("Column", "20");
       if (offset < 0 || offset > this.model.getMaxLength() || isNaN(offset)) {

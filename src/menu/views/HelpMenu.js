@@ -15,7 +15,7 @@ const HelpMenu = MenuBuilder.extend({
       return window.open("https://github.com/wilzbach/msa/issues");
     });
     this.addNode("User manual", () => {
-      return window.open("https://github.com/wilzbach/msa/wiki");
+      return window.open("https://github.com/wilzbach/msa/wiki/User-manual");
     });
     this.el.style.display = "inline-block";
     this.el.appendChild(this.buildDOM());

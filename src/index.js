@@ -16,7 +16,7 @@ export * as model from "./model";
 
 // extra plugins, extensions
 export * as menu from "./menu";
-export {default as utils} from "./utils";
+export * as utils from "./utils";
 
 // probably needed more often
 export {default as selection} from  "./g/selection/Selection";
@@ -25,7 +25,6 @@ export {default as view} from "backbone-viewj";
 export {default as boneView} from "backbone-childs";
 
 // convenience
-export {default as _} from 'underscore';
 export {default as $} from 'jbone';
 
 // parser (are currently bundled - so we can also expose them)

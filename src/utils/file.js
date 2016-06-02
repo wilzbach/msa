@@ -1,7 +1,8 @@
+import {extend} from "lodash";
+
 const FastaReader = require("biojs-io-fasta");
 const ClustalReader = require("biojs-io-clustal");
 const GffReader = require("biojs-io-gff");
-const _ = require("underscore");
 const xhr = require("xhr");
 
 const FileHelper = function(msa) {
@@ -82,8 +83,10 @@ var funs =
       this.msa.g.config.set("url", "userimport");
       this.msa.g.trigger("url:userImport");
     } else if (type === "features") {
+      alert("Support for reading JalView files is limited. Please open a issue on github if you run into troubles");
       this.msa.seqs.addFeatures(objs);
     } else if (type === "newick") {
+      console.error("Loading Newick files is experimental. Please open a issue on github if you run into troubles");
       this.msa.u.tree.loadTree(() => {
         return this.msa.u.tree.showTree(file);
       });
@@ -115,5 +118,5 @@ var funs =
   }
   };
 
-_.extend(FileHelper.prototype, funs);
+extend(FileHelper.prototype, funs);
 export default FileHelper;

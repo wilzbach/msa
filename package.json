@@ -1,7 +1,7 @@
 {
   "name": "msa",
   "description": "Display multiple sequences",
-  "version": "0.4.23",
+  "version": "0.0.0",
   "homepage": "http://github.com/wilzbach/msa",
   "repository": {
     "type": "git",
@@ -41,12 +41,12 @@
     "jbone": "^1.1.2",
     "koala-js": "^1.0.7",
     "linear-scale": "0.0.1",
+    "lodash": "^4.13.1",
     "menu-builder": "^0.0.7",
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.8",
     "msa-seqtools": "^0.1.8",
     "stat.seqs": "^0.1.20",
-    "underscore": "^1.6.0",
     "xhr": "^1.17.0"
   },
   "devDependencies": {
@@ -73,10 +73,11 @@
     "prunner": "^1.0.0",
     "sinon": "^1.12.1",
     "sniper": "^0.2.16",
+    "strip-loader": "^0.1.2",
     "style-loader": "^0.13.0",
     "through2": "^0.6.3",
     "tnt.tree": "0.1.4",
-    "uglify-js": "~2.4.15",
+    "uglify-js": "~2.6.2",
     "webpack": "^1.13.0"
   },
   "keywords": [
@@ -90,13 +91,13 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "echo 'temporarily disabled'",
-    "prepublish": "./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
-    "build": "./node_modules/webpack/bin/webpack.js -p && gulp build",
-    "sniper": "./node_modules/sniper/bin/sniper .",
-    "watch": "./node_modules/webpack/bin/webpack.js -w",
-    "w": "prunner 'npm run sniper' 'npm run watch'"
+    "prepublish": "node ./node_modules/webpack/bin/webpack.js -p && gulp build && babel -d lib src",
+    "build": "node ./node_modules/webpack/bin/webpack.js -p && gulp build",
+    "sniper": "node ./node_modules/sniper/bin/sniper .",
+    "watch": "node ./node_modules/webpack/bin/webpack.js -w",
+    "w": "prunner \"npm run sniper\" \"npm run watch\""
   },
-  "license": "Apache-2.0",
+  "license": "BSL-1.0",
   "browserify": {
     "exclude": [
       "biojs-io-newick",

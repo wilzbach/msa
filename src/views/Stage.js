@@ -1,5 +1,5 @@
 const boneView = require("backbone-childs");
-const _ = require('underscore');
+import {debounce} from "lodash";
 
 import AlignmentBody from "./AlignmentBody";
 import HeaderBlock from "./header/HeaderBlock";
@@ -21,7 +21,7 @@ const View  = boneView.extend({
     });
 
     // debounce a bulk operation
-    this.listenTo(this.model,"change:hidden", _.debounce(this.rerender, 10));
+    this.listenTo(this.model,"change:hidden", debounce(this.rerender, 10));
 
     this.listenTo(this.model,"sort", this.rerender);
     this.listenTo(this.model,"add", function() {
@@ -32,6 +32,7 @@ const View  = boneView.extend({
     this.listenTo(this.g.vis,"change:overviewbox", this.rerender);
     this.listenTo(this.g.visorder,"change", this.rerender);
     this.listenTo(this.g.zoomer, "change:columnWidth", this.rerender);
+    this.listenTo(this.g.vis,"change:scaleslider", this.rerender);
 
     return this;
   },
@@ -65,9 +66,8 @@ const View  = boneView.extend({
       var scaleslider = new ScaleSlider({model: this.g.scale, g: this.g});
       scaleslider.ordering = this.g.visorder.get('scaleSlider');
       this.addView("scaleSlider", scaleslider);
-      scaleslider.syncModel();
     }
-    
+
     return this;
   },
 
