@@ -1,5 +1,5 @@
 import MenuBuilder from "../menubuilder";
-import Exporter from "../../utils/export";
+import Exporter from "../../utils/exporter";
 
 const FastaExporter = require("biojs-io-fasta").writer;
 

@@ -16,7 +16,7 @@ export * as model from "./model";
 
 // extra plugins, extensions
 export * as menu from "./menu";
-export {default as utils} from "./utils";
+export * as utils from "./utils";
 
 // probably needed more often
 export {default as selection} from  "./g/selection/Selection";

@@ -18,7 +18,7 @@ const ImportMenu = MenuBuilder.extend({
     // http://www.w3schools.com/jsref/prop_fileupload_accept.asp
     // for now we allow multiple files
     uploader.multiple = true;
-    uploader.addEventListener("change", function() {
+    uploader.addEventListener("change", () => {
       var files = uploader.files || [];
       return msa.u.file.importFiles(files);
     });
