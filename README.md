@@ -502,9 +502,6 @@ The best way to get your feature request is to send us a pull request.
 Don't worry about simple implementations, we will help you to make it better.
 
 For more questions, ping us on the issue tracker or [Gitter](https://gitter.im/wilzbach/msa).
-> do so, all subject to the following:
-
-If you use the MSA Viewer on your website, it solely requires you to link to us.
 
 Team
 ----
