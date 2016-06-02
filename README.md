@@ -26,7 +26,7 @@ Multiple Sequence Alignment Viewer - the MSA Viewer - a BioJS component.
 
 
 ```html
-<script src=//cdn.bio.sh/msa/0.4/msa.min.gz.js></script>
+<script src=//cdn.bio.sh/msa/1.0/msa.min.gz.js></script>
 ```
 
 Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
