@@ -1,7 +1,7 @@
-msa
-=====
+MSA Viewer
+==========
 
-Multiple Sequence Alignment Viewer - the MSAViewer - a BioJS component.
+Multiple Sequence Alignment Viewer - the MSA Viewer - a BioJS component.
 
 ```
           .         .
@@ -44,7 +44,7 @@ Use it
 Demo
 -----
 
-These examples show how you could embed the MSAViewer into your page.
+These examples show how you could embed the MSA Viewer into your page.
 
 [![JSBin clustal](http://img.shields.io/badge/jsbin-clustal-blue.svg)](http://jsbin.com/quvex/4/edit?js,output)
 [![JSBin large](http://img.shields.io/badge/jsbin-large-blue.svg)](http://jsbin.com/zunuko/4/edit?html,js,output)
@@ -70,7 +70,7 @@ These examples show how you could embed the MSAViewer into your page.
 * generate the consenus seq
 * more to come ...
 
-## Use the MSAViewer
+## Use the MSA Viewer
 
 **The following examples assume that the ```msa()``` constructor is available.**
 
@@ -496,7 +496,7 @@ Getting involved
 ----------------
 
 Just pick a open issue on the [issue tracker](https://github.com/wilzbach/msa/issues)
-and help to make the MSAViewer better.
+and help to make the MSA Viewer better.
 
 The best way to get your feature request is to send us a pull request.
 Don't worry about simple implementations, we will help you to make it better.
@@ -504,7 +504,7 @@ Don't worry about simple implementations, we will help you to make it better.
 For more questions, ping us on the issue tracker or [Gitter](https://gitter.im/wilzbach/msa).
 > do so, all subject to the following:
 
-If you use the MSAViewer on your website, it solely requires you to link to us.
+If you use the MSA Viewer on your website, it solely requires you to link to us.
 
 Team
 ----
@@ -528,4 +528,4 @@ This project is licensed under the [Boost Software License 1.0](https://github.c
 > Software, and to permit third-parties to whom the Software is furnished to
 > do so, all subject to the following:
 
-If you use the MSAViewer on your website, it solely requires you to link to us.
+If you use the MSA Viewer on your website, it solely requires you to link to us.
