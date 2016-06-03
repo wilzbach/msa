@@ -241,7 +241,7 @@ const OverviewBox = view.extend({
     this.el.height = this.model.length * rectHeight;
     this.el.width = this.model.getMaxLength() * rectWidth;
     this.ctx = this.el.getContext("2d");
-    this.el.style.overflow = "scroll";
+    this.el.style.overflow = "auto";
     return this.el.style.cursor = "crosshair";
   }
 });
