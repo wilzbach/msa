@@ -50,7 +50,6 @@ var tf =
               nwck.name = `s${seq.id + 1}`;
             } else {
               //seqs have custom ids - don't mess with these
-              console.log('hi');
               nwck.name = seq.id;
             }
           }
