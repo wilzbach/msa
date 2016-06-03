@@ -42,8 +42,8 @@ var tf =
           //found a leave
           let seq = seqs.filter(s => s.name === nwck.name)[0];
           if(seq != null){
-            seq.ids = [seq.id];
-            nwck.name = seq.id;
+            seq.ids = [`s${seq.id + 1}`];
+            nwck.name = `s${seq.id + 1}`;
           }
         }
       }
