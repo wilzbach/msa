@@ -50,7 +50,7 @@ Return the lowercase format for a given file
 export default function(text, opt) {
     const fileName = opt.name || opt.url || "";
     const fileNameSplit = fileName.split(".");
-    let suffix = fileNameSplit[fileNameSplit - 1];
+    let suffix = fileNameSplit[fileNameSplit.length - 1] || "";
     for (var i = 0; i < recognizers.length; i++) {
         var v = recognizers[i](text, suffix);
         if (!!v)
