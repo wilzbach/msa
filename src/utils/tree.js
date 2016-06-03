@@ -24,12 +24,13 @@ var tf =
 
       var sel = new mt.selections();
       var treeDiv;
-      if(this.msa.el.childNodes.length === 1){
+
+      if(this.msa.el.getElementsByClassName('tnt_groupDiv').length === 0){
         treeDiv = document.createElement("div");
         this.msa.el.appendChild(treeDiv);
       } else {
         console.log('A tree already exists. It will be overridden.');
-        treeDiv = this.msa.el.childNodes[1];
+        treeDiv = this.msa.el.getElementsByClassName('tnt_groupDiv')[0].parentNode;
         treeDiv.innerHTML = '';
       }
 
@@ -41,9 +42,17 @@ var tf =
         } else {
           //found a leave
           let seq = seqs.filter(s => s.name === nwck.name)[0];
+
           if(seq != null){
-            seq.ids = [`s${seq.id + 1}`];
-            nwck.name = `s${seq.id + 1}`;
+            if(typeof seq.id === 'number'){
+              //no tree has been uploaded so far, seqs have standard IDs
+              seq.ids = [`s${seq.id + 1}`];
+              nwck.name = `s${seq.id + 1}`;
+            } else {
+              //seqs have custom ids - don't mess with these
+              console.log('hi');
+              nwck.name = seq.id;
+            }
           }
         }
       }
@@ -53,8 +62,6 @@ var tf =
         seqs: seqs,
         tree: newickObj
       });
-
-      console.log("nodes", nodes.seqs);
 
       var t = new mt.adapters.tree({
         model: nodes,
