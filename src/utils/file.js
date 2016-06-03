@@ -1,9 +1,8 @@
 import {extend} from "lodash";
 
-const FastaReader = require("biojs-io-fasta");
-const ClustalReader = require("biojs-io-clustal");
-const GffReader = require("biojs-io-gff");
-const xhr = require("xhr");
+import {clustal as ClustalReader,
+        fasta as FastaReader,
+        gff as GffReader, xhr} from "bio.io/src/index_plain";
 
 const FileHelper = function(msa) {
   this.msa = msa;
@@ -76,6 +75,7 @@ var funs =
     var fileName;
     var [objs, type] = this.parseText(file);
     if (type === "error") {
+        alert("An error happened");
         return "error";
     }
     if (type === "seqs") {
@@ -83,13 +83,15 @@ var funs =
       this.msa.g.config.set("url", "userimport");
       this.msa.g.trigger("url:userImport");
     } else if (type === "features") {
-      alert("Support for reading JalView files is limited. Please open a issue on github if you run into troubles");
+      console.error("Loading Feature files is experimental. Please open a issue on github if you run into troubles");
       this.msa.seqs.addFeatures(objs);
     } else if (type === "newick") {
       console.error("Loading Newick files is experimental. Please open a issue on github if you run into troubles");
       this.msa.u.tree.loadTree(() => {
         return this.msa.u.tree.showTree(file);
       });
+    } else {
+      alert("Unknown file!");
     }
 
     return fileName = file.name;
