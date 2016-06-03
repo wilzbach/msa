@@ -51,7 +51,13 @@ const OverviewBox = view.extend({
     const showLowerCase = this.g.colorscheme.get("showLowerCase");
 
     let y = -rectHeight;
-    for (let i = 0; i < this.model.length; i++) {
+    const len = this.model.length;
+    for (let i = 0; i < len; i++) {
+      // fixes weird bug on tatyana's machine
+      if (!this.model.at(i))
+      {
+          continue;
+      }
       const seq = this.model.at(i).get("seq");
       let x = 0;
       y = y + rectHeight;
@@ -95,7 +101,8 @@ const OverviewBox = view.extend({
     const maxHeight = rectHeight * this.model.length;
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
-    for (let i = 0; i <= this.g.selcol.length - 1; i++) {
+    const len = this.g.selcol.length;
+    for (let i = 0; i < len; i++) {
       const sel = this.g.selcol.at(i);
       if(!sel) continue;
       let seq, pos;
