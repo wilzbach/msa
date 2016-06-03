@@ -69,6 +69,7 @@ const SeqCollection = Collection.extend({
 
   // you can add features independent to the current seqs as they may be added
   // later (lagging connection)
+  // sequence - feature binding is based on id
   addFeatures: function(features) {
     if ((features.config != null)) {
       const obj = features;
@@ -84,9 +85,12 @@ const SeqCollection = Collection.extend({
         });
       }
     }
+    // we might already have features
     if (_.isEmpty(this.features)) {
+      // replace (no existent features)
       this.features = features;
     } else {
+      // merge
       _.each(features, (val, key) => {
         if (!this.features.hasOwnProperty(key)) {
           return this.features[key] = val;
@@ -100,13 +104,15 @@ const SeqCollection = Collection.extend({
   },
 
   // adds features to a sequence
+  // does it silenty without triggering an event
   _bindSeqWithFeatures: function(seq) {
     // TODO: probably we don't always want to bind to name
     var features = this.features[seq.attributes.name];
     if (features) {
-      seq.set("features", new FeatureCol(features));
+      // do silently to avoid triggering to many events
+      seq.attributes.features = new FeatureCol(features);
       seq.attributes.features.assignRows();
-      return seq.set("height", seq.attributes.features.getCurrentHeight() + 1);
+      seq.attributes.height = seq.attributes.features.getCurrentHeight() + 1;
     }
   },
 
