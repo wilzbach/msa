@@ -4,46 +4,49 @@ import {clustal as ClustalReader,
         fasta as FastaReader,
         gff as GffReader, xhr} from "bio.io/src/index_plain";
 
+import guessFileType from "./recognize";
+
 const FileHelper = function(msa) {
   this.msa = msa;
   return this;
 };
 
 var funs =
-  {guessFileType: function(name) {
-    name = name.split(".");
-    var fileName = name[name.length(-1)];
-    switch (fileName) {
-      case "aln": case "clustal": return ClustalReader; break;
-      case "fasta": return FastaReader; break;
-      default:
-        return FastaReader;
-    }
-  },
-
-  guessFileFromText: function(text) {
+  { guessFileFromText: function(text, opt) {
     if (!(typeof text !== "undefined" && text !== null)) {
       console.warn("invalid file format");
       return ["", "error"];
     }
-    if (text.substring(0,7) === "CLUSTAL") {
-      var reader = ClustalReader;
-      var type = "seqs";
-    } else if (text.substring(0,1) === ">") {
-      reader = FastaReader;
-      type = "seqs";
-    } else if (text.substring(0,1) === "(") {
-      type = "newick";
-    } else {
-      reader = GffReader;
-      type = "features";
+    const recognizedFile = guessFileType(text, opt);
+    switch (recognizedFile) {
+      case "clustal":
+        var reader = ClustalReader;
+        var type = "seqs";
+        break;
+
+      case "fasta":
+        reader = FastaReader;
+        type = "seqs";
+        break;
+
+      case "newick":
+        type = "newick";
+        break;
+
+      case "gff":
+        reader = GffReader;
+        type = "features";
+        break;
+
+      default:
+        alert("Unknown file format. Please contact us on Github for help.");
+        break;
     }
-      //console.warn "Unknown format. Contact greenify"
     return [reader,type];
   },
 
-  parseText: function(text) {
-    var [reader, type] = this.guessFileFromText(text);
+  parseText: function(text, opt) {
+    var [reader, type] = this.guessFileFromText(text, opt);
     if (type === "seqs") {
       var seqs = reader.parse(text);
       return [seqs,type];
@@ -71,9 +74,11 @@ var funs =
     })();
   },
 
-  importFile: function(file) {
+  importFile: function(file, opt) {
+    opt = opt || {};
+    opt.name = file.name;
     var fileName;
-    var [objs, type] = this.parseText(file);
+    var [objs, type] = this.parseText(file, opt);
     if (type === "error") {
         alert("An error happened");
         return "error";
@@ -105,7 +110,7 @@ var funs =
         timeout: 0
     }, (err,status,body) => {
       if (!err) {
-        var res = this.importFile(body);
+        var res = this.importFile(body, {url: url});
         if (res === "error") {
           return;
         }
@@ -114,7 +119,7 @@ var funs =
           return cb();
         }
       } else {
-        return console.log(err);
+        return console.error(err);
       }
     });
   }
