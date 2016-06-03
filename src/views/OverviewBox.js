@@ -45,16 +45,15 @@ const OverviewBox = view.extend({
     this.ctx.fillStyle = "#999999";
     this.ctx.fillRect(0,0,this.el.width,this.el.height);
 
-    var rectWidth = this.g.zoomer.get("boxRectWidth");
-    var rectHeight = this.g.zoomer.get("boxRectHeight");
-    var hidden = this.g.columns.get("hidden");
-    var showLowerCase = this.g.colorscheme.get("showLowerCase");
+    const rectWidth = this.g.zoomer.get("boxRectWidth");
+    const rectHeight = this.g.zoomer.get("boxRectHeight");
+    const hidden = this.g.columns.get("hidden");
+    const showLowerCase = this.g.colorscheme.get("showLowerCase");
 
-    var y = -rectHeight;
-    var end = this.model.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
-      var seq = this.model.at(i).get("seq");
-      var x = 0;
+    let y = -rectHeight;
+    for (let i = 0; i < this.model.length; i++) {
+      const seq = this.model.at(i).get("seq");
+      let x = 0;
       y = y + rectHeight;
 
 
@@ -65,12 +64,11 @@ const OverviewBox = view.extend({
         continue;
       }
 
-      var end1 = seq.length - 1;
-      for (var j = 0; 0 < end1 ? j <= end1 : j >= end1; 0 < end1 ? j++ : j--) {
-        var c = seq[j];
+      for (let j = 0; j < seq.length; j++) {
+        let c = seq[j];
         // todo: optional uppercasing
         if (showLowerCase) { c = c.toUpperCase(); }
-        var color = this.color.getColor(c, {pos: j});
+        let color = this.color.getColor(c, {pos: j});
 
         if (hidden.indexOf(j) >= 0) {
           color = "grey";
@@ -92,22 +90,22 @@ const OverviewBox = view.extend({
     // hide during selection
     if (this.dragStart.length > 0 && !this.prolongSelection) { return; }
 
-    var rectWidth = this.g.zoomer.get("boxRectWidth");
-    var rectHeight = this.g.zoomer.get("boxRectHeight");
-    var maxHeight = rectHeight * this.model.length;
+    const rectWidth = this.g.zoomer.get("boxRectWidth");
+    const rectHeight = this.g.zoomer.get("boxRectHeight");
+    const maxHeight = rectHeight * this.model.length;
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
-    var end = this.g.selcol.length - 1;
-    for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
-      var sel = this.g.selcol.at(i);
+    for (let i = 0; i <= this.g.selcol.length - 1; i++) {
+      const sel = this.g.selcol.at(i);
       if(!sel) continue;
+      let seq, pos;
       if (sel.get('type') === 'column') {
         this.ctx.fillRect( rectWidth * sel.get('xStart'),0,rectWidth *
         (sel.get('xEnd') - sel.get('xStart') + 1),maxHeight
         );
       } else if (sel.get('type') === 'row') {
-        var seq = (this.model.filter(function(el) { return el.get('id') === sel.get('seqId'); }))[0];
-        var pos = this.model.indexOf(seq);
+        seq = (this.model.filter(function(el) { return el.get('id') === sel.get('seqId'); }))[0];
+        pos = this.model.indexOf(seq);
         this.ctx.fillRect(0,rectHeight * pos, rectWidth * seq.get('seq').length, rectHeight);
       } else if (sel.get('type') === 'pos') {
         seq = (this.model.filter(function(el) { return el.get('id') === sel.get('seqId'); }))[0];
@@ -131,7 +129,7 @@ const OverviewBox = view.extend({
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
 
-    var rect = this._calcSelection( mouse.abs(e) );
+    const rect = this._calcSelection( mouse.abs(e) );
     this.ctx.fillRect(rect[0][0],rect[1][0],rect[0][1] - rect[0][0], rect[1][1] - rect[1][0]);
 
     // abort selection events of the browser
@@ -158,7 +156,7 @@ const OverviewBox = view.extend({
   // calculates the current selection
   _calcSelection: function(dragMove) {
     // relative to first click
-    var dragRel = [dragMove[0] - this.dragStart[0], dragMove[1] - this.dragStart[1]];
+    let dragRel = [dragMove[0] - this.dragStart[0], dragMove[1] - this.dragStart[1]];
 
     // relative to target
     for (var i = 0; i <= 1; i++) {
@@ -166,10 +164,10 @@ const OverviewBox = view.extend({
     }
 
     // 0:x, 1: y
-    var rect = [[this.dragStartRel[0], dragRel[0]], [this.dragStartRel[1], dragRel[1]]];
+    const rect = [[this.dragStartRel[0], dragRel[0]], [this.dragStartRel[1], dragRel[1]]];
 
     // swap the coordinates if needed
-    for (var i = 0; i <= 1; i++) {
+    for (let i = 0; i <= 1; i++) {
       if (rect[i][1] < rect[i][0]) {
         rect[i] = [rect[i][1], rect[i][0]];
       }
@@ -189,7 +187,7 @@ const OverviewBox = view.extend({
     // duplicate events
     if (this.dragStart.length === 0) { return; }
 
-    var rect = this._calcSelection(dragEnd);
+    const rect = this._calcSelection(dragEnd);
 
     // x
     for (var i = 0; i <= 1; i++) {
@@ -207,8 +205,8 @@ const OverviewBox = view.extend({
 
     // select
     var selis = [];
-    for (var j = rect[1][0]; rect[1][0] < rect[1][1] ? j <= rect[1][1] : j >= rect[1][1]; rect[1][0] < rect[1][1] ? j++ : j--) {
-      var args = {seqId: this.model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]};
+    for (let j = rect[1][0]; j <= rect[1][1]; j++) {
+      const args = {seqId: this.model.at(j).get('id'), xStart: rect[0][0], xEnd: rect[0][1]};
       selis.push(new possel(args));
     }
 
@@ -237,8 +235,8 @@ const OverviewBox = view.extend({
 
  // init the canvas
   _createCanvas: function() {
-    var rectWidth = this.g.zoomer.get("boxRectWidth");
-    var rectHeight = this.g.zoomer.get("boxRectHeight");
+    const rectWidth = this.g.zoomer.get("boxRectWidth");
+    const rectHeight = this.g.zoomer.get("boxRectHeight");
 
     this.el.height = this.model.length * rectHeight;
     this.el.width = this.model.getMaxLength() * rectWidth;
