@@ -3,6 +3,10 @@
 s3="aws s3"
 export AWS_DEFAULT_REGION="eu-central-1"
 
+# set version to equal git tag
+npm install npm-prepublish
+./node_modules/npm-prepublish/bin/npm-prepublish.js --verbose
+
 # to be sure - run build again
 npm run build
 
