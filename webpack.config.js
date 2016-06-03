@@ -10,7 +10,7 @@ module.exports = {
     },
     module: {
         loaders: [
-            {   test: path.join(__dirname, 'src'),
+            {   test: /\.js?$/,
                 loader: 'babel-loader'
             },
             { test: /\.css$/,

@@ -1,6 +1,6 @@
 const view = require("backbone-viewj");
 const dom = require("dom-helper");
-const st = require("msa-seqtools");
+import st from "bio.io/src/seqs";
 import MenuBuilder from "../../menu/menubuilder";
 import {reduce} from "lodash";
 

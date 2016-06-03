@@ -1,6 +1,7 @@
-const Fasta = require("biojs-io-fasta");
-const GFF = require("biojs-io-gff");
-const xhr = require("xhr");
+import {fasta as Fasta,
+        gff as GFF,
+        xhr} from "bio.io/src/index_plain";
+
 const blobURL = require("blueimp_canvastoblob");
 const saveAs = require("browser-saveas");
 import {flatten, compact} from "lodash";
@@ -42,7 +43,6 @@ const Exporter =
     }
     );
   },
-
 
   shareLink: function(that, cb) {
     var url = that.g.config.get("importURL");

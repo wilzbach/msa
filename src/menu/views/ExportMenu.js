@@ -1,7 +1,9 @@
 import MenuBuilder from "../menubuilder";
 import Exporter from "../../utils/exporter";
 
-const FastaExporter = require("biojs-io-fasta").writer;
+import fasta from "bio.io/src/fasta";
+
+const FastaExporter = fasta.write;
 
 const ShareSym = "\u21AA";
 
