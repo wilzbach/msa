@@ -4,6 +4,9 @@ var opts = {
   el: rootDiv,
   importURL: "./data/tree/B2014122194A560KL7I.4.ids.fa",
   bootstrapMenu: true,
+  conf: {
+    dropImport: true
+  }
 };
 var m = new msa(opts);
 m.importURL("./data/tree/B2014122194A560KL7I.4.ids.phylotree.txt", function(){
