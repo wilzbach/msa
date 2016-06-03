@@ -1,6 +1,4 @@
-
 /* global yourDiv */
-var msa = window.msa;
 
 var clustal = msa.io.clustal;
 var gffParser = msa.io.gff;
