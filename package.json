@@ -43,7 +43,7 @@
     "menu-builder": "^0.0.7",
     "mouse-pos": "^1.0.3",
     "msa-colorschemes": "^1.0.10",
-    "stat.seqs": "^0.1.20",
+    "stat.seqs": "^0.1.21",
     "xhr": "^2.2.0"
   },
   "devDependencies": {
