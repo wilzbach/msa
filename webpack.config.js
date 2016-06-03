@@ -23,6 +23,13 @@ module.exports = {
             MSA_VERSION: JSON.stringify(require("./package.json").version)
         }),
     ],
+    // require other ES6 files (experimental)
+    resolve: {
+      root: path.resolve(__dirname),
+      alias: {
+        "bio.io": 'node_modules/bio.io/src/index'
+      }
+    },
 };
 var w = module.exports;
 

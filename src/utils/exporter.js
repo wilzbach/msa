@@ -1,6 +1,6 @@
 import {fasta as Fasta,
         gff as GFF,
-        xhr} from "bio.io/src/index_plain";
+        xhr} from "bio.io";
 
 const blobURL = require("blueimp_canvastoblob");
 const saveAs = require("browser-saveas");

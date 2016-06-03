@@ -2,7 +2,7 @@ import {extend} from "lodash";
 
 import {clustal as ClustalReader,
         fasta as FastaReader,
-        gff as GffReader, xhr} from "bio.io/src/index_plain";
+        gff as GffReader, xhr} from "bio.io";
 
 import guessFileType from "./recognize";
 

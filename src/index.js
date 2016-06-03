@@ -28,7 +28,7 @@ export {default as boneView} from "backbone-childs";
 export {default as $} from 'jbone';
 
 // parser (are currently bundled - so we can also expose them)
-import {fasta, clustal, gff} from "bio.io/src/index_plain";
+import {fasta, clustal, gff} from "bio.io";
 const io = {
     xhr: require('xhr'),
     fasta: fasta,

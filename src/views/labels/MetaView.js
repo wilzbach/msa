@@ -1,6 +1,6 @@
 const view = require("backbone-viewj");
 const dom = require("dom-helper");
-import st from "bio.io/src/seqs";
+import {seqs as st} from "bio.io";
 import MenuBuilder from "../../menu/menubuilder";
 import {reduce} from "lodash";
 

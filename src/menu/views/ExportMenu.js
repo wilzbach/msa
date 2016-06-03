@@ -1,7 +1,7 @@
 import MenuBuilder from "../menubuilder";
 import Exporter from "../../utils/exporter";
 
-import fasta from "bio.io/src/fasta";
+import {fasta} from "bio.io";
 
 const FastaExporter = fasta.write;
 
