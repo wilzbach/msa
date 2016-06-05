@@ -141,6 +141,20 @@ There also many other option - grouped into these categories. See below for more
 Please open an [issue](https://github.com/wilzbach/msa/issues/new)
 or ping us on [Gitter](https://gitter.im/wilzbach/msa)
 
+### MSAViewer in Action
+
+- [VaPoR](http://vapor.biojs.tgac.ac.uk)
+- [Gene3D](http://gene3d.biochem.ucl.ac.uk/) - [Paper](http://nar.oxfordjournals.org/content/early/2015/11/16/nar.gkv1231.full#F1), [example](http://gene3d.biochem.ucl.ac.uk/model?smd5=408c333701ec7e889d495aeb32d7ae10;regs=81_147;fam=2.30.30.40.FF19354;mregs=81_147;cath_mod=na)
+- [msaR](https://github.com/bene200/msaR) - Visualize an MSA as interactive R plot or shiny widget
+- [MPI Bioinformatics Toolkit for protein sequence analysis](http://toolkit.tuebingen.mpg.de/sections/alignment)
+- [PolyMarker](http://www.ncbi.nlm.nih.gov/pubmed/25649618)
+- [Galaxy visualization plugin](http://www.benjamenwhite.com/2015/07/biojs2galaxy-a-step-by-step-guide)
+- [BitterDB](http://bitterdb.agri.huji.ac.il/bitterdbtest/dbbitter.php#ReceptorAlignment)
+- [@thejmazz's _JavaScript and Bioinformatics_ tutorial](https://github.com/thejmazz/js-bioinformatics-exercise)
+- [Center for Phage Technology](https://cpt.tamu.edu/clustalw-msa-and-visualisations)
+
+Are you using the MSAViewer? Don't hesistate to make a PR and let us know!
+
 ### Change the colorscheme
 
 Checkout this [live example](http://workmen.biojs.net/demo/msa/colorscheme) or [edit](http://workmen.biojs.net/jsbin/msa/colorscheme).
