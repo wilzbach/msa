@@ -110,11 +110,10 @@ m.render()
 #### c) Asynchronously import seqs
 
 ```
-var clustal = require("biojs-io-clustal");
 var m = msa({
 	el: rootDiv,
 });
-clustal.read("https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
+msa.io.clustal.read("https://raw.githubusercontent.com/wilzbach/msa/master/test/dummy/samples/p53.clustalo.clustal", function(err, seqs){
 	m.seqs.reset(seqs);
 	m.render();
 });
