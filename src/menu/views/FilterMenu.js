@@ -25,6 +25,22 @@ const FilterMenu = MenuBuilder.extend({
       return this.g.columns.set("hidden", hidden);
     });
 
+    this.addNode("Hide non-polymorphic sites",(e) => {
+      var threshold = prompt("Enter identity threshold (in percent)", 100);
+      threshold = threshold / 100;
+      var maxLen = this.model.getMaxLength();
+      var hidden = [];
+      // TODO: cache this value
+      var conserv = this.g.stats.scale(this.g.stats.conservation());
+      var end = maxLen - 1;
+      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
+        if (conserv[i] >= threshold) {
+          hidden.push(i);
+        }
+      }
+      return this.g.columns.set("hidden", hidden);
+    });
+
     this.addNode("Hide columns by selection", () => {
       var hiddenOld = this.g.columns.get("hidden");
       var hidden = hiddenOld.concat(this.g.selcol.getAllColumnBlocks({maxLen: this.model.getMaxLength(), withPos: true}));
