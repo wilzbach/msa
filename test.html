@@ -10,57 +10,70 @@
 
 <body>
 
-    <div id="menuDiv"></div>
-    <div id="yourDiv">Loading ... </div>
+	<div>some text</div>
+	<div>more text</div>
+	<div>of your awesome website</div>
+	<br>
 
-    <script>
-        // this is a way how you use a bundled file parser
-        //msa = require("msa");
-		//msa = window.msa;
+	<!--A simple website with left and right bars-->
+	<div>
+		<span> Left bar </span>
 
-        var opts = {};
+		<div style="width: 70%; display: inline-block">
+		    <div id="menuDiv"></div>
+		    <div id="yourDiv">Loading ... </div>
 
-        // set your custom properties
-        // @see: https://github.com/wilzbach/biojs-vis-msa/tree/master/src/g 
-        opts.el = document.getElementById("yourDiv");
-        opts.vis = {
-            conserv: false,
-            overviewbox: false,
-            seqlogo: true
-        };
-        opts.conf = {
-            dropImport: true
-        };
-        opts.zoomer = {
-            menuFontsize: "12px",
-            autoResize: true
-        };
+		    <script>
+		        // this is a way how you use a bundled file parser
+		        //msa = require("msa");
+				//msa = window.msa;
 
-        // init msa
-        var m = new msa(opts);
+		        var opts = {};
 
-        var defaultURL = "./snippets/data/fer1.clustal";
-  		function getURLParameter(name) {
-            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
-        }
+		        // set your custom properties
+		        // @see: https://github.com/wilzbach/biojs-vis-msa/tree/master/src/g
+		        opts.el = document.getElementById("yourDiv");
+		        opts.vis = {
+		            conserv: false,
+		            overviewbox: false,
+		            seqlogo: true
+		        };
+		        opts.conf = {
+		            dropImport: true
+		        };
+		        opts.zoomer = {
+		            menuFontsize: "12px",
+		            autoResize: true
+		        };
 
-		var url = getURLParameter('seq') || defaultURL;
-        m.u.file.importURL(url, renderMSA);
+		        // init msa
+		        var m = new msa(opts);
 
-        function renderMSA() {
+		        var defaultURL = "./snippets/data/fer1.clustal";
+		  		function getURLParameter(name) {
+		            return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
+		        }
 
-            // the menu is independent to the MSA container
-            var menuOpts = {};
-            menuOpts.el = document.getElementById('div');
-            menuOpts.msa = m;
-            menuOpts.menu = "small";
-            var defMenu = new msa.menu.defaultmenu(menuOpts);
-            m.addView("menu", defMenu);
+				var url = getURLParameter('seq') || defaultURL;
+		        m.u.file.importURL(url, renderMSA);
 
-            // call render at the end to display the whole MSA
-            m.render();
-        }
-    </script>
+		        function renderMSA() {
+
+		            // the menu is independent to the MSA container
+		            var menuOpts = {};
+		            menuOpts.el = document.getElementById('div');
+		            menuOpts.msa = m;
+		            menuOpts.menu = "small";
+		            var defMenu = new msa.menu.defaultmenu(menuOpts);
+		            m.addView("menu", defMenu);
+
+		            // call render at the end to display the whole MSA
+		            m.render();
+		        }
+		    </script>
+		</div>
+		<span> &nbsp; Right bar</span>
+	</div>
 
 </body>
 </html>

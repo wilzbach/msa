@@ -1,12 +1,12 @@
 /* BASIC */
 
 .biojs_msa_div {
-  
+
 }
 
 .biojs_msa_stage {
     cursor: default;
-    line-height: normal; 
+    line-height: normal;
     font-family: Helvetica;
 }
 
@@ -110,8 +110,10 @@
 
 .smenu-dropdown {
     position: absolute;
-    z-index: 9999999;
+    z-index: 9;
     display: none;
+    margin-left: 5px;
+    margin-top: 22px;
 }
 
 .smenu-dropdown .smenu-dropdown-menu,
@@ -133,22 +135,13 @@
     padding: 10px;
 }
 
-
 .smenu-dropdown.smenu-dropdown-scroll .smenu-dropdown-menu,
 .smenu-dropdown.smenu-dropdown-scroll .smenu-dropdown-panel {
     max-height: 358px;
     overflow: auto;
 }
 
-.smenu-dropdown .smenu-dropdown-menu LI {
-    list-style: none;
-    padding: 0 0;
-    margin: 0;
-    line-height: 18px;
-}
-
-.smenu-dropdown .smenu-dropdown-menu LI,
-.smenu-dropdown .smenu-dropdown-menu LABEL {
+.smenu-dropdown .smenu-dropdown-menu li {
     display: block;
     color: #555;
     text-decoration: none;
@@ -157,8 +150,7 @@
     white-space: nowrap;
 }
 
-.smenu-dropdown .smenu-dropdown-menu LI:hover,
-.smenu-dropdown .smenu-dropdown-menu LABEL:hover {
+.smenu-dropdown .smenu-dropdown-menu li:hover {
     background-color: #08C;
     color: #FFF;
     cursor: pointer;

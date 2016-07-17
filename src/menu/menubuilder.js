@@ -1,12 +1,12 @@
-const builder = require("menu-builder");
+import {default as Builder} from "./menulib";
 
-const MenuBuilder = builder.extend({
+const MenuBuilder = Builder.extend({
 
     buildDOM: function() {
       this.on("new:node", this.buildNode);
       this.on("new:button", this.buildButton);
       this.on("new:menu", this.buildMenu);
-      return builder.prototype.buildDOM.call(this);
+      return Builder.prototype.buildDOM.call(this);
     },
 
     buildNode: function(li) {
