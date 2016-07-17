@@ -528,6 +528,22 @@ Sebastian Wilzbach (Technical University of Munich; TUM), Ian Sillitoe (Universi
 Do you want to be part of the team? Just grab an issue and send us a PR!
 Ask us on [Gitter](https://gitter.im/wilzbach/msa) if you need help to get started.
 
+Versioning & CDN
+----------------
+
+New MSA versions are released following [semantic versioning](http://semver.org/).
+Starting from 1.0.3 [git tags](https://github.com/wilzbach/msa/tags) match the versions deployed on npm and our CDN.
+On our CDN we offer four different versions:  
+
+```
+https://cdn.bio.sh/msa/1.0.3/msa.min.gz.js // static, won't change
+https://cdn.bio.sh/msa/1.0/msa.min.gz.js // will be updated until a new minor version is released
+https://cdn.bio.sh/msa/1/msa.min.gz.js // will be updated until a new major version is released
+https://cdn.bio.sh/msa/latest/msa.min.gz.js // will be updated on every commit
+```
+
+If you use the MSAViewer in production, we recommend to lock the CDN version to an exact release and update from time to time.
+
 License
 -------
 
