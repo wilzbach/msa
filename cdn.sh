@@ -11,20 +11,19 @@ npm install npm-prepublish
 npm run build
 
 # current version
-PACKAGE_VERSION=$(cat package.json \
-  | grep version \
-  | head -1 \
-  | awk -F: '{ print $2 }' \
-  | sed 's/[",]//g')
+PACKAGE_VERSION=$(git describe --exact-match HEAD)
 
-MINOR_VERSION=$(echo $PACKAGE_VERSION | awk -F. '{printf "%s.%s", $1, $2}')
-MAJOR_VERSION=$(echo $PACKAGE_VERSION | awk -F. '{print $1}')
+if [ $? -eq 0 ] ; then
+	PACKAGE_VERSION="${PACKAGE_VERSION:1:${#PACKAGE_VERSION}-1}"
+	MINOR_VERSION=$(echo $PACKAGE_VERSION | awk -F. '{printf "%s.%s", $1, $2}')
+	MAJOR_VERSION=$(echo $PACKAGE_VERSION | awk -F. '{print $1}')
+fi
 
 echo "LATEST: ${PACKAGE_VERSION}"
 
 # only update versions if tagged
 if [[ ! -z "${PACKAGE_VERSION}" ]] ; then
-	VERSIONS="latest ${PACKAGE_VERSION} ${MINOR_VERSION} ${MAJOR_VERSION})"
+	VERSIONS="latest ${PACKAGE_VERSION} ${MINOR_VERSION} ${MAJOR_VERSION}"
 else
 	VERSIONS="latest"
 fi
