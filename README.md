@@ -152,6 +152,7 @@ or ping us on [Gitter](https://gitter.im/wilzbach/msa)
 - [@thejmazz's _JavaScript and Bioinformatics_ tutorial](https://github.com/thejmazz/js-bioinformatics-exercise)
 - [Center for Phage Technology](https://cpt.tamu.edu/clustalw-msa-and-visualisations)
 - [PHYLOViZ Online](https://online.phyloviz.net)
+- [HistoneDB 2.0](https://www.ncbi.nlm.nih.gov/projects/HistoneDB2.0/index.fcgi/browse/)
 
 Are you using the MSAViewer? Don't hesistate to make a PR and let us know!
 
@@ -540,3 +541,27 @@ This project is licensed under the [Boost Software License 1.0](https://github.c
 > do so, all subject to the following:
 
 If you use the MSAViewer on your website, it solely requires you to link to us.
+
+Citing the MSAViewer
+--------------------
+
+The MSAViewer has been published :tada:
+
+Please cite [this paper](http://bioinformatics.oxfordjournals.org/content/early/2016/07/12/bioinformatics.btw474.abstract), when you use the MSAViewer in your project.
+
+> Guy Yachdav and Sebastian Wilzbach and Benedikt Rauscher and Robert Sheridan and Ian Sillitoe and James Procter and Suzanna Lewis and Burkhard Rost and Tatyana Goldberg. "MSAViewer: interactive JavaScript visualization of multiple sequence alignments." Bioinformatics (2016)
+
+As Bibtex:
+
+```
+@Article{msaviewer,
+   Author = {Guy Yachdav and Sebastian Wilzbach and Benedikt Rauscher and Robert Sheridan and Ian Sillitoe and James Procter and Suzanna Lewis and Burkhard Rost and Tatyana Goldberg},
+   Title="{{M}{S}{A}{V}iewer: interactive {J}ava{S}cript visualization of multiple sequence alignments}",
+   Journal="Bioinformatics",
+   Year="2016",
+   Pages=" ",
+   Month="Jul",
+   Doi = {10.1093/bioinformatics/btw474},
+   Url = {http://dx.doi.org/10.1093/bioinformatics/btw474}
+}
+```
