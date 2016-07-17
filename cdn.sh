@@ -22,7 +22,14 @@ MAJOR_VERSION=$(echo $PACKAGE_VERSION | awk -F. '{print $1}')
 
 echo "LATEST: ${PACKAGE_VERSION}"
 
-for folder in "latest" ${PACKAGE_VERSION} ${MINOR_VERSION} ${MAJOR_VERSION} ; do
+# only update versions if tagged
+if [[ ! -z "${PACKAGE_VERSION}" ]] ; then
+	VERSIONS="latest ${PACKAGE_VERSION} ${MINOR_VERSION} ${MAJOR_VERSION})"
+else
+	VERSIONS="latest"
+fi
+
+for folder in $VERSIONS ; do
 
 echo "uploading to s3 folder: $folder"
 
