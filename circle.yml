@@ -8,13 +8,12 @@ test:
   override:
     - npm test
 deployment:
-  # CircleCi needs to listen to tags
   release:
     tag: /v.*/
-    branch: master
+    owner: wilzbach
     commands:
       - ./cdn.sh
-  staging:
+  production:
     branch: master
     commands:
       - ./cdn.sh
