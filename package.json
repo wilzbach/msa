@@ -32,7 +32,7 @@
     "bio.io": "^1.0.6",
     "biojs-events": "^0.0.4",
     "biojs-model": "^0.0.2",
-    "biojs-vis-seqlogo": "0.0.13",
+    "biojs-vis-seqlogo": "0.0.14",
     "blueimp_canvastoblob": "^1.0.0",
     "browser-saveas": "^1.0.1",
     "dom-helper": "^1.0.0",
