@@ -56,12 +56,12 @@ _.extend(CanvasSelection.prototype, {
     return (() => {
       const result = [];
       const end = seq.length - 1;
-      for (let n = 0; 0 < end ? n <= end : n >= end; 0 < end ? n++ : n--) {
+      for (let n = 0; n <= end; n++) {
         result.push((() => {
           if (data.hidden.indexOf(n) >= 0) {
             return hiddenOffset++;
           } else {
-            var k = n - hiddenOffset;
+            const k = n - hiddenOffset;
             // only if its a new selection
             if (selection.indexOf(n) >= 0 && (k === 0 || selection.indexOf(n - 1) < 0 )) {
               return this._renderSelection({n:n,
@@ -95,7 +95,7 @@ _.extend(CanvasSelection.prototype, {
     // get the length of this selection
     let selectionLength = 0;
     const end = data.model.get("seq").length - 1;
-    for (let i = n; n < end ? i <= end : i >= end; n < end ? i++ : i--) {
+    for (let i = n; i <= end; i++) {
       if (selection.indexOf(i) >= 0) {
         selectionLength++;
       } else {
@@ -121,7 +121,7 @@ _.extend(CanvasSelection.prototype, {
     // split up the selection into single cells
     let xPart = 0;
     const end1 = selectionLength - 1;
-    for (var i = 0; 0 < end1 ? i <= end1 : i >= end1; 0 < end1 ? i++ : i--) {
+    for (let i = 0; i <= end1; i++) {
       let xPos = n + i;
       if (hidden.indexOf(xPos) >= 0) {
         continue;
