@@ -31,7 +31,9 @@ const MarkerView = view.extend({
 
     for( let n=0; n < nMax; n++ ) {
       if (hidden.indexOf(n) >= 0) {
-        this.markerHidden(span,n, stepSize);
+        let el = this.markerHidden(n, stepSize);
+        if (!!el)
+            container.appendChild(el);
         n += stepSize;
         continue;
       }
@@ -55,7 +57,7 @@ const MarkerView = view.extend({
     return this;
   },
 
-  markerHidden: function(span,n,stepSize) {
+  markerHidden: function(n,stepSize) {
     const hidden = this.g.columns.get("hidden").slice(0);
 
     const min = Math.max(0, n - stepSize);
@@ -72,7 +74,7 @@ const MarkerView = view.extend({
     let length = 0;
     let index = -1;
     // accumlate multiple rows
-    for (let n2 = n; n2 <= nMax; n++) {
+    for (let n2 = n; n2 <= nMax; n2++) {
       if (!(index >= 0)) { index = hidden.indexOf(n2); }// sets the first index
       if (hidden.indexOf(n2) >= 0) {
         length++;
@@ -85,7 +87,8 @@ const MarkerView = view.extend({
     s.style.position = "relative";
     const triangle = svg.polygon({points: "0,0 5,5 10,0", style:
       "fill:lime;stroke:purple;stroke-width:1"
-    });jbone(triangle).on("click", (evt) => {
+    });
+    jbone(triangle).on("click", (evt) => {
       hidden.splice(index, length);
       return this.g.columns.set("hidden", hidden);
     });
