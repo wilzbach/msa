@@ -10,14 +10,14 @@ const FilterMenu = MenuBuilder.extend({
   render: function() {
     this.setName("Filter");
     this.addNode("Hide columns by threshold",(e) => {
-      var threshold = prompt("Enter threshold (in percent)", 20);
+      let threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
-      var maxLen = this.model.getMaxLength();
-      var hidden = [];
+      const maxLen = this.model.getMaxLength();
+      const hidden = [];
       // TODO: cache this value
-      var conserv = this.g.stats.scale(this.g.stats.conservation());
-      var end = maxLen - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
+      const conserv = this.g.stats.scale(this.g.stats.conservation());
+      const end = maxLen - 1;
+      for (let i = 0; i <= end; i++) {
         if (conserv[i] < threshold) {
           hidden.push(i);
         }
@@ -26,26 +26,26 @@ const FilterMenu = MenuBuilder.extend({
     });
 
     this.addNode("Hide columns by selection", () => {
-      var hiddenOld = this.g.columns.get("hidden");
-      var hidden = hiddenOld.concat(this.g.selcol.getAllColumnBlocks({maxLen: this.model.getMaxLength(), withPos: true}));
+      const hiddenOld = this.g.columns.get("hidden");
+      const hidden = hiddenOld.concat(this.g.selcol.getAllColumnBlocks({maxLen: this.model.getMaxLength(), withPos: true}));
       this.g.selcol.reset([]);
       return this.g.columns.set("hidden", hidden);
     });
 
     this.addNode("Hide columns by gaps", () => {
-      var threshold = prompt("Enter threshold (in percent)", 20);
+      let threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
-      var maxLen = this.model.getMaxLength();
-      var hidden = [];
-      var end = maxLen - 1;
-      for (var i = 0; 0 < end ? i <= end : i >= end; 0 < end ? i++ : i--) {
-        var gaps = 0;
-        var total = 0;
+      const maxLen = this.model.getMaxLength();
+      const hidden = [];
+      const end = maxLen - 1;
+      for (let i = 0; i <= end; i++) {
+        let gaps = 0;
+        let total = 0;
         this.model.each((el) => {
           if (el.get('seq')[i] === "-") { gaps++; }
           return total++;
         });
-        var gapContent = gaps / total;
+        const gapContent = gaps / total;
         if (gapContent > threshold) {
           hidden.push(i);
         }
@@ -54,7 +54,7 @@ const FilterMenu = MenuBuilder.extend({
     });
 
     this.addNode("Hide seqs by identity", () => {
-      var threshold = prompt("Enter threshold (in percent)", 20);
+      let threshold = prompt("Enter threshold (in percent)", 20);
       threshold = threshold / 100;
       return this.model.each((el) => {
         if (el.get('identity') < threshold) {
@@ -64,8 +64,8 @@ const FilterMenu = MenuBuilder.extend({
     });
 
     this.addNode("Hide seqs by selection", () => {
-      var hidden = this.g.selcol.where({type: "row"});
-      var ids = hidden.map((el) => el.get('seqId'));
+      const hidden = this.g.selcol.where({type: "row"});
+      const ids = hidden.map((el) => el.get('seqId'));
       this.g.selcol.reset([]);
       return this.model.each((el) => {
         if (ids.indexOf(el.get('id')) >= 0) {
@@ -75,10 +75,10 @@ const FilterMenu = MenuBuilder.extend({
     });
 
     this.addNode("Hide seqs by gaps", () => {
-      var threshold = prompt("Enter threshold (in percent)", 40);
+      const threshold = prompt("Enter threshold (in percent)", 40);
       return this.model.each((el,i) => {
-        var seq = el.get('seq');
-        var gaps = seq.reduce((memo, c) => c === '-' ? ++memo: undefined,0);
+        const seq = el.get('seq');
+        const gaps = seq.reduce((memo, c) => c === '-' ? ++memo: undefined,0);
         if (gaps >  threshold) {
           return el.set('hidden', true);
         }
