@@ -92,7 +92,6 @@ const MarkerView = view.extend({
     });
 
     s.appendChild(triangle);
-    span.appendChild(s);
     return s;
   },
 
