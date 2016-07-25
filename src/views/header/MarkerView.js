@@ -16,31 +16,30 @@ const MarkerView = view.extend({
 
   render: function() {
     dom.removeAllChilds(this.el);
-    
-    var fontSize = this.g.zoomer.get("markerFontsize");
-    var cellWidth = this.g.zoomer.get("columnWidth");
-    var stepSize = this.g.zoomer.get("stepSize");
-    var markerStepSize = this.g.zoomer.get("markerStepSize");
 
-    var hidden = this.g.columns.get("hidden");
-    
+    const fontSize = this.g.zoomer.get("markerFontsize");
+    const cellWidth = this.g.zoomer.get("columnWidth");
+    const stepSize = this.g.zoomer.get("stepSize");
+    const markerStepSize = this.g.zoomer.get("markerStepSize");
+
+    const hidden = this.g.columns.get("hidden");
+
     this.el.style.fontSize = fontSize;
 
-    var container = document.createElement("span");
-    var n = 0;
-    var nMax = this.model.getMaxLength();
+    const container = document.createElement("span");
+    const nMax = this.model.getMaxLength();
 
-    for( var n=0; n < nMax; n++ ) {
+    for( let n=0; n < nMax; n++ ) {
       if (hidden.indexOf(n) >= 0) {
         this.markerHidden(span,n, stepSize);
         n += stepSize;
         continue;
       }
-      var span = document.createElement("span");
+      let span = document.createElement("span");
       span.className = 'msa-col-header';
       span.style.width = cellWidth + "px";
       span.style.display = "inline-block";
-      
+
       if ((n+1) % markerStepSize === 0) {
         span.textContent = (n + 1);
       } else if ((n+1) % stepSize === 0) {
@@ -57,34 +56,34 @@ const MarkerView = view.extend({
   },
 
   markerHidden: function(span,n,stepSize) {
-    var hidden = this.g.columns.get("hidden").slice(0);
+    const hidden = this.g.columns.get("hidden").slice(0);
 
-    var min = Math.max(0, n - stepSize);
-    var prevHidden = true;
-    for (var j = min; j <= n; j++ ) {
+    const min = Math.max(0, n - stepSize);
+    let prevHidden = true;
+    for (let j = min; j <= n; j++ ) {
       prevHidden &= hidden.indexOf(j) >= 0;
     }
 
     // filter duplicates
     if (prevHidden) { return; }
 
-    var nMax = this.model.getMaxLength();
+    const nMax = this.model.getMaxLength();
 
-    var length = 0;
-    var index = -1;
+    let length = 0;
+    let index = -1;
     // accumlate multiple rows
-    for (var n = n; n <= nMax; n++) {
-      if (!(index >= 0)) { index = hidden.indexOf(n); }// sets the first index
-      if (hidden.indexOf(n) >= 0) {
+    for (let n2 = n; n2 <= nMax; n++) {
+      if (!(index >= 0)) { index = hidden.indexOf(n2); }// sets the first index
+      if (hidden.indexOf(n2) >= 0) {
         length++;
       } else {
         break;
       }
     }
 
-    var s = svg.base({height: 10, width: 10});
+    const s = svg.base({height: 10, width: 10});
     s.style.position = "relative";
-    var triangle = svg.polygon({points: "0,0 5,5 10,0", style:
+    const triangle = svg.polygon({points: "0,0 5,5 10,0", style:
       "fill:lime;stroke:purple;stroke-width:1"
     });jbone(triangle).on("click", (evt) => {
       hidden.splice(index, length);
@@ -96,7 +95,7 @@ const MarkerView = view.extend({
   },
 
   manageEvents: function() {
-    var events = {};
+    const events = {};
     if (this.g.config.get("registerMouseClicks")) {
       events.click = "_onclick";
     }
@@ -110,20 +109,20 @@ const MarkerView = view.extend({
   },
 
   _onclick: function(evt) {
-    var rowPos = evt.target.rowPos;
-    var stepSize = this.g.zoomer.get("stepSize");
+    const rowPos = evt.target.rowPos;
+    const stepSize = this.g.zoomer.get("stepSize");
     return this.g.trigger("column:click", {rowPos: rowPos,stepSize: stepSize, evt:evt});
   },
 
   _onmousein: function(evt) {
-    var rowPos = this.g.zoomer.get("stepSize" * evt.rowPos);
-    var stepSize = this.g.zoomer.get("stepSize");
+    const rowPos = this.g.zoomer.get("stepSize" * evt.rowPos);
+    const stepSize = this.g.zoomer.get("stepSize");
     return this.g.trigger("column:mousein", {rowPos: rowPos,stepSize: stepSize, evt:evt});
   },
 
   _onmouseout: function(evt) {
-    var rowPos = this.g.zoomer.get("stepSize" * evt.rowPos);
-    var stepSize = this.g.zoomer.get("stepSize");
+    const rowPos = this.g.zoomer.get("stepSize" * evt.rowPos);
+    const stepSize = this.g.zoomer.get("stepSize");
     return this.g.trigger("column:mouseout", {rowPos: rowPos,stepSize: stepSize, evt:evt});
   }
 });
