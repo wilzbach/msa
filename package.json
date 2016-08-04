@@ -1,4 +1,4 @@
-{
+{ 
   "name": "msa",
   "description": "Display multiple sequences",
   "version": "0.0.0",
@@ -29,7 +29,7 @@
     "backbone-childs": "^1.0.3",
     "backbone-thin": "^1.0.8",
     "backbone-viewj": "^1.0.1",
-    "bio.io": "^1.0.6",
+    "bio.io": "https://github.com/wilzbach/bio.io.git",
     "biojs-events": "^0.0.4",
     "biojs-model": "^0.0.2",
     "biojs-vis-seqlogo": "0.0.14",
