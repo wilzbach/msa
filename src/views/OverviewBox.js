@@ -45,43 +45,57 @@ const OverviewBox = view.extend({
     this.ctx.fillStyle = "#999999";
     this.ctx.fillRect(0,0,this.el.width,this.el.height);
 
+    const len = this.model.length;
     const rectWidth = this.g.zoomer.get("boxRectWidth");
     const rectHeight = this.g.zoomer.get("boxRectHeight");
     const hidden = this.g.columns.get("hidden");
     const showLowerCase = this.g.colorscheme.get("showLowerCase");
+    const boxes = {'x': Math.ceil( 1.0*this.el.width / rectWidth), 
+                   'y': Math.ceil( 1.0*this.el.height / rectHeight)};
+    const resid_per_box = {'x': Math.max(1, 1.0*this.model.getMaxLength() / this.el.width * rectWidth),
+                           'y': Math.max(1, 1.0*len / this.el.height * rectHeight)};
 
     let y = -rectHeight;
-    const len = this.model.length;
-    for (let i = 0; i < len; i++) {
-      // fixes weird bug on tatyana's machine
-      if (!this.model.at(i))
-      {
+    for (let ybox=0; ybox < boxes.y; ybox++) {
+      const seqs = [];
+      const seq_hidden = [];
+      for (let i = Math.floor(ybox*resid_per_box.y); i < Math.floor((ybox+1)*resid_per_box.y) && i < len; i++) {
+        // fixes weird bug on tatyana's machine
+        if (!this.model.at(i)){
           continue;
+        }
+        seqs.push(this.model.at(i).get("seq"));
+        seq_hidden.push(this.model.at(i).get('hidden'));
       }
-      const seq = this.model.at(i).get("seq");
       let x = 0;
       y = y + rectHeight;
 
-
-      if (this.model.at(i).get("hidden")) {
-        // hidden seq
-        this.ctx.fillStyle = "grey";
-        this.ctx.fillRect(0,y,seq.length * rectWidth,rectHeight);
-        continue;
-      }
-
-      for (let j = 0; j < seq.length; j++) {
-        let c = seq[j];
-        // todo: optional uppercasing
-        if (showLowerCase) { c = c.toUpperCase(); }
-        let color = this.color.getColor(c, {pos: j});
-
-        if (hidden.indexOf(j) >= 0) {
-          color = "grey";
+      for (let xbox = 0; xbox < boxes.x; xbox++){
+        var colors = [];
+        for (let i=0; i<seqs.length; i++) {
+          for (let j=Math.floor(xbox*resid_per_box.x); j<Math.floor((xbox+1)*resid_per_box.x) && j<seqs[i].length; j++) {
+            if (seq_hidden[i]) {
+              colors.push("grey");
+              continue;
+            }
+            let c = seqs[i][j];
+            // todo: optional uppercasing
+            if (showLowerCase) { c = c.toUpperCase(); }
+            let color = this.color.getColor(c, {pos: j});
+  
+            if (hidden.indexOf(j) >= 0) {
+              color = "grey";
+            }
+  
+            if ((typeof color !== "undefined" && color !== null)) {
+              colors.push(color);
+            }
+          }
         }
-
-        if ((typeof color !== "undefined" && color !== null)) {
-          this.ctx.fillStyle = color;
+        
+        if (colors.length !== 0) {
+          const box_color = this._mode(colors)
+          this.ctx.fillStyle = box_color;
           this.ctx.fillRect(x,y,rectWidth,rectHeight);
         }
 
@@ -90,6 +104,31 @@ const OverviewBox = view.extend({
     }
 
     return this._drawSelection();
+  },
+
+  _update_coords_transform: function() {
+    const rectHeight = this.g.zoomer.get('boxRectHeight');
+    const rectWidth = this.g.zoomer.get('boxRectWidth');
+    const contWidth = Math.min(this.g.zoomer.get('alignmentWidth') + this.g.zoomer.getLeftBlockWidth(), 
+                               this.model.getMaxLength() * rectWidth);
+    const contHeight = Math.min(200, this.model.length * rectHeight);
+    
+    this._coords = {
+       container_size: {x: contWidth, y: contHeight},
+       boxes_size: {x: rectWidth, y: rectHeight},
+       resid_per_box: {x: Math.max(1, 1.0*this.model.getMaxLength() / contWidth * rectWidth),
+                       y: Math.max(1, 1.0*this.model.length / contHeight * rectHeight)},
+       boxes: {x: Math.ceil(1.0*contWidth / rectWidth), 
+               y: Math.ceil(1.0*contHeight / rectHeight)}
+       };	
+    return this;
+  },
+
+  _mode: function(arr) {
+    return arr.sort((a,b) =>
+              arr.filter(v => v===a).length
+            - arr.filter(v => v===b).length
+    ).pop();
   },
 
   _drawSelection: function() {
@@ -242,11 +281,10 @@ const OverviewBox = view.extend({
 
  // init the canvas
   _createCanvas: function() {
-    const rectWidth = this.g.zoomer.get("boxRectWidth");
-    const rectHeight = this.g.zoomer.get("boxRectHeight");
+    this._update_coords_transform();
 
-    this.el.height = this.model.length * rectHeight;
-    this.el.width = this.model.getMaxLength() * rectWidth;
+    this.el.height = this._coords.container_size.y;
+    this.el.width = this._coords.container_size.x;
     this.ctx = this.el.getContext("2d");
     this.el.style.overflow = "auto";
     return this.el.style.cursor = "crosshair";
