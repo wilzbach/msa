@@ -46,20 +46,15 @@ const OverviewBox = view.extend({
     this.ctx.fillRect(0,0,this.el.width,this.el.height);
 
     const len = this.model.length;
-    const rectWidth = this.g.zoomer.get("boxRectWidth");
-    const rectHeight = this.g.zoomer.get("boxRectHeight");
     const hidden = this.g.columns.get("hidden");
     const showLowerCase = this.g.colorscheme.get("showLowerCase");
-    const boxes = {'x': Math.ceil( 1.0*this.el.width / rectWidth), 
-                   'y': Math.ceil( 1.0*this.el.height / rectHeight)};
-    const resid_per_box = {'x': Math.max(1, 1.0*this.model.getMaxLength() / this.el.width * rectWidth),
-                           'y': Math.max(1, 1.0*len / this.el.height * rectHeight)};
 
-    let y = -rectHeight;
-    for (let ybox=0; ybox < boxes.y; ybox++) {
+    let y = -this.coords.boxes_size.y;
+    for (let ybox=0; ybox < this.coords.boxes.y; ybox++) {
       const seqs = [];
       const seq_hidden = [];
-      for (let i = Math.floor(ybox*resid_per_box.y); i < Math.floor((ybox+1)*resid_per_box.y) && i < len; i++) {
+      for (let i = Math.floor(ybox*this.coords.resid_per_box.y); 
+               i < Math.floor((ybox+1)*this.coords.resid_per_box.y) && i < len; i++) {
         // fixes weird bug on tatyana's machine
         if (!this.model.at(i)){
           continue;
@@ -68,12 +63,12 @@ const OverviewBox = view.extend({
         seq_hidden.push(this.model.at(i).get('hidden'));
       }
       let x = 0;
-      y = y + rectHeight;
+      y = y + this.coords.boxes_size.y;
 
-      for (let xbox = 0; xbox < boxes.x; xbox++){
+      for (let xbox = 0; xbox < this.coords.boxes.x; xbox++){
         var colors = [];
         for (let i=0; i<seqs.length; i++) {
-          for (let j=Math.floor(xbox*resid_per_box.x); j<Math.floor((xbox+1)*resid_per_box.x) && j<seqs[i].length; j++) {
+          for (let j=Math.floor(xbox*this.coords.resid_per_box.x); j<Math.floor((xbox+1)*this.coords.resid_per_box.x) && j<seqs[i].length; j++) {
             if (seq_hidden[i]) {
               colors.push("grey");
               continue;
@@ -96,32 +91,38 @@ const OverviewBox = view.extend({
         if (colors.length !== 0) {
           const box_color = this._mode(colors)
           this.ctx.fillStyle = box_color;
-          this.ctx.fillRect(x,y,rectWidth,rectHeight);
+          this.ctx.fillRect(x, y, this.coords.boxes_size.x, this.coords.boxes_size.y);
         }
 
-        x = x + rectWidth;
+        x = x + this.coords.boxes_size.x;
       }
     }
 
     return this._drawSelection();
   },
 
-  _update_coords_transform: function() {
-    const rectHeight = this.g.zoomer.get('boxRectHeight');
-    const rectWidth = this.g.zoomer.get('boxRectWidth');
-    const contWidth = Math.min(this.g.zoomer.get('alignmentWidth') + this.g.zoomer.getLeftBlockWidth(), 
-                               this.model.getMaxLength() * rectWidth);
-    const contHeight = Math.min(200, this.model.length * rectHeight);
-    
-    this._coords = {
-       container_size: {x: contWidth, y: contHeight},
-       boxes_size: {x: rectWidth, y: rectHeight},
-       resid_per_box: {x: Math.max(1, 1.0*this.model.getMaxLength() / contWidth * rectWidth),
-                       y: Math.max(1, 1.0*this.model.length / contHeight * rectHeight)},
-       boxes: {x: Math.ceil(1.0*contWidth / rectWidth), 
-               y: Math.ceil(1.0*contHeight / rectHeight)}
-       };	
-    return this;
+  coords: {
+    screen_to_model: function(val, coord){
+      const pos = val * this.resid_per_box[coord] / this.boxes_size[coord];
+      return Math.floor(pos)
+    },
+    model_to_screen: function(val, coord){
+      return Math.floor(val * this.boxes_size[coord] / this.resid_per_box[coord]);
+    },
+    updatecoords_transform: function(overviewBox) {
+      const rectHeight = overviewBox.g.zoomer.get('boxRectHeight');
+      const rectWidth = overviewBox.g.zoomer.get('boxRectWidth');
+      const contWidth = Math.min(overviewBox.g.zoomer.get('alignmentWidth') + overviewBox.g.zoomer.getLeftBlockWidth(), 
+                                 overviewBox.model.getMaxLength() * rectWidth);
+      const contHeight = Math.min(201, overviewBox.model.length * rectHeight);
+      
+      this.container_size = {x: contWidth, y: contHeight};
+      this.boxes_size = {x: rectWidth, y: rectHeight};
+      this.resid_per_box = {x: Math.max(1, 1.0*overviewBox.model.getMaxLength() / contWidth * rectWidth),
+                            y: Math.max(1, 1.0*overviewBox.model.length / contHeight * rectHeight)};
+      this.boxes = {x: Math.ceil(1.0*contWidth / rectWidth), 
+                    y: Math.ceil(1.0*contHeight / rectHeight)};
+    }
   },
 
   _mode: function(arr) {
@@ -135,9 +136,6 @@ const OverviewBox = view.extend({
     // hide during selection
     if (this.dragStart.length > 0 && !this.prolongSelection) { return; }
 
-    const rectWidth = this.g.zoomer.get("boxRectWidth");
-    const rectHeight = this.g.zoomer.get("boxRectHeight");
-    const maxHeight = rectHeight * this.model.length;
     this.ctx.fillStyle = "#666666";
     this.ctx.globalAlpha = 0.9;
     const len = this.g.selcol.length;
@@ -146,17 +144,19 @@ const OverviewBox = view.extend({
       if(!sel) continue;
       let seq, pos;
       if (sel.get('type') === 'column') {
-        this.ctx.fillRect( rectWidth * sel.get('xStart'),0,rectWidth *
-        (sel.get('xEnd') - sel.get('xStart') + 1),maxHeight
+        this.ctx.fillRect( this.coords.boxes_size.x * sel.get('xStart'),0,this.coords.boxes_size.x *
+        (sel.get('xEnd') - sel.get('xStart') + 1), this.coords.container_size.y
         );
       } else if (sel.get('type') === 'row') {
         seq = (this.model.filter(function(el) { return el.get('id') === sel.get('seqId'); }))[0];
         pos = this.model.indexOf(seq);
-        this.ctx.fillRect(0,rectHeight * pos, rectWidth * seq.get('seq').length, rectHeight);
+        this.ctx.fillRect(0, this.coords.model_to_screen(pos, 'y'), 
+                          this.coords.model_to_screen(seq.get('seq').length, 'x'), this.coords.boxes_size.y);
       } else if (sel.get('type') === 'pos') {
         seq = (this.model.filter(function(el) { return el.get('id') === sel.get('seqId'); }))[0];
         pos = this.model.indexOf(seq);
-        this.ctx.fillRect(rectWidth * sel.get('xStart'),rectHeight * pos, rectWidth * (sel.get('xEnd') - sel.get('xStart') + 1), rectHeight);
+        this.ctx.fillRect(this.coords.model_to_screen(sel.get('xStart'),'x'), this.coords.model_to_screen(pos, 'y'), 
+                          this.coords.model_to_screen(sel.get('xEnd') - sel.get('xStart') + 1, 'x'), this.coords.boxes_size.y);
       }
     }
 
@@ -237,12 +237,12 @@ const OverviewBox = view.extend({
 
     // x
     for (var i = 0; i <= 1; i++) {
-      rect[0][i] = Math.floor( rect[0][i] / this.g.zoomer.get("boxRectWidth"));
+      rect[0][i] = this.coords.screen_to_model(rect[0][i], 'x');
     }
 
     // y
     for (var i = 0; i <= 1; i++) {
-      rect[1][i] = Math.floor( rect[1][i] / this.g.zoomer.get("boxRectHeight") );
+      rect[1][i] = this.coords.screen_to_model(rect[1][i], 'y');
     }
 
     // upper limit
@@ -281,10 +281,10 @@ const OverviewBox = view.extend({
 
  // init the canvas
   _createCanvas: function() {
-    this._update_coords_transform();
+    this.coords.updatecoords_transform(this);
 
-    this.el.height = this._coords.container_size.y;
-    this.el.width = this._coords.container_size.x;
+    this.el.height = this.coords.container_size.y;
+    this.el.width = this.coords.container_size.x;
     this.ctx = this.el.getContext("2d");
     this.el.style.overflow = "auto";
     return this.el.style.cursor = "crosshair";
