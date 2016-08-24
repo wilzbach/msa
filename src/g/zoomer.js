@@ -53,6 +53,8 @@ module.exports = Zoomer = Model.extend({
     boxRectHeight: 2,
     boxRectWidth: 2,
     overviewboxPaddingTop: 10,
+    overviewboxWidth: "auto",  // "auto" (fitting div) or "fixed"
+    overviewboxHeight: 200,    // "fixed" or in px
 
     // meta cell
     metaGapWidth: 35,

@@ -11,6 +11,8 @@ const OverviewBox = view.extend({
   initialize: function(data) {
     this.g = data.g;
     this.listenTo( this.g.zoomer,"change:boxRectWidth change:boxRectHeight change:overviewboxPaddingTop", this.rerender);
+    this.listenTo(this.g.zoomer, "change:alignmentHeight change:alignmentWidth", this.rerender);
+    this.listenTo(this.g.zoomer, "change:overviewboxWidth change:overviewboxHeigth", this.rerender);
     this.listenTo(this.g.selcol, "add reset change", this.rerender);
     this.listenTo(this.g.columns, "change:hidden", this.rerender);
     this.listenTo(this.g.colorscheme, "change:showLowerCase", this.rerender);
@@ -89,8 +91,7 @@ const OverviewBox = view.extend({
         }
         
         if (colors.length !== 0) {
-          const box_color = this._mode(colors)
-          this.ctx.fillStyle = box_color;
+          this.ctx.fillStyle = this._mode(colors);
           this.ctx.fillRect(x, y, this.coords.boxes_size.x, this.coords.boxes_size.y);
         }
 
@@ -112,20 +113,27 @@ const OverviewBox = view.extend({
     updatecoords_transform: function(overviewBox) {
       const rectHeight = overviewBox.g.zoomer.get('boxRectHeight');
       const rectWidth = overviewBox.g.zoomer.get('boxRectWidth');
-      const contWidth = Math.min(overviewBox.g.zoomer.get('alignmentWidth') + overviewBox.g.zoomer.getLeftBlockWidth(), 
+      const setting_w = overviewBox.g.zoomer.get('overviewboxWidth');
+      const setting_h = overviewBox.g.zoomer.get('overviewboxHeight');
+
+      const contWidth = setting_w === "fixed" ? overviewBox.model.getMaxLength() * rectWidth :
+                        Math.min(overviewBox.g.zoomer.get('alignmentWidth') + overviewBox.g.zoomer.getLeftBlockWidth(),
                                  overviewBox.model.getMaxLength() * rectWidth);
-      const contHeight = Math.min(201, overviewBox.model.length * rectHeight);
+      const contHeight = setting_h === "fixed" ? overviewBox.model.length * rectHeight :
+                         Math.min((isNaN(parseInt(setting_h, 10)) ? 1e10 : parseInt(setting_h,10)),
+                                  overviewBox.model.length * rectHeight);
       
       this.container_size = {x: contWidth, y: contHeight};
       this.boxes_size = {x: rectWidth, y: rectHeight};
-      this.resid_per_box = {x: Math.max(1, 1.0*overviewBox.model.getMaxLength() / contWidth * rectWidth),
-                            y: Math.max(1, 1.0*overviewBox.model.length / contHeight * rectHeight)};
-      this.boxes = {x: Math.ceil(1.0*contWidth / rectWidth), 
-                    y: Math.ceil(1.0*contHeight / rectHeight)};
+      this.resid_per_box = {x: Math.max(1, overviewBox.model.getMaxLength() / contWidth * rectWidth),
+                            y: Math.max(1, overviewBox.model.length / contHeight * rectHeight)};
+      this.boxes = {x: Math.ceil(contWidth / rectWidth),
+                    y: Math.ceil(contHeight / rectHeight)};
     }
   },
 
   _mode: function(arr) {
+    // get the mode, i.e. the most frequent element of an array
     return arr.sort((a,b) =>
               arr.filter(v => v===a).length
             - arr.filter(v => v===b).length
