@@ -89,7 +89,7 @@ var msa = require("msa");
 
 #### a) Directly import a url
 
-```
+```js
 var opts = {
   el: rootDiv,
   importURL: "./data/fer1.clustal",
@@ -97,19 +97,32 @@ var opts = {
 var m = msa(opts);
 ```
 
-#### b) Import your own seqs
+-> [JSBin example](http://jsbin.com/yusifufiwa/1/edit?js,output)
 
-```
+### b) Import your own sequences from a string
+
+```js
+// your fasta file (advice: save it in a DOM node)
+var fasta = ">seq1\n\
+ACTG\n\
+>seq2\n\
+ACGG\n";
+
+// parsed array of the sequences
+var seqs =  msa.io.fasta.parse(fasta);
+
 var m = msa({
-	el: rootDiv,
-	seqs: msa.utils.seqgen.genConservedSequences(10,30, "ACGT-"); // an array of seq files
+     el: rootDiv,
+     seqs: seqs
 });
-m.render()
+m.render();
 ```
+
+-> [JSBin Example](http://jsbin.com/zutaqofuro/1/edit?html,js,output)
 
 #### c) Asynchronously import seqs
 
-```
+```js
 var m = msa({
 	el: rootDiv,
 });
@@ -118,6 +131,33 @@ msa.io.clustal.read("https://raw.githubusercontent.com/wilzbach/msa/master/test/
 	m.render();
 });
 ```
+
+-> [JSBin example](http://jsbin.com/zesihapede/1/edit)
+
+### d) Import your sequences from the DOM
+
+```js
+var fasta = document.getElementById("fasta-file").innerText;
+var seqs = msa.io.fasta.parse(fasta);
+
+var m = msa({
+    el: rootDiv,
+    seqs: seqs
+});
+m.render();
+```
+
+with the following data stored in your HTML page:
+
+```html
+<pre style="display: none" id="fasta-file">
+>seq1
+ACTG
+>seq2
+ACGG</pre>
+```
+
+-> [JSBin Example](http://jsbin.com/megecapene/1/edit?html,js,output)
 
 ### Basic config parameters
 
