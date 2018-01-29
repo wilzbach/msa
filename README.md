@@ -419,7 +419,7 @@ zoomer: {
     alignmentHeight: 225,
     columnWidth: 15,
     rowHeight: 15,
-    autoResize: true // only for the width
+    autoResize: true, // only for the width
 
     // labels
     textVisible: true,
