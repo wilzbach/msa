@@ -20,19 +20,14 @@ Multiple Sequence Alignment Viewer - the MSAViewer - a BioJS component.
 [![Build Status](https://travis-ci.org/wilzbach/msa.svg?branch=master)](https://travis-ci.org/wilzbach/msa)
 [![NPM version](http://img.shields.io/npm/v/msa.svg)](https://www.npmjs.org/package/msa)
 [![Join the chat at https://gitter.im/wilzbach/msa](https://badges.gitter.im/wilzbach/msa.svg)](https://gitter.im/wilzbach/msa?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Dependencies](https://david-dm.org/wilzbach/msa.png)](https://david-dm.org/wilzbach/msa)
 [![Code Climate](https://codeclimate.com/github/wilzbach/msa/badges/gpa.svg)](https://codeclimate.com/github/wilzbach/msa)
 [![NPM downloads](http://img.shields.io/npm/dm/msa.svg)](https://www.npmjs.org/package/msa)
 
+## 
 
-```html
-<script src=//cdn.bio.sh/msa/1.0/msa.min.gz.js></script>
-```
+**This project is unmaintained. The domain for the JavaScript file used for MSAViewer was not renewed, and it was purchased by bad actors and [infected with malware](https://github.com/wilzbach/msa/issues/262).**
 
-Yes you can either link to the minified, gzipped CDN version or download the dev version from S3 .
-
-[![Min version](http://img.shields.io/badge/prod-35kB-blue.svg)](https://cdn.bio.sh/msa/latest/msa.min.gz.js)
-[![Dev version](http://img.shields.io/badge/dev-latest-yellow.svg)](https://cdn.bio.sh/msa/latest/msa.js)
+If you still need to use MSAViewer, download and locally host http://web.archive.org/web/20220120161943id_/https://s3.eu-central-1.amazonaws.com/cdn.bio.sh/msa/latest/msa.min.gz.js. Within that file, you'll also need to change `"at"in t` to `"on"in t`, as described in [#257 (comment)](https://github.com/wilzbach/msa/issues/257#issuecomment-916738101).
 
 [![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
@@ -76,7 +71,7 @@ These examples show how you could embed the MSAViewer into your page.
 
 If you have loaded ```msa``` as a script in your web page with something like...
 ```
-<script src="//cdn.bio.sh/msa/latest/msa.min.gz.js"></script>
+<script src="path/to/msa.min.gz.js"></script>
 ```
 ... then congratulations! You are ready to go.
 
@@ -520,7 +515,7 @@ You can browse the snippets at [localhost:9090/snippets](http:localhost:9090/sni
 Compiling for the browser
 --------------------------
 
-For most cases using our CDN builds, is the best way to go.
+For most cases downloading the archived release builds is the best way to go.
 If you need to make some changes to the MSA, you can get a minified bundle in
 the folder `dist` with:
 
@@ -569,21 +564,11 @@ Sebastian Wilzbach (Technical University of Munich; TUM), Ian Sillitoe (Universi
 Do you want to be part of the team? Just grab an issue and send us a PR!
 Ask us on [Gitter](https://gitter.im/wilzbach/msa) if you need help to get started.
 
-Versioning & CDN
+Versioning
 ----------------
 
 New MSA versions are released following [semantic versioning](http://semver.org/).
-Starting from 1.0.3 [git tags](https://github.com/wilzbach/msa/tags) match the versions deployed on npm and our CDN.
-On our CDN we offer four different versions:  
-
-```
-https://cdn.bio.sh/msa/1.0.3/msa.min.gz.js // static, won't change
-https://cdn.bio.sh/msa/1.0/msa.min.gz.js // will be updated until a new minor version is released
-https://cdn.bio.sh/msa/1/msa.min.gz.js // will be updated until a new major version is released
-https://cdn.bio.sh/msa/latest/msa.min.gz.js // will be updated on every commit
-```
-
-If you use the MSAViewer in production, we recommend to lock the CDN version to an exact release and update from time to time.
+Starting from 1.0.3 [git tags](https://github.com/wilzbach/msa/tags) match the versions deployed on npm.
 
 License
 -------
