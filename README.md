@@ -25,9 +25,14 @@ Multiple Sequence Alignment Viewer - the MSAViewer - a BioJS component.
 
 ## 
 
-**This project is unmaintained. The domain for the JavaScript file used for MSAViewer was not renewed, and it was purchased by bad actors and [infected with malware](https://github.com/wilzbach/msa/issues/262).**
+## This project is unmaintained. Please consider switching to [plotly/react-msa-viewer](https://github.com/plotly/react-msa-viewer).
 
-If you still need to use MSAViewer, download and locally host http://web.archive.org/web/20220120161943id_/https://s3.eu-central-1.amazonaws.com/cdn.bio.sh/msa/latest/msa.min.gz.js. Within that file, you'll also need to change `"at"in t` to `"on"in t`, as described in [#257 (comment)](https://github.com/wilzbach/msa/issues/257#issuecomment-916738101).
+If you still need to use MSAViewer, download and locally host http://web.archive.org/web/20220120161943id_/https://s3.eu-central-1.amazonaws.com/cdn.bio.sh/msa/latest/msa.min.gz.js. 
+See [#257](https://github.com/wilzbach/msa/issues/257) for further details.
+
+-----------------------------
+
+-----------------------------
 
 [![NPM](https://nodei.co/npm/msa.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/msa/)
 
