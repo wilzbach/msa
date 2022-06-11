@@ -1,4 +1,4 @@
-import {find} from "lodash";
+import {find, extend} from "lodash";
 
 const CanvasSelection = (function(g,ctx) {
   this.g = g;
@@ -7,7 +7,7 @@ const CanvasSelection = (function(g,ctx) {
 }
 );
 
-_.extend(CanvasSelection.prototype, {
+extend(CanvasSelection.prototype, {
 
   // TODO: should I be moved to the selection manager?
   // returns an array with the currently selected residues
