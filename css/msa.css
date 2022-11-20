@@ -49,7 +49,7 @@
 }
 
 .biojs_msa_labelblock::-webkit-scrollbar, .biojs_msa_rheader::-webkit-scrollbar{
-    // FIX scrollbars on Mac
+    /* FIX scrollbars on Mac */
     -webkit-appearance: none;
     width: 7px;
     height: 7px;
